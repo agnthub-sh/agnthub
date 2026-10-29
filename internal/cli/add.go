@@ -14,6 +14,7 @@ import (
 	"github.com/heynemann/agnthub/internal/discovery"
 	"github.com/heynemann/agnthub/internal/harness"
 	"github.com/heynemann/agnthub/internal/install"
+	"github.com/heynemann/agnthub/internal/resolve"
 	"github.com/heynemann/agnthub/internal/source"
 	"github.com/heynemann/agnthub/internal/state"
 )
@@ -82,7 +83,7 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	if opts.list {
 		return out.inventory(snapshot, inventory)
 	}
-	targets, err := selectAgents(inventory, opts)
+	selected, err := selectAgents(inventory, opts)
 	if err != nil {
 		return err
 	}
@@ -94,6 +95,15 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	if err != nil {
 		return err
 	}
+	closure, err := (&resolve.Resolver{
+		Opener:   a.Opener,
+		Registry: a.Registry,
+		Limits:   discovery.DefaultLimits(),
+	}).Resolve(ctx, resolve.Root{Snapshot: snapshot, Inventory: inventory}, selected, harnesses)
+	if err != nil {
+		return err
+	}
+	defer func() { _ = closure.Close() }()
 	scope := harness.ScopeProject
 	if opts.global {
 		scope = harness.ScopeGlobal
@@ -104,7 +114,7 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	}
 	plan, err := planner.Build(install.Request{
 		Source:    a.lockedSource(snapshot),
-		Targets:   targets,
+		Targets:   a.targets(closure),
 		Harnesses: harnesses,
 		Settings:  settings,
 		Scope:     scope,
@@ -139,7 +149,7 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	return err
 }
 
-func selectAgents(inventory *discovery.Inventory, opts *addOptions) ([]install.Target, error) {
+func selectAgents(inventory *discovery.Inventory, opts *addOptions) ([]*agent.Definition, error) {
 	var defs []*agent.Definition
 	switch {
 	case opts.all:
@@ -174,11 +184,27 @@ func selectAgents(inventory *discovery.Inventory, opts *addOptions) ([]install.T
 	if len(defs) == 0 {
 		return nil, errors.New("the source contains no installable agents")
 	}
-	targets := make([]install.Target, 0, len(defs))
-	for _, def := range defs {
-		targets = append(targets, install.Target{Definition: def, Origin: state.OriginDirect})
+	return defs, nil
+}
+
+// targets turns the resolved closure into plan targets; companions keep their own
+// source but share the user's Harnesses, scope and Settings.
+func (a *App) targets(closure *resolve.Closure) []install.Target {
+	targets := make([]install.Target, 0, len(closure.Members))
+	for _, member := range closure.Members {
+		target := install.Target{
+			Definition: member.Definition,
+			Origin:     state.OriginDependency,
+			Source:     a.lockedSource(member.Snapshot),
+			Harnesses:  member.Harnesses,
+			RequiredBy: member.RequiredBy,
+		}
+		if member.Direct {
+			target.Origin = state.OriginDirect
+		}
+		targets = append(targets, target)
 	}
-	return targets, nil
+	return targets
 }
 
 func agentProblems(inventory *discovery.Inventory) []string {

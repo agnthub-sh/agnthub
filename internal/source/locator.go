@@ -87,6 +87,20 @@ func Parse(input, cwd string, environment env.Env) (Locator, error) {
 	return loc, nil
 }
 
+// ErrLocalReference reports repository metadata naming a local directory.
+var ErrLocalReference = errors.New(
+	"repository metadata may only reference Git sources, not local paths",
+)
+
+// ParseRemote interprets a source locator named by repository metadata, such as an
+// external Agent Dependency. Metadata never selects a directory on the user's machine.
+func ParseRemote(input string) (Locator, error) {
+	if isLocal(strings.TrimSpace(input)) {
+		return Locator{}, fmt.Errorf("%q: %w", input, ErrLocalReference)
+	}
+	return Parse(input, "", env.Env{})
+}
+
 func isLocal(input string) bool {
 	if input == "." || input == ".." || input == "~" {
 		return true

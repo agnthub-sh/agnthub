@@ -42,9 +42,13 @@ type Item struct {
 	Artifact     harness.Artifact
 	SourcePath   string
 	SourceDigest string
-	Origin       state.Origin
-	Action       Action
-	Reason       string
+	// Source is the exact source the Agent comes from; companions keep their own.
+	Source state.LockedSource
+	Origin state.Origin
+	// RequiredBy names the dependents of a dependency Item.
+	RequiredBy []string
+	Action     Action
+	Reason     string
 }
 
 // Plan is a fully resolved installation, computed before any write.
@@ -70,10 +74,17 @@ func (p *Plan) Blocking() []Item {
 type Target struct {
 	Definition *agent.Definition
 	Origin     state.Origin
+	// Source overrides Request.Source for an Agent from another source.
+	Source state.LockedSource
+	// Harnesses restricts the Target to these requested Harnesses; nil means all.
+	Harnesses []agent.HarnessID
+	// RequiredBy names the dependents that required a dependency Target.
+	RequiredBy []string
 }
 
 // Request describes what to plan.
 type Request struct {
+	// Source is the selected source and the default source of every Target.
 	Source    state.LockedSource
 	Targets   []Target
 	Harnesses []agent.HarnessID
@@ -96,6 +107,9 @@ func (p *Planner) Build(req Request) (*Plan, error) {
 	claimed := map[string]string{}
 	for _, target := range req.Targets {
 		for _, harnessID := range req.Harnesses {
+			if target.Harnesses != nil && !slices.Contains(target.Harnesses, harnessID) {
+				continue
+			}
 			item, err := p.item(req, target, harnessID)
 			if err != nil {
 				return nil, err
@@ -116,10 +130,15 @@ func (p *Planner) Build(req Request) (*Plan, error) {
 func (p *Planner) item(req Request, target Target, harnessID agent.HarnessID) (Item, error) {
 	def := target.Definition
 	item := Item{
-		Agent:    def.ID,
-		Harness:  harnessID,
-		Settings: req.Settings[harnessID],
-		Origin:   target.Origin,
+		Agent:      def.ID,
+		Harness:    harnessID,
+		Settings:   req.Settings[harnessID],
+		Source:     req.Source,
+		Origin:     target.Origin,
+		RequiredBy: target.RequiredBy,
+	}
+	if target.Source != (state.LockedSource{}) {
+		item.Source = target.Source
 	}
 	installer, err := p.Registry.Installer(harnessID)
 	if err != nil {

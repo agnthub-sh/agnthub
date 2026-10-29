@@ -12,6 +12,7 @@ import (
 	"github.com/heynemann/agnthub/internal/discovery"
 	"github.com/heynemann/agnthub/internal/install"
 	"github.com/heynemann/agnthub/internal/source"
+	"github.com/heynemann/agnthub/internal/state"
 )
 
 var jsonOut = sonic.Config{SortMapKeys: true, EscapeHTML: false}.Froze()
@@ -136,7 +137,9 @@ type itemJSON struct {
 	Path        string            `json:"path,omitempty"`
 	Variant     string            `json:"variant,omitempty"`
 	SourcePath  string            `json:"sourcePath,omitempty"`
+	Source      sourceJSON        `json:"source"`
 	Origin      string            `json:"origin"`
+	RequiredBy  []string          `json:"requiredBy,omitempty"`
 	Action      string            `json:"action"`
 	Reason      string            `json:"reason,omitempty"`
 	Notes       []string          `json:"notes,omitempty"`
@@ -157,7 +160,9 @@ func (p *printer) plan(plan *install.Plan, status string) {
 			Destination: item.Destination.Label,
 			Path:        item.Path,
 			SourcePath:  item.SourcePath,
+			Source:      sourceJSON(item.Source),
 			Origin:      string(item.Origin),
+			RequiredBy:  item.RequiredBy,
 			Action:      string(item.Action),
 			Reason:      item.Reason,
 			Notes:       item.Artifact.Notes,
@@ -199,6 +204,14 @@ func (p *printer) plan(plan *install.Plan, status string) {
 			fmt.Fprintf(p.w, "      → %s (%s)\n", item.Path, item.Destination)
 		case item.Path != "":
 			fmt.Fprintf(p.w, "      → %s\n", item.Path)
+		}
+		if item.Origin == string(state.OriginDependency) {
+			fmt.Fprintf(
+				p.w,
+				"      dependency of %s, from %s\n",
+				strings.Join(item.RequiredBy, ", "),
+				sourceLabel(item.Source),
+			)
 		}
 		if item.Reason != "" {
 			fmt.Fprintf(p.w, "      %s\n", item.Reason)

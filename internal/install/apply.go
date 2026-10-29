@@ -60,7 +60,7 @@ func (p *Planner) record(plan *Plan, item Item, projectRoot string, now time.Tim
 	if item.Artifact.Generated {
 		variant = state.VariantGenerated
 	}
-	p.Lock.Upsert(plan.Source, item.Agent, item.Origin, state.LockedArtifact{
+	p.Lock.Upsert(item.Source, item.Agent, item.Origin, state.LockedArtifact{
 		Harness:      string(item.Harness),
 		Variant:      variant,
 		SourcePath:   item.SourcePath,
@@ -76,7 +76,7 @@ func (p *Planner) record(plan *Plan, item Item, projectRoot string, now time.Tim
 		Scope:       string(plan.Scope),
 		Settings:    item.Settings,
 		Destination: item.Destination.Label,
-		Source:      plan.Source.Kind + ":" + plan.Source.Locator,
+		Source:      item.Source.Kind + ":" + item.Source.Locator,
 		Agent:       item.Agent,
 		Origin:      item.Origin,
 		InstalledAt: now.UTC(),
@@ -84,11 +84,16 @@ func (p *Planner) record(plan *Plan, item Item, projectRoot string, now time.Tim
 	if plan.Scope == harness.ScopeProject {
 		record.ProjectRoot = projectRoot
 	}
-	if existing := p.Ownership.ForPath(item.Path); item.Action == ActionUnchanged {
-		for _, previous := range existing {
-			if previous.Binding() == record.Binding() {
-				record.InstalledAt = previous.InstalledAt
-			}
+	// A companion reinstall never downgrades a direct installation to dependency.
+	for _, previous := range p.Ownership.ForPath(item.Path) {
+		if previous.Binding() != record.Binding() {
+			continue
+		}
+		if previous.Origin == state.OriginDirect {
+			record.Origin = state.OriginDirect
+		}
+		if item.Action == ActionUnchanged {
+			record.InstalledAt = previous.InstalledAt
 		}
 	}
 	p.Ownership.Put(record)
