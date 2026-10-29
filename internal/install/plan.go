@@ -35,9 +35,13 @@ func (a Action) Blocking() bool {
 
 // Item is one Agent placement for one Harness.
 type Item struct {
-	Agent       string
-	Harness     agent.HarnessID
-	Settings    harness.Settings
+	Agent    string
+	Harness  agent.HarnessID
+	Settings harness.Settings
+	// Binding is the effective Settings the installation is recorded under: the
+	// explicit Settings plus detected native defaults (e.g. the active omp profile),
+	// so later updates keep the binding instead of following a newly active default.
+	Binding     harness.Settings
 	Destination harness.Destination
 	// Path is the absolute artifact path.
 	Path         string
@@ -337,11 +341,33 @@ func (p *Planner) item(req Request, target Target, harnessID agent.HarnessID) (I
 	}
 	item.Artifact = artifact
 	item.Destination = destination
+	item.Binding = effectiveBinding(installer, req.Context, item.Settings)
 	item.SourcePath = sourcePath
 	item.SourceDigest = state.Digest(sourceRaw)
 	item.Path = filepath.Join(destination.Dir, artifact.FileName)
 	item.Action, item.Reason, err = p.action(req, item)
 	return item, err
+}
+
+// effectiveBinding returns settings plus the native defaults the installer reports.
+func effectiveBinding(
+	installer harness.Installer,
+	ctx harness.Context,
+	settings harness.Settings,
+) harness.Settings {
+	reporter, ok := installer.(harness.SettingsReporter)
+	if !ok {
+		return settings
+	}
+	effective := reporter.EffectiveSettings(ctx, settings)
+	if len(effective) == 0 {
+		return settings
+	}
+	binding := make(harness.Settings, len(effective))
+	for _, setting := range effective {
+		binding[setting.Key] = setting.Value
+	}
+	return binding
 }
 
 // render prefers an explicit Variant; an invalid Variant never falls back.

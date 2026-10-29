@@ -252,7 +252,8 @@ func (r *gitRepo) fetchError(err error) error {
 	case strings.Contains(lower, "couldn't find remote ref"),
 		strings.Contains(lower, "not our ref"),
 		strings.Contains(lower, "no such remote ref"):
-		if r.loc.Ref != "" && shortHex.MatchString(r.loc.Ref) {
+		if r.loc.Ref != "" && shortHex.MatchString(r.loc.Ref) &&
+			!commitPattern.MatchString(r.loc.Ref) {
 			return fmt.Errorf(
 				"%s: %w: %q (commits must be given as a full SHA)",
 				display, ErrRefNotFound, r.loc.Ref,

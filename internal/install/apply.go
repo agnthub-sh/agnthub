@@ -82,7 +82,7 @@ func (p *Planner) record(plan *Plan, item Item, projectRoot string, now time.Tim
 		Digest:      digest,
 		Harness:     string(item.Harness),
 		Scope:       string(plan.Scope),
-		Settings:    item.Settings,
+		Settings:    item.Binding,
 		Destination: item.Destination.Label,
 		Source:      item.Source.Kind + ":" + item.Source.Locator,
 		Agent:       item.Agent,

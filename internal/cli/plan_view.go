@@ -34,6 +34,8 @@ type planView struct {
 	SkippedSkills []skills.Item
 	// Outcome reports the Skill backend runs, observed effects and verification.
 	Outcome *skills.Outcome
+	// Report describes what an update or restore changes relative to the lock.
+	Report *lifecycleReport
 }
 
 // harnessView is one selected Harness with detection and effective Settings.
@@ -83,6 +85,8 @@ type planJSON struct {
 	Skipped       []itemJSON     `json:"skipped,omitempty"`
 	Summary       map[string]int `json:"summary"`
 	SkillSummary  map[string]int `json:"skillSummary,omitempty"`
+	// Changes compares an update or restore with the lock.
+	Changes *lifecycleReport `json:"changes,omitempty"`
 }
 
 type skillJSON struct {
@@ -220,6 +224,7 @@ func (p *printer) plan(view *planView, status string) {
 		Source:    sourceJSON(view.Plan.Source),
 		Harnesses: make([]harnessJSON, 0, len(view.Harnesses)),
 		Items:     make([]itemJSON, 0, len(view.Plan.Items)),
+		Changes:   view.Report,
 		Summary:   map[string]int{},
 	}
 	effective := make(map[agent.HarnessID]map[string]string, len(view.Harnesses))
@@ -280,8 +285,16 @@ func newItemJSON(item install.Item, effective map[agent.HarnessID]map[string]str
 
 func (p *printer) humanPlan(payload *planJSON) {
 	s := p.styles
-	fmt.Fprintf(p.w, "%s · %s scope · from %s\n",
-		s.title.Render(titleStatus(payload.Status)), payload.Scope, sourceLabel(payload.Source))
+	if payload.Changes != nil {
+		fmt.Fprintf(p.w, "%s · %s scope · lock %s\n",
+			s.title.Render(lifecycleTitle(payload.Changes.Command, payload.Status)),
+			payload.Scope, payload.Changes.Lock)
+		p.humanReport(payload.Changes)
+	} else {
+		fmt.Fprintf(p.w, "%s · %s scope · from %s\n",
+			s.title.Render(titleStatus(payload.Status)), payload.Scope,
+			sourceLabel(payload.Source))
+	}
 	if len(payload.Harnesses) > 0 {
 		fmt.Fprintln(p.w, s.heading.Render("  Harnesses"))
 		for _, h := range payload.Harnesses {

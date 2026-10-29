@@ -158,49 +158,51 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	if err != nil {
 		return err
 	}
-	if err := a.planSkills(ctx, planner, plan, closure, harnesses, settings, scope); err != nil {
+	plan.Skills, err = a.planSkills(ctx, planner, a.Opener, closure.Skills, harnesses, settings,
+		scope)
+	if err != nil {
 		return err
 	}
+	plan.NoteBlockedSkills()
 	view := &planView{Plan: plan, Harnesses: a.harnessViews(harnesses, settings)}
 	if !interactive {
-		return a.applyUnattended(ctx, planner, view, out, opts)
+		return a.applyUnattended(ctx, planner, view, out, opts.yes || opts.all, opts.json)
 	}
 	return a.applyInteractive(ctx, planner, view, out)
 }
 
-// planSkills preflights the closure's Skill Dependencies into plan. The user's
-// installer configuration is read (and rejected when invalid) before anything runs.
+// planSkills preflights Skill requirements, opening their sources with opener.
+// The user's installer configuration is read (and rejected when invalid) before
+// anything runs.
 func (a *App) planSkills(
 	ctx context.Context,
 	planner *install.Planner,
-	plan *install.Plan,
-	closure *resolve.Closure,
+	opener skills.Opener,
+	requirements []skills.Requirement,
 	harnesses []agent.HarnessID,
 	settings map[agent.HarnessID]harness.Settings,
 	scope harness.Scope,
-) error {
-	if len(closure.Skills) == 0 {
-		return nil
+) ([]skills.Item, error) {
+	if len(requirements) == 0 {
+		return nil, nil
 	}
 	backend, err := skills.LoadInstaller(skills.ConfigPath(a.Env))
 	if err != nil {
-		return err
+		return nil, err
 	}
-	plan.Skills = (&skills.Planner{
+	return (&skills.Planner{
 		Registry:  a.Registry,
-		Opener:    a.Opener,
+		Opener:    opener,
 		Installer: backend,
 		Ownership: planner.Ownership,
 		Lock:      planner.Lock,
 	}).Plan(ctx, skills.Request{
-		Requirements: closure.Skills,
+		Requirements: requirements,
 		Harnesses:    harnesses,
 		Settings:     settings,
 		Scope:        scope,
 		Context:      a.harnessContext(),
-	})
-	plan.NoteBlockedSkills()
-	return nil
+	}), nil
 }
 
 // applyUnattended applies only an entirely valid plan: it never prompts, never
@@ -210,15 +212,15 @@ func (a *App) applyUnattended(
 	planner *install.Planner,
 	view *planView,
 	out *printer,
-	opts *addOptions,
+	approved, asJSON bool,
 ) error {
 	if view.Plan.Blocked() {
 		out.plan(view, statusRefused)
 		return &ExitError{Code: 1}
 	}
-	if !opts.yes && !opts.all {
+	if !approved {
 		out.plan(view, statusPlanned)
-		if opts.json {
+		if asJSON {
 			return errors.New("--json never prompts; rerun with --yes to apply this plan")
 		}
 		return errors.New(
@@ -261,6 +263,7 @@ func (a *App) applyInteractive(
 		detail = strings.Join(lines, "\n")
 		view = &planView{
 			Plan: kept, Harnesses: view.Harnesses, Skipped: dropped, SkippedSkills: droppedSkills,
+			Report: view.Report,
 		}
 	}
 	confirmed, err := a.Prompter.Confirm(ctx, question, detail)
@@ -301,7 +304,7 @@ func (a *App) apply(
 		applied.Items = result.Applied
 		out.plan(&planView{
 			Plan: &applied, Harnesses: view.Harnesses, Skipped: view.Skipped,
-			SkippedSkills: view.SkippedSkills, Outcome: view.Outcome,
+			SkippedSkills: view.SkippedSkills, Outcome: view.Outcome, Report: view.Report,
 		}, statusApplied)
 	}
 	return err

@@ -63,6 +63,8 @@ type LockedSkill struct {
 }
 
 // UpsertSkill records skill for harness, merging Harnesses of the same directory.
+// Re-verifying identical content without fetching its source keeps the locked
+// revision, so provenance survives updates and reinstalls.
 func (l *Lock) UpsertSkill(skill LockedSkill, harness string) {
 	for i := range l.Skills {
 		locked := &l.Skills[i]
@@ -72,6 +74,11 @@ func (l *Lock) UpsertSkill(skill LockedSkill, harness string) {
 		harnesses := locked.Harnesses
 		if locked.Mode == SkillInstalled && skill.Mode == SkillReused {
 			skill.Mode = SkillInstalled
+		}
+		if skill.Source.Revision == "" && skill.Digest == locked.Digest &&
+			skill.Source.Kind == locked.Source.Kind &&
+			skill.Source.Locator == locked.Source.Locator && skill.Source.Ref == locked.Source.Ref {
+			skill.Source.Revision = locked.Source.Revision
 		}
 		*locked = skill
 		locked.Harnesses = harnesses
