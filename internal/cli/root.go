@@ -96,7 +96,7 @@ func (a *App) rootCommand(ctx context.Context) *cobra.Command {
 		SilenceUsage:  true,
 		SilenceErrors: true,
 	}
-	root.AddCommand(a.addCommand(ctx), a.listCommand())
+	root.AddCommand(a.addCommand(ctx), a.listCommand(), a.removeCommand(ctx))
 	return root
 }
 
