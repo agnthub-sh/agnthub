@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"path/filepath"
+	"slices"
 
 	"github.com/heynemann/agnthub/internal/agent"
 	"github.com/heynemann/agnthub/internal/harness"
@@ -144,6 +145,11 @@ func (p *Planner) item(req Request, target Target, harnessID agent.HarnessID) (I
 			return item, nil
 		}
 	}
+	if advisor, ok := installer.(harness.DependencyAdvisor); ok {
+		artifact.Notes = append(
+			artifact.Notes,
+			advisor.DependencyNotes(dependencies(def, harnessID))...)
+	}
 	destination, err := installer.Destination(req.Context, req.Scope, item.Settings)
 	if err != nil {
 		item.Action, item.Reason = ActionIncompatible, err.Error()
@@ -172,6 +178,16 @@ func render(
 		return artifact, "", nil, err
 	}
 	return artifact, def.Portable.Path, def.Portable.Raw, nil
+}
+
+// dependencies returns the Agent's common Dependencies plus its Variant's for h.
+func dependencies(def *agent.Definition, h agent.HarnessID) agent.Dependencies {
+	deps := def.Dependencies
+	if variant := def.Variant(h); variant != nil {
+		deps.Agents = append(slices.Clip(deps.Agents), variant.Dependencies.Agents...)
+		deps.Skills = append(slices.Clip(deps.Skills), variant.Dependencies.Skills...)
+	}
+	return deps
 }
 
 // action decides whether writing item is safe given what exists on disk.

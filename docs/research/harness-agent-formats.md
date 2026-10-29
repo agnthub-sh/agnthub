@@ -80,6 +80,15 @@ The name is ambiguous; none of these sources proves the user intends one, nor th
 
 A2A (remote-agent communication) and MCP (tool/server connectivity) are different concerns, not interchangeable agent-definition formats. Oracle's positioning makes that distinction explicitly, and Gemini separately documents A2A remote subagents. [Oracle positioning](https://oracle.github.io/agent-spec/26.3.1/agentspec/positioning.html), [Gemini remote subagents](https://geminicli.com/docs/core/remote-agents/)
 
+## Runtime-verified installer findings
+
+Checked against the shipped CLIs (cursor-agent 2026.10.22-27dcf5f, Gemini CLI 0.66.0) while implementing the installers; these override documentation where they differ.
+
+- **Cursor reads frontmatter line by line, not as YAML.** Each `key: value` line sets a lowercased key to the raw trimmed value; quotes are kept, block scalars read as `>`/`|`, nested lines also match, and only the text `true` enables `readonly`/`is_background` (`background` is an alias). Files with an empty body are skipped. The installer therefore checks what Cursor's reader sees, not only the YAML: a quoted, commented, nested or multi-line declaration that would change identity, description or read-only mode is refused.
+- **cursor-agent scans workspace `.cursor/agents` (plus `.claude/agents` and `.grok/agents`) and plugin subagents only.** This build does not read `~/.cursor/agents`; user-scope installs follow the documented editor location and were not proven loadable from the CLI.
+- **Gemini CLI validates agent frontmatter strictly** (unknown keys are errors; `name` must match `^[a-z0-9-_]+$`; local agents allow `tools`, `mcp_servers`, `model`, `temperature`, `max_turns`, `timeout_mins`, `display_name`; remote agents need exactly one of `agent_card_url`/`agent_card_json`), skips files whose names start with `_`, and only loads project agents in trusted folders after the user acknowledges each new or changed file. `GEMINI_CLI_HOME` replaces the home directory, so user agents live in `$GEMINI_CLI_HOME/.gemini/agents`.
+- **Gemini accepts `invoke_agent` in a subagent's `tools` without error but never lets a subagent invoke agents,** so agnthub refuses that declaration rather than install a delegation the Harness ignores.
+
 ## Decisions and remaining unknowns
 
 1. **Exact product support target:** CLI-only, IDE, or cloud per harness? Copilot especially needs separate surface labels. Should initial support include all seven, or only a tested subset? Skill support is not agent support.

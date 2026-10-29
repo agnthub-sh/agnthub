@@ -124,6 +124,13 @@ type Installer interface {
 	Detect(ctx Context) bool
 }
 
+// DependencyAdvisor is an optional Installer extension for Harnesses where an
+// installed Dependency does not carry the runtime meaning users may assume.
+type DependencyAdvisor interface {
+	// DependencyNotes returns plan notes for an Agent declaring deps.
+	DependencyNotes(deps agent.Dependencies) []string
+}
+
 // Registry holds every known Adapter.
 type Registry struct {
 	adapters map[agent.HarnessID]Adapter
