@@ -15,6 +15,7 @@ import (
 	"github.com/heynemann/agnthub/internal/agent"
 	"github.com/heynemann/agnthub/internal/discovery"
 	"github.com/heynemann/agnthub/internal/harness"
+	"github.com/heynemann/agnthub/internal/skills"
 	"github.com/heynemann/agnthub/internal/source"
 )
 
@@ -24,12 +25,13 @@ var (
 	ErrCycle = errors.New("agent dependency cycle")
 	// ErrMissing reports a required Agent that is absent, ambiguous or invalid in its source.
 	ErrMissing = errors.New("required agent cannot be resolved")
-	// ErrConflict reports one Dependency identity required at different revisions.
-	ErrConflict = errors.New("conflicting revisions of one agent dependency")
+	// ErrConflict reports one Dependency identity required at different revisions,
+	// or one Skill name required from different sources.
+	ErrConflict = errors.New("conflicting revisions of one dependency")
 	// ErrSource reports an unusable external Dependency source.
-	ErrSource = errors.New("invalid agent dependency source")
-	// ErrSkillsUnsupported reports Skill Dependencies, which cannot be installed yet.
-	ErrSkillsUnsupported = errors.New("skill dependencies are not supported yet")
+	ErrSource = errors.New("invalid dependency source")
+	// ErrSkill reports an invalid Skill Dependency declaration.
+	ErrSkill = errors.New("invalid skill dependency")
 )
 
 // Opener resolves locators into snapshots; source.Opener satisfies it.
@@ -62,11 +64,14 @@ type Member struct {
 	RequiredBy []string
 }
 
-// Closure is the resolved selection plus every required companion Agent.
+// Closure is the resolved selection plus every required companion Agent and Skill.
 type Closure struct {
 	// Members lists direct Agents in selection order, then companions in discovery order.
 	Members []Member
-	opened  []*source.Snapshot
+	// Skills lists each required Skill once, in first-required order, with every
+	// dependent's bounds per Harness.
+	Skills []skills.Requirement
+	opened []*source.Snapshot
 }
 
 // Close releases the external snapshots opened during resolution; the root
@@ -125,6 +130,14 @@ type run struct {
 	order     []*node
 	edges     map[edgeKey]*node
 	opened    []*source.Snapshot
+	skills    map[string]*skillEntry
+	skillList []*skillEntry
+}
+
+// skillEntry is one required Skill name and the dependent that first required it.
+type skillEntry struct {
+	requirement skills.Requirement
+	firstBy     string
 }
 
 // Resolve returns the transitive closure of selected for harnesses. Each Harness
@@ -145,6 +158,7 @@ func (r *Resolver) Resolve(
 		snapshots: map[string]*entry{snapshotKey(root.Snapshot.Locator): rootEntry},
 		nodes:     map[string]*node{},
 		edges:     map[edgeKey]*node{},
+		skills:    map[string]*skillEntry{},
 	}
 	direct := make([]*node, 0, len(selected))
 	for _, def := range selected {
@@ -163,7 +177,11 @@ func (r *Resolver) Resolve(
 			}
 		}
 	}
-	return &Closure{Members: s.members(harnesses), opened: s.opened}, nil
+	closure := &Closure{Members: s.members(harnesses), opened: s.opened}
+	for _, entry := range s.skillList {
+		closure.Skills = append(closure.Skills, entry.requirement)
+	}
+	return closure, nil
 }
 
 func (s *run) visit(
@@ -186,9 +204,11 @@ func (s *run) visit(
 	if variant := n.def.Variant(harnessID); variant != nil {
 		added = variant.Dependencies
 	}
-	for _, skills := range [2][]agent.SkillDependency{common.Skills, added.Skills} {
-		if len(skills) > 0 {
-			return skillError(n, harnessID, skills[0])
+	for _, deps := range [2][]agent.SkillDependency{common.Skills, added.Skills} {
+		for _, dep := range deps {
+			if err := s.skill(n, harnessID, dep); err != nil {
+				return err
+			}
 		}
 	}
 	for _, deps := range [2][]agent.AgentDependency{common.Agents, added.Agents} {
@@ -404,9 +424,47 @@ func missingError(from *node, id string, target *entry) error {
 	)
 }
 
-func skillError(n *node, harnessID agent.HarnessID, skill agent.SkillDependency) error {
-	return fmt.Errorf(
-		"%w: %s requires skill %s from %s for %s",
-		ErrSkillsUnsupported, n.label, skill.Skill, skill.Source, harnessID,
-	)
+// skill records a Skill Dependency of n for harnessID. One Skill name maps to
+// one source revision: Harnesses discover Skills by name, so two sources (or
+// refs) for one name conflict instead of being solved.
+func (s *run) skill(n *node, harnessID agent.HarnessID, dep agent.SkillDependency) error {
+	if !agent.ValidID(dep.Skill) {
+		return fmt.Errorf(
+			"%w: %s requires skill %q, which is not a valid skill name "+
+				"(lowercase letters, digits, '-' and '_')",
+			ErrSkill, n.label, dep.Skill,
+		)
+	}
+	loc, err := source.ParseRemote(dep.Source)
+	if err != nil {
+		return fmt.Errorf("%w: %s requires skill %s from %w", ErrSource, n.label, dep.Skill, err)
+	}
+	bounds, err := skills.ParseBounds(dep.MinVersion, dep.MaxVersion)
+	if err != nil {
+		return fmt.Errorf("%w: %s requires skill %s: %w", ErrSkill, n.label, dep.Skill, err)
+	}
+	entry, ok := s.skills[dep.Skill]
+	if !ok {
+		entry = &skillEntry{
+			requirement: skills.Requirement{Skill: dep.Skill, Source: loc},
+			firstBy:     n.label,
+		}
+		s.skills[dep.Skill] = entry
+		s.skillList = append(s.skillList, entry)
+	} else if existing := entry.requirement.Source; existing.Key() != loc.Key() ||
+		existing.Ref != loc.Ref {
+		return fmt.Errorf(
+			"%w: skill %s is required from %s by %s and from %s by %s",
+			ErrConflict, dep.Skill, existing.Display(), entry.firstBy, loc.Display(), n.label,
+		)
+	}
+	need := skills.Need{Harness: harnessID, Bounds: bounds, RequiredBy: n.label}
+	for _, existing := range entry.requirement.Needs {
+		if existing.Harness == need.Harness && existing.RequiredBy == need.RequiredBy &&
+			existing.Bounds.String() == need.Bounds.String() {
+			return nil
+		}
+	}
+	entry.requirement.Needs = append(entry.requirement.Needs, need)
+	return nil
 }

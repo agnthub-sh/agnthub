@@ -67,7 +67,7 @@ func TestReduceKeepsDependencyClosurePerHarness(t *testing.T) {
 		item("planner", agent.Codex, install.ActionCreate, "reviewer"),
 		item("linter", agent.Claude, install.ActionCreate, "planner (github.com/acme/tools#v1)"),
 	}}
-	kept, dropped := plan.Reduce()
+	kept, dropped, _ := plan.Reduce()
 	var keptKeys, droppedKeys []string
 	for _, it := range kept.Items {
 		keptKeys = append(keptKeys, it.Agent+"/"+string(it.Harness))

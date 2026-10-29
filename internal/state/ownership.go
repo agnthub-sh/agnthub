@@ -26,8 +26,11 @@ type Record struct {
 	Destination string            `json:"destination"`
 	Source      string            `json:"source"`
 	Agent       string            `json:"agent"`
-	Origin      Origin            `json:"origin"`
-	InstalledAt time.Time         `json:"installedAt"`
+	// Skill names the Skill of a Skill directory agnthub's backend installed;
+	// such records have no Agent.
+	Skill       string    `json:"skill,omitempty"`
+	Origin      Origin    `json:"origin"`
+	InstalledAt time.Time `json:"installedAt"`
 }
 
 // Binding identifies the Harness binding a record belongs to.

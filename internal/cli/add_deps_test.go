@@ -281,11 +281,18 @@ func TestDependencyFailuresLeaveTheProjectUntouched(t *testing.T) {
 			git:  fakeGit{"acme/tools#v1": toolsRepo("1111")},
 			want: "incompatible",
 		},
-		"skill dependency": {
+		"unfetchable skill source": {
 			manifest: "schemaVersion: 1\nagents:\n" +
 				"  reviewer:\n    portable: agents/reviewer.md\n" +
 				"    dependencies:\n      skills:\n        - source: acme/skills#v1\n          skill: code-review\n",
-			want: "skill dependencies are not supported yet",
+			want: "acme/skills#v1",
+		},
+		"invalid skill bounds": {
+			manifest: "schemaVersion: 1\nagents:\n" +
+				"  reviewer:\n    portable: agents/reviewer.md\n" +
+				"    dependencies:\n      skills:\n        - source: acme/skills#v1\n" +
+				"          skill: code-review\n          minVersion: \"1.2\"\n",
+			want: "minVersion",
 		},
 	}
 	for name, tc := range cases {

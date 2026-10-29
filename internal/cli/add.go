@@ -15,6 +15,7 @@ import (
 	"github.com/heynemann/agnthub/internal/harness"
 	"github.com/heynemann/agnthub/internal/install"
 	"github.com/heynemann/agnthub/internal/resolve"
+	"github.com/heynemann/agnthub/internal/skills"
 	"github.com/heynemann/agnthub/internal/source"
 	"github.com/heynemann/agnthub/internal/state"
 )
@@ -51,7 +52,11 @@ explicit local directory (./path). Harness settings use --extra <harness>.<key>=
 
 In a terminal, add asks which agents and harnesses to install (detected harnesses
 are preselected), previews the plan and asks before writing. --yes, --all and
---json never prompt and refuse any plan that is not entirely valid.`,
+--json never prompt and refuse any plan that is not entirely valid.
+
+Required skills are reused when a compatible copy is already visible; missing ones
+install first through the skill installer (skills.sh, or skillInstaller in
+~/.config/agnthub/config.yaml) and are verified before any agent file is written.`,
 		Example: `  agnthub add ./my-agents --list
   agnthub add ./my-agents --agent reviewer --harness claude
   agnthub add owner/repo --harness omp --global --extra omp.profile=work
@@ -153,22 +158,61 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	if err != nil {
 		return err
 	}
+	if err := a.planSkills(ctx, planner, plan, closure, harnesses, settings, scope); err != nil {
+		return err
+	}
 	view := &planView{Plan: plan, Harnesses: a.harnessViews(harnesses, settings)}
 	if !interactive {
-		return a.applyUnattended(planner, view, out, opts)
+		return a.applyUnattended(ctx, planner, view, out, opts)
 	}
 	return a.applyInteractive(ctx, planner, view, out)
+}
+
+// planSkills preflights the closure's Skill Dependencies into plan. The user's
+// installer configuration is read (and rejected when invalid) before anything runs.
+func (a *App) planSkills(
+	ctx context.Context,
+	planner *install.Planner,
+	plan *install.Plan,
+	closure *resolve.Closure,
+	harnesses []agent.HarnessID,
+	settings map[agent.HarnessID]harness.Settings,
+	scope harness.Scope,
+) error {
+	if len(closure.Skills) == 0 {
+		return nil
+	}
+	backend, err := skills.LoadInstaller(skills.ConfigPath(a.Env))
+	if err != nil {
+		return err
+	}
+	plan.Skills = (&skills.Planner{
+		Registry:  a.Registry,
+		Opener:    a.Opener,
+		Installer: backend,
+		Ownership: planner.Ownership,
+		Lock:      planner.Lock,
+	}).Plan(ctx, skills.Request{
+		Requirements: closure.Skills,
+		Harnesses:    harnesses,
+		Settings:     settings,
+		Scope:        scope,
+		Context:      a.harnessContext(),
+	})
+	plan.NoteBlockedSkills()
+	return nil
 }
 
 // applyUnattended applies only an entirely valid plan: it never prompts, never
 // reduces the selection and never approves a blocked item.
 func (a *App) applyUnattended(
+	ctx context.Context,
 	planner *install.Planner,
 	view *planView,
 	out *printer,
 	opts *addOptions,
 ) error {
-	if len(view.Plan.Blocking()) > 0 {
+	if view.Plan.Blocked() {
 		out.plan(view, statusRefused)
 		return &ExitError{Code: 1}
 	}
@@ -181,7 +225,7 @@ func (a *App) applyUnattended(
 			"confirmation required but input is not interactive; rerun with --yes",
 		)
 	}
-	return a.apply(planner, view, out)
+	return a.apply(ctx, planner, view, out)
 }
 
 // applyInteractive previews the plan and applies it only after explicit approval.
@@ -192,8 +236,8 @@ func (a *App) applyInteractive(
 	view *planView,
 	out *printer,
 ) error {
-	blocked := len(view.Plan.Blocking()) > 0
-	kept, dropped := view.Plan.Reduce()
+	blocked := view.Plan.Blocked()
+	kept, dropped, droppedSkills := view.Plan.Reduce()
 	if blocked && len(kept.Items) == 0 {
 		out.plan(view, statusRefused)
 		return &ExitError{Code: 1}
@@ -201,17 +245,23 @@ func (a *App) applyInteractive(
 	out.plan(view, statusPlanned)
 	question, detail := "Apply this plan?", ""
 	if blocked {
-		lines := make([]string, 0, len(dropped))
+		lines := make([]string, 0, len(dropped)+len(droppedSkills))
 		for _, item := range dropped {
 			lines = append(lines, fmt.Sprintf("skip %s for %s: %s", item.Agent, item.Harness,
 				item.Reason))
 		}
+		for _, item := range droppedSkills {
+			lines = append(lines, fmt.Sprintf("skip skill %s for %s: %s", item.Skill,
+				item.Harness, item.Reason))
+		}
 		question = fmt.Sprintf(
 			"Some items are blocked. Apply only the %d valid item(s) and skip %d?",
-			len(kept.Items), len(dropped),
+			len(kept.Items)+len(kept.Skills), len(dropped)+len(droppedSkills),
 		)
 		detail = strings.Join(lines, "\n")
-		view = &planView{Plan: kept, Harnesses: view.Harnesses, Skipped: dropped}
+		view = &planView{
+			Plan: kept, Harnesses: view.Harnesses, Skipped: dropped, SkippedSkills: droppedSkills,
+		}
 	}
 	confirmed, err := a.Prompter.Confirm(ctx, question, detail)
 	if err != nil {
@@ -220,16 +270,39 @@ func (a *App) applyInteractive(
 	if !confirmed {
 		return errCancelled
 	}
-	return a.apply(planner, view, out)
+	return a.apply(ctx, planner, view, out)
 }
 
-func (a *App) apply(planner *install.Planner, view *planView, out *printer) error {
+// apply installs and verifies required Skills first; only when every Skill is
+// verified are the Agent artifacts written. A backend or verification failure
+// writes no Agent file and reports what the backend changed, without rollback.
+func (a *App) apply(
+	ctx context.Context,
+	planner *install.Planner,
+	view *planView,
+	out *printer,
+) error {
+	if len(view.Plan.Skills) > 0 {
+		outcome, err := (&skills.Applier{
+			Registry: a.Registry, Context: a.harnessContext(), Scope: view.Plan.Scope,
+		}).Apply(ctx, view.Plan.Skills)
+		view.Outcome = outcome
+		if err != nil {
+			out.plan(view, statusFailed)
+			return &ExitError{Code: 1}
+		}
+		verified := *view.Plan
+		verified.Skills = outcome.Items
+		view.Plan = &verified
+	}
 	result, err := planner.Apply(view.Plan, a.WorkDir, a.Now())
 	if result != nil {
 		applied := *view.Plan
 		applied.Items = result.Applied
-		out.plan(&planView{Plan: &applied, Harnesses: view.Harnesses, Skipped: view.Skipped},
-			statusApplied)
+		out.plan(&planView{
+			Plan: &applied, Harnesses: view.Harnesses, Skipped: view.Skipped,
+			SkippedSkills: view.SkippedSkills, Outcome: view.Outcome,
+		}, statusApplied)
 	}
 	return err
 }

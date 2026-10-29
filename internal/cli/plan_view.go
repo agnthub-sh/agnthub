@@ -11,6 +11,7 @@ import (
 	"github.com/heynemann/agnthub/internal/agent"
 	"github.com/heynemann/agnthub/internal/harness"
 	"github.com/heynemann/agnthub/internal/install"
+	"github.com/heynemann/agnthub/internal/skills"
 	"github.com/heynemann/agnthub/internal/state"
 )
 
@@ -19,6 +20,8 @@ const (
 	statusPlanned = "planned"
 	statusRefused = "refused"
 	statusApplied = "applied"
+	// statusFailed reports a Skill backend or verification failure: no Agent was written.
+	statusFailed = "failed"
 )
 
 // planView is a plan with the Harness context a preview shows.
@@ -27,6 +30,10 @@ type planView struct {
 	Harnesses []harnessView
 	// Skipped lists items an interactive user chose to leave out.
 	Skipped []install.Item
+	// SkippedSkills lists Skill items left out with their dependents.
+	SkippedSkills []skills.Item
+	// Outcome reports the Skill backend runs, observed effects and verification.
+	Outcome *skills.Outcome
 }
 
 // harnessView is one selected Harness with detection and effective Settings.
@@ -62,13 +69,109 @@ func (a *App) printer(asJSON bool) *printer {
 }
 
 type planJSON struct {
-	Status    string         `json:"status"`
-	Scope     string         `json:"scope"`
-	Source    sourceJSON     `json:"source"`
-	Harnesses []harnessJSON  `json:"harnesses"`
-	Items     []itemJSON     `json:"items"`
-	Skipped   []itemJSON     `json:"skipped,omitempty"`
-	Summary   map[string]int `json:"summary"`
+	Status        string         `json:"status"`
+	Scope         string         `json:"scope"`
+	Source        sourceJSON     `json:"source"`
+	Harnesses     []harnessJSON  `json:"harnesses"`
+	Skills        []skillJSON    `json:"skills,omitempty"`
+	SkippedSkills []skillJSON    `json:"skippedSkills,omitempty"`
+	SkillRuns     []skillRunJSON `json:"skillRuns,omitempty"`
+	// SkillEffects are changes observed in watched Skill locations during the runs.
+	SkillEffects  []effectJSON   `json:"skillEffects,omitempty"`
+	SkillFailures []string       `json:"skillFailures,omitempty"`
+	Items         []itemJSON     `json:"items"`
+	Skipped       []itemJSON     `json:"skipped,omitempty"`
+	Summary       map[string]int `json:"summary"`
+	SkillSummary  map[string]int `json:"skillSummary,omitempty"`
+}
+
+type skillJSON struct {
+	Skill       string            `json:"skill"`
+	Source      string            `json:"source"`
+	Harness     string            `json:"harness"`
+	Settings    map[string]string `json:"settings"`
+	Requirement string            `json:"requirement"`
+	RequiredBy  []string          `json:"requiredBy"`
+	Decision    string            `json:"decision"`
+	Path        string            `json:"path,omitempty"`
+	Location    string            `json:"location,omitempty"`
+	Scope       string            `json:"scope,omitempty"`
+	Version     string            `json:"version,omitempty"`
+	Revision    string            `json:"revision,omitempty"`
+	Target      string            `json:"target,omitempty"`
+	Command     []string          `json:"command,omitempty"`
+	Shadowed    string            `json:"shadowed,omitempty"`
+	Reason      string            `json:"reason,omitempty"`
+}
+
+type skillRunJSON struct {
+	Skill     string   `json:"skill"`
+	Path      string   `json:"path"`
+	Command   []string `json:"command"`
+	Harnesses []string `json:"harnesses"`
+	ExitCode  int      `json:"exitCode"`
+	Error     string   `json:"error,omitempty"`
+	Output    string   `json:"output,omitempty"`
+}
+
+type effectJSON struct {
+	Path   string `json:"path"`
+	Change string `json:"change"`
+}
+
+func newSkillJSON(item *skills.Item) skillJSON {
+	entry := skillJSON{
+		Skill:       item.Skill,
+		Source:      item.Source.Display(),
+		Harness:     string(item.Harness),
+		Settings:    map[string]string{},
+		Requirement: item.Requirement,
+		RequiredBy:  item.RequiredBy,
+		Decision:    string(item.Decision),
+		Path:        item.Path,
+		Location:    item.Location,
+		Scope:       string(item.Scope),
+		Version:     item.Version,
+		Revision:    item.Revision,
+		Target:      item.Target,
+		Command:     item.Command,
+		Shadowed:    item.Shadowed,
+		Reason:      item.Reason,
+	}
+	maps.Copy(entry.Settings, item.Settings)
+	return entry
+}
+
+// addSkills fills the Skill sections of payload from the view.
+func addSkills(payload *planJSON, view *planView) {
+	for i := range view.Plan.Skills {
+		item := &view.Plan.Skills[i]
+		if payload.SkillSummary == nil {
+			payload.SkillSummary = map[string]int{}
+		}
+		payload.Skills = append(payload.Skills, newSkillJSON(item))
+		payload.SkillSummary[string(item.Decision)]++
+	}
+	for i := range view.SkippedSkills {
+		payload.SkippedSkills = append(payload.SkippedSkills, newSkillJSON(&view.SkippedSkills[i]))
+	}
+	if view.Outcome == nil {
+		return
+	}
+	for _, run := range view.Outcome.Runs {
+		harnesses := make([]string, 0, len(run.Harnesses))
+		for _, h := range run.Harnesses {
+			harnesses = append(harnesses, string(h))
+		}
+		payload.SkillRuns = append(payload.SkillRuns, skillRunJSON{
+			Skill: run.Skill, Path: run.Path, Command: run.Command, Harnesses: harnesses,
+			ExitCode: run.ExitCode, Error: run.Error, Output: run.Output,
+		})
+	}
+	for _, effect := range view.Outcome.Effects {
+		payload.SkillEffects = append(payload.SkillEffects, effectJSON(effect))
+	}
+	payload.SkillFailures = view.Outcome.Failures
 }
 
 type harnessJSON struct {
@@ -140,6 +243,7 @@ func (p *printer) plan(view *planView, status string) {
 	for _, item := range view.Skipped {
 		payload.Skipped = append(payload.Skipped, newItemJSON(item, effective))
 	}
+	addSkills(&payload, view)
 	if p.json {
 		_ = p.emitJSON(payload)
 		return
@@ -192,11 +296,133 @@ func (p *printer) humanPlan(payload *planJSON) {
 			fmt.Fprintln(p.w, strings.TrimRight(line, " "))
 		}
 	}
-	p.humanItems("Agents", payload.Items)
+	p.humanSkills("Skills", payload.Skills)
+	if len(payload.SkippedSkills) > 0 {
+		p.humanSkills("Skipped skills", payload.SkippedSkills)
+	}
+	p.humanSkillRuns(payload)
+	itemsHeading := "Agents"
+	if payload.Status == statusFailed {
+		itemsHeading = "Agents (not written)"
+	}
+	p.humanItems(itemsHeading, payload.Items)
 	if len(payload.Skipped) > 0 {
 		p.humanItems("Skipped (not written)", payload.Skipped)
 	}
-	fmt.Fprintln(p.w, "  "+summaryLine(payload.Summary))
+	line := summaryLine(payload.Summary)
+	if len(payload.SkillSummary) > 0 {
+		line += "  ·  skills: " + skillSummaryLine(payload.SkillSummary)
+	}
+	fmt.Fprintln(p.w, "  "+line)
+}
+
+// humanSkills lists Skill requirements grouped by Skill, one line per Harness.
+func (p *printer) humanSkills(heading string, items []skillJSON) {
+	if len(items) == 0 {
+		return
+	}
+	s := p.styles
+	fmt.Fprintln(p.w, s.heading.Render("  "+heading))
+	var group string
+	for i := range items {
+		item := &items[i]
+		if key := item.Skill + "\x00" + item.Requirement; key != group {
+			group = key
+			fmt.Fprintln(p.w, "    "+s.title.Render(item.Skill)+s.dim.Render(fmt.Sprintf(
+				"  %s from %s, required by %s",
+				item.Requirement, item.Source, strings.Join(item.RequiredBy, ", "),
+			)))
+		}
+		decision := skills.Decision(item.Decision)
+		marker := "+"
+		switch {
+		case decision.Blocking():
+			marker = "✗"
+		case decision == skills.DecisionReuse || decision == skills.DecisionUnchanged:
+			marker = "="
+		}
+		action := fmt.Sprintf("%s %-12s", marker, item.Decision)
+		switch {
+		case decision.Blocking():
+			action = s.blocked.Render(action)
+		case marker == "=":
+			action = s.unchanged.Render(action)
+		default:
+			action = s.create.Render(action)
+		}
+		line := fmt.Sprintf("      %s %-9s %-10s", action, item.Harness, item.Version)
+		if item.Path != "" {
+			line += " " + item.Path
+		}
+		fmt.Fprintln(p.w, strings.TrimRight(line, " "))
+		if item.Location != "" {
+			fmt.Fprintln(p.w, "          "+s.dim.Render(item.Location))
+		}
+		if len(item.Command) > 0 {
+			fmt.Fprintln(p.w, "          "+s.dim.Render(
+				"runs "+skills.Display(item.Command[0], item.Command[1:])))
+		}
+		if item.Reason != "" {
+			style := s.dim
+			if decision.Blocking() {
+				style = s.blocked
+			}
+			fmt.Fprintln(p.w, "          "+style.Render(item.Reason))
+		}
+	}
+}
+
+// humanSkillRuns reports backend runs, failures and observed effects.
+func (p *printer) humanSkillRuns(payload *planJSON) {
+	s := p.styles
+	if len(payload.SkillRuns) > 0 {
+		fmt.Fprintln(p.w, s.heading.Render("  Skill installer runs"))
+		for _, run := range payload.SkillRuns {
+			status := s.create.Render("ok")
+			if run.Error != "" {
+				status = s.blocked.Render("failed: " + run.Error)
+			}
+			fmt.Fprintf(p.w, "    %s for %s: %s\n      %s\n", run.Skill,
+				strings.Join(run.Harnesses, ", "), status,
+				s.dim.Render(skills.Display(run.Command[0], run.Command[1:])))
+			if run.Error != "" && strings.TrimSpace(run.Output) != "" {
+				for line := range strings.SplitSeq(strings.TrimRight(run.Output, "\n"), "\n") {
+					fmt.Fprintln(p.w, "      | "+line)
+				}
+			}
+		}
+	}
+	for _, failure := range payload.SkillFailures {
+		fmt.Fprintln(p.w, "    "+s.blocked.Render("verification failed: "+failure))
+	}
+	if payload.Status == statusFailed || len(payload.SkillEffects) > 0 {
+		fmt.Fprintln(p.w, s.heading.Render("  Changes observed in skill locations"))
+		if len(payload.SkillEffects) == 0 {
+			fmt.Fprintln(p.w, "    none")
+		}
+		for _, effect := range payload.SkillEffects {
+			fmt.Fprintf(p.w, "    %-8s %s\n", effect.Change, effect.Path)
+		}
+		if payload.Status == statusFailed {
+			fmt.Fprintln(p.w, "    "+s.dim.Render(
+				"agnthub does not roll back the skill installer; review or remove these yourself"))
+		}
+	}
+}
+
+func skillSummaryLine(summary map[string]int) string {
+	order := []skills.Decision{
+		skills.DecisionInstall, skills.DecisionReuse, skills.DecisionUnchanged,
+		skills.DecisionShadowed, skills.DecisionConflict, skills.DecisionUnsatisfied,
+		skills.DecisionDisabled, skills.DecisionUnsupported,
+	}
+	parts := make([]string, 0, len(order))
+	for _, decision := range order {
+		if n := summary[string(decision)]; n > 0 {
+			parts = append(parts, fmt.Sprintf("%d %s", n, decision))
+		}
+	}
+	return strings.Join(parts, " · ")
 }
 
 func (p *printer) humanItems(heading string, items []itemJSON) {
@@ -275,6 +501,8 @@ func titleStatus(status string) string {
 		return "Refused before writing"
 	case statusApplied:
 		return "Installed"
+	case statusFailed:
+		return "Failed: skills not verified, no agent written"
 	default:
 		return "Plan"
 	}

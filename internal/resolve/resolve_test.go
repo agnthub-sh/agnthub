@@ -324,14 +324,104 @@ func TestMissingAmbiguousAndLocalDependenciesFail(t *testing.T) {
 	}
 }
 
-func TestSkillDependenciesRefuseUntilSupported(t *testing.T) {
-	f := newFixture(t, newRepo(map[string]string{
-		"reviewer": "    dependencies:\n      agents:\n        - agent: planner\n",
-		"planner": "    dependencies:\n      skills:\n        - source: acme/skills#v1\n" +
-			"          skill: code-review\n",
-	}), nil)
-	_, err := f.resolve([]string{"reviewer"}, agent.Claude)
-	if !errors.Is(err, resolve.ErrSkillsUnsupported) {
-		t.Fatalf("want unsupported skill dependency, got %v", err)
+func TestSkillDependenciesJoinTheClosurePerHarness(t *testing.T) {
+	f := newFixture(t, repo{
+		manifest: "schemaVersion: 1\nagents:\n" +
+			"  reviewer:\n    portable: agents/reviewer.md\n" +
+			"    variants:\n      codex:\n        path: .codex/agents/reviewer.toml\n" +
+			"        dependencies:\n          skills:\n" +
+			"            - source: acme/skills#v1\n              skill: codex-only\n" +
+			"    dependencies:\n      agents:\n        - agent: planner\n" +
+			"  planner:\n    portable: agents/planner.md\n" +
+			"    dependencies:\n      skills:\n        - source: acme/skills#v1\n" +
+			"          skill: code-review\n          minVersion: \"1.2.0\"\n" +
+			"          maxVersion: \"2.0.0\"\n",
+		extra: map[string]string{
+			"agents/reviewer.md": portable("reviewer"),
+			"agents/planner.md":  portable("planner"),
+			".codex/agents/reviewer.toml": "name = \"reviewer\"\ndescription = \"r\"\n" +
+				"developer_instructions = \"Review.\"\n",
+		},
+	}, nil)
+	closure, err := f.resolve([]string{"reviewer"}, agent.Claude, agent.Codex)
+	if err != nil {
+		t.Fatal(err)
+	}
+	got := map[string][]string{}
+	for _, requirement := range closure.Skills {
+		if requirement.Source.Display() != "acme/skills#v1" {
+			t.Fatalf("skill source = %s", requirement.Source.Display())
+		}
+		for _, need := range requirement.Needs {
+			got[requirement.Skill] = append(got[requirement.Skill],
+				string(need.Harness)+":"+need.RequiredBy+":"+need.Bounds.String())
+		}
+	}
+	want := map[string][]string{
+		"code-review": {"claude:planner:>=1.2.0 <=2.0.0", "codex:planner:>=1.2.0 <=2.0.0"},
+		"codex-only":  {"codex:reviewer:any version"},
+	}
+	for skill, needs := range want {
+		if !slices.Equal(got[skill], needs) {
+			t.Errorf("%s needs = %v, want %v", skill, got[skill], needs)
+		}
+	}
+	if len(f.opener.opens) != 0 {
+		t.Fatal("resolving skill requirements must not fetch skill sources")
+	}
+}
+
+func TestInvalidOrConflictingSkillDependenciesFail(t *testing.T) {
+	skill := func(source, name, bounds string) string {
+		return "    dependencies:\n      skills:\n        - source: " + source +
+			"\n          skill: " + name + "\n" + bounds
+	}
+	cases := map[string]struct {
+		agents map[string]string
+		want   error
+	}{
+		"non-semver bound": {
+			agents: map[string]string{
+				"reviewer": skill("acme/skills", "x", "          minVersion: \"1.0\"\n"),
+			},
+			want: resolve.ErrSkill,
+		},
+		"inverted bounds": {
+			agents: map[string]string{"reviewer": skill("acme/skills", "x",
+				"          minVersion: \"2.0.0\"\n          maxVersion: \"1.0.0\"\n")},
+			want: resolve.ErrSkill,
+		},
+		"invalid name": {
+			agents: map[string]string{"reviewer": skill("acme/skills", "../x", "")},
+			want:   resolve.ErrSkill,
+		},
+		"local source": {
+			agents: map[string]string{"reviewer": skill("./skills", "x", "")},
+			want:   resolve.ErrSource,
+		},
+		"one name from two sources": {
+			agents: map[string]string{
+				"reviewer": "    dependencies:\n      agents:\n        - agent: planner\n" +
+					"      skills:\n        - source: acme/skills#v1\n          skill: x\n",
+				"planner": skill("other/skills#v1", "x", ""),
+			},
+			want: resolve.ErrConflict,
+		},
+		"one name at two refs": {
+			agents: map[string]string{
+				"reviewer": "    dependencies:\n      agents:\n        - agent: planner\n" +
+					"      skills:\n        - source: acme/skills#v1\n          skill: x\n",
+				"planner": skill("acme/skills#v2", "x", ""),
+			},
+			want: resolve.ErrConflict,
+		},
+	}
+	for name, tc := range cases {
+		t.Run(name, func(t *testing.T) {
+			f := newFixture(t, newRepo(tc.agents), nil)
+			if _, err := f.resolve([]string{"reviewer"}, agent.Claude); !errors.Is(err, tc.want) {
+				t.Fatalf("want %v, got %v", tc.want, err)
+			}
+		})
 	}
 }

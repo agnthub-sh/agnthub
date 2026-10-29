@@ -11,6 +11,7 @@ import (
 
 	"github.com/heynemann/agnthub/internal/agent"
 	"github.com/heynemann/agnthub/internal/harness"
+	"github.com/heynemann/agnthub/internal/skills"
 	"github.com/heynemann/agnthub/internal/state"
 )
 
@@ -58,6 +59,11 @@ type Plan struct {
 	Source   state.LockedSource
 	LockPath string
 	Items    []Item
+	// Skills are the preflighted Skill Dependencies of Items, per Harness. They
+	// install and verify before any Agent artifact is written.
+	Skills []skills.Item
+	// Home is the user's home directory, used to keep locked Skill paths portable.
+	Home string
 }
 
 // Blocking returns the items that prevent applying the plan.
@@ -71,15 +77,44 @@ func (p *Plan) Blocking() []Item {
 	return blocking
 }
 
-// Reduce returns the plan without its blocking items, plus every item it drops.
-// Dependency closure holds per Harness: an Agent requiring a dropped companion is
-// dropped too, and so is a companion that no kept Agent requires. Requirers are
-// matched by Agent ID, which can drop more than strictly needed but never less.
-func (p *Plan) Reduce() (*Plan, []Item) {
+// BlockingSkills returns the Skill items that prevent applying the plan.
+func (p *Plan) BlockingSkills() []skills.Item {
+	var blocking []skills.Item
+	for _, item := range p.Skills {
+		if item.Blocking() {
+			blocking = append(blocking, item)
+		}
+	}
+	return blocking
+}
+
+// Blocked reports whether any Agent or Skill item blocks the plan.
+func (p *Plan) Blocked() bool {
+	return len(p.Blocking()) > 0 || len(p.BlockingSkills()) > 0
+}
+
+// Reduce returns the plan without its blocking items, plus every Agent and Skill
+// item it drops. Dependency closure holds per Harness: an Agent requiring a
+// dropped companion or a blocked Skill is dropped too, and so is a companion or
+// Skill that no kept Agent requires. Requirers are matched by Agent ID, which can
+// drop more than strictly needed but never less.
+func (p *Plan) Reduce() (*Plan, []Item, []skills.Item) {
 	dropped := make([]bool, len(p.Items))
 	reasons := make([]string, len(p.Items))
 	for i, item := range p.Items {
 		dropped[i] = item.Action.Blocking()
+		if dropped[i] {
+			continue
+		}
+		for _, skill := range p.Skills {
+			if skill.Blocking() && skill.Harness == item.Harness &&
+				requiresSkill(skill, item.Agent) {
+				dropped[i] = true
+				reasons[i] = fmt.Sprintf("skipped: requires skill %s, which is blocked",
+					skill.Skill)
+				break
+			}
+		}
 	}
 	for changed := true; changed; {
 		changed = false
@@ -92,7 +127,7 @@ func (p *Plan) Reduce() (*Plan, []Item) {
 			}
 		}
 	}
-	kept := &Plan{Scope: p.Scope, Source: p.Source, LockPath: p.LockPath}
+	kept := &Plan{Scope: p.Scope, Source: p.Source, LockPath: p.LockPath, Home: p.Home}
 	var skipped []Item
 	for i, item := range p.Items {
 		if !dropped[i] {
@@ -104,7 +139,53 @@ func (p *Plan) Reduce() (*Plan, []Item) {
 		}
 		skipped = append(skipped, item)
 	}
-	return kept, skipped
+	var skippedSkills []skills.Item
+	for _, skill := range p.Skills {
+		if !skill.Blocking() && kept.requiredSkill(skill) {
+			kept.Skills = append(kept.Skills, skill)
+			continue
+		}
+		if !skill.Blocking() {
+			skill.Reason = "skipped: every agent requiring it is skipped"
+		}
+		skippedSkills = append(skippedSkills, skill)
+	}
+	return kept, skipped, skippedSkills
+}
+
+// requiredSkill reports whether a kept Agent item requires skill.
+func (p *Plan) requiredSkill(skill skills.Item) bool {
+	for _, item := range p.Items {
+		if item.Harness == skill.Harness && requiresSkill(skill, item.Agent) {
+			return true
+		}
+	}
+	return false
+}
+
+func requiresSkill(skill skills.Item, id string) bool {
+	for _, label := range skill.RequiredBy {
+		if dependent, _, _ := strings.Cut(label, " ("); dependent == id {
+			return true
+		}
+	}
+	return false
+}
+
+// NoteBlockedSkills notes, on each Agent item, the blocked Skills it requires,
+// so a refused preview shows why an otherwise valid Agent cannot be written.
+func (p *Plan) NoteBlockedSkills() {
+	for i := range p.Items {
+		item := &p.Items[i]
+		for _, skill := range p.Skills {
+			if skill.Blocking() && skill.Harness == item.Harness &&
+				requiresSkill(skill, item.Agent) {
+				item.Artifact.Notes = append(slices.Clip(item.Artifact.Notes), fmt.Sprintf(
+					"waits on skill %s, which is %s for %s", skill.Skill, skill.Decision,
+					skill.Harness))
+			}
+		}
+	}
 }
 
 // orphaned explains why item i cannot be kept without the dropped items, or "".
@@ -172,7 +253,9 @@ type Planner struct {
 
 // Build resolves artifacts, destinations and actions for every Agent/Harness pair.
 func (p *Planner) Build(req Request) (*Plan, error) {
-	plan := &Plan{Scope: req.Scope, Source: req.Source, LockPath: p.LockPath}
+	plan := &Plan{
+		Scope: req.Scope, Source: req.Source, LockPath: p.LockPath, Home: req.Context.Env.Home(),
+	}
 	claimed := map[string]string{}
 	for _, target := range req.Targets {
 		for _, harnessID := range req.Harnesses {
@@ -331,6 +414,13 @@ var ErrBlocked = errors.New("plan has blocking problems")
 func (p *Plan) Validate() error {
 	blocking := p.Blocking()
 	if len(blocking) == 0 {
+		if skillsBlocking := p.BlockingSkills(); len(skillsBlocking) > 0 {
+			first := skillsBlocking[0]
+			return fmt.Errorf(
+				"%w: %d skill(s), first %s for %s: %s",
+				ErrBlocked, len(skillsBlocking), first.Skill, first.Harness, first.Reason,
+			)
+		}
 		return nil
 	}
 	first := blocking[0]

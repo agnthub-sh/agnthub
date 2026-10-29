@@ -32,6 +32,58 @@ const (
 type Lock struct {
 	Version int           `json:"version"`
 	Agents  []LockedAgent `json:"agents"`
+	// Skills are the verified Skill Dependencies of the locked Agents.
+	Skills []LockedSkill `json:"skills,omitempty"`
+}
+
+// Skill provenance modes.
+const (
+	// SkillInstalled marks a Skill agnthub's configured backend installed.
+	SkillInstalled = "installed"
+	// SkillReused marks a compatible existing Skill agnthub does not own.
+	SkillReused = "reused"
+)
+
+// LockedSkill records one verified Skill directory that locked Agents require.
+type LockedSkill struct {
+	Skill  string       `json:"skill"`
+	Source LockedSource `json:"source"`
+	// Version is the declared metadata.version, when any.
+	Version string `json:"version,omitempty"`
+	// Digest covers the Skill directory's installable files.
+	Digest string `json:"digest"`
+	// Path is project-relative inside the project, "~/"-relative inside the home
+	// directory, and absolute otherwise.
+	Path      string   `json:"path"`
+	Scope     string   `json:"scope"`
+	Harnesses []string `json:"harnesses"`
+	// Mode is SkillInstalled or SkillReused.
+	Mode string `json:"mode"`
+}
+
+// UpsertSkill records skill for harness, merging Harnesses of the same directory.
+func (l *Lock) UpsertSkill(skill LockedSkill, harness string) {
+	for i := range l.Skills {
+		locked := &l.Skills[i]
+		if locked.Skill != skill.Skill || locked.Path != skill.Path {
+			continue
+		}
+		harnesses := locked.Harnesses
+		if locked.Mode == SkillInstalled && skill.Mode == SkillReused {
+			skill.Mode = SkillInstalled
+		}
+		*locked = skill
+		locked.Harnesses = harnesses
+		for _, h := range harnesses {
+			if h == harness {
+				return
+			}
+		}
+		locked.Harnesses = append(locked.Harnesses, harness)
+		return
+	}
+	skill.Harnesses = []string{harness}
+	l.Skills = append(l.Skills, skill)
 }
 
 // LockedSource identifies the exact source content used.
@@ -103,6 +155,15 @@ func (l *Lock) normalize() {
 	if l.Agents == nil {
 		l.Agents = []LockedAgent{}
 	}
+	for i := range l.Skills {
+		sort.Strings(l.Skills[i].Harnesses)
+	}
+	sort.Slice(l.Skills, func(i, j int) bool {
+		if l.Skills[i].Skill != l.Skills[j].Skill {
+			return l.Skills[i].Skill < l.Skills[j].Skill
+		}
+		return l.Skills[i].Path < l.Skills[j].Path
+	})
 }
 
 // Find returns the locked Agent with key, or nil.
