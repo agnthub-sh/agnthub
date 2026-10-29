@@ -194,7 +194,10 @@ func (p *printer) plan(plan *install.Plan, status string) {
 			line += " [" + formatSettings(item.Settings) + "]"
 		}
 		fmt.Fprintln(p.w, line)
-		if item.Path != "" {
+		switch {
+		case item.Path != "" && item.Destination != "":
+			fmt.Fprintf(p.w, "      → %s (%s)\n", item.Path, item.Destination)
+		case item.Path != "":
 			fmt.Fprintf(p.w, "      → %s\n", item.Path)
 		}
 		if item.Reason != "" {
