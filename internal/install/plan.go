@@ -49,8 +49,11 @@ type Item struct {
 	Origin state.Origin
 	// RequiredBy names the dependents of a dependency Item.
 	RequiredBy []string
-	Action     Action
-	Reason     string
+	// Requires is recorded as the locked artifact's state.LockedArtifact.Requires;
+	// nil records unknown requirements.
+	Requires []string
+	Action   Action
+	Reason   string
 }
 
 // Plan is a fully resolved installation, computed before any write.
@@ -230,6 +233,9 @@ type Target struct {
 	Harnesses []agent.HarnessID
 	// RequiredBy names the dependents that required a dependency Target.
 	RequiredBy []string
+	// Requires lists, per Harness, the state.RequireAgent/RequireSkill entries of
+	// what this Target needs. A nil map records unknown requirements.
+	Requires map[agent.HarnessID][]string
 }
 
 // Request describes what to plan.
@@ -288,6 +294,9 @@ func (p *Planner) item(req Request, target Target, harnessID agent.HarnessID) (I
 		Source:     req.Source,
 		Origin:     target.Origin,
 		RequiredBy: target.RequiredBy,
+	}
+	if target.Requires != nil {
+		item.Requires = append([]string{}, target.Requires[harnessID]...)
 	}
 	if target.Source != (state.LockedSource{}) {
 		item.Source = target.Source

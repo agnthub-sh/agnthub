@@ -33,9 +33,11 @@ type Record struct {
 	InstalledAt time.Time `json:"installedAt"`
 }
 
-// Binding identifies the Harness binding a record belongs to.
+// Binding identifies the Harness binding a record belongs to. The installing
+// project is part of it: a home directory Skill installed from two projects keeps
+// one record per project.
 func (r Record) Binding() string {
-	return r.Path + "|" + r.Harness + "|" + SettingsKey(r.Settings)
+	return r.Path + "|" + r.Harness + "|" + SettingsKey(r.Settings) + "|" + r.ProjectRoot
 }
 
 // SettingsKey is a deterministic encoding of Harness Settings.
@@ -116,4 +118,15 @@ func (o *Ownership) Put(record Record) {
 		}
 	}
 	o.Records = append(o.Records, record)
+}
+
+// Remove deletes the record with binding, reporting whether one existed.
+func (o *Ownership) Remove(binding string) bool {
+	for i := range o.Records {
+		if o.Records[i].Binding() == binding {
+			o.Records = append(o.Records[:i], o.Records[i+1:]...)
+			return true
+		}
+	}
+	return false
 }

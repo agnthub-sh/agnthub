@@ -75,6 +75,7 @@ func (p *Planner) record(plan *Plan, item Item, projectRoot string, now time.Tim
 		Converter:    item.Artifact.Converter,
 		Path:         lockPath,
 		Digest:       digest,
+		Requires:     item.Requires,
 	})
 	record := state.Record{
 		Path:        item.Path,

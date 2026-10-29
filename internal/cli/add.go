@@ -565,16 +565,53 @@ func (a *App) lockedSource(snapshot *source.Snapshot) state.LockedSource {
 }
 
 // targets turns the resolved closure into plan targets; companions keep their own
-// source but share the user's Harnesses, scope and Settings.
+// source but share the user's Harnesses, scope and Settings. Each Target carries
+// what it requires per Harness so the lock can tell later whether a Dependency is
+// still needed.
 func (a *App) targets(closure *resolve.Closure) []install.Target {
-	targets := make([]install.Target, 0, len(closure.Members))
+	keys := make(map[string]string, len(closure.Members))
+	sources := make([]state.LockedSource, len(closure.Members))
+	for i, member := range closure.Members {
+		sources[i] = a.lockedSource(member.Snapshot)
+		keys[member.Label] = state.LockedAgent{
+			Source: sources[i], Agent: member.Definition.ID,
+		}.Key()
+	}
+	requires := map[string]map[agent.HarnessID][]string{}
+	add := func(label string, harnessID agent.HarnessID, entry string) {
+		byHarness := requires[label]
+		if byHarness == nil {
+			byHarness = map[agent.HarnessID][]string{}
+			requires[label] = byHarness
+		}
+		if !slices.Contains(byHarness[harnessID], entry) {
+			byHarness[harnessID] = append(byHarness[harnessID], entry)
+		}
+	}
 	for _, member := range closure.Members {
+		for harnessID, labels := range member.Requires {
+			for _, label := range labels {
+				add(member.Label, harnessID, state.RequireAgent(keys[label]))
+			}
+		}
+	}
+	for _, requirement := range closure.Skills {
+		for _, need := range requirement.Needs {
+			add(need.RequiredBy, need.Harness, state.RequireSkill(requirement.Skill))
+		}
+	}
+	targets := make([]install.Target, 0, len(closure.Members))
+	for i, member := range closure.Members {
 		target := install.Target{
 			Definition: member.Definition,
 			Origin:     state.OriginDependency,
-			Source:     a.lockedSource(member.Snapshot),
+			Source:     sources[i],
 			Harnesses:  member.Harnesses,
 			RequiredBy: member.RequiredBy,
+			Requires:   requires[member.Label],
+		}
+		if target.Requires == nil {
+			target.Requires = map[agent.HarnessID][]string{}
 		}
 		if member.Direct {
 			target.Origin = state.OriginDirect

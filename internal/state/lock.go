@@ -3,6 +3,7 @@ package state
 import (
 	"fmt"
 	"path/filepath"
+	"slices"
 	"sort"
 )
 
@@ -106,7 +107,17 @@ type LockedArtifact struct {
 	// Path is relative to the project root for project scope, absolute otherwise.
 	Path   string `json:"path"`
 	Digest string `json:"digest"`
+	// Requires lists what this artifact's Agent needs in the same Harness binding:
+	// RequireAgent(key) companions and RequireSkill(name) Skills. Empty means none;
+	// null (a lock written before requirements were recorded) means unknown.
+	Requires []string `json:"requires"`
 }
+
+// RequireAgent is the Requires entry for a companion Agent's LockedAgent.Key().
+func RequireAgent(key string) string { return "agent:" + key }
+
+// RequireSkill is the Requires entry for a Skill Dependency.
+func RequireSkill(name string) string { return "skill:" + name }
 
 // LockedAgent records one installed logical Agent.
 type LockedAgent struct {
@@ -150,6 +161,9 @@ func (l *Lock) normalize() {
 			}
 			return artifacts[a].Path < artifacts[b].Path
 		})
+		for j := range artifacts {
+			sort.Strings(artifacts[j].Requires)
+		}
 	}
 	sort.Slice(l.Agents, func(i, j int) bool { return l.Agents[i].Key() < l.Agents[j].Key() })
 	if l.Agents == nil {
@@ -208,6 +222,50 @@ func (l *Lock) DigestForPath(artifactPath string) (string, bool) {
 		}
 	}
 	return "", false
+}
+
+// RemoveArtifact drops the artifact at artifactPath from the Agent with key,
+// dropping the Agent once it has no artifact left. It reports whether anything
+// was removed.
+func (l *Lock) RemoveArtifact(key, artifactPath string) bool {
+	locked := l.Find(key)
+	if locked == nil {
+		return false
+	}
+	before := len(locked.Artifacts)
+	locked.Artifacts = slices.DeleteFunc(locked.Artifacts, func(a LockedArtifact) bool {
+		return a.Path == artifactPath
+	})
+	if len(locked.Artifacts) == before {
+		return false
+	}
+	if len(locked.Artifacts) == 0 {
+		l.Agents = slices.DeleteFunc(l.Agents, func(a LockedAgent) bool { return a.Key() == key })
+	}
+	return true
+}
+
+// RemoveSkillHarness drops harness from the locked Skill at skillPath, dropping
+// the Skill once no Harness is left. It reports whether anything was removed.
+func (l *Lock) RemoveSkillHarness(skill, skillPath, harness string) bool {
+	for i := range l.Skills {
+		locked := &l.Skills[i]
+		if locked.Skill != skill || locked.Path != skillPath {
+			continue
+		}
+		before := len(locked.Harnesses)
+		locked.Harnesses = slices.DeleteFunc(locked.Harnesses, func(h string) bool {
+			return h == harness
+		})
+		if len(locked.Harnesses) == before {
+			return false
+		}
+		if len(locked.Harnesses) == 0 {
+			l.Skills = slices.Delete(l.Skills, i, i+1)
+		}
+		return true
+	}
+	return false
 }
 
 // LockPath returns the lock location for a scope: the project root for project

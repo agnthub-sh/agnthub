@@ -9,6 +9,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"slices"
 	"sort"
 	"strings"
 
@@ -62,6 +63,10 @@ type Member struct {
 	Harnesses []agent.HarnessID
 	// RequiredBy names the dependents that required a dependency Member, sorted.
 	RequiredBy []string
+	// Label is how dependents name this Member in RequiredBy and skills.Need.
+	Label string
+	// Requires lists, per Harness, the Labels of the companions this Member requires.
+	Requires map[agent.HarnessID][]string
 }
 
 // Closure is the resolved selection plus every required companion Agent and Skill.
@@ -106,6 +111,8 @@ type node struct {
 	requiredBy string
 	// needs records, per Harness, the dependents that required the node.
 	needs map[agent.HarnessID]map[string]bool
+	// requires records, per Harness, the companions the node requires.
+	requires map[agent.HarnessID][]*node
 }
 
 type edgeKey struct {
@@ -217,6 +224,9 @@ func (s *run) visit(
 			if err != nil {
 				return err
 			}
+			if !slices.Contains(n.requires[harnessID], child) {
+				n.requires[harnessID] = append(n.requires[harnessID], child)
+			}
 			if !child.direct {
 				dependents := child.needs[harnessID]
 				if dependents == nil {
@@ -312,6 +322,7 @@ func (s *run) node(e *entry, def *agent.Definition, requiredBy string) (*node, e
 		label:      nodeLabel(e, def),
 		requiredBy: requiredBy,
 		needs:      map[agent.HarnessID]map[string]bool{},
+		requires:   map[agent.HarnessID][]*node{},
 	}
 	s.nodes[identity] = n
 	s.order = append(s.order, n)
@@ -325,6 +336,7 @@ func (s *run) members(harnesses []agent.HarnessID) []Member {
 		if n.direct {
 			members = append(members, Member{
 				Snapshot: n.entry.snapshot, Definition: n.def, Direct: true, Harnesses: harnesses,
+				Label: n.label, Requires: n.requiredLabels(),
 			})
 			continue
 		}
@@ -346,10 +358,23 @@ func (s *run) members(harnesses []agent.HarnessID) []Member {
 				Definition: n.def,
 				Harnesses:  []agent.HarnessID{harnessID},
 				RequiredBy: requiredBy,
+				Label:      n.label,
+				Requires:   n.requiredLabels(),
 			})
 		}
 	}
 	return members
+}
+
+// requiredLabels lists, per Harness, the labels of the companions n requires.
+func (n *node) requiredLabels() map[agent.HarnessID][]string {
+	labels := make(map[agent.HarnessID][]string, len(n.requires))
+	for harnessID, children := range n.requires {
+		for _, child := range children {
+			labels[harnessID] = append(labels[harnessID], child.label)
+		}
+	}
+	return labels
 }
 
 func snapshotKey(loc source.Locator) string {
