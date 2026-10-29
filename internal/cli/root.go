@@ -21,16 +21,19 @@ var Version = "dev"
 
 // App holds process-level dependencies so commands stay testable.
 type App struct {
-	Env         env.Env
-	WorkDir     string
-	Stdin       io.Reader
-	Stdout      io.Writer
-	Stderr      io.Writer
+	Env     env.Env
+	WorkDir string
+	Stdin   io.Reader
+	Stdout  io.Writer
+	Stderr  io.Writer
+	// Interactive reports a terminal user who can answer prompts.
 	Interactive bool
-	Now         func() time.Time
-	Registry    *harness.Registry
-	Opener      source.Opener
-	LookPath    func(string) (string, error)
+	// Prompter asks interactive users; nil selects the terminal UI.
+	Prompter Prompter
+	Now      func() time.Time
+	Registry *harness.Registry
+	Opener   source.Opener
+	LookPath func(string) (string, error)
 }
 
 // NewApp returns an App with production defaults for unset fields.
@@ -46,6 +49,13 @@ func NewApp(app App) *App {
 	}
 	if app.Opener.Git == nil {
 		app.Opener.Git = &source.GitFetcher{Env: app.Env}
+	}
+	if app.Prompter == nil {
+		app.Prompter = &formPrompter{
+			in:         app.Stdin,
+			out:        app.Stdout,
+			accessible: app.Env.Get("ACCESSIBLE") != "" || app.Env.Get("TERM") == "dumb",
+		}
 	}
 	return &app
 }

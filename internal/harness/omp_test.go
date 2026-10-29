@@ -110,6 +110,45 @@ func TestOMPGlobalProfilePrecedence(t *testing.T) {
 	}
 }
 
+func TestOMPReportsTheEffectiveProfileAndWhereItCameFrom(t *testing.T) {
+	reporter, ok := ompInstaller(t).(harness.SettingsReporter)
+	if !ok {
+		t.Fatal("omp must report its effective settings")
+	}
+	cases := map[string]struct {
+		vars     map[string]string
+		settings harness.Settings
+		want     harness.EffectiveSetting
+	}{
+		"native default": {nil, nil, harness.EffectiveSetting{
+			Key: "profile", Value: "default", Source: harness.SettingNativeDefault,
+		}},
+		"detected": {map[string]string{"OMP_PROFILE": "work"}, nil, harness.EffectiveSetting{
+			Key: "profile", Value: "work", Source: "OMP_PROFILE",
+		}},
+		"explicit wins": {
+			map[string]string{"OMP_PROFILE": "work"},
+			harness.Settings{"profile": "hep"},
+			harness.EffectiveSetting{Key: "profile", Value: "hep", Source: harness.SettingExplicit},
+		},
+	}
+	for name, tc := range cases {
+		t.Run(name, func(t *testing.T) {
+			got := reporter.EffectiveSettings(
+				harness.Context{Env: env.FromMap(tc.vars)},
+				tc.settings,
+			)
+			if len(got) != 1 || got[0] != tc.want {
+				t.Fatalf("got %+v, want %+v", got, tc.want)
+			}
+		})
+	}
+	invalid := harness.Context{Env: env.FromMap(map[string]string{"OMP_PROFILE": "Bad"})}
+	if got := reporter.EffectiveSettings(invalid, nil); got != nil {
+		t.Fatalf("an unresolvable profile must not be reported, got %+v", got)
+	}
+}
+
 func TestOMPRefusesInvalidOrAmbiguousProfiles(t *testing.T) {
 	for _, value := range []string{"", "Hep", "hep.", "con", "lpt1.txt", "../hep", "a b"} {
 		_, err := harness.ResolveSettings(

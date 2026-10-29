@@ -131,6 +131,28 @@ type DependencyAdvisor interface {
 	DependencyNotes(deps agent.Dependencies) []string
 }
 
+// Setting sources reported by SettingsReporter besides environment variable names.
+const (
+	SettingExplicit      = "explicit"
+	SettingNativeDefault = "native default"
+)
+
+// EffectiveSetting is one Harness Setting value in effect for a plan.
+type EffectiveSetting struct {
+	Key   string
+	Value string
+	// Source is SettingExplicit for an --extra value, SettingNativeDefault, or the
+	// environment variable the native default was detected from.
+	Source string
+}
+
+// SettingsReporter is an optional Installer extension reporting the Settings in
+// effect, including native defaults detected when no --extra was given. It returns
+// nil when the settings cannot be resolved; Destination reports why.
+type SettingsReporter interface {
+	EffectiveSettings(ctx Context, settings Settings) []EffectiveSetting
+}
+
 // Registry holds every known Adapter.
 type Registry struct {
 	adapters map[agent.HarnessID]Adapter

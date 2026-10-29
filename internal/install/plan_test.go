@@ -2,6 +2,7 @@ package install_test
 
 import (
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/heynemann/agnthub/internal/agent"
@@ -51,5 +52,39 @@ func TestPlanCarriesHarnessDependencyNotes(t *testing.T) {
 	}
 	if notes[agent.Gemini] == 0 || notes[agent.Claude] != 0 {
 		t.Fatalf("only Gemini must qualify agent dependencies: %v", notes)
+	}
+}
+
+func TestReduceKeepsDependencyClosurePerHarness(t *testing.T) {
+	item := func(id string, h agent.HarnessID, action install.Action, requiredBy ...string) install.Item {
+		return install.Item{Agent: id, Harness: h, Action: action, RequiredBy: requiredBy}
+	}
+	plan := &install.Plan{Items: []install.Item{
+		item("reviewer", agent.Claude, install.ActionCreate),
+		item("reviewer", agent.Codex, install.ActionConflict),
+		item("solo", agent.Claude, install.ActionCreate),
+		item("planner", agent.Claude, install.ActionIncompatible, "reviewer"),
+		item("planner", agent.Codex, install.ActionCreate, "reviewer"),
+		item("linter", agent.Claude, install.ActionCreate, "planner (github.com/acme/tools#v1)"),
+	}}
+	kept, dropped := plan.Reduce()
+	var keptKeys, droppedKeys []string
+	for _, it := range kept.Items {
+		keptKeys = append(keptKeys, it.Agent+"/"+string(it.Harness))
+	}
+	for _, it := range dropped {
+		droppedKeys = append(droppedKeys, it.Agent+"/"+string(it.Harness))
+		if !it.Action.Blocking() && it.Reason == "" {
+			t.Fatalf("cascaded %s/%s without a reason", it.Agent, it.Harness)
+		}
+	}
+	if got := strings.Join(keptKeys, " "); got != "solo/claude" {
+		t.Fatalf(
+			"kept %q; a dependent of a blocked companion or an orphaned companion survived",
+			got,
+		)
+	}
+	if len(droppedKeys) != 5 {
+		t.Fatalf("dropped %v", droppedKeys)
 	}
 }

@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"path/filepath"
 	"slices"
+	"strings"
 
 	"github.com/heynemann/agnthub/internal/agent"
 	"github.com/heynemann/agnthub/internal/harness"
@@ -68,6 +69,74 @@ func (p *Plan) Blocking() []Item {
 		}
 	}
 	return blocking
+}
+
+// Reduce returns the plan without its blocking items, plus every item it drops.
+// Dependency closure holds per Harness: an Agent requiring a dropped companion is
+// dropped too, and so is a companion that no kept Agent requires. Requirers are
+// matched by Agent ID, which can drop more than strictly needed but never less.
+func (p *Plan) Reduce() (*Plan, []Item) {
+	dropped := make([]bool, len(p.Items))
+	reasons := make([]string, len(p.Items))
+	for i, item := range p.Items {
+		dropped[i] = item.Action.Blocking()
+	}
+	for changed := true; changed; {
+		changed = false
+		for i := range p.Items {
+			if dropped[i] {
+				continue
+			}
+			if reason := p.orphaned(i, dropped); reason != "" {
+				dropped[i], reasons[i], changed = true, reason, true
+			}
+		}
+	}
+	kept := &Plan{Scope: p.Scope, Source: p.Source, LockPath: p.LockPath}
+	var skipped []Item
+	for i, item := range p.Items {
+		if !dropped[i] {
+			kept.Items = append(kept.Items, item)
+			continue
+		}
+		if reasons[i] != "" {
+			item.Reason = reasons[i]
+		}
+		skipped = append(skipped, item)
+	}
+	return kept, skipped
+}
+
+// orphaned explains why item i cannot be kept without the dropped items, or "".
+func (p *Plan) orphaned(i int, dropped []bool) string {
+	item := p.Items[i]
+	requirerKept := false
+	for j, other := range p.Items {
+		if j == i || other.Harness != item.Harness {
+			continue
+		}
+		if dropped[j] && requires(other, item.Agent) {
+			return fmt.Sprintf("skipped: requires %s, which is skipped", other.Agent)
+		}
+		if !dropped[j] && requires(item, other.Agent) {
+			requirerKept = true
+		}
+	}
+	if len(item.RequiredBy) > 0 && !requirerKept {
+		return "skipped: every agent requiring it is skipped"
+	}
+	return ""
+}
+
+// requires reports whether dependency lists id among its dependents. Dependent
+// labels are an Agent ID, optionally followed by " (<source>)".
+func requires(dependency Item, id string) bool {
+	for _, label := range dependency.RequiredBy {
+		if dependent, _, _ := strings.Cut(label, " ("); dependent == id {
+			return true
+		}
+	}
+	return false
 }
 
 // Target is one selected Agent with its origin.

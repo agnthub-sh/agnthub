@@ -1,11 +1,11 @@
 package cli
 
 import (
-	"bufio"
 	"context"
 	"errors"
 	"fmt"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/spf13/cobra"
@@ -30,16 +30,32 @@ type addOptions struct {
 	all       bool
 }
 
+// validate rejects contradictory flags before any source is opened.
+func (o *addOptions) validate() error {
+	if o.all && (len(o.agents) > 0 || len(o.harnesses) > 0) {
+		return errors.New(
+			"--all selects every agent and every supported harness; " +
+				"drop --all to choose with --agent/--harness",
+		)
+	}
+	return nil
+}
+
 func (a *App) addCommand(ctx context.Context) *cobra.Command {
 	opts := &addOptions{}
 	cmd := &cobra.Command{
 		Use:   "add <source>",
 		Short: "Install agents from a source repository or local directory",
 		Long: `Install agents from a GitHub repository (owner/repo[#ref]), a Git URL or an
-explicit local directory (./path). Harness settings use --extra <harness>.<key>=<value>.`,
+explicit local directory (./path). Harness settings use --extra <harness>.<key>=<value>.
+
+In a terminal, add asks which agents and harnesses to install (detected harnesses
+are preselected), previews the plan and asks before writing. --yes, --all and
+--json never prompt and refuse any plan that is not entirely valid.`,
 		Example: `  agnthub add ./my-agents --list
   agnthub add ./my-agents --agent reviewer --harness claude
-  agnthub add owner/repo --harness omp --global --extra omp.profile=work`,
+  agnthub add owner/repo --harness omp --global --extra omp.profile=work
+  agnthub add owner/repo --all --extra omp.profile=work`,
 		Args: cobra.ExactArgs(1),
 		RunE: func(_ *cobra.Command, args []string) error {
 			return a.runAdd(ctx, args[0], opts)
@@ -58,14 +74,17 @@ explicit local directory (./path). Harness settings use --extra <harness>.<key>=
 		false,
 		"install into user scope instead of the project",
 	)
-	flags.BoolVarP(&opts.yes, "yes", "y", false, "apply without confirmation")
-	flags.BoolVar(&opts.json, "json", false, "print machine-readable JSON")
+	flags.BoolVarP(&opts.yes, "yes", "y", false, "apply without prompting")
+	flags.BoolVar(&opts.json, "json", false, "print machine-readable JSON; never prompts")
 	flags.BoolVar(&opts.all, "all", false,
-		"select every agent and every supported harness and skip confirmation")
+		"select every agent and every supported harness and apply without prompting")
 	return cmd
 }
 
 func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
+	if err := opts.validate(); err != nil {
+		return err
+	}
 	loc, err := source.Parse(raw, a.WorkDir, a.Env)
 	if err != nil {
 		return err
@@ -79,15 +98,26 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	if err != nil {
 		return err
 	}
-	out := newPrinter(a.Stdout, opts.json)
+	out := a.printer(opts.json)
 	if opts.list {
 		return out.inventory(snapshot, inventory)
 	}
-	selected, err := selectAgents(inventory, opts)
+	// Only a terminal user without --yes/--all/--json is ever asked anything.
+	interactive := a.Interactive && !opts.yes && !opts.all && !opts.json
+	if interactive {
+		// Reject malformed or invalid extras before asking anything; whether their
+		// Harness is selected is checked once the selection is known.
+		if _, err := harness.ResolveSettings(
+			a.Registry, opts.extras, a.supportedHarnesses(),
+		); err != nil {
+			return err
+		}
+	}
+	defs, err := a.selectAgents(ctx, inventory, opts, interactive)
 	if err != nil {
 		return err
 	}
-	harnesses, err := a.selectHarnesses(opts)
+	harnesses, err := a.selectHarnesses(ctx, opts, interactive)
 	if err != nil {
 		return err
 	}
@@ -99,7 +129,7 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 		Opener:   a.Opener,
 		Registry: a.Registry,
 		Limits:   discovery.DefaultLimits(),
-	}).Resolve(ctx, resolve.Root{Snapshot: snapshot, Inventory: inventory}, selected, harnesses)
+	}).Resolve(ctx, resolve.Root{Snapshot: snapshot, Inventory: inventory}, defs, harnesses)
 	if err != nil {
 		return err
 	}
@@ -123,33 +153,93 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	if err != nil {
 		return err
 	}
-	if err := plan.Validate(); err != nil {
-		out.plan(plan, "refused")
+	view := &planView{Plan: plan, Harnesses: a.harnessViews(harnesses, settings)}
+	if !interactive {
+		return a.applyUnattended(planner, view, out, opts)
+	}
+	return a.applyInteractive(ctx, planner, view, out)
+}
+
+// applyUnattended applies only an entirely valid plan: it never prompts, never
+// reduces the selection and never approves a blocked item.
+func (a *App) applyUnattended(
+	planner *install.Planner,
+	view *planView,
+	out *printer,
+	opts *addOptions,
+) error {
+	if len(view.Plan.Blocking()) > 0 {
+		out.plan(view, statusRefused)
 		return &ExitError{Code: 1}
 	}
 	if !opts.yes && !opts.all {
-		if !opts.json {
-			out.plan(plan, "planned")
+		out.plan(view, statusPlanned)
+		if opts.json {
+			return errors.New("--json never prompts; rerun with --yes to apply this plan")
 		}
-		confirmed, err := a.confirm("Apply this plan?")
-		if err != nil {
-			return err
-		}
-		if !confirmed {
-			return errors.New("cancelled; nothing was written")
-		}
+		return errors.New(
+			"confirmation required but input is not interactive; rerun with --yes",
+		)
 	}
-	result, err := planner.Apply(plan, a.WorkDir, a.Now())
-	if result != nil {
-		applied := &install.Plan{
-			Scope: plan.Scope, Source: plan.Source, LockPath: plan.LockPath, Items: result.Applied,
+	return a.apply(planner, view, out)
+}
+
+// applyInteractive previews the plan and applies it only after explicit approval.
+// A plan with blocking items may be reduced to its valid items, never silently.
+func (a *App) applyInteractive(
+	ctx context.Context,
+	planner *install.Planner,
+	view *planView,
+	out *printer,
+) error {
+	blocked := len(view.Plan.Blocking()) > 0
+	kept, dropped := view.Plan.Reduce()
+	if blocked && len(kept.Items) == 0 {
+		out.plan(view, statusRefused)
+		return &ExitError{Code: 1}
+	}
+	out.plan(view, statusPlanned)
+	question, detail := "Apply this plan?", ""
+	if blocked {
+		lines := make([]string, 0, len(dropped))
+		for _, item := range dropped {
+			lines = append(lines, fmt.Sprintf("skip %s for %s: %s", item.Agent, item.Harness,
+				item.Reason))
 		}
-		out.plan(applied, "applied")
+		question = fmt.Sprintf(
+			"Some items are blocked. Apply only the %d valid item(s) and skip %d?",
+			len(kept.Items), len(dropped),
+		)
+		detail = strings.Join(lines, "\n")
+		view = &planView{Plan: kept, Harnesses: view.Harnesses, Skipped: dropped}
+	}
+	confirmed, err := a.Prompter.Confirm(ctx, question, detail)
+	if err != nil {
+		return err
+	}
+	if !confirmed {
+		return errCancelled
+	}
+	return a.apply(planner, view, out)
+}
+
+func (a *App) apply(planner *install.Planner, view *planView, out *printer) error {
+	result, err := planner.Apply(view.Plan, a.WorkDir, a.Now())
+	if result != nil {
+		applied := *view.Plan
+		applied.Items = result.Applied
+		out.plan(&planView{Plan: &applied, Harnesses: view.Harnesses, Skipped: view.Skipped},
+			statusApplied)
 	}
 	return err
 }
 
-func selectAgents(inventory *discovery.Inventory, opts *addOptions) ([]*agent.Definition, error) {
+func (a *App) selectAgents(
+	ctx context.Context,
+	inventory *discovery.Inventory,
+	opts *addOptions,
+	interactive bool,
+) ([]*agent.Definition, error) {
 	var defs []*agent.Definition
 	switch {
 	case opts.all:
@@ -175,6 +265,8 @@ func selectAgents(inventory *discovery.Inventory, opts *addOptions) ([]*agent.De
 		}
 	case len(inventory.Agents) == 1 && len(agentProblems(inventory)) == 0:
 		defs = inventory.Agents
+	case interactive && len(inventory.Agents) > 0:
+		return a.promptAgents(ctx, inventory)
 	default:
 		return nil, fmt.Errorf(
 			"choose agents with --agent (available: %s) or use --all",
@@ -187,24 +279,40 @@ func selectAgents(inventory *discovery.Inventory, opts *addOptions) ([]*agent.De
 	return defs, nil
 }
 
-// targets turns the resolved closure into plan targets; companions keep their own
-// source but share the user's Harnesses, scope and Settings.
-func (a *App) targets(closure *resolve.Closure) []install.Target {
-	targets := make([]install.Target, 0, len(closure.Members))
-	for _, member := range closure.Members {
-		target := install.Target{
-			Definition: member.Definition,
-			Origin:     state.OriginDependency,
-			Source:     a.lockedSource(member.Snapshot),
-			Harnesses:  member.Harnesses,
-			RequiredBy: member.RequiredBy,
+func (a *App) promptAgents(
+	ctx context.Context,
+	inventory *discovery.Inventory,
+) ([]*agent.Definition, error) {
+	options := make([]Option, 0, len(inventory.Agents))
+	for _, def := range inventory.Agents {
+		label := def.ID
+		if description := oneLine(def.Description); description != "" {
+			label += " — " + description
 		}
-		if member.Direct {
-			target.Origin = state.OriginDirect
-		}
-		targets = append(targets, target)
+		options = append(options, Option{
+			Value: def.ID, Label: label, Selected: len(inventory.Agents) == 1,
+		})
 	}
-	return targets
+	var description string
+	if problems := agentProblems(inventory); len(problems) > 0 {
+		description = "Not installable:\n" + strings.Join(problems, "\n")
+	}
+	ids, err := a.Prompter.MultiSelect(ctx, "Agents to install", description, options)
+	if err != nil {
+		return nil, err
+	}
+	defs := make([]*agent.Definition, 0, len(ids))
+	for _, id := range ids {
+		def := inventory.Find(id)
+		if def == nil {
+			return nil, missingAgent(inventory, id)
+		}
+		defs = append(defs, def)
+	}
+	if len(defs) == 0 {
+		return nil, errCancelled
+	}
+	return defs, nil
 }
 
 func agentProblems(inventory *discovery.Inventory) []string {
@@ -244,31 +352,101 @@ func missingAgent(inventory *discovery.Inventory, id string) error {
 	return fmt.Errorf("agent %q cannot be installed:\n  %s", id, strings.Join(lines, "\n  "))
 }
 
-func (a *App) selectHarnesses(opts *addOptions) ([]agent.HarnessID, error) {
-	if opts.all {
-		installers := a.Registry.Installers()
-		ids := make([]agent.HarnessID, 0, len(installers))
-		for _, installer := range installers {
-			ids = append(ids, installer.ID())
+// supportedHarnesses lists every Harness agnthub can install into, in display order.
+func (a *App) supportedHarnesses() []agent.HarnessID {
+	installers := a.Registry.Installers()
+	ids := make([]agent.HarnessID, 0, len(installers))
+	for _, installer := range installers {
+		ids = append(ids, installer.ID())
+	}
+	return ids
+}
+
+func (a *App) selectHarnesses(
+	ctx context.Context,
+	opts *addOptions,
+	interactive bool,
+) ([]agent.HarnessID, error) {
+	switch {
+	case opts.all:
+		return a.supportedHarnesses(), nil
+	case len(opts.harnesses) > 0:
+		ids := make([]agent.HarnessID, 0, len(opts.harnesses))
+		for _, name := range opts.harnesses {
+			id, err := agent.ParseHarness(name)
+			if err != nil {
+				return nil, err
+			}
+			if !slices.Contains(ids, id) {
+				ids = append(ids, id)
+			}
 		}
 		return ids, nil
+	case interactive:
+		return a.promptHarnesses(ctx)
+	default:
+		return nil, errors.New(
+			"choose at least one --harness (e.g. --harness claude) or use --all",
+		)
 	}
-	if len(opts.harnesses) == 0 {
-		return nil, errors.New("choose at least one --harness (e.g. --harness claude) or use --all")
+}
+
+// promptHarnesses offers every supported Harness; detection only preselects.
+func (a *App) promptHarnesses(ctx context.Context) ([]agent.HarnessID, error) {
+	hctx := a.harnessContext()
+	installers := a.Registry.Installers()
+	options := make([]Option, 0, len(installers))
+	for _, installer := range installers {
+		detected := installer.Detect(hctx)
+		label := fmt.Sprintf("%-9s %s", installer.ID(), installer.Name())
+		if detected {
+			label += " (detected)"
+		}
+		options = append(options, Option{
+			Value: string(installer.ID()), Label: label, Selected: detected,
+		})
 	}
-	var ids []agent.HarnessID
-	seen := map[agent.HarnessID]bool{}
-	for _, name := range opts.harnesses {
-		id, err := agent.ParseHarness(name)
+	values, err := a.Prompter.MultiSelect(
+		ctx, "Harnesses to install into", "Detected harnesses are preselected.", options,
+	)
+	if err != nil {
+		return nil, err
+	}
+	ids := make([]agent.HarnessID, 0, len(values))
+	for _, value := range values {
+		id, err := agent.ParseHarness(value)
 		if err != nil {
 			return nil, err
 		}
-		if !seen[id] {
-			seen[id] = true
-			ids = append(ids, id)
-		}
+		ids = append(ids, id)
+	}
+	if len(ids) == 0 {
+		return nil, errCancelled
 	}
 	return ids, nil
+}
+
+// harnessViews reports detection and effective Settings for each selected Harness.
+func (a *App) harnessViews(
+	ids []agent.HarnessID,
+	settings map[agent.HarnessID]harness.Settings,
+) []harnessView {
+	hctx := a.harnessContext()
+	views := make([]harnessView, 0, len(ids))
+	for _, id := range ids {
+		view := harnessView{ID: id, Name: string(id)}
+		if adapter, ok := a.Registry.Get(id); ok {
+			view.Name = adapter.Name()
+		}
+		if installer, err := a.Registry.Installer(id); err == nil {
+			view.Detected = installer.Detect(hctx)
+			if reporter, ok := installer.(harness.SettingsReporter); ok {
+				view.Settings = reporter.EffectiveSettings(hctx, settings[id])
+			}
+		}
+		views = append(views, view)
+	}
+	return views
 }
 
 func (a *App) planner(scope harness.Scope) (*install.Planner, error) {
@@ -313,17 +491,22 @@ func (a *App) lockedSource(snapshot *source.Snapshot) state.LockedSource {
 	return locked
 }
 
-func (a *App) confirm(question string) (bool, error) {
-	if !a.Interactive {
-		return false, errors.New(
-			"confirmation required but input is not interactive; rerun with --yes",
-		)
+// targets turns the resolved closure into plan targets; companions keep their own
+// source but share the user's Harnesses, scope and Settings.
+func (a *App) targets(closure *resolve.Closure) []install.Target {
+	targets := make([]install.Target, 0, len(closure.Members))
+	for _, member := range closure.Members {
+		target := install.Target{
+			Definition: member.Definition,
+			Origin:     state.OriginDependency,
+			Source:     a.lockedSource(member.Snapshot),
+			Harnesses:  member.Harnesses,
+			RequiredBy: member.RequiredBy,
+		}
+		if member.Direct {
+			target.Origin = state.OriginDirect
+		}
+		targets = append(targets, target)
 	}
-	fmt.Fprintf(a.Stdout, "%s [y/N] ", question)
-	line, err := bufio.NewReader(a.Stdin).ReadString('\n')
-	if err != nil && line == "" {
-		return false, errors.New("no confirmation received; nothing was written")
-	}
-	answer := strings.ToLower(strings.TrimSpace(line))
-	return answer == "y" || answer == "yes", nil
+	return targets
 }

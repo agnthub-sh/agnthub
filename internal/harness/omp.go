@@ -147,6 +147,25 @@ func resolveOMPProfile(ctx Context, settings Settings) (ompProfile, error) {
 	return ompProfile{}, nil
 }
 
+// EffectiveSettings reports the one profile the plan binds to.
+func (ompAdapter) EffectiveSettings(ctx Context, settings Settings) []EffectiveSetting {
+	profile, err := resolveOMPProfile(ctx, settings)
+	if err != nil {
+		return nil
+	}
+	setting := EffectiveSetting{Key: ompProfileKey, Value: profile.name, Source: profile.source}
+	if setting.Value == "" {
+		setting.Value = ompDefaultProfile
+	}
+	switch {
+	case profile.explicit:
+		setting.Source = SettingExplicit
+	case setting.Source == "":
+		setting.Source = SettingNativeDefault
+	}
+	return []EffectiveSetting{setting}
+}
+
 // ompConfigRoot is omp's profile-independent config root: $HOME joined with
 // PI_CONFIG_DIR (default ".omp"), as omp joins it even when the value is absolute.
 func ompConfigRoot(ctx Context) (string, error) {
