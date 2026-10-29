@@ -121,7 +121,7 @@ func (s *scanner) manifestAgent(id string, spec manifestAgent) (*agent.Definitio
 		if err != nil {
 			return nil, err
 		}
-		doc, err := agent.ParseMarkdown(spec.Portable, raw)
+		doc, err := agent.ParseMarkdownLenient(spec.Portable, raw)
 		if err != nil {
 			return nil, manifestErr("agent %s: %v", id, err)
 		}

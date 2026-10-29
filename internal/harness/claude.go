@@ -23,7 +23,7 @@ func (claudeAdapter) Layout() NativeLayout {
 func (claudeAdapter) Settings() []SettingSpec { return nil }
 
 func (claudeAdapter) Identify(path string, raw []byte) (NativeAgent, error) {
-	doc, err := agent.ParseMarkdown(path, raw)
+	doc, err := agent.ParseMarkdownLenient(path, raw)
 	if err != nil {
 		return NativeAgent{}, err
 	}
@@ -80,7 +80,7 @@ func (a claudeAdapter) Native(id string, variant *agent.VariantFile) (Artifact, 
 			Reason: fmt.Sprintf("name %q does not match agent %q", identity.ID, id),
 		}
 	}
-	doc, _ := agent.ParseMarkdown(variant.Path, variant.Raw)
+	doc, _ := agent.ParseMarkdownLenient(variant.Path, variant.Raw)
 	return Artifact{
 		FileName: id + ".md",
 		Content:  variant.Raw,

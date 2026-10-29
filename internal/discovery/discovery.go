@@ -315,7 +315,7 @@ func (s *scanner) portableFile(name, impliedID string) (*candidate, error) {
 	if err != nil {
 		return nil, err
 	}
-	doc, err := agent.ParseMarkdown(name, raw)
+	doc, err := agent.ParseMarkdownLenient(name, raw)
 	if err != nil {
 		s.problems = append(s.problems, Problem{Agent: impliedID, Path: name, Message: err.Error()})
 		return nil, nil
