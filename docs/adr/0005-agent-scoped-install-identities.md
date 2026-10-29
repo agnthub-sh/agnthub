@@ -1,0 +1,7 @@
+# Count agent-scoped local CLI identities, with separate harness adoption
+
+A unique reported install is an agent under one random, agent-scoped local CLI identity, not a person, a verified physical device or a harness copy. Within a local profile, projects, global scope, reinstalls, updates and added harnesses do not create new logical-agent totals. Identity state stays outside shareable project lockfiles; no shared cross-agent device identifier or local path is transmitted. Different machines/profiles or reset state can legitimately count again, and client reports are not fraud-proof.
+
+Count actual direct and dependency agent installations, distinguishing their origin without sending private parent-source identifiers. Deduplicate the logical total by agent plus installation identity and harness adoption by that same pair plus harness. A later direct install of a dependency must not create a second logical total. Cumulative adoption is not active usage; removal does not justify advertising an accurate active-install population.
+
+Use the combined automatic-sharing opt-out already selected: disable automatic public registration and metrics when `DO_NOT_TRACK` or `DISABLE_TELEMETRY` is set, including child-installer telemetry. Keep private/local source identifiers, destination paths, credentials and search queries out of reporting. WorkOS website login is not required for anonymous direct installation or these counts, and is not linked to installation identities.
