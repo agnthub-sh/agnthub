@@ -44,6 +44,9 @@ func NewApp(app App) *App {
 	if app.LookPath == nil {
 		app.LookPath = exec.LookPath
 	}
+	if app.Opener.Git == nil {
+		app.Opener.Git = &source.GitFetcher{Env: app.Env}
+	}
 	return &app
 }
 

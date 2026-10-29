@@ -196,7 +196,13 @@ func parseURL(spec string) (Locator, error) {
 		}
 		return loc, nil
 	}
-	return Locator{Kind: KindGit, Host: host, RepoPath: repoPath, CloneURL: spec}, nil
+	// A non-default port is part of the repository's identity.
+	return Locator{
+		Kind:     KindGit,
+		Host:     strings.ToLower(parsed.Host),
+		RepoPath: repoPath,
+		CloneURL: spec,
+	}, nil
 }
 
 func validateRepoPath(repoPath string) error {

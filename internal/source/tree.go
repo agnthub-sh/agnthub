@@ -219,31 +219,44 @@ func NewMemTree() *MemTree {
 
 // Add records an entry; content is used only for files.
 func (t *MemTree) Add(name string, kind EntryKind, content []byte) error {
-	cleaned, err := CleanPath(name)
-	if err != nil {
+	cleaned, err := t.add(name, kind, int64(len(content)))
+	if err != nil || kind != EntryFile {
 		return err
 	}
+	t.content[cleaned] = content
+	return nil
+}
+
+// AddEntry records an entry of the given size without content, for trees that
+// load file bytes on demand.
+func (t *MemTree) AddEntry(name string, kind EntryKind, size int64) error {
+	_, err := t.add(name, kind, size)
+	return err
+}
+
+func (t *MemTree) add(name string, kind EntryKind, size int64) (string, error) {
+	cleaned, err := CleanPath(name)
+	if err != nil {
+		return "", err
+	}
 	if cleaned == "." {
-		return errors.New("cannot add the root")
+		return "", errors.New("cannot add the root")
 	}
 	if existing, exists := t.entries[cleaned]; exists {
 		if existing.Kind == EntryDir && kind == EntryDir {
-			return nil
+			return cleaned, nil
 		}
-		return fmt.Errorf("duplicate tree entry %s", cleaned)
+		return "", fmt.Errorf("duplicate tree entry %s", cleaned)
 	}
 	if kind == EntryDir {
 		t.ensureDir(cleaned)
-		return nil
+		return cleaned, nil
 	}
 	t.ensureDir(path.Dir(cleaned))
-	t.entries[cleaned] = Entry{Name: path.Base(cleaned), Kind: kind, Size: int64(len(content))}
-	if kind == EntryFile {
-		t.content[cleaned] = content
-	}
+	t.entries[cleaned] = Entry{Name: path.Base(cleaned), Kind: kind, Size: size}
 	parent := path.Dir(cleaned)
 	t.dirs[parent] = append(t.dirs[parent], cleaned)
-	return nil
+	return cleaned, nil
 }
 
 func (t *MemTree) ensureDir(dir string) {
