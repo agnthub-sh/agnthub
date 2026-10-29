@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"cmp"
 	"context"
 	"errors"
 	"fmt"
@@ -60,18 +61,26 @@ func (l *lifecycle) Close() error {
 }
 
 // lockedLocator turns a credential-free locked source back into a locator at
-// its recorded ref. Generic Git sources are fetched over https.
+// its recorded ref. Git sources are refetched over their recorded transport: the
+// recorded SSH clone URL, or https when none is recorded (older locks).
 func (a *App) lockedLocator(locked state.LockedSource) (source.Locator, error) {
 	var (
 		loc source.Locator
 		err error
 	)
-	switch source.Kind(locked.Kind) {
-	case source.KindLocal:
+	switch {
+	case locked.Transport == source.TransportSSH && source.Kind(locked.Kind) != source.KindLocal:
+		loc, err = source.ParseRemote(locked.URL)
+		if err == nil && loc.SSHURL() == "" {
+			err = fmt.Errorf("%q is not an SSH clone URL", locked.URL)
+		}
+	case locked.Transport != "":
+		err = fmt.Errorf("unsupported transport %q", locked.Transport)
+	case source.Kind(locked.Kind) == source.KindLocal:
 		loc, err = source.Parse(locked.Locator, a.WorkDir, a.Env)
-	case source.KindGitHub:
+	case source.Kind(locked.Kind) == source.KindGitHub:
 		loc, err = source.Parse(locked.Locator, "", env.Env{})
-	case source.KindGit:
+	case source.Kind(locked.Kind) == source.KindGit:
 		loc, err = source.Parse("https://"+locked.Locator, "", env.Env{})
 	default:
 		err = fmt.Errorf("unknown source kind %q", locked.Kind)
@@ -79,9 +88,11 @@ func (a *App) lockedLocator(locked state.LockedSource) (source.Locator, error) {
 	if err != nil {
 		return source.Locator{}, fmt.Errorf("locked source %s: %w", locked.Locator, err)
 	}
-	if loc.Kind != source.Kind(locked.Kind) {
+	if loc.Kind != source.Kind(locked.Kind) ||
+		(loc.IsRemote() && skills.LockedSource(loc, "").Locator != locked.Locator) {
 		return source.Locator{}, fmt.Errorf(
-			"locked source %s is not a %s source", locked.Locator, locked.Kind,
+			"locked source %s does not match its recorded %s source %s",
+			locked.Locator, locked.Kind, cmp.Or(locked.URL, locked.Locator),
 		)
 	}
 	loc.Ref = locked.Ref

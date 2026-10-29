@@ -547,22 +547,19 @@ func (a *App) planner(scope harness.Scope) (*install.Planner, error) {
 // when possible so the lock stays shareable.
 func (a *App) lockedSource(snapshot *source.Snapshot) state.LockedSource {
 	loc := snapshot.Locator
-	locked := state.LockedSource{Kind: string(loc.Kind), Ref: loc.Ref, Revision: snapshot.Revision}
-	switch loc.Kind {
-	case source.KindLocal:
-		locked.Locator = loc.Path
-		rel, err := filepath.Rel(a.WorkDir, loc.Path)
-		switch {
-		case err != nil || rel == ".." || strings.HasPrefix(rel, ".."+string(filepath.Separator)):
-		case rel == ".":
-			locked.Locator = "."
-		default:
-			locked.Locator = "./" + filepath.ToSlash(rel)
-		}
-	case source.KindGitHub:
-		locked.Locator = loc.Owner + "/" + loc.Repo
+	if loc.Kind != source.KindLocal {
+		return skills.LockedSource(loc, snapshot.Revision)
+	}
+	locked := state.LockedSource{
+		Kind: string(loc.Kind), Locator: loc.Path, Ref: loc.Ref, Revision: snapshot.Revision,
+	}
+	rel, err := filepath.Rel(a.WorkDir, loc.Path)
+	switch {
+	case err != nil || rel == ".." || strings.HasPrefix(rel, ".."+string(filepath.Separator)):
+	case rel == ".":
+		locked.Locator = "."
 	default:
-		locked.Locator = loc.Host + "/" + loc.RepoPath
+		locked.Locator = "./" + filepath.ToSlash(rel)
 	}
 	return locked
 }

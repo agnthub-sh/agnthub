@@ -101,6 +101,12 @@ type LockedSource struct {
 	Locator  string `json:"locator"`
 	Ref      string `json:"ref,omitempty"`
 	Revision string `json:"revision,omitempty"`
+	// Transport is "ssh" for a Git source fetched over SSH; empty means https,
+	// which is also how locks written before transports were recorded refetch.
+	Transport string `json:"transport,omitempty"`
+	// URL is the credential-free SSH clone URL (user@host:path or ssh://...)
+	// when Transport is "ssh".
+	URL string `json:"url,omitempty"`
 }
 
 // LockedArtifact records one installed Harness artifact and how it was produced.

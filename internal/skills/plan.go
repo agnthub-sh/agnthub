@@ -562,7 +562,8 @@ func SourceKey(loc source.Locator) string {
 	return locked.Kind + ":" + locked.Locator
 }
 
-// LockedSource is the credential-free lock form of a remote Skill source.
+// LockedSource is the credential-free lock form of a remote source, including
+// the SSH clone URL of a source fetched over SSH.
 func LockedSource(loc source.Locator, revision string) state.LockedSource {
 	locked := state.LockedSource{Kind: string(loc.Kind), Ref: loc.Ref, Revision: revision}
 	switch loc.Kind {
@@ -572,6 +573,9 @@ func LockedSource(loc source.Locator, revision string) state.LockedSource {
 		locked.Locator = loc.Host + "/" + loc.RepoPath
 	default:
 		locked.Locator = loc.Path
+	}
+	if url := loc.SSHURL(); url != "" {
+		locked.Transport, locked.URL = source.TransportSSH, url
 	}
 	return locked
 }

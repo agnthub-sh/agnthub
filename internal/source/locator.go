@@ -264,3 +264,19 @@ func (l Locator) Display() string {
 func (l Locator) IsRemote() bool {
 	return l.Kind != KindLocal
 }
+
+// TransportSSH names a Git source fetched over SSH in locks.
+const TransportSSH = "ssh"
+
+// SSHURL returns the clone URL of a source fetched over SSH (scp-like
+// user@host:path or ssh://), or "" for https and local sources. Parse refuses
+// passwords, so the URL is credential-free and safe to record in a lock.
+func (l Locator) SSHURL() string {
+	if l.Kind == KindLocal {
+		return ""
+	}
+	if strings.HasPrefix(l.CloneURL, "ssh://") || scpLike.MatchString(l.CloneURL) {
+		return l.CloneURL
+	}
+	return ""
+}

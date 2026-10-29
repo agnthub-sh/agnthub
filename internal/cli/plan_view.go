@@ -196,6 +196,9 @@ type sourceJSON struct {
 	Locator  string `json:"locator"`
 	Ref      string `json:"ref,omitempty"`
 	Revision string `json:"revision,omitempty"`
+	// Transport and URL name an SSH clone URL; https sources omit them.
+	Transport string `json:"transport,omitempty"`
+	URL       string `json:"url,omitempty"`
 }
 
 type itemJSON struct {

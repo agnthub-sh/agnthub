@@ -495,3 +495,144 @@ func TestUpdateAndRestoreKeepSkillsPinnedToTheLockedRevision(t *testing.T) {
 		t.Fatal("a refused restore must not write agents")
 	}
 }
+
+// recordingGit serves fakeGit snapshots and records each clone URL it fetched.
+type recordingGit struct {
+	repos fakeGit
+	urls  *[]string
+}
+
+func (g recordingGit) Fetch(ctx context.Context, loc source.Locator) (*source.Snapshot, error) {
+	*g.urls = append(*g.urls, loc.CloneURL)
+	return g.repos.Fetch(ctx, loc)
+}
+
+func (h *harnessT) runRecording(git recordingGit, args ...string) (int, string) {
+	h.t.Helper()
+	var out bytes.Buffer
+	app := cli.NewApp(cli.App{
+		Env:      env.FromMap(map[string]string{"HOME": h.home}),
+		WorkDir:  h.project,
+		Stdin:    strings.NewReader(""),
+		Stdout:   &out,
+		Stderr:   &out,
+		Now:      func() time.Time { return time.Date(2026, 10, 29, 0, 0, 0, 0, time.UTC) },
+		LookPath: func(string) (string, error) { return "", os.ErrNotExist },
+		Opener:   source.Opener{Git: git},
+	})
+	return app.Run(context.Background(), args), out.String()
+}
+
+func TestSSHSourcesAreRefetchedOverTheirRecordedTransport(t *testing.T) {
+	const (
+		sshURL  = "ssh://git@git.example.com:2222/team/agents.git"
+		display = "git.example.com:2222/team/agents.git"
+	)
+	h := newHarness(t)
+	repos := fakeGit{}
+	serve := func(revision, body string) {
+		repo := remoteRepo{revision: revision, files: reviewerFiles(body)}
+		repos[display+"#main"] = repo
+		repos[display+"#"+revision] = repo
+	}
+	serve("r1", "Review v1.")
+	var urls []string
+	git := recordingGit{repos: repos, urls: &urls}
+	if code, out := h.runRecording(git, "add", sshURL+"#main", "--harness", "claude",
+		"--yes"); code != 0 {
+		t.Fatalf("add exit %d: %s", code, out)
+	}
+	locked := h.lock().Agents[0].Source
+	if locked.Transport != "ssh" || locked.URL != sshURL || locked.Locator != display {
+		t.Fatalf("the lock must record the SSH transport and clone URL: %+v", locked)
+	}
+
+	fetchedOnlySSH := func(command string) {
+		t.Helper()
+		for _, url := range urls {
+			if url != sshURL {
+				t.Fatalf("%s fetched %q instead of the recorded SSH URL", command, url)
+			}
+		}
+		urls = urls[:0]
+	}
+	serve("r2", "Review v2.")
+	urls = urls[:0]
+	if code, out := h.runRecording(git, "check"); code != 0 || !strings.Contains(out, "content") {
+		t.Fatalf("check exit %d: %s", code, out)
+	}
+	fetchedOnlySSH("check")
+	if code, out := h.runRecording(git, "update", "--yes"); code != 0 {
+		t.Fatalf("update exit %d: %s", code, out)
+	}
+	fetchedOnlySSH("update")
+	h.resetMachine(".claude")
+	if code, out := h.runRecording(git, "restore", "--yes"); code != 0 {
+		t.Fatalf("restore exit %d: %s", code, out)
+	}
+	fetchedOnlySSH("restore")
+	if !strings.Contains(h.installed(".claude/agents/reviewer.md"), "Review v2.") {
+		t.Fatal("restore must reproduce the locked revision")
+	}
+
+	lockPath := filepath.Join(h.project, state.LockFileName)
+	lock := h.lock()
+	lock.Agents[0].Source.URL = "ssh://git@git.example.com:2222/team/other.git"
+	if err := lock.Save(lockPath); err != nil {
+		t.Fatal(err)
+	}
+	h.resetMachine(".claude")
+	if code, out := h.runRecording(git, "restore", "--yes"); code == 0 || len(urls) != 0 {
+		t.Fatalf("a clone URL naming another repository must be refused unfetched: %v %s",
+			urls, out)
+	}
+
+	// Locks written before transports were recorded keep refetching over https.
+	lock.Agents[0].Source.Transport, lock.Agents[0].Source.URL = "", ""
+	if err := lock.Save(lockPath); err != nil {
+		t.Fatal(err)
+	}
+	h.runRecording(git, "restore", "--yes")
+	if len(urls) == 0 || urls[0] != "https://"+display {
+		t.Fatalf("a lock without a transport must refetch over https: %v", urls)
+	}
+}
+
+func TestSSHDependencySourcesAreLockedAndRestoredOverSSH(t *testing.T) {
+	const depURL = "git@git.example.com:team/tools.git"
+	h := newHarness(t)
+	tools := remoteRepo{revision: "t1", files: map[string]string{
+		"agents/linter.md": agentFile("linter"),
+	}}
+	repos := fakeGit{
+		"git.example.com/team/tools.git#v1": tools,
+		"git.example.com/team/tools.git#t1": tools,
+	}
+	files := reviewerFiles("Review v1.")
+	files["agnthub.yaml"] = "schemaVersion: 1\nagents:\n" +
+		"  reviewer:\n    portable: agents/reviewer.md\n" +
+		"    dependencies:\n      agents:\n        - agent: linter\n" +
+		"          source: " + depURL + "#v1\n"
+	agentsRepo(repos, "r1", files)
+	var urls []string
+	git := recordingGit{repos: repos, urls: &urls}
+	if code, out := h.runRecording(git, "add", "acme/agents", "--harness", "claude",
+		"--yes"); code != 0 {
+		t.Fatalf("add exit %d: %s", code, out)
+	}
+	companion := h.lock().Find("git:git.example.com/team/tools.git::linter")
+	if companion == nil || companion.Source.Transport != "ssh" || companion.Source.URL != depURL {
+		t.Fatalf("the companion must be locked with its SSH clone URL: %+v", h.lock().Agents)
+	}
+	h.resetMachine(".claude")
+	urls = urls[:0]
+	if code, out := h.runRecording(git, "restore", "--yes"); code != 0 {
+		t.Fatalf("restore exit %d: %s", code, out)
+	}
+	h.installed(".claude/agents/linter.md")
+	for _, url := range urls {
+		if strings.Contains(url, "tools") && url != depURL {
+			t.Fatalf("the companion must be refetched over SSH, got %q", url)
+		}
+	}
+}
