@@ -11,8 +11,10 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/heynemann/agnthub/internal/adoption"
 	"github.com/heynemann/agnthub/internal/harness"
 	"github.com/heynemann/agnthub/internal/platform/env"
+	"github.com/heynemann/agnthub/internal/skills"
 	"github.com/heynemann/agnthub/internal/source"
 )
 
@@ -34,6 +36,9 @@ type App struct {
 	Registry *harness.Registry
 	Opener   source.Opener
 	LookPath func(string) (string, error)
+	// Adoption reports successful public GitHub installs; nil selects the production
+	// reporter configured by AGNTHUB_API_URL or the user configuration's apiURL.
+	Adoption *adoption.Reporter
 }
 
 // NewApp returns an App with production defaults for unset fields.
@@ -55,6 +60,16 @@ func NewApp(app App) *App {
 			in:         app.Stdin,
 			out:        app.Stdout,
 			accessible: app.Env.Get("ACCESSIBLE") != "" || app.Env.Get("TERM") == "dumb",
+		}
+	}
+	if app.Adoption == nil {
+		// An unreadable configuration leaves the destination unknown: report nothing
+		// rather than guess.
+		configured, err := skills.LoadAPIURL(skills.ConfigPath(app.Env))
+		if err != nil {
+			app.Adoption = &adoption.Reporter{Env: app.Env}
+		} else {
+			app.Adoption = adoption.New(app.Env, Version, configured)
 		}
 	}
 	return &app

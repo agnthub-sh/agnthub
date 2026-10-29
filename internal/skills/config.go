@@ -58,27 +58,38 @@ func ConfigPath(e env.Env) string {
 
 type configFile struct {
 	SkillInstaller *Installer `yaml:"skillInstaller"`
+	// APIURL is the registry API origin automatic install reports go to.
+	APIURL string `yaml:"apiURL"`
 }
 
 // ErrConfig reports an invalid user configuration; nothing has run.
 var ErrConfig = errors.New("invalid agnthub configuration")
 
+// readConfig strictly decodes the user configuration file; an absent file is empty.
+func readConfig(path string) (configFile, error) {
+	var file configFile
+	raw, err := os.ReadFile(path)
+	if errors.Is(err, os.ErrNotExist) {
+		return file, nil
+	}
+	if err != nil {
+		return file, fmt.Errorf("read %s: %w", path, err)
+	}
+	decoder := yaml.NewDecoder(bytes.NewReader(raw))
+	decoder.KnownFields(true)
+	if err := decoder.Decode(&file); err != nil && !errors.Is(err, io.EOF) {
+		return file, fmt.Errorf("%w: %s: %w", ErrConfig, path, err)
+	}
+	return file, nil
+}
+
 // LoadInstaller reads the Skill installer from the user configuration file,
 // returning the default when the file or its skillInstaller section is absent.
 // Only this user-level file can configure the backend; sources never can.
 func LoadInstaller(path string) (Installer, error) {
-	raw, err := os.ReadFile(path)
-	if errors.Is(err, os.ErrNotExist) {
-		return DefaultInstaller(), nil
-	}
+	file, err := readConfig(path)
 	if err != nil {
-		return Installer{}, fmt.Errorf("read %s: %w", path, err)
-	}
-	var file configFile
-	decoder := yaml.NewDecoder(bytes.NewReader(raw))
-	decoder.KnownFields(true)
-	if err := decoder.Decode(&file); err != nil && !errors.Is(err, io.EOF) {
-		return Installer{}, fmt.Errorf("%w: %s: %w", ErrConfig, path, err)
+		return Installer{}, err
 	}
 	if file.SkillInstaller == nil {
 		return DefaultInstaller(), nil
@@ -89,6 +100,12 @@ func LoadInstaller(path string) (Installer, error) {
 		return Installer{}, fmt.Errorf("%w: %s: %w", ErrConfig, path, err)
 	}
 	return installer, nil
+}
+
+// LoadAPIURL reads the configured registry API origin, "" when unset.
+func LoadAPIURL(path string) (string, error) {
+	file, err := readConfig(path)
+	return file.APIURL, err
 }
 
 // placeholderPattern finds "{name}" tokens; any other brace use stays literal.

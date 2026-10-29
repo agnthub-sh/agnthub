@@ -42,6 +42,7 @@ func (h *harnessT) runLifecycle(run lifecycleRun, args ...string) (int, string) 
 		Now:         func() time.Time { return time.Date(2026, 10, 29, 0, 0, 0, 0, time.UTC) },
 		LookPath:    func(string) (string, error) { return "", os.ErrNotExist },
 		Opener:      source.Opener{Git: run.git},
+		Adoption:    offline,
 	})
 	return app.Run(context.Background(), args), out.String()
 }
@@ -519,6 +520,7 @@ func (h *harnessT) runRecording(git recordingGit, args ...string) (int, string) 
 		Now:      func() time.Time { return time.Date(2026, 10, 29, 0, 0, 0, 0, time.UTC) },
 		LookPath: func(string) (string, error) { return "", os.ErrNotExist },
 		Opener:   source.Opener{Git: git},
+		Adoption: offline,
 	})
 	return app.Run(context.Background(), args), out.String()
 }

@@ -12,6 +12,7 @@ import (
 	"slices"
 	"strings"
 
+	"github.com/heynemann/agnthub/internal/adoption"
 	"github.com/heynemann/agnthub/internal/agent"
 	"github.com/heynemann/agnthub/internal/harness"
 	"github.com/heynemann/agnthub/internal/platform/env"
@@ -154,10 +155,12 @@ func (a *Applier) run(ctx context.Context, run backendRun) RunResult {
 		return result
 	}
 	// The configured backend is trusted user code: it runs without a shell, with
-	// the user's environment (so DO_NOT_TRACK/DISABLE_TELEMETRY reach skills.sh).
+	// the user's environment. When the user opted out of sharing, every opt-out
+	// variable is set (DO_NOT_TRACK=1, DISABLE_TELEMETRY=1) so skills.sh or any
+	// other backend disables its own telemetry too.
 	//nolint:gosec // G204: executable and argument templates come from the user's own config
 	cmd := exec.CommandContext(ctx, executable, run.Command[1:]...)
-	cmd.Env = a.Context.Env.Pairs()
+	cmd.Env = adoption.ChildEnv(a.Context.Env).Pairs()
 	cmd.Dir = a.Context.ProjectRoot
 	output := &tailBuffer{limit: outputTail}
 	cmd.Stdout, cmd.Stderr = output, output

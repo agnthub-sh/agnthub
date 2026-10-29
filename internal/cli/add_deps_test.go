@@ -12,6 +12,7 @@ import (
 
 	"github.com/bytedance/sonic"
 
+	"github.com/heynemann/agnthub/internal/adoption"
 	"github.com/heynemann/agnthub/internal/cli"
 	"github.com/heynemann/agnthub/internal/platform/env"
 	"github.com/heynemann/agnthub/internal/source"
@@ -57,9 +58,14 @@ func (h *harnessT) runWith(git fakeGit, extraEnv map[string]string, args ...stri
 		Now:      func() time.Time { return time.Date(2026, 10, 29, 0, 0, 0, 0, time.UTC) },
 		LookPath: func(string) (string, error) { return "", os.ErrNotExist },
 		Opener:   source.Opener{Git: git},
+		Adoption: offline,
 	})
 	return app.Run(context.Background(), args), out.String()
 }
+
+// offline reports nothing: fake Git repositories aren't real GitHub repositories, so
+// tests never contact GitHub or the registry unless they configure their own servers.
+var offline = &adoption.Reporter{}
 
 func agentFile(id string) string {
 	return fmt.Sprintf("---\nname: %s\ndescription: The %s agent\n---\nDo %s work.\n", id, id, id)

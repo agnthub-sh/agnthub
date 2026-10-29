@@ -10,6 +10,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/heynemann/agnthub/internal/adoption"
 	"github.com/heynemann/agnthub/internal/agent"
 	"github.com/heynemann/agnthub/internal/discovery"
 	"github.com/heynemann/agnthub/internal/harness"
@@ -279,6 +280,8 @@ func (a *App) applyInteractive(
 // apply installs and verifies required Skills first; only when every Skill is
 // verified are the Agent artifacts written. A backend or verification failure
 // writes no Agent file and reports what the backend changed, without rollback.
+// After a complete install or update, the artifacts it actually created or
+// replaced are reported best-effort; the outcome never depends on that report.
 func (a *App) apply(
 	ctx context.Context,
 	planner *install.Planner,
@@ -307,7 +310,29 @@ func (a *App) apply(
 			SkippedSkills: view.SkippedSkills, Outcome: view.Outcome, Report: view.Report,
 		}, statusApplied)
 	}
+	if err == nil && !replays(view) {
+		a.Adoption.Report(ctx, placed(result.Applied))
+	}
 	return err
+}
+
+// replays reports a restore: it reproduces locked artifacts and is no new install.
+func replays(view *planView) bool {
+	return view.Report != nil && view.Report.Command == "restore"
+}
+
+// placed lists the artifacts an apply created or replaced; unchanged ones were no install.
+func placed(items []install.Item) []adoption.Install {
+	var out []adoption.Install
+	for _, item := range items {
+		if item.Action != install.ActionCreate && item.Action != install.ActionReplace {
+			continue
+		}
+		out = append(out, adoption.Install{
+			Source: item.Source, Agent: item.Agent, Origin: item.Origin, Harness: item.Harness,
+		})
+	}
+	return out
 }
 
 func (a *App) selectAgents(
