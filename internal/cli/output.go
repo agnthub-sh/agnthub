@@ -82,6 +82,7 @@ func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory)
 	if p.json {
 		return p.emitJSON(payload)
 	}
+	s := p.styles
 	header := payload.Source
 	if payload.Revision != "" {
 		header += " @ " + shortRevision(payload.Revision)
@@ -89,12 +90,12 @@ func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory)
 	if inv.Manifest {
 		header += " (agnthub.yaml)"
 	}
-	fmt.Fprintln(p.w, header)
+	fmt.Fprintln(p.w, s.title.Render(header))
 	if len(payload.Agents) == 0 {
 		fmt.Fprintln(p.w, "  no installable agents found")
 	}
 	for _, item := range payload.Agents {
-		fmt.Fprintf(p.w, "  %s  %s\n", item.ID, oneLine(item.Description))
+		fmt.Fprintf(p.w, "  %s  %s\n", s.heading.Render(item.ID), oneLine(item.Description))
 		var forms []string
 		if item.Portable != "" {
 			forms = append(forms, "portable "+item.Portable)
@@ -104,13 +105,18 @@ func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory)
 				forms = append(forms, string(harnessID)+" "+path)
 			}
 		}
-		fmt.Fprintf(p.w, "      %s\n", strings.Join(forms, "; "))
+		fmt.Fprintf(p.w, "      %s\n", s.dim.Render(strings.Join(forms, "; ")))
 	}
 	if len(payload.Problems) > 0 {
-		fmt.Fprintln(p.w, "problems:")
+		fmt.Fprintln(p.w, s.blocked.Render("problems:"))
 		for _, problem := range inv.Problems {
 			fmt.Fprintf(p.w, "  ! %s\n", problem)
 		}
+	}
+	if len(payload.Agents) > 0 {
+		fmt.Fprintln(p.w, s.dim.Render(
+			"Install with --agent <id> (repeatable, '*' for all) and --harness <id>, or run "+
+				"add without them to choose interactively."))
 	}
 	return nil
 }

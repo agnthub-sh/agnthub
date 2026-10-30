@@ -54,7 +54,7 @@ or missing files), unavailable sources and the recorded harness bindings. Nothin
 written.`,
 		Example: `  agnthub check
   agnthub check reviewer --json
-  agnthub check --global`,
+  agnthub check -g`,
 		RunE: func(_ *cobra.Command, args []string) error {
 			return a.runCheck(ctx, args, opts)
 		},
@@ -66,8 +66,9 @@ written.`,
 func (a *App) updateCommand(ctx context.Context) *cobra.Command {
 	opts := &lifecycleOptions{}
 	cmd := &cobra.Command{
-		Use:   "update [agent...]",
-		Short: "Preview and apply newer content for installed agents",
+		Use:     "update [agent...]",
+		Aliases: []string{"upgrade"},
+		Short:   "Preview and apply newer content for installed agents (alias: upgrade)",
 		Long: `Resolve each selected direct agent (default: all) at the current revision of its
 recorded ref, with its current dependencies, and preview content, variant,
 dependency and skill changes before writing. Locally modified or unmanaged files
@@ -75,7 +76,7 @@ are never overwritten. Each artifact keeps its recorded harness binding (e.g. it
 omp profile); an ambiguous or missing binding needs --extra or a prompt.`,
 		Example: `  agnthub update
   agnthub update reviewer --yes
-  agnthub update --global --extra omp.profile=work`,
+  agnthub upgrade -g --extra omp.profile=work`,
 		RunE: func(_ *cobra.Command, args []string) error {
 			return a.runUpdate(ctx, args, opts)
 		},
@@ -95,7 +96,8 @@ artifact and skill matches the locked digests. Unavailable revisions, changed
 bytes or unsupported converters refuse the restore; fresh content is never
 substituted. On a machine without recorded bindings, harnesses with settings need
 --extra (e.g. --extra omp.profile=default) or a prompt.`,
-		Example: `  agnthub restore
+		Example: `  # Recreate the locked agents in a fresh clone
+  agnthub restore
   agnthub restore --yes --extra omp.profile=work`,
 		Args: cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
@@ -122,7 +124,9 @@ func (a *App) runCheck(ctx context.Context, ids []string, opts *lifecycleOptions
 	if err != nil {
 		return err
 	}
+	done := a.busy(opts.json, "Checking locked sources")
 	lp, err := l.planLatest(ctx, contexts, false)
+	done()
 	if err != nil {
 		return err
 	}
@@ -155,7 +159,9 @@ func (a *App) runUpdate(ctx context.Context, ids []string, opts *lifecycleOption
 	if err != nil {
 		return err
 	}
+	done := a.busy(opts.json, "Resolving newer content")
 	lp, err := l.planLatest(ctx, contexts, true)
+	done()
 	if err != nil {
 		return err
 	}
@@ -192,7 +198,9 @@ func (a *App) runRestore(ctx context.Context, opts *lifecycleOptions) error {
 	if err != nil {
 		return err
 	}
+	done := a.busy(opts.json, "Fetching locked revisions")
 	lp, err := l.planFrozen(ctx, contexts)
+	done()
 	if err != nil {
 		return err
 	}

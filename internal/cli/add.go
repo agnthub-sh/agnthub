@@ -32,6 +32,10 @@ type addOptions struct {
 	all       bool
 }
 
+// allSelector selects every agent (--agent '*') or every supported harness
+// (--harness '*'), as skills.sh's --skill '*' and --agent '*' do.
+const allSelector = "*"
+
 // validate rejects contradictory flags before any source is opened.
 func (o *addOptions) validate() error {
 	if o.all && (len(o.agents) > 0 || len(o.harnesses) > 0) {
@@ -40,16 +44,24 @@ func (o *addOptions) validate() error {
 				"drop --all to choose with --agent/--harness",
 		)
 	}
+	for _, selectors := range [][]string{o.agents, o.harnesses} {
+		if slices.Contains(selectors, allSelector) && len(selectors) > 1 {
+			return errors.New("'*' already selects everything; drop the other values")
+		}
+	}
 	return nil
 }
 
 func (a *App) addCommand(ctx context.Context) *cobra.Command {
 	opts := &addOptions{}
 	cmd := &cobra.Command{
-		Use:   "add <source>",
-		Short: "Install agents from a source repository or local directory",
+		Use:     "add <source>",
+		Aliases: []string{"a"},
+		Short:   "Install agents from a repository or local directory (alias: a)",
 		Long: `Install agents from a GitHub repository (owner/repo[#ref]), a Git URL or an
-explicit local directory (./path). Harness settings use --extra <harness>.<key>=<value>.
+explicit local directory (./path). --agent selects agent definitions from the
+source and --harness the coding harnesses to install them into; '*' selects all
+of either. Harness settings use --extra <harness>.<key>=<value>.
 
 In a terminal, add asks which agents and harnesses to install (detected harnesses
 are preselected), previews the plan and asks before writing. --yes, --all and
@@ -58,19 +70,27 @@ are preselected), previews the plan and asks before writing. --yes, --all and
 Required skills are reused when a compatible copy is already visible; missing ones
 install first through the skill installer (skills.sh, or skillInstaller in
 ~/.config/agnthub/config.yaml) and are verified before any agent file is written.`,
-		Example: `  agnthub add ./my-agents --list
-  agnthub add ./my-agents --agent reviewer --harness claude
+		Example: `  # List the agents a source provides without installing
+  agnthub add owner/repo -l
+  # Choose agents and harnesses interactively
+  agnthub add owner/repo
+  agnthub add ./my-agents --agent reviewer --harness claude --harness codex
+  agnthub add owner/repo#v1.2.0 --agent '*' --harness claude --yes
   agnthub add owner/repo --harness omp --global --extra omp.profile=work
-  agnthub add owner/repo --all --extra omp.profile=work`,
+  # Every agent into every harness, without prompting
+  agnthub add owner/repo --all
+  agnthub add owner/repo --all --json`,
 		Args: cobra.ExactArgs(1),
 		RunE: func(_ *cobra.Command, args []string) error {
 			return a.runAdd(ctx, args[0], opts)
 		},
 	}
 	flags := cmd.Flags()
-	flags.BoolVar(&opts.list, "list", false, "list the source's agents without installing")
-	flags.StringArrayVarP(&opts.agents, "agent", "a", nil, "agent to install (repeatable)")
-	flags.StringArrayVarP(&opts.harnesses, "harness", "H", nil, "target harness (repeatable)")
+	flags.BoolVarP(&opts.list, "list", "l", false, "list the source's agents without installing")
+	flags.StringArrayVarP(&opts.agents, "agent", "a", nil,
+		"agent to install (repeatable; '*' for all agents)")
+	flags.StringArrayVarP(&opts.harnesses, "harness", "H", nil,
+		"harness to install into (repeatable; '*' for all supported harnesses)")
 	flags.StringArrayVar(&opts.extras, "extra", nil,
 		"harness setting <harness>.<key>=<value> (repeatable), e.g. omp.profile=work")
 	flags.BoolVarP(
@@ -82,8 +102,7 @@ install first through the skill installer (skills.sh, or skillInstaller in
 	)
 	flags.BoolVarP(&opts.yes, "yes", "y", false, "apply without prompting")
 	flags.BoolVar(&opts.json, "json", false, "print machine-readable JSON; never prompts")
-	flags.BoolVar(&opts.all, "all", false,
-		"select every agent and every supported harness and apply without prompting")
+	flags.BoolVar(&opts.all, "all", false, "shorthand for --agent '*' --harness '*' --yes")
 	return cmd
 }
 
@@ -95,7 +114,9 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	if err != nil {
 		return err
 	}
+	done := a.busy(opts.json, "Fetching "+loc.Display())
 	snapshot, err := a.Opener.Open(ctx, loc)
+	done()
 	if err != nil {
 		return err
 	}
@@ -131,11 +152,13 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	if err != nil {
 		return err
 	}
+	done = a.busy(opts.json, "Resolving dependencies")
 	closure, err := (&resolve.Resolver{
 		Opener:   a.Opener,
 		Registry: a.Registry,
 		Limits:   discovery.DefaultLimits(),
 	}).Resolve(ctx, resolve.Root{Snapshot: snapshot, Inventory: inventory}, defs, harnesses)
+	done()
 	if err != nil {
 		return err
 	}
@@ -159,8 +182,13 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	if err != nil {
 		return err
 	}
+	done = func() {}
+	if len(closure.Skills) > 0 {
+		done = a.busy(opts.json, "Checking required skills")
+	}
 	plan.Skills, err = a.planSkills(ctx, planner, a.Opener, closure.Skills, harnesses, settings,
 		scope)
+	done()
 	if err != nil {
 		return err
 	}
@@ -289,9 +317,11 @@ func (a *App) apply(
 	out *printer,
 ) error {
 	if len(view.Plan.Skills) > 0 {
+		done := a.busy(out.json, "Installing required skills")
 		outcome, err := (&skills.Applier{
 			Registry: a.Registry, Context: a.harnessContext(), Scope: view.Plan.Scope,
 		}).Apply(ctx, view.Plan.Skills)
+		done()
 		view.Outcome = outcome
 		if err != nil {
 			out.plan(view, statusFailed)
@@ -343,10 +373,10 @@ func (a *App) selectAgents(
 ) ([]*agent.Definition, error) {
 	var defs []*agent.Definition
 	switch {
-	case opts.all:
+	case opts.all || slices.Contains(opts.agents, allSelector):
 		if problems := agentProblems(inventory); len(problems) > 0 {
 			return nil, fmt.Errorf(
-				"--all cannot select an ambiguous or invalid agent:\n  %s",
+				"cannot select every agent; some are ambiguous or invalid:\n  %s",
 				strings.Join(problems, "\n  "),
 			)
 		}
@@ -469,7 +499,7 @@ func (a *App) selectHarnesses(
 	interactive bool,
 ) ([]agent.HarnessID, error) {
 	switch {
-	case opts.all:
+	case opts.all || slices.Contains(opts.harnesses, allSelector):
 		return a.supportedHarnesses(), nil
 	case len(opts.harnesses) > 0:
 		ids := make([]agent.HarnessID, 0, len(opts.harnesses))

@@ -4,17 +4,50 @@ Build and run the CLI from a clone of this repository (or use a [release](../REA
 
 ```sh
 make build
-./bin/agnthub add ./path/to/source --list
+./bin/agnthub add ./path/to/source -l                   # list the source's agents (--list)
 ./bin/agnthub add ./path/to/source                      # choose agents and harnesses interactively
 ./bin/agnthub add ./path/to/source --agent reviewer --harness claude --harness codex
+./bin/agnthub add owner/repo --agent '*' --harness claude --yes
 ./bin/agnthub add owner/repo --all --global --extra omp.profile=work
-./bin/agnthub list
+./bin/agnthub ls                                        # list (alias ls), -H claude to filter
 ./bin/agnthub check                                     # source changes and local drift, no writes
-./bin/agnthub update reviewer                           # preview, approve, apply newer content
+./bin/agnthub update reviewer                           # preview, approve, apply newer content (alias upgrade)
 ./bin/agnthub restore --yes --extra omp.profile=work    # recreate exactly what the lock records
+./bin/agnthub rm                                        # choose installed agents to remove (alias rm)
 ./bin/agnthub remove reviewer --harness omp --extra omp.profile=work
 ./bin/agnthub remove --clean-dependencies
 ```
+
+## Commands and flags
+
+The command surface follows [skills.sh](https://skills.sh) (`npx skills`) where the agnthub contract allows, so the same habits work for agents:
+
+| Command | Alias | What it does |
+| --- | --- | --- |
+| `add <source>` | `a` | Preview and install agents from a repository, Git URL or local directory |
+| `list` | `ls` | List the agents agnthub installed (`-g` global, `-H <harness>` filter, `--json`) |
+| `remove [agent...]` | `rm` | Remove installed agents; without names a terminal user picks them from a list |
+| `check [agent...]` | | Show available updates and local drift without writing |
+| `update [agent...]` | `upgrade` | Preview and apply newer content |
+| `restore` | | Recreate exactly what `agnthub-lock.json` records |
+| `completion <shell>` | | Print a bash, zsh, fish or PowerShell completion script |
+
+Shared flags: `-g/--global` (user scope instead of the project), `-y/--yes` (no prompts), `--json` (machine-readable output, never prompts), `-a/--agent` (agent definitions), `-H/--harness` (harnesses; skills.sh target names such as `claude-code`, `github-copilot` and `gemini-cli` are accepted), `--extra <harness>.<key>=<value>`, `add -l/--list` and `add --all`. `--agent '*'` selects every agent of the source and `--harness '*'` every supported harness; `--all` is shorthand for `--agent '*' --harness '*' --yes`. `agnthub --help` and `agnthub <command> --help` show grouped commands, flags and examples; `agnthub --version` (or `-v`) prints the version.
+
+Output: in a terminal, plans, tables, errors and help are styled (lipgloss/fang) and slow steps (fetching sources, resolving dependencies, running the skill installer) show a transient spinner on stderr. Redirected output, `NO_COLOR` and `TERM=dumb` give plain text without colors or spinners, errors become a single `error: ...` line on stderr, and `--json` prints only JSON on stdout.
+
+Intentional differences from skills.sh:
+
+- skills.sh's `--agent` names the coding tool to install into; agnthub installs *agents* into *harnesses*, so `-a/--agent` selects agent definitions (skills.sh's `--skill`) and `-H/--harness` the coding tools (skills.sh's `--agent`). `skills add owner/repo -s pr-review -a claude-code` becomes `agnthub add owner/repo -a reviewer -H claude`.
+- Several values are given by repeating the flag (`-H claude -H codex`); skills.sh's space-separated lists (`--agent claude-code cursor`) are not accepted because an agnthub source argument could be mistaken for one.
+- `--yes` never selects everything implicitly: with more than one agent it needs `--agent` (or `'*'`), and with no `--harness` it fails instead of guessing harnesses. Running inside an agent does not switch agnthub to non-interactive mode; only `--yes`, `--all`, `--json` or a non-terminal stdin/stdout do.
+- `--yes`, `--all` and `--json` never reduce a plan: a blocked item fails the whole run before anything is written. skills.sh has no equivalent preview or refusal.
+- agnthub writes agent files directly (no `--copy`/symlink choice) and records ownership, so `remove` deletes only unchanged files it installed; `remove --all` is not offered.
+- `--extra <harness>.<key>=<value>` (e.g. `omp.profile=work`) has no skills.sh counterpart. `check` and `restore` (skills.sh's `experimental_install`) are first-class; skills.sh's `use`, `init`, `find` and `experimental_sync` have no agnthub command yet (search agents on [agnthub.sh](https://agnthub.sh)).
+
+See the [skills.sh reference](research/skills-reference.md) for the full skills.sh command surface this was compared against.
+
+## Behavior
 
 Sources are explicit local directories (`./dir`), GitHub repositories (`owner/repo[#ref]`) or Git URLs. Harness settings use repeatable `--extra <harness>.<key>=<value>` (for example `--extra omp.profile=work`). The project lock is `agnthub-lock.json`; user-local ownership records live under `$XDG_STATE_HOME/agnthub/`.
 

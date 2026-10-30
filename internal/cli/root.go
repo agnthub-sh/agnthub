@@ -11,6 +11,8 @@ import (
 	"strings"
 	"time"
 
+	"charm.land/fang/v2"
+	"github.com/charmbracelet/x/term"
 	"github.com/spf13/cobra"
 
 	"github.com/heynemann/agnthub/adoption"
@@ -55,6 +57,10 @@ type App struct {
 	// Adoption reports successful public GitHub installs; nil selects the production
 	// reporter configured by AGNTHUB_API_URL or the user configuration's apiURL.
 	Adoption *adoption.Reporter
+
+	// styledStderr reports a terminal stderr that can show styled errors and a
+	// transient progress line.
+	styledStderr bool
 }
 
 // NewApp returns an App with production defaults for unset fields.
@@ -88,6 +94,7 @@ func NewApp(app App) *App {
 			app.Adoption = adoption.New(app.Env, Version, configured)
 		}
 	}
+	app.styledStderr = isTerminal(app.Stderr) && app.Env.Get("TERM") != "dumb"
 	return &app
 }
 
@@ -107,7 +114,13 @@ func (a *App) Run(ctx context.Context, args []string) int {
 	root.SetIn(a.Stdin)
 	root.SetOut(a.Stdout)
 	root.SetErr(a.Stderr)
-	err := root.ExecuteContext(ctx)
+	// fang styles help, usage errors and version output and adds completion and
+	// man page generation; colorprofile strips styling when stdout is no terminal
+	// or NO_COLOR / TERM=dumb ask for plain text.
+	err := fang.Execute(ctx, root,
+		fang.WithVersion(Version),
+		fang.WithErrorHandler(a.reportError),
+	)
 	if err == nil {
 		return 0
 	}
@@ -115,14 +128,48 @@ func (a *App) Run(ctx context.Context, args []string) int {
 	if errors.As(err, &exitErr) {
 		return exitErr.Code
 	}
-	fmt.Fprintln(a.Stderr, "error:", err)
 	return 1
 }
 
+// reportError prints a failure on stderr: fang's styled block in a terminal,
+// a single stable `error: ...` line otherwise. An ExitError was already reported.
+func (a *App) reportError(w io.Writer, styles fang.Styles, err error) {
+	if _, reported := errors.AsType[*ExitError](err); reported {
+		return
+	}
+	if !a.styledStderr {
+		fmt.Fprintln(a.Stderr, "error:", err)
+		return
+	}
+	fang.DefaultErrorHandler(w, styles, err)
+}
+
+// Command groups shown by help, following skills.sh's sections.
+const (
+	groupManage  = "manage"
+	groupUpdates = "updates"
+	groupProject = "project"
+)
+
 func (a *App) rootCommand(ctx context.Context) *cobra.Command {
 	root := &cobra.Command{
-		Use:           "agnthub",
-		Short:         "Install agents from source repositories into your coding harnesses",
+		Use:   "agnthub",
+		Short: "Install agents from source repositories into your coding harnesses",
+		Long: `Install agents from source repositories into your coding harnesses.
+
+agnthub installs agent definitions (--agent) into harnesses such as Claude Code,
+OpenCode, Codex, GitHub Copilot CLI, Cursor, Gemini CLI and omp (--harness). It
+previews every plan, records what it wrote in agnthub-lock.json and never
+overwrites files it does not own.`,
+		Example: `  # Choose agents and harnesses interactively
+  agnthub add owner/repo
+  agnthub add owner/repo --list
+  agnthub add owner/repo --agent reviewer --harness claude --harness codex
+  agnthub add owner/repo --all --global
+  agnthub ls
+  agnthub check
+  agnthub update --yes
+  agnthub rm reviewer`,
 		Version:       Version,
 		SilenceUsage:  true,
 		SilenceErrors: true,
@@ -130,13 +177,31 @@ func (a *App) rootCommand(ctx context.Context) *cobra.Command {
 	if Commit != "" {
 		root.SetVersionTemplate("agnthub version {{.Version}} (commit " + Commit + ")\n")
 	}
-	root.AddCommand(
-		a.addCommand(ctx), a.listCommand(), a.removeCommand(ctx),
-		a.checkCommand(ctx), a.updateCommand(ctx), a.restoreCommand(ctx),
+	root.AddGroup(
+		&cobra.Group{ID: groupManage, Title: "Manage agents"},
+		&cobra.Group{ID: groupUpdates, Title: "Updates"},
+		&cobra.Group{ID: groupProject, Title: "Project"},
 	)
+	for _, cmd := range []*cobra.Command{a.addCommand(ctx), a.listCommand(), a.removeCommand(ctx)} {
+		cmd.GroupID = groupManage
+		root.AddCommand(cmd)
+	}
+	for _, cmd := range []*cobra.Command{a.checkCommand(ctx), a.updateCommand(ctx)} {
+		cmd.GroupID = groupUpdates
+		root.AddCommand(cmd)
+	}
+	restore := a.restoreCommand(ctx)
+	restore.GroupID = groupProject
+	root.AddCommand(restore)
 	return root
 }
 
 func (a *App) harnessContext() harness.Context {
 	return harness.Context{Env: a.Env, ProjectRoot: a.WorkDir, LookPath: a.LookPath}
+}
+
+// isTerminal reports whether w is a terminal device.
+func isTerminal(w io.Writer) bool {
+	f, ok := w.(interface{ Fd() uintptr })
+	return ok && term.IsTerminal(f.Fd())
 }

@@ -1,6 +1,6 @@
 # skills.sh / vercel-labs/skills reference
 
-Researched 2026-10-29 from first-party documentation, live website text, and targeted source reads; no CLI execution. Upstream `main` resolved to [`92a9a34ac3bf88e695e468b90c7bf32f163d32c8`](https://github.com/vercel-labs/skills/commit/92a9a34ac3bf88e695e468b90c7bf32f163d32c8). Source links below pin that revision. Website behavior is an observation, not a promise about its backend implementation or a pixel-level design review.
+Researched 2026-10-29 from first-party documentation, live website text, and targeted source reads; no CLI execution. Upstream `main` resolved to [`92a9a34ac3bf88e695e468b90c7bf32f163d32c8`](https://github.com/vercel-labs/skills/commit/92a9a34ac3bf88e695e468b90c7bf32f163d32c8). Source links below pin that revision. Website behavior is an observation, not a promise about its backend implementation or a pixel-level design review. Section 8 was added on 2026-10-30 from running the published CLI (`npx skills`, version 1.7.4).
 
 ## 1. Listing is not a prerequisite for installation
 
@@ -69,3 +69,40 @@ The following are **design implications**, not claims that skills already solves
 6. **Trust/privacy need independent contracts.** A registry entry should show compatibility validation separately from security findings and popularity. Define repository ownership/registration policy, public/private boundaries, telemetry opt-out, indexing refresh, and whether safety lookups are independent of analytics consent.
 
 Unresolved product decisions for the design session: public registration mechanism and refresh trigger; initial Git hosts/ref grammar; stable agent identity and collisions; variant precedence versus conversion; supported native artifact matrix; project/global defaults; exact meaning of all; immutable pinning versus moving-ref updates/local edits; telemetry/ranking policy; audit policy; and private-source support versus public indexing. OpenAgent support remains a separate later capability, not inferred from any skills CLI target.
+
+## 8. CLI command surface (executed, skills 1.7.4)
+
+Observed on 2026-10-30 by running `npx --yes skills --help`, `--version`, every command's `--help` and a few commands in a scratch `HOME`/project with telemetry disabled. These are observations of one release, not a stable contract.
+
+**Help is global.** `skills --help` prints one screen grouping commands and every command's options. Only `remove`/`rm` has its own help (`Usage: skills remove [skills...] [options]`, description, arguments, options, examples); `add --help`, `a`, `use`, `list`, `ls`, `find`, `update`, `upgrade`, `check`, `init`, `experimental_install`, `experimental_sync` and `sync` with `--help` all print the global screen, exit 0. An unknown command prints `Unknown command: <name>` / `Run skills --help for usage.` and exits 1. `--version`/`-v` print the bare version (`1.7.4`); `--help`/`-h` print help.
+
+| Group (help heading) | Command | Aliases | Purpose |
+| --- | --- | --- | --- |
+| Manage Skills | `add <package>` | `a` | Add a skill package (`owner/repo`, a well-known site, a GitHub URL, …) |
+| | `use <package>@<skill>` | | Print a prompt that uses one skill without installing it (`… \| claude`) |
+| | `remove [skills]` | `rm` | Remove installed skills; no names → interactive selection |
+| | `list` | `ls` | List installed skills (project by default) |
+| | `find [query]` | | Search the skills.sh catalog; no query → interactive search |
+| Updates | `update [skills...]` | `upgrade` | Update skills to the latest versions |
+| | `check` | | Not in help; prints `Checking for skill updates…` and the global lock status |
+| Project | `experimental_install` | | Restore from `skills-lock.json` |
+| | `init [name]` | | Create `<name>/SKILL.md` or `./SKILL.md` |
+| | `experimental_sync` | `sync` | Sync skills from `node_modules` into agent directories |
+
+Options by command (as printed; `<agents>`/`<skills>` take several space-separated values, `'*'` means all):
+
+- `add`: `-g, --global` (user level instead of project), `-a, --agent <agents>` (target coding agents), `-s, --skill <skills>`, `-l, --list` (list without installing), `-y, --yes` (skip confirmation prompts), `--copy` (copy instead of symlink), `--metadata <json>` (telemetry payload), `--subagent <names>` (Eve subagents), `--all` (= `--skill '*' --agent '*' -y`), `--full-depth`, `--json` (machine-readable, no ANSI).
+- `use`: `-s, --skill <skill>`, `-a, --agent <agent>` (start one agent interactively), `--full-depth`.
+- `remove`: `-g, --global`, `-a, --agent <agents>` (omit to clean all agent links), `-s, --skill <skills>`, `-y, --yes`, `--all` (every installed skill, `-y` implied, not combinable with names).
+- `list`: `-g, --global` (default: project), `-a, --agent <agents>` (filter), `--json`.
+- `find`: `--owner <owner>`.
+- `update`: `-g, --global`, `-p, --project`, `-y, --yes` (skip the scope prompt; project if in a project, else global).
+- `experimental_sync`: `-a, --agent`, `-y, --yes`, `--copy`, `--dry-run`, `--no-cleanup`, `--no-remote`, `-r, --recursive`, `--include <patterns>`, `--exclude <patterns>`.
+
+Help examples include `skills add vercel-labs/agent-skills -g`, `--agent claude-code cursor`, `--skill pr-review commit`, `--json -y`, `skills rm --global frontend-design`, `skills ls -a claude-code`, `skills find react --owner vercel` and `skills update my-skill`, ending with `Discover more skills at https://skills.sh/`.
+
+**Interactive versus `--yes`.** In a terminal, `add` prints an ASCII-art banner and a clack-style flow (`┌ skills`, `◇ Source: …`, `◒ Fetching skills…`, `◇ Found 9 skills`), then a searchable multi-select of skills with `Select All`, then a searchable multi-select of 79 target agents with detected ones preselected (`Selected: Claude Code, Codex, …`); the scope and install-method prompts described in section 3 follow (not exercised here). Without a terminal and without `-y` it cancels: `Interactive prompt required but stdin is not a TTY. Nothing was installed. Use --agent <name> (or --agent '*') and -y to run non-interactively.`, exit 1. When it detects that it runs inside a coding agent (here Claude Code via its environment) it prints `claude  Agent detected — installing non-interactively` and proceeds without prompts, targeting that agent. `add <repo> --list` prints the source, each skill and its description and `Use --skill <name> to install specific skills`, exit 0.
+
+**Output.** Human output is decorated (`│`, `◇`, `●`, boxed `Installation Summary`, spinners). With `--json` the JSON array (`name`, `status`, `source`, `ref`, `hash`, `path`, `scope`, `agents`, `mode`, `security`) goes to stdout while the decorations still go to stderr. `ls` with nothing installed prints `No project skills found.` and `Try listing global skills with -g`; `ls --json` prints `[]`. `find typescript` prints `owner/repo@skill  <N> installs` lines, each followed by its skills.sh URL, under `Install with npx skills add <owner/repo@skill>`. `update` with no names prints `Checking for skill updates…`, the target agents and `✓ Updated <n> skill(s)`.
+
+agnthub's alignment with this surface (aliases `a`, `ls`, `rm`, `upgrade`; `-l`, `-g`, `-y`, `--json`, `--all`, `'*'` selectors; interactive `remove`) and its intentional differences (`--agent` versus `--harness`, repeated flags instead of space-separated lists, no implicit selection under `--yes` or inside an agent, refused plans, `--extra`) are documented in the [CLI guide](../cli.md#commands-and-flags).

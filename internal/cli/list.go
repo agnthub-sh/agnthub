@@ -3,29 +3,43 @@ package cli
 import (
 	"fmt"
 	"path/filepath"
+	"slices"
+	"strings"
 
+	"charm.land/lipgloss/v2"
+	"charm.land/lipgloss/v2/table"
 	"github.com/spf13/cobra"
 
+	"github.com/heynemann/agnthub/agent"
 	"github.com/heynemann/agnthub/state"
 )
 
 type listOptions struct {
-	global bool
-	json   bool
+	global    bool
+	json      bool
+	harnesses []string
 }
 
 func (a *App) listCommand() *cobra.Command {
 	opts := &listOptions{}
 	cmd := &cobra.Command{
-		Use:   "list",
-		Short: "List agents installed by agnthub in this project (or globally)",
-		Args:  cobra.NoArgs,
+		Use:     "list",
+		Aliases: []string{"ls"},
+		Short:   "List agents agnthub installed in this project or globally (alias: ls)",
+		Example: `  agnthub list
+  agnthub ls -g
+  agnthub ls -H claude
+  agnthub ls --json`,
+		Args: cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
 			return a.runList(opts)
 		},
 	}
-	cmd.Flags().BoolVarP(&opts.global, "global", "g", false, "list user-scope installations")
-	cmd.Flags().BoolVar(&opts.json, "json", false, "print machine-readable JSON")
+	flags := cmd.Flags()
+	flags.BoolVarP(&opts.global, "global", "g", false, "list user-scope installations")
+	flags.StringArrayVarP(&opts.harnesses, "harness", "H", nil,
+		"only list installations for this harness (repeatable)")
+	flags.BoolVar(&opts.json, "json", false, "print machine-readable JSON")
 	return cmd
 }
 
@@ -45,6 +59,14 @@ type listedAgent struct {
 }
 
 func (a *App) runList(opts *listOptions) error {
+	filter := make([]string, 0, len(opts.harnesses))
+	for _, name := range opts.harnesses {
+		id, err := agent.ParseHarness(name)
+		if err != nil {
+			return err
+		}
+		filter = append(filter, string(id))
+	}
 	lockPath := state.LockPath(a.WorkDir, a.Env.ConfigHome(), opts.global)
 	lock, err := state.LoadLock(lockPath)
 	if err != nil {
@@ -62,6 +84,9 @@ func (a *App) runList(opts *listOptions) error {
 			Origin: string(locked.Origin),
 		}
 		for _, artifact := range locked.Artifacts {
+			if len(filter) > 0 && !slices.Contains(filter, artifact.Harness) {
+				continue
+			}
 			path := artifact.Path
 			if !filepath.IsAbs(path) {
 				path = filepath.Join(a.WorkDir, filepath.FromSlash(path))
@@ -84,41 +109,83 @@ func (a *App) runList(opts *listOptions) error {
 			}
 			entry.Artifacts = append(entry.Artifacts, item)
 		}
-		listed = append(listed, entry)
+		if len(entry.Artifacts) > 0 {
+			listed = append(listed, entry)
+		}
 	}
-	out := newPrinter(a.Stdout, opts.json)
+	out := a.printer(opts.json)
 	if opts.json {
 		return out.emitJSON(listed)
 	}
 	if len(listed) == 0 {
-		fmt.Fprintf(a.Stdout, "No agents installed (%s).\n", lockPath)
+		fmt.Fprintf(out.w, "No agents installed (%s).\n", lockPath)
+		if !opts.global {
+			fmt.Fprintln(out.w, out.styles.dim.Render("Try listing user-scope agents with -g."))
+		}
 		return nil
 	}
+	a.listTable(out, listed)
+	return nil
+}
+
+// listTable prints one row per installed artifact as borderless, aligned columns:
+// styled in a terminal, plain text otherwise.
+func (a *App) listTable(out *printer, listed []listedAgent) {
+	s := out.styles
+	const statusColumn = 3
+	var rows [][]string
 	for _, entry := range listed {
-		fmt.Fprintf(
-			a.Stdout,
-			"%s  from %s (%s)\n",
-			entry.Agent,
-			sourceLabel(entry.Source),
-			entry.Origin,
-		)
+		name := entry.Agent
+		if entry.Origin == string(state.OriginDependency) {
+			name += " (dependency)"
+		}
 		for _, artifact := range entry.Artifacts {
-			line := fmt.Sprintf(
-				"  %-9s %-9s %-8s %s",
-				artifact.Harness,
-				artifact.Variant,
-				artifact.Status,
-				artifact.Path,
-			)
+			harnessCell := artifact.Harness
 			for _, binding := range artifact.Bindings {
 				if len(binding) > 0 {
-					line += " [" + formatSettings(binding) + "]"
+					harnessCell += " [" + formatSettings(binding) + "]"
 				}
 			}
-			fmt.Fprintln(a.Stdout, line)
+			rows = append(rows, []string{
+				name, harnessCell, artifact.Variant, artifact.Status,
+				displayPath(a.WorkDir, artifact.Path), sourceLabel(entry.Source),
+			})
 		}
 	}
-	return nil
+	cell := lipgloss.NewStyle().PaddingRight(2)
+	rendered := table.New().
+		Border(lipgloss.HiddenBorder()).
+		BorderTop(false).BorderBottom(false).BorderLeft(false).BorderRight(false).
+		BorderHeader(false).BorderColumn(false).
+		Headers("AGENT", "HARNESS", "VARIANT", "STATUS", "PATH", "SOURCE").
+		Rows(rows...).
+		StyleFunc(func(row, col int) lipgloss.Style {
+			switch {
+			case row == table.HeaderRow:
+				return cell.Inherit(s.heading)
+			case col == 0:
+				return cell.Inherit(s.title)
+			case col == statusColumn && rows[row][col] == "ok":
+				return cell.Inherit(s.create)
+			case col == statusColumn:
+				return cell.Inherit(s.blocked)
+			default:
+				return cell
+			}
+		}).
+		Render()
+	for line := range strings.SplitSeq(rendered, "\n") {
+		fmt.Fprintln(out.w, strings.TrimRight(line, " "))
+	}
+}
+
+// displayPath shortens a path inside the project to a project-relative one.
+func displayPath(workDir, path string) string {
+	if rel, err := filepath.Rel(workDir, path); err == nil && rel != ".." &&
+		!strings.HasPrefix(rel, ".."+string(filepath.Separator)) {
+		return rel
+	}
+	return path
 }
 
 func artifactStatus(path, digest string) string {

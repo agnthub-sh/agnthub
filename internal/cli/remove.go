@@ -29,8 +29,9 @@ type removeOptions struct {
 func (a *App) removeCommand(ctx context.Context) *cobra.Command {
 	opts := &removeOptions{}
 	cmd := &cobra.Command{
-		Use:   "remove <agent>... | remove --clean-dependencies [dependency]...",
-		Short: "Remove installed agents, or explicitly clean up unneeded dependencies",
+		Use:     "remove [agent...]",
+		Aliases: []string{"rm"},
+		Short:   "Remove installed agents or clean up unneeded dependencies (alias: rm)",
 		Long: `Remove deletes the selected agents' files that agnthub installed and that are
 unchanged since. Modified files, files agnthub cannot prove it owns and unrelated
 harness configuration are never deleted. Companion agents and skills stay
@@ -46,10 +47,16 @@ the cleanup to them.
 A file installed for several harness bindings (e.g. one project .omp/agents file
 used by omp profiles hep and work) is only deleted when its last binding goes;
 choose a binding with --extra. Ambiguous bindings are asked about in a terminal
-and refused otherwise.`,
-		Example: `  agnthub remove reviewer
+and refused otherwise.
+
+Without agent names, a terminal user chooses the agents to remove from a list.`,
+		Example: `  # Choose installed agents interactively
+  agnthub remove
+  agnthub rm reviewer
+  agnthub rm reviewer planner --yes
   agnthub remove reviewer --harness claude --harness codex --yes
   agnthub remove reviewer --harness omp --extra omp.profile=work --yes
+  agnthub rm --global reviewer
   agnthub remove --clean-dependencies --yes
   agnthub remove --clean-dependencies code-review --global`,
 		RunE: func(_ *cobra.Command, args []string) error {
@@ -84,24 +91,27 @@ type removal struct {
 }
 
 func (a *App) runRemove(ctx context.Context, names []string, opts *removeOptions) error {
-	if !opts.clean && len(names) == 0 {
-		return errors.New(
-			"name the agents to remove, or use --clean-dependencies to clean up dependencies",
-		)
-	}
 	r := &removal{
 		app:         a,
 		opts:        opts,
 		interactive: a.Interactive && !opts.yes && !opts.json,
+	}
+	if !opts.clean && len(names) == 0 && !r.interactive {
+		return errors.New(
+			"name the agents to remove, or use --clean-dependencies to clean up dependencies",
+		)
 	}
 	if err := r.load(); err != nil {
 		return err
 	}
 	var selected []*uninstall.Unit
 	var err error
-	if opts.clean {
+	switch {
+	case opts.clean:
 		selected, err = r.dependencies(names)
-	} else {
+	case len(names) == 0:
+		selected, err = r.promptAgents(ctx)
+	default:
 		selected, err = r.agents(names)
 	}
 	if err != nil {
@@ -182,6 +192,45 @@ func (r *removal) agents(names []string) ([]*uninstall.Unit, error) {
 		selected = append(selected, filtered...)
 	}
 	return selected, nil
+}
+
+// promptAgents asks a terminal user which installed Agents to remove, offering
+// each locked Agent (within the harness filter) once with its harnesses.
+func (r *removal) promptAgents(ctx context.Context) ([]*uninstall.Unit, error) {
+	var keys []string
+	byKey := map[string][]*uninstall.Unit{}
+	for _, unit := range r.harnessFilter(r.inv.Units) {
+		if unit.Kind != uninstall.KindAgent {
+			continue
+		}
+		if _, seen := byKey[unit.Key]; !seen {
+			keys = append(keys, unit.Key)
+		}
+		byKey[unit.Key] = append(byKey[unit.Key], unit)
+	}
+	if len(keys) == 0 {
+		return nil, fmt.Errorf("no agents are installed in %s scope", r.scopeName())
+	}
+	options := make([]Option, 0, len(keys))
+	for _, key := range keys {
+		units := byKey[key]
+		label := fmt.Sprintf("%s — %s, from %s", units[0].Name, unitHarnesses(units),
+			sourceLabel(sourceJSON(units[0].Source)))
+		if units[0].Origin == state.OriginDependency {
+			label += " (dependency)"
+		}
+		options = append(options, Option{Value: key, Label: label})
+	}
+	chosen, err := r.app.Prompter.MultiSelect(ctx, "Agents to remove",
+		"Only unchanged files agnthub installed are deleted; dependencies stay installed.",
+		options)
+	if err != nil {
+		return nil, err
+	}
+	if len(chosen) == 0 {
+		return nil, errCancelled
+	}
+	return r.agents(chosen)
 }
 
 // dependencies selects the cleanup candidates: companion Agents and Skills, all
@@ -777,9 +826,5 @@ func removeTitle(title, status string) string {
 
 // display shortens paths inside the project to project-relative ones.
 func (r *removal) display(path string) string {
-	if rel, err := filepath.Rel(r.app.WorkDir, path); err == nil &&
-		!strings.HasPrefix(rel, "..") {
-		return rel
-	}
-	return path
+	return displayPath(r.app.WorkDir, path)
 }
