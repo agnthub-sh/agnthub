@@ -245,42 +245,108 @@ func codexSkillConfig(value any) string {
 	return ""
 }
 
-// codexAgentFile is the generated portable-core agent, in schema field order.
+// codexAgentFile is a generated agent, in schema field order.
 type codexAgentFile struct {
-	Name                  string `toml:"name"`
-	Description           string `toml:"description"`
-	DeveloperInstructions string `toml:"developer_instructions,multiline"`
+	Name                  string             `toml:"name"`
+	Description           string             `toml:"description"`
+	DeveloperInstructions string             `toml:"developer_instructions,multiline"`
+	Features              *codexFeatureTable `toml:"features,omitempty"`
 }
 
-func (codexAdapter) Convert(id string, portable *agent.Document) (Artifact, error) {
-	core, err := ExtractPortable(agent.Codex, id, portable)
+// codexFeatureTable holds the capability reductions conversion writes.
+type codexFeatureTable struct {
+	ShellTool bool `toml:"shell_tool"`
+}
+
+func (a codexAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics, error) {
+	if _, err := a.Native(id, variant); err != nil {
+		return nil, err
+	}
+	fields, _ := decodeCodexAgent(variant.Path, variant.Raw)
+	sem := &Semantics{Source: agent.Codex}
+	sem.ID, _ = fields["name"].(string)
+	sem.Description, _ = fields["description"].(string)
+	sem.Instructions, _ = fields["developer_instructions"].(string)
+	for _, key := range sortedKeys(fields) {
+		switch key {
+		case "name", "description", "developer_instructions":
+		case "model":
+			sem.Model, _ = fields[key].(string)
+		case "features":
+			table, _ := fields[key].(map[string]any)
+			for _, feature := range sortedKeys(table) {
+				if feature == "shell_tool" {
+					sem.Tools.Denied |= CapShell
+					continue
+				}
+				sem.note(
+					"omitted features.%s = false: a Codex capability other harnesses do not have",
+					feature,
+				)
+			}
+		case "skills":
+			sem.note("omitted skills settings: they only disable Codex skills")
+		default:
+			sem.note("omitted %s: model settings are model-specific", key)
+		}
+	}
+	return sem, nil
+}
+
+// Convert writes a standalone agent. Codex has no per-agent tool allowlist and
+// no agent-local read-only mode, so an Agent withholding reads, searches or
+// edits is refused; withheld shell becomes features.shell_tool = false. Web
+// search and delegation follow the parent session and are noted.
+func (a codexAdapter) Convert(sem *Semantics) (Artifact, error) {
+	check, err := begin(agent.Codex, sem)
+	if err == nil {
+		err = check.requireWithheld(CapRead|CapSearch|CapEdit,
+			"a Codex agent file has no tool allowlist or read-only mode to withhold it")
+	}
+	if err == nil {
+		err = check.requireMaxTurns()
+	}
+	if err == nil {
+		err = check.requireForeground()
+	}
 	if err != nil {
 		return Artifact{}, err
 	}
-	if !utf8.ValidString(core.Description) || !utf8.ValidString(core.Instructions) {
-		return Artifact{}, &IncompatibleError{
-			Harness: agent.Codex,
-			Reason:  "TOML requires UTF-8 text; the portable definition is not valid UTF-8",
-		}
+	if !utf8.ValidString(sem.Description) || !utf8.ValidString(sem.Instructions) {
+		return Artifact{}, check.refuse("TOML requires UTF-8 text; the %s is not valid UTF-8",
+			sem.sourceLabel())
+	}
+	check.noteWithheld(CapWeb|CapDelegate,
+		"Codex agents use the session's web search and subagent settings")
+	if sem.Tools.Restricted {
+		check.note(
+			"Codex agents keep the session's MCP servers; an agent file cannot withhold them",
+		)
 	}
 	file := codexAgentFile{
-		Name:                  core.ID,
-		Description:           core.Description,
-		DeveloperInstructions: core.Instructions,
+		Name:                  sem.ID,
+		Description:           sem.Description,
+		DeveloperInstructions: sem.Instructions,
+	}
+	if !sem.Tools.Allows(CapShell) {
+		file.Features = &codexFeatureTable{ShellTool: false}
 	}
 	content, err := toml.Marshal(file)
 	if err != nil {
-		return Artifact{}, fmt.Errorf("serialize Codex agent %q: %w", id, err)
+		return Artifact{}, fmt.Errorf("serialize Codex agent %q: %w", sem.ID, err)
 	}
 	var parsed codexAgentFile
-	if err := toml.Unmarshal(content, &parsed); err != nil || parsed != file {
-		return Artifact{}, fmt.Errorf("serialize Codex agent %q: text does not round-trip", id)
+	if err := toml.Unmarshal(content, &parsed); err != nil || parsed.Name != file.Name ||
+		parsed.Description != file.Description ||
+		parsed.DeveloperInstructions != file.DeveloperInstructions ||
+		(parsed.Features == nil) != (file.Features == nil) {
+		return Artifact{}, fmt.Errorf("serialize Codex agent %q: text does not round-trip", sem.ID)
 	}
-	return Artifact{
-		FileName:  id + ".toml",
+	return selfCheck(a, sem.ID, Artifact{
+		FileName:  sem.ID + ".toml",
 		Content:   content,
 		Generated: true,
-		Converter: "codex/v1",
-		Notes:     core.OmissionNotes(),
-	}, nil
+		Converter: converterID(agent.Codex),
+		Notes:     check.notes,
+	})
 }

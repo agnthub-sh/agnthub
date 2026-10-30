@@ -5,6 +5,7 @@ import (
 	"math"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strings"
 
 	"github.com/heynemann/agnthub/internal/agent"
@@ -234,38 +235,134 @@ func isPositiveInt(value any) bool {
 	}
 }
 
-func (geminiAdapter) Convert(id string, portable *agent.Document) (Artifact, error) {
-	if portable != nil {
-		for _, key := range delegationKeys {
-			if _, ok := portable.Frontmatter[key]; ok {
-				return Artifact{}, &IncompatibleError{
-					Harness: agent.Gemini,
-					Reason: fmt.Sprintf(
-						"portable definition declares %q, but Gemini CLI subagents cannot invoke other agents",
-						key,
-					),
-				}
+// geminiToolTable maps Gemini CLI built-in tool names (0.66) to capabilities.
+// Core names are what conversion writes.
+var geminiToolTable = toolTable{
+	tools: []nativeTool{
+		{name: "read_file", cap: CapRead, core: true},
+		{name: "list_directory", cap: CapRead, core: true},
+		{name: "read_many_files", cap: CapRead},
+		{name: "glob", cap: CapSearch, core: true},
+		{name: "grep_search", cap: CapSearch, core: true},
+		{name: "search_file_content", cap: CapSearch},
+		{name: "replace", cap: CapEdit, core: true},
+		{name: "write_file", cap: CapEdit, core: true},
+		{name: "run_shell_command", cap: CapShell, core: true},
+		{name: "web_fetch", cap: CapWebFetch, core: true},
+		{name: "google_web_search", cap: CapWebSearch, core: true},
+		{name: "write_todos", cap: CapTodo, core: true},
+		{name: "tracker_create_task", cap: CapTodo},
+		{name: "tracker_update_task", cap: CapTodo},
+		{name: "tracker_get_task", cap: CapTodo},
+		{name: "tracker_list_tasks", cap: CapTodo},
+		{name: "tracker_add_dependency", cap: CapTodo},
+		{name: "tracker_visualize", cap: CapTodo},
+		{name: "activate_skill", cap: CapSkill, core: true},
+	},
+	helpers: map[string]string{
+		"ask_user":        "asks the user a question in Gemini CLI",
+		"enter_plan_mode": "enters Gemini CLI plan mode",
+		"exit_plan_mode":  "leaves Gemini CLI plan mode",
+		"complete_task":   "Gemini CLI adds it to every subagent",
+		"update_topic":    "Gemini CLI removes it from subagents",
+	},
+	mcp: func(name string) bool {
+		return strings.HasPrefix(name, "mcp_") || name == "read_mcp_resource" ||
+			name == "list_mcp_resources"
+	},
+}
+
+// geminiAllMCP keeps every MCP tool in an enumerated tools list.
+const geminiAllMCP = "mcp_*"
+
+func (a geminiAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics, error) {
+	if _, err := a.Native(id, variant); err != nil {
+		return nil, err
+	}
+	doc, _ := agent.ParseMarkdown(variant.Path, variant.Raw)
+	sem := &Semantics{
+		ID:           id,
+		Description:  doc.String("description"),
+		Instructions: doc.Body,
+		Source:       agent.Gemini,
+	}
+	for _, key := range sortedKeys(doc.Frontmatter) {
+		value := doc.Frontmatter[key]
+		switch key {
+		case "name", "description":
+		case "kind":
+			if value == "remote" {
+				sem.unsupported(key, "a remote A2A agent")
 			}
+		case "display_name":
+			sem.note("omitted display_name: cosmetic")
+		case "model":
+			sem.Model, _ = value.(string)
+		case "temperature":
+			sem.note("omitted temperature: model tuning is model-specific")
+		case "max_turns":
+			sem.MaxTurns, _ = positiveInt(value)
+		case "tools":
+			names, _ := nameList(value)
+			if !slices.Contains(names, "*") {
+				sem.allow("tools", names, geminiToolTable)
+			}
+		default:
+			meaning := map[string]string{
+				"mcp_servers":  "MCP servers scoped to the agent",
+				"timeout_mins": "stops the agent after a time limit",
+			}[key]
+			if meaning == "" {
+				meaning = "a Gemini CLI field with no verified equivalent"
+			}
+			sem.unsupported(key, meaning)
 		}
 	}
-	core, err := ExtractPortable(agent.Gemini, id, portable)
+	return sem, nil
+}
+
+// Convert writes a Gemini CLI local subagent. Gemini subagents cannot invoke
+// other agents, so an allowlist granting delegation is refused. Gemini has no
+// denylist: one becomes the remaining built-in tools plus every MCP tool.
+func (a geminiAdapter) Convert(sem *Semantics) (Artifact, error) {
+	check, err := begin(agent.Gemini, sem)
+	if err == nil {
+		err = check.requireGrant(CapDelegate, "Gemini CLI subagents cannot invoke other agents")
+	}
+	if err == nil {
+		err = check.requireForeground()
+	}
 	if err != nil {
 		return Artifact{}, err
 	}
-	content, err := agent.RenderMarkdown([]agent.Field{
-		{Key: "name", Value: core.ID},
-		{Key: "description", Value: core.Description},
-	}, core.Instructions)
+	fields := []agent.Field{
+		{Key: "name", Value: sem.ID},
+		{Key: "description", Value: sem.Description},
+	}
+	if sem.Tools.Limited() {
+		tools := toolNames(geminiToolTable.tools, sem.Tools.Effective())
+		if !sem.Tools.Restricted {
+			tools = append(tools, geminiAllMCP)
+		}
+		if tools == nil {
+			tools = []string{}
+		}
+		fields = append(fields, agent.Field{Key: "tools", Value: tools})
+	}
+	if sem.MaxTurns > 0 {
+		fields = append(fields, agent.Field{Key: "max_turns", Value: sem.MaxTurns})
+	}
+	content, err := agent.RenderMarkdown(fields, sem.Instructions)
 	if err != nil {
 		return Artifact{}, err
 	}
-	return Artifact{
-		FileName:  id + ".md",
+	return selfCheck(a, sem.ID, Artifact{
+		FileName:  sem.ID + ".md",
 		Content:   content,
 		Generated: true,
-		Converter: "gemini/v1",
-		Notes:     core.OmissionNotes(),
-	}, nil
+		Converter: converterID(agent.Gemini),
+		Notes:     check.notes,
+	})
 }
 
 // DependencyNotes reports that installing companion Agents does not let a Gemini

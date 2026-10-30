@@ -178,27 +178,354 @@ func (opencodeAdapter) Native(id string, variant *agent.VariantFile) (Artifact, 
 	return Artifact{FileName: id + ".md", Content: variant.Raw, Notes: notes}, nil
 }
 
-// Convert writes the portable core as an explicit subagent: OpenCode's default
-// mode would otherwise also register a registry role as a primary agent.
-func (opencodeAdapter) Convert(id string, portable *agent.Document) (Artifact, error) {
-	core, err := ExtractPortable(agent.OpenCode, id, portable)
+// opencodeActions maps OpenCode permission actions, V1 and V2 spellings, to
+// capabilities. Write, patch and multiedit are gated by edit; V2 renamed bash to
+// shell and task to subagent.
+var opencodeActions = map[string]Capability{
+	"read":        CapRead,
+	"glob":        CapSearch,
+	"grep":        CapSearch,
+	"edit":        CapEdit,
+	"write":       CapEdit,
+	"patch":       CapEdit,
+	"apply_patch": CapEdit,
+	"multiedit":   CapEdit,
+	"bash":        CapShell,
+	"shell":       CapShell,
+	"webfetch":    CapWebFetch,
+	"websearch":   CapWebSearch,
+	"task":        CapDelegate,
+	"subagent":    CapDelegate,
+	"todowrite":   CapTodo,
+	"skill":       CapSkill,
+}
+
+// opencodeRenderActions are the V1 permission keys conversion writes per
+// capability; OpenCode V2 maps bash to shell and task to subagent.
+var opencodeRenderActions = []struct {
+	cap     Capability
+	actions []string
+}{
+	{CapRead, []string{"read"}},
+	{CapSearch, []string{"glob", "grep"}},
+	{CapEdit, []string{"edit"}},
+	{CapShell, []string{"bash"}},
+	{CapWebFetch, []string{"webfetch"}},
+	{CapWebSearch, []string{"websearch"}},
+	{CapDelegate, []string{"task"}},
+	{CapTodo, []string{"todowrite"}},
+	{CapSkill, []string{"skill"}},
+}
+
+// opencodeInertActions grant nothing an agent could lose: removed V1 actions,
+// the user question tool, loop detection and the always-denied browser.
+var opencodeInertActions = map[string]bool{
+	"list": true, "lsp": true, "codesearch": true, "todoread": true,
+	"doom_loop": true, "question": true, "browser": true,
+}
+
+// opencodeTuning are model-tuning fields conversion omits with a note.
+var opencodeTuning = map[string]bool{
+	"temperature": true, "top_p": true, "variant": true, "options": true,
+	"request": true, "reasoningEffort": true,
+}
+
+// opencodeRule is one permission rule; OpenCode applies the last match.
+type opencodeRule struct {
+	action string
+	effect string
+	// pattern is the command, path or agent pattern of a scoped rule.
+	pattern string
+	// scoped reports a rule limited to some commands, paths or agents.
+	scoped bool
+}
+
+func (a opencodeAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics, error) {
+	if _, err := a.Native(id, variant); err != nil {
+		return nil, err
+	}
+	doc, _ := agent.ParseMarkdown(variant.Path, variant.Raw)
+	sem := &Semantics{
+		ID:           id,
+		Description:  doc.String("description"),
+		Instructions: doc.Body,
+		Source:       agent.OpenCode,
+	}
+	var legacy, current, ordered []opencodeRule
+	for _, key := range sortedKeys(doc.Frontmatter) {
+		value := doc.Frontmatter[key]
+		switch {
+		case key == "description" || key == "name":
+		case key == "model":
+			sem.Model = fmt.Sprint(value)
+		case key == "mode":
+			if value == "primary" {
+				sem.note(
+					"OpenCode offers it as a primary agent; other harnesses install it as a subagent",
+				)
+			}
+		case key == "steps" || key == "maxSteps":
+			if turns, ok := positiveInt(value); ok {
+				sem.MaxTurns = turns
+			}
+		case key == "color" || key == "hidden":
+			sem.note("omitted %s: cosmetic", key)
+		case key == "disable" || key == "disabled":
+			if value == true {
+				sem.unsupported(key, "OpenCode does not load the agent")
+			}
+		case key == "prompt" || key == "system":
+			sem.unsupported(key, "a prompt outside the Markdown body")
+		case key == "tools":
+			legacy = opencodeToolRules(sem, doc.Raw, value)
+		case key == "permission":
+			current = opencodePermissionRules(sem, doc.Raw, value)
+		case key == "permissions":
+			ordered = opencodeOrderedRules(sem, value)
+		case opencodeTuning[key]:
+			sem.note("omitted %s: model tuning is model-specific", key)
+		case harmlessPortableKeys[key]:
+			sem.note("omitted %s: descriptive metadata", key)
+		default:
+			sem.note("omitted %s: OpenCode passes unknown fields to the model provider", key)
+		}
+	}
+	opencodePolicy(sem, append(append(legacy, current...), ordered...))
+	return sem, nil
+}
+
+// opencodeToolRules reads the legacy tools booleans in authored order.
+func opencodeToolRules(sem *Semantics, raw []byte, value any) []opencodeRule {
+	tools, _ := value.(map[string]any)
+	rules := make([]opencodeRule, 0, len(tools))
+	for _, name := range agent.MappingKeys(raw, "tools") {
+		effect := "deny"
+		if tools[name] == true {
+			effect = "allow"
+		}
+		rules = append(rules, opencodeRule{action: name, effect: effect})
+	}
+	if len(rules) != len(tools) {
+		sem.unsupported("tools", "a tool map agnthub cannot read")
+	}
+	return rules
+}
+
+// opencodePermissionRules reads the V1 permission field in authored order.
+func opencodePermissionRules(sem *Semantics, raw []byte, value any) []opencodeRule {
+	if effect, ok := value.(string); ok {
+		return []opencodeRule{{action: "*", effect: effect}}
+	}
+	actions, _ := value.(map[string]any)
+	rules := make([]opencodeRule, 0, len(actions))
+	for _, action := range agent.MappingKeys(raw, "permission") {
+		switch rule := actions[action].(type) {
+		case string:
+			rules = append(rules, opencodeRule{action: action, effect: rule})
+		case map[string]any:
+			for pattern, effect := range rule {
+				text, _ := effect.(string)
+				rules = append(rules, opencodeRule{
+					action: action, effect: text, pattern: pattern, scoped: pattern != "*",
+				})
+			}
+		}
+	}
+	if len(agent.MappingKeys(raw, "permission")) != len(actions) {
+		sem.unsupported("permission", "a permission map agnthub cannot read")
+	}
+	return rules
+}
+
+// opencodeOrderedRules reads the V2 permissions list of {action, resource, effect}.
+func opencodeOrderedRules(sem *Semantics, value any) []opencodeRule {
+	entries, ok := value.([]any)
+	if !ok {
+		sem.unsupported("permissions", "a permission list agnthub cannot read")
+		return nil
+	}
+	rules := make([]opencodeRule, 0, len(entries))
+	for _, entry := range entries {
+		fields, _ := entry.(map[string]any)
+		action, _ := fields["action"].(string)
+		effect, _ := fields["effect"].(string)
+		resource, hasResource := fields["resource"].(string)
+		if action == "" || effect == "" {
+			sem.unsupported("permissions", "a permission list agnthub cannot read")
+			return nil
+		}
+		rules = append(rules, opencodeRule{
+			action: action, effect: effect, pattern: resource,
+			scoped: hasResource && resource != "*",
+		})
+	}
+	return rules
+}
+
+// opencodeEnvRules are OpenCode's built-in read rules protecting .env files.
+// Conversion repeats them under read, since an agent's read: allow would
+// otherwise override them, and parsing ignores them.
+var opencodeEnvRules = map[string]string{
+	"*":             "allow",
+	"*.env":         "ask",
+	"*.env.*":       "ask",
+	"*.env.example": "allow",
+}
+
+// opencodePolicy evaluates rules like OpenCode: everything is allowed unless
+// the last rule matching an action says otherwise. A trailing "*" deny makes the
+// agent an allowlist. Approval prompts and scoped rules have no equivalent.
+func opencodePolicy(sem *Semantics, all []opencodeRule) {
+	rules := make([]opencodeRule, 0, len(all))
+	for _, rule := range all {
+		if rule.scoped && opencodeNormal(rule.action) == "read" &&
+			opencodeEnvRules[rule.pattern] == rule.effect {
+			continue
+		}
+		rules = append(rules, rule)
+	}
+	effectOf := func(action string) string {
+		effect := "allow"
+		for _, rule := range rules {
+			if !rule.scoped && (rule.action == "*" || opencodeNormal(rule.action) == action) {
+				effect = rule.effect
+			}
+		}
+		return effect
+	}
+	for _, rule := range rules {
+		field := "permission." + rule.action
+		switch {
+		case opencodeInertActions[rule.action]:
+		case rule.scoped:
+			sem.unsupported(field, "allows or denies only some commands, paths or agents")
+		case rule.effect == "ask":
+			sem.unsupported(field, "asks the user before each use, which other harnesses "+
+				"cannot require for one agent")
+		}
+	}
+	restricted := effectOf("*") == "deny"
+	sem.Tools.Restricted = restricted
+	for _, entry := range opencodeRenderActions {
+		var allowed, denied bool
+		for _, action := range entry.actions {
+			switch effectOf(action) {
+			case "allow":
+				allowed = true
+			case "deny":
+				denied = true
+			}
+		}
+		switch {
+		case allowed && denied:
+			sem.unsupported("permission "+strings.Join(entry.actions, "/"),
+				"allows only part of "+entry.cap.String())
+		case allowed && restricted:
+			sem.Tools.Allowed |= entry.cap
+		case denied && !restricted:
+			sem.Tools.Denied |= entry.cap
+		}
+	}
+	opencodeOtherActions(sem, rules, effectOf, restricted)
+}
+
+// opencodeOtherActions handles actions outside the capability set: MCP and
+// custom tools, external directories and Code Mode.
+func opencodeOtherActions(
+	sem *Semantics,
+	rules []opencodeRule,
+	effectOf func(string) string,
+	restricted bool,
+) {
+	seen := map[string]bool{}
+	for _, rule := range rules {
+		action := rule.action
+		_, known := opencodeActions[action]
+		if action == "*" || known || opencodeInertActions[action] || seen[action] {
+			continue
+		}
+		seen[action] = true
+		effect := effectOf(action)
+		switch {
+		case action == "external_directory" && effect != "allow":
+			sem.unsupported("permission.external_directory",
+				"limits access outside the project directory")
+		case action == "external_directory":
+		case action == "execute" && effect == "deny" && !restricted:
+			sem.unsupported("permission.execute", "withholds MCP tools reached through Code Mode")
+		case action == "execute":
+		case effect == "allow" && restricted:
+			sem.Tools.Unknown = append(sem.Tools.Unknown, action)
+		case effect == "deny" && !restricted:
+			sem.unsupported("permission."+action,
+				"withholds a custom or MCP tool other harnesses cannot withhold")
+		}
+	}
+}
+
+// opencodeNormal maps V1 and V2 action spellings onto the keys conversion writes.
+func opencodeNormal(action string) string {
+	switch action {
+	case "write", "patch", "apply_patch", "multiedit":
+		return "edit"
+	case "shell":
+		return "bash"
+	case "subagent":
+		return "task"
+	}
+	return action
+}
+
+// Convert writes an explicit subagent: OpenCode's default mode would otherwise
+// also register a registry role as a primary agent. Tool policies become a V1
+// permission map, which OpenCode V2 still reads: an allowlist denies "*" first
+// (OpenCode applies the last matching rule, so this also hides MCP tools) and
+// then allows each granted action.
+func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
+	check, err := begin(agent.OpenCode, sem)
+	if err == nil {
+		err = check.requireForeground()
+	}
 	if err != nil {
 		return Artifact{}, err
 	}
-	content, err := agent.RenderMarkdown([]agent.Field{
-		{Key: "description", Value: core.Description},
+	fields := []agent.Field{
+		{Key: "description", Value: sem.Description},
 		{Key: "mode", Value: "subagent"},
-	}, core.Instructions)
+	}
+	if sem.Tools.Limited() {
+		permission := map[string]any{}
+		if sem.Tools.Restricted {
+			permission["*"] = "deny"
+		}
+		for _, entry := range opencodeRenderActions {
+			for _, action := range entry.actions {
+				switch {
+				case sem.Tools.Restricted && sem.Tools.Allowed&entry.cap != 0 && action == "read":
+					permission[action] = opencodeEnvRules
+				case sem.Tools.Restricted && sem.Tools.Allowed&entry.cap != 0:
+					permission[action] = "allow"
+				case !sem.Tools.Restricted && sem.Tools.Denied&entry.cap != 0:
+					permission[action] = "deny"
+				}
+			}
+		}
+		fields = append(fields, agent.Field{Key: "permission", Value: permission})
+	}
+	if sem.MaxTurns > 0 {
+		fields = append(fields, agent.Field{Key: "steps", Value: sem.MaxTurns})
+	}
+	content, err := agent.RenderMarkdown(fields, sem.Instructions)
 	if err != nil {
 		return Artifact{}, err
 	}
-	return Artifact{
-		FileName:  id + ".md",
+	return selfCheck(a, sem.ID, Artifact{
+		FileName:  sem.ID + ".md",
 		Content:   content,
 		Generated: true,
-		Converter: "opencode/v1",
-		Notes:     core.OmissionNotes(),
-	}, nil
+		Converter: converterID(agent.OpenCode),
+		Notes:     check.notes,
+	})
 }
 
 func (opencodeAdapter) Detect(ctx Context) bool {

@@ -400,7 +400,7 @@ func TestOMPNativeVariantsStayFaithful(t *testing.T) {
 		t.Fatal(err)
 	}
 	var incompatible *harness.IncompatibleError
-	if _, err := installer.Convert("reviewer", doc); !errors.As(err, &incompatible) {
+	if _, err := convert(installer, "reviewer", doc); !errors.As(err, &incompatible) {
 		t.Fatalf("portable tools must refuse conversion, got %v", err)
 	}
 }

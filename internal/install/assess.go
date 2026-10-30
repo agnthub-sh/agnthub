@@ -15,7 +15,7 @@ type Status string
 const (
 	// StatusNative installs the authored Variant, which the Harness accepts.
 	StatusNative Status = "native"
-	// StatusGenerated converts the portable core.
+	// StatusGenerated converts the portable core or another Harness's Variant.
 	StatusGenerated Status = "generated"
 	// StatusIncompatible has no faithful representation for the Harness.
 	StatusIncompatible Status = "incompatible"
@@ -52,7 +52,7 @@ func Assess(
 		out.Status, out.Reason = StatusIncompatible, err.Error()
 		return out
 	}
-	artifact, sourcePath, _, err := render(installer, def)
+	artifact, sourcePath, _, err := render(registry, installer, def)
 	if err != nil {
 		var incompatible *harness.IncompatibleError
 		var invalid *harness.InvalidVariantError

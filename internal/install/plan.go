@@ -313,7 +313,7 @@ func (p *Planner) item(req Request, target Target, harnessID agent.HarnessID) (I
 		}
 		return item, err
 	}
-	artifact, sourcePath, sourceRaw, err := render(installer, def)
+	artifact, sourcePath, sourceRaw, err := render(p.Registry, installer, def)
 	if err != nil {
 		var incompatible *harness.IncompatibleError
 		var invalid *harness.InvalidVariantError
@@ -371,7 +371,9 @@ func effectiveBinding(
 }
 
 // render prefers an explicit Variant; an invalid Variant never falls back.
+// Otherwise it converts the portable core or another Harness's Variant.
 func render(
+	registry *harness.Registry,
 	installer harness.Installer,
 	def *agent.Definition,
 ) (harness.Artifact, string, []byte, error) {
@@ -379,11 +381,7 @@ func render(
 		artifact, err := installer.Native(def.ID, variant)
 		return artifact, variant.Path, variant.Raw, err
 	}
-	artifact, err := installer.Convert(def.ID, def.Portable)
-	if err != nil {
-		return artifact, "", nil, err
-	}
-	return artifact, def.Portable.Path, def.Portable.Raw, nil
+	return registry.Generate(installer, def)
 }
 
 // dependencies returns the Agent's common Dependencies plus its Variant's for h.

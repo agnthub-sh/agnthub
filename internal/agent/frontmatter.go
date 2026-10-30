@@ -153,3 +153,30 @@ func RenderMarkdown(fields []Field, body string) ([]byte, error) {
 	buf.WriteString(body)
 	return buf.Bytes(), nil
 }
+
+// MappingKeys returns the keys of the frontmatter mapping field in authored
+// order, or nil when field is absent or not a mapping. Decoded frontmatter maps
+// lose key order, which matters where a Harness applies the last matching rule.
+func MappingKeys(raw []byte, field string) []string {
+	header, _, err := splitFrontmatter("", raw)
+	if err != nil {
+		return nil
+	}
+	var node yaml.Node
+	if yaml.Unmarshal([]byte(header), &node) != nil || len(node.Content) != 1 {
+		return nil
+	}
+	root := node.Content[0]
+	for i := 0; i+1 < len(root.Content); i += 2 {
+		if root.Content[i].Value != field || root.Content[i+1].Kind != yaml.MappingNode {
+			continue
+		}
+		value := root.Content[i+1]
+		keys := make([]string, 0, len(value.Content)/2)
+		for j := 0; j+1 < len(value.Content); j += 2 {
+			keys = append(keys, value.Content[j].Value)
+		}
+		return keys
+	}
+	return nil
+}

@@ -29,7 +29,8 @@ func TestCopilotIdentityStripsAgentSuffixAndIgnoresDisplayName(t *testing.T) {
 }
 
 func TestCopilotConversionWritesNameDescriptionAndBody(t *testing.T) {
-	artifact, err := installer(t, agent.Copilot).Convert(
+	artifact, err := convert(
+		installer(t, agent.Copilot),
 		"reviewer",
 		portable(t, "---\nname: reviewer\ndescription: Reviews\n---\nReview it.\n"),
 	)
@@ -42,13 +43,14 @@ func TestCopilotConversionWritesNameDescriptionAndBody(t *testing.T) {
 	}
 	if artifact.FileName != "reviewer.agent.md" || doc.String("name") != "reviewer" ||
 		doc.String("description") != "Reviews" || doc.Body != "Review it.\n" ||
-		len(doc.Frontmatter) != 2 || artifact.Converter != "copilot/v1" || !artifact.Generated {
+		len(doc.Frontmatter) != 2 || artifact.Converter != "copilot/v2" || !artifact.Generated {
 		t.Fatalf("unexpected conversion: %+v\n%s", artifact, artifact.Content)
 	}
 }
 
 func TestCopilotConversionRefusesBehavioralFields(t *testing.T) {
-	_, err := installer(t, agent.Copilot).Convert(
+	_, err := convert(
+		installer(t, agent.Copilot),
 		"reviewer",
 		portable(t, "---\nname: reviewer\ndescription: Reviews\nreadonly: true\n---\nbody\n"),
 	)

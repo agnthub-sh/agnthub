@@ -70,7 +70,8 @@ type Artifact struct {
 	// FileName is the name inside the destination directory.
 	FileName string
 	Content  []byte
-	// Generated reports conversion from the portable core rather than an authored Variant.
+	// Generated reports conversion (from the portable core or another Harness's
+	// Variant) rather than this Harness's authored Variant.
 	Generated bool
 	// Converter identifies the conversion contract for generated content.
 	Converter string
@@ -118,8 +119,11 @@ type Installer interface {
 	Destination(ctx Context, scope Scope, settings Settings) (Destination, error)
 	// Native returns the artifact for an authored Variant, validating it for id.
 	Native(id string, variant *agent.VariantFile) (Artifact, error)
-	// Convert generates an artifact from the portable core or refuses.
-	Convert(id string, portable *agent.Document) (Artifact, error)
+	// Semantics parses an authored Variant of this Harness into harness-neutral
+	// Semantics so other Harnesses can convert it.
+	Semantics(id string, variant *agent.VariantFile) (*Semantics, error)
+	// Convert renders Semantics into a generated artifact or refuses.
+	Convert(sem *Semantics) (Artifact, error)
 	// Detect reports whether the Harness appears to be available locally.
 	Detect(ctx Context) bool
 }

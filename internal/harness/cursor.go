@@ -7,6 +7,8 @@ import (
 	"regexp"
 	"strings"
 
+	"go.yaml.in/yaml/v3"
+
 	"github.com/heynemann/agnthub/internal/agent"
 )
 
@@ -206,37 +208,113 @@ func unquote(value string) string {
 	return value
 }
 
-func (cursorAdapter) Convert(id string, portable *agent.Document) (Artifact, error) {
-	core, err := ExtractPortable(agent.Cursor, id, portable)
-	if err != nil {
-		return Artifact{}, err
+// cursorReadonlyCaps are what a Cursor readonly agent keeps: it blocks edits,
+// every shell command and MCP tool calls. Delegation is not carried, since a
+// delegated agent could edit.
+const cursorReadonlyCaps = CapRead | CapSearch | CapWeb | CapTodo | CapSkill
+
+func (a cursorAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics, error) {
+	if _, err := a.Native(id, variant); err != nil {
+		return nil, err
 	}
-	notes := core.OmissionNotes()
-	description := strings.Join(strings.Fields(core.Description), " ")
-	if description != strings.TrimSpace(core.Description) {
-		notes = append(notes, "description joined onto one line: Cursor reads one line per key")
+	doc, _ := agent.ParseMarkdown(variant.Path, variant.Raw)
+	sem := &Semantics{
+		ID:           id,
+		Description:  doc.String("description"),
+		Instructions: doc.Body,
+		Source:       agent.Cursor,
 	}
-	content, err := agent.RenderMarkdown([]agent.Field{
-		{Key: "name", Value: core.ID},
-		{Key: "description", Value: description},
-	}, core.Instructions)
-	if err != nil {
-		return Artifact{}, err
-	}
-	seen := cursorFrontmatter(content)
-	if seen["name"] != core.ID || unquote(seen["description"]) != description {
-		return Artifact{}, &IncompatibleError{
-			Harness: agent.Cursor,
-			Reason:  "description cannot be written in a form Cursor reads unchanged; author a native cursor variant",
+	for _, key := range sortedKeys(doc.Frontmatter) {
+		value := doc.Frontmatter[key]
+		switch key {
+		case "name", "description":
+		case "model":
+			sem.Model, _ = value.(string)
+		case "readonly":
+			if value == true {
+				sem.Tools = ToolPolicy{Restricted: true, Allowed: cursorReadonlyCaps}
+				sem.note("Cursor readonly: converted without edits, shell, MCP tools or delegation")
+			}
+		case "is_background":
+			sem.Background = value == true
+		default:
+			sem.note("omitted %s: descriptive metadata", key)
 		}
 	}
-	return Artifact{
-		FileName:  id + ".md",
+	return sem, nil
+}
+
+// Convert writes a Cursor subagent. Cursor has no tool allowlist: readonly: true
+// is its only restriction and blocks edits and every shell command together, so
+// an Agent withholding exactly one of them is refused.
+func (a cursorAdapter) Convert(sem *Semantics) (Artifact, error) {
+	check, err := begin(agent.Cursor, sem)
+	if err == nil {
+		err = check.requireWithheld(CapRead|CapSearch, "Cursor cannot withhold it")
+	}
+	if err == nil {
+		err = check.requireMaxTurns()
+	}
+	readonly := !sem.Tools.Allows(CapEdit)
+	switch {
+	case err != nil:
+	case readonly && sem.Tools.Allows(CapShell):
+		err = check.refuse("it uses shell without edits, but Cursor's only restriction " +
+			"(readonly) blocks every shell command")
+	case !readonly && !sem.Tools.Allows(CapShell):
+		err = check.refuse("it excludes shell but allows edits, and Cursor can only " +
+			"withhold shell by making the agent read-only")
+	}
+	if err != nil {
+		return Artifact{}, err
+	}
+	check.noteWithheld(CapWeb|CapDelegate, "Cursor cannot withhold them from an agent")
+	if sem.Tools.Restricted && !readonly {
+		check.note("Cursor agents keep the session's MCP tools unless read-only")
+	}
+	description := strings.Join(strings.Fields(sem.Description), " ")
+	if description != strings.TrimSpace(sem.Description) {
+		check.note("description joined onto one line: Cursor reads one line per key")
+	}
+	// YAML's default style may single-quote a description containing ": ",
+	// doubling its apostrophes; Cursor keeps the raw line, so fall back to a
+	// double-quoted line, which needs no escapes unless the text has '"' or '\'.
+	var content []byte
+	for _, value := range []any{
+		description,
+		&yaml.Node{Kind: yaml.ScalarNode, Tag: "!!str", Style: yaml.DoubleQuotedStyle, Value: description},
+	} {
+		fields := []agent.Field{
+			{Key: "name", Value: sem.ID},
+			{Key: "description", Value: value},
+		}
+		if readonly {
+			fields = append(fields, agent.Field{Key: "readonly", Value: true})
+		}
+		if sem.Background {
+			fields = append(fields, agent.Field{Key: "is_background", Value: true})
+		}
+		rendered, err := agent.RenderMarkdown(fields, sem.Instructions)
+		if err != nil {
+			return Artifact{}, err
+		}
+		seen := cursorFrontmatter(rendered)
+		if seen["name"] == sem.ID && unquote(seen["description"]) == description {
+			content = rendered
+			break
+		}
+	}
+	if content == nil {
+		return Artifact{}, check.refuse("description cannot be written in a form Cursor " +
+			"reads unchanged; author a native cursor variant")
+	}
+	return selfCheck(a, sem.ID, Artifact{
+		FileName:  sem.ID + ".md",
 		Content:   content,
 		Generated: true,
-		Converter: "cursor/v1",
-		Notes:     notes,
-	}, nil
+		Converter: converterID(agent.Cursor),
+		Notes:     check.notes,
+	})
 }
 
 func (cursorAdapter) Detect(ctx Context) bool {

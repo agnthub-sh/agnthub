@@ -119,7 +119,7 @@ func TestCursorConversionRefusesRestrictionsInsteadOfDemotingThem(t *testing.T) 
 			t,
 			"---\nname: reviewer\ndescription: d\n"+field+"\n---\nNever edit files.\n",
 		)
-		_, err := installer(t, agent.Cursor).Convert("reviewer", doc)
+		_, err := convert(installer(t, agent.Cursor), "reviewer", doc)
 		requireIncompatible(t, err)
 	}
 }
@@ -134,11 +134,11 @@ func TestCursorConversionIsReadableByCursor(t *testing.T) {
 	for _, description := range descriptions {
 		doc := portable(t, "---\nname: reviewer\ndescription: |-\n  "+
 			strings.ReplaceAll(description, "\n", "\n  ")+"\nlicense: MIT\n---\nReview the diff.\n")
-		artifact, err := cursor.Convert("reviewer", doc)
+		artifact, err := convert(cursor, "reviewer", doc)
 		if err != nil {
 			t.Fatalf("%q: %v", description, err)
 		}
-		if !artifact.Generated || artifact.Converter != "cursor/v1" || len(artifact.Notes) == 0 {
+		if !artifact.Generated || artifact.Converter != "cursor/v2" || len(artifact.Notes) == 0 {
 			t.Fatalf("generated artifact must record converter and omissions: %+v", artifact)
 		}
 		// The generated file must pass the same checks as an authored Cursor variant.

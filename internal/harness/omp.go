@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"slices"
 	"strings"
 
 	"github.com/heynemann/agnthub/internal/agent"
@@ -300,31 +301,173 @@ func (a ompAdapter) Native(id string, variant *agent.VariantFile) (Artifact, err
 	return Artifact{FileName: id + ".md", Content: variant.Raw, Notes: notes}, nil
 }
 
-func (ompAdapter) Convert(id string, portable *agent.Document) (Artifact, error) {
-	core, err := ExtractPortable(agent.OMP, id, portable)
-	if err != nil {
-		return Artifact{}, err
+// ompTools maps omp built-in tool names (18.13, matched case-insensitively) to
+// capabilities. omp's read also fetches URLs; there is no separate fetch tool.
+var ompTools = []nativeTool{
+	{name: "read", cap: CapRead | CapWebFetch, core: true},
+	{name: "lsp", cap: CapRead},
+	{name: "grep", cap: CapSearch, core: true},
+	{name: "glob", cap: CapSearch, core: true},
+	{name: "find", cap: CapSearch, core: true},
+	{name: "search", cap: CapSearch},
+	{name: "ast_grep", cap: CapSearch},
+	{name: "edit", cap: CapEdit, core: true},
+	{name: "write", cap: CapEdit, core: true},
+	{name: "ast_edit", cap: CapEdit},
+	{name: "bash", cap: CapShell, core: true},
+	{name: "exec", cap: CapShell},
+	{name: "eval", cap: CapShell},
+	{name: "web_search", cap: CapWebSearch, core: true},
+	{name: "task", cap: CapDelegate, core: true},
+	{name: "todo", cap: CapTodo, core: true},
+}
+
+// ompHelpers are omp session tools whose omission elsewhere is harmless.
+var ompHelpers = map[string]bool{
+	"ask": true, "wait": true, "yield": true, "goal": true, "think": true,
+	"checkpoint": true, "rewind": true, "context_notes": true, "new_context": true,
+}
+
+// ompOtherBuiltins are real omp tools with no cross-harness equivalent.
+var ompOtherBuiltins = map[string]bool{
+	"debug": true, "ida": true, "github": true, "security_scan": true,
+	"memory_edit": true, "retain": true, "recall": true, "reflect": true,
+	"learn": true, "manage_skill": true,
+}
+
+// ompBehaviors are omp agent fields with no cross-harness equivalent.
+var ompBehaviors = map[string]string{
+	"autoload-skills": "skills loaded into the agent's context",
+	"output":          "a structured output schema",
+	"structured":      "structured output",
+	"blocking":        "omp blocking behavior",
+	"read-summarize":  "omp read summarization",
+	"prewalk":         "an omp prewalk pass",
+	"advisor":         "an omp advisor",
+}
+
+func (a ompAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics, error) {
+	if _, err := a.Native(id, variant); err != nil {
+		return nil, err
 	}
-	if ompReservedNames[strings.ToLower(strings.TrimSpace(core.ID))] {
-		return Artifact{}, &IncompatibleError{
-			Harness: agent.OMP,
-			Reason:  fmt.Sprintf("agent name %q is reserved by omp", core.ID),
+	doc, _ := agent.ParseMarkdown(variant.Path, variant.Raw)
+	sem := &Semantics{
+		ID:           id,
+		Description:  doc.String("description"),
+		Instructions: doc.Body,
+		Source:       agent.OMP,
+	}
+	spawnsAll := false
+	for _, key := range sortedKeys(doc.Frontmatter) {
+		value := doc.Frontmatter[key]
+		switch key {
+		case "name", "description":
+		case "model":
+			if names, ok := nameList(value); ok {
+				sem.Model = strings.Join(names, ", ")
+			}
+		case "thinking-level":
+			sem.note("omitted thinking-level: model settings are model-specific")
+		case "tools":
+			names, _ := nameList(value)
+			ompToolPolicy(sem, names)
+		case "spawns":
+			names, _ := nameList(value)
+			if !slices.Equal(names, []string{"*"}) {
+				sem.unsupported(key, "limits which agents it can delegate to")
+			}
+			spawnsAll = true
+		default:
+			if harmlessPortableKeys[key] {
+				sem.note("omitted %s: descriptive metadata", key)
+				continue
+			}
+			meaning := ompBehaviors[key]
+			if meaning == "" {
+				meaning = "an omp field with no verified equivalent"
+			}
+			sem.unsupported(key, meaning)
 		}
 	}
-	content, err := agent.RenderMarkdown([]agent.Field{
-		{Key: "name", Value: core.ID},
-		{Key: "description", Value: core.Description},
-	}, core.Instructions)
+	if spawnsAll && sem.Tools.Restricted {
+		sem.Tools.Allowed |= CapDelegate
+	}
+	return sem, nil
+}
+
+// ompToolPolicy reads an omp tools list. omp ignores names that are not
+// built-in tools, so they grant nothing.
+func ompToolPolicy(sem *Semantics, names []string) {
+	sem.Tools.Restricted = true
+	for _, name := range names {
+		lower := strings.ToLower(name)
+		if c, ok := lookupTool(ompTools, lower); ok {
+			sem.Tools.Allowed |= c
+			continue
+		}
+		switch {
+		case ompHelpers[lower]:
+			sem.note("omitted tools entry %s: an omp session helper", name)
+		case ompOtherBuiltins[lower]:
+			sem.Tools.Unknown = append(sem.Tools.Unknown, name)
+		default:
+			sem.note("omitted tools entry %s: omp ignores it, so it grants nothing", name)
+		}
+	}
+}
+
+// Convert writes an omp task agent. omp's tools list selects built-ins only:
+// MCP, extension and custom tools stay available, and read also fetches URLs.
+func (a ompAdapter) Convert(sem *Semantics) (Artifact, error) {
+	if ompReservedNames[strings.ToLower(strings.TrimSpace(sem.ID))] {
+		return Artifact{}, &IncompatibleError{
+			Harness: agent.OMP,
+			Reason:  fmt.Sprintf("agent name %q is reserved by omp", sem.ID),
+		}
+	}
+	check, err := begin(agent.OMP, sem)
+	if err == nil {
+		err = check.requireMaxTurns()
+	}
+	if err == nil {
+		err = check.requireForeground()
+	}
 	if err != nil {
 		return Artifact{}, err
 	}
-	return Artifact{
-		FileName:  id + ".md",
+	fields := []agent.Field{
+		{Key: "name", Value: sem.ID},
+		{Key: "description", Value: sem.Description},
+	}
+	if sem.Tools.Limited() {
+		effective := sem.Tools.Effective()
+		switch {
+		case effective&CapRead != 0 && effective&CapWebFetch == 0:
+			check.note("excludes web fetch, but omp's read tool also fetches URLs")
+		case effective&CapRead == 0 && effective&CapWebFetch != 0:
+			check.note("uses web fetch, which omp's read tool provides together with file reads")
+		}
+		if sem.Tools.Restricted {
+			check.note("omp keeps MCP, extension and custom tools available to agents " +
+				"with a tools list")
+		}
+		tools := toolNames(ompTools, effective)
+		if tools == nil {
+			tools = []string{}
+		}
+		fields = append(fields, agent.Field{Key: "tools", Value: tools})
+	}
+	content, err := agent.RenderMarkdown(fields, sem.Instructions)
+	if err != nil {
+		return Artifact{}, err
+	}
+	return selfCheck(a, sem.ID, Artifact{
+		FileName:  sem.ID + ".md",
 		Content:   content,
 		Generated: true,
-		Converter: "omp/v1",
-		Notes:     core.OmissionNotes(),
-	}, nil
+		Converter: converterID(agent.OMP),
+		Notes:     check.notes,
+	})
 }
 
 func (ompAdapter) Detect(ctx Context) bool {

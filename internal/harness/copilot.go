@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"path"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 
@@ -203,25 +204,149 @@ func (copilotAdapter) Native(id string, variant *agent.VariantFile) (Artifact, e
 	}, nil
 }
 
-func (copilotAdapter) Convert(id string, portable *agent.Document) (Artifact, error) {
-	core, err := ExtractPortable(agent.Copilot, id, portable)
+// copilotToolNames maps Copilot CLI tools entries (matched case-insensitively) to
+// capabilities. Copilot's web alias, and its WebSearch compatibility alias, only
+// expose web_fetch: the CLI has no web search tool. Core names are the primary
+// aliases conversion writes.
+var copilotToolNames = []nativeTool{
+	{name: "read", cap: CapRead, core: true},
+	{name: "view", cap: CapRead},
+	{name: "notebookread", cap: CapRead},
+	{name: "search", cap: CapSearch, core: true},
+	{name: "grep", cap: CapSearch},
+	{name: "glob", cap: CapSearch},
+	{name: "search/codebase", cap: CapSearch},
+	{name: "edit", cap: CapEdit, core: true},
+	{name: "create", cap: CapEdit},
+	{name: "write", cap: CapEdit},
+	{name: "multiedit", cap: CapEdit},
+	{name: "notebookedit", cap: CapEdit},
+	{name: "editfiles", cap: CapEdit},
+	{name: "execute", cap: CapShell, core: true},
+	{name: "shell", cap: CapShell},
+	{name: "bash", cap: CapShell},
+	{name: "powershell", cap: CapShell},
+	{name: "runcommands", cap: CapShell},
+	{name: "web", cap: CapWebFetch, core: true},
+	{name: "webfetch", cap: CapWebFetch},
+	{name: "web_fetch", cap: CapWebFetch},
+	{name: "websearch", cap: CapWebFetch},
+	{name: "agent", cap: CapDelegate, core: true},
+	{name: "custom-agent", cap: CapDelegate},
+	{name: "task", cap: CapDelegate},
+	{name: "runsubagent", cap: CapDelegate},
+	{name: "todo", cap: CapTodo, core: true},
+	{name: "todowrite", cap: CapTodo},
+}
+
+func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics, error) {
+	if _, err := a.Native(id, variant); err != nil {
+		return nil, err
+	}
+	doc, _ := agent.ParseMarkdown(variant.Path, variant.Raw)
+	sem := &Semantics{
+		ID:           id,
+		Description:  doc.String("description"),
+		Instructions: doc.Body,
+		Source:       agent.Copilot,
+	}
+	for _, key := range sortedKeys(doc.Frontmatter) {
+		value := doc.Frontmatter[key]
+		switch key {
+		case "name", "description", "target", "include-custom-instructions":
+		case "model":
+			sem.Model, _ = value.(string)
+		case "models", "modelPolicy", "reasoningEffort":
+			sem.note("omitted %s: model settings are model-specific", key)
+		case "tools":
+			names, _ := nameList(value)
+			copilotToolPolicy(sem, names)
+		case "infer":
+			if value == false {
+				sem.unsupported(key, "Copilot never delegates to it automatically")
+			}
+		case "disable-model-invocation":
+			if value == true {
+				sem.unsupported(key, "Copilot never delegates to it automatically")
+			}
+		case "user-invocable":
+			if value == false {
+				sem.note("omitted user-invocable: false: other harnesses let users select it")
+			}
+		case "mcp-servers":
+			sem.unsupported(key, "MCP servers scoped to the agent")
+		default:
+			sem.note("omitted %s: not used by Copilot CLI", key)
+		}
+	}
+	return sem, nil
+}
+
+// copilotToolPolicy reads a Copilot tools list. Copilot ignores names it does
+// not know, so they grant nothing; skill and sql are always present.
+func copilotToolPolicy(sem *Semantics, names []string) {
+	if slices.Contains(names, "*") {
+		return
+	}
+	sem.Tools.Restricted = true
+	for _, name := range names {
+		lower := strings.ToLower(name)
+		if c, ok := lookupTool(copilotToolNames, lower); ok {
+			sem.Tools.Allowed |= c
+			continue
+		}
+		switch {
+		case lower == "skill" || lower == "sql":
+		case strings.Contains(name, "/"):
+			sem.Tools.MCP = append(sem.Tools.MCP, name)
+		default:
+			sem.note("omitted tools entry %s: Copilot CLI ignores it, so it grants nothing", name)
+		}
+	}
+	sem.Tools.Allowed |= CapSkill
+}
+
+// Convert writes a Copilot CLI agent. Tool policies become primary aliases;
+// Copilot has no denylist, so one is written as the allowlist of the remaining
+// built-in aliases.
+func (a copilotAdapter) Convert(sem *Semantics) (Artifact, error) {
+	check, err := begin(agent.Copilot, sem)
+	if err == nil {
+		err = check.requireGrant(CapWebSearch, "Copilot CLI has no web search tool")
+	}
+	if err == nil {
+		err = check.requireMaxTurns()
+	}
+	if err == nil {
+		err = check.requireForeground()
+	}
 	if err != nil {
 		return Artifact{}, err
 	}
-	content, err := agent.RenderMarkdown([]agent.Field{
-		{Key: "name", Value: core.ID},
-		{Key: "description", Value: core.Description},
-	}, core.Instructions)
+	fields := []agent.Field{
+		{Key: "name", Value: sem.ID},
+		{Key: "description", Value: sem.Description},
+	}
+	if sem.Tools.Limited() {
+		if !sem.Tools.Restricted {
+			check.note("Copilot CLI has no tool denylist, so the agent lists its built-in " +
+				"tools and does not get MCP tools")
+		}
+		fields = append(fields, agent.Field{
+			Key: "tools", Value: toolNames(copilotToolNames, sem.Tools.Effective()),
+		})
+	}
+	content, err := agent.RenderMarkdown(fields, sem.Instructions)
 	if err != nil {
 		return Artifact{}, err
 	}
-	return Artifact{
-		FileName:  id + ".agent.md",
+	return selfCheck(a, sem.ID, Artifact{
+		FileName:  sem.ID + ".agent.md",
 		Content:   content,
 		Generated: true,
-		Converter: "copilot/v1",
-		Notes:     core.OmissionNotes(),
-	}, nil
+		Converter: converterID(agent.Copilot),
+		Notes:     check.notes,
+	})
 }
 
 func (copilotAdapter) Detect(ctx Context) bool {

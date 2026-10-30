@@ -40,14 +40,14 @@ func TestCodexConvertPreservesInstructionTextExactly(t *testing.T) {
 	}
 	for label, body := range bodies {
 		t.Run(label, func(t *testing.T) {
-			artifact, err := codex.Convert("reviewer", portableDoc(
+			artifact, err := convert(codex, "reviewer", portableDoc(
 				map[string]any{"name": "reviewer", "description": "Reviews \"code\"\nwell"},
 				body,
 			))
 			if err != nil {
 				t.Fatal(err)
 			}
-			if !artifact.Generated || artifact.Converter != "codex/v1" ||
+			if !artifact.Generated || artifact.Converter != "codex/v2" ||
 				artifact.FileName != "reviewer.toml" {
 				t.Fatalf("unexpected artifact metadata: %+v", artifact)
 			}
@@ -73,7 +73,7 @@ func TestCodexConvertPreservesInstructionTextExactly(t *testing.T) {
 func TestCodexConvertRefusesNonPortableFields(t *testing.T) {
 	codex := codexInstaller(t)
 	for _, key := range []string{"tools", "model", "sandbox_mode", "readonly", "mcp_servers"} {
-		_, err := codex.Convert("reviewer", portableDoc(
+		_, err := convert(codex, "reviewer", portableDoc(
 			map[string]any{"name": "reviewer", "description": "x", key: "value"},
 			"body\n",
 		))
@@ -82,14 +82,14 @@ func TestCodexConvertRefusesNonPortableFields(t *testing.T) {
 			t.Fatalf("%s must refuse conversion, got %v", key, err)
 		}
 	}
-	artifact, err := codex.Convert("reviewer", portableDoc(
+	artifact, err := convert(codex, "reviewer", portableDoc(
 		map[string]any{"name": "reviewer", "description": "x", "license": "MIT"},
 		"body\n",
 	))
 	if err != nil || len(artifact.Notes) == 0 {
 		t.Fatalf("harmless metadata is omitted with a note: %v %+v", err, artifact)
 	}
-	if _, err := codex.Convert("reviewer", portableDoc(
+	if _, err := convert(codex, "reviewer", portableDoc(
 		map[string]any{"name": "reviewer", "description": "x"},
 		"invalid \xff utf-8\n",
 	)); err == nil {

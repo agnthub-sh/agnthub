@@ -2,6 +2,7 @@ package harness
 
 import (
 	"fmt"
+	"slices"
 	"sort"
 	"strings"
 
@@ -53,6 +54,14 @@ func ExtractPortable(
 		case key == "name" || key == "description":
 		case harmlessPortableKeys[key]:
 			core.Omitted = append(core.Omitted, key)
+		case target == agent.Gemini && slices.Contains(delegationKeys, key):
+			return PortableCore{}, &IncompatibleError{
+				Harness: target,
+				Reason: fmt.Sprintf(
+					"portable definition declares %q, but Gemini CLI subagents cannot invoke other agents",
+					key,
+				),
+			}
 		default:
 			return PortableCore{}, &IncompatibleError{
 				Harness: target,

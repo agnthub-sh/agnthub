@@ -44,6 +44,8 @@ func TestAssessGeneratesEveryHarnessFromAPortableCore(t *testing.T) {
 	}
 }
 
+// The first refusal is reported when neither the portable core nor another
+// Variant converts.
 func TestAssessPrefersValidVariantsAndRefusesUnsupportedPortableFields(t *testing.T) {
 	def := &agent.Definition{
 		ID:       "reviewer",
@@ -53,7 +55,8 @@ func TestAssessPrefersValidVariantsAndRefusesUnsupportedPortableFields(t *testin
 				Harness: agent.Claude,
 				Path:    ".claude/agents/reviewer.md",
 				Raw: []byte(
-					"---\nname: reviewer\ndescription: Reviews\ntools: Read\n---\nReview.\n",
+					"---\nname: reviewer\ndescription: Reviews\ntools: Read, mcp__db__query\n" +
+						"---\nReview.\n",
 				),
 			},
 		},
@@ -92,23 +95,38 @@ func TestAssessNeverFallsBackFromAnInvalidVariant(t *testing.T) {
 	}
 }
 
-func TestAssessWithoutPortableCoreIsIncompatibleElsewhere(t *testing.T) {
-	def := &agent.Definition{
-		ID: "reviewer",
-		Variants: map[agent.HarnessID]*agent.VariantFile{
-			agent.Claude: {
-				Harness: agent.Claude,
-				Path:    ".claude/agents/reviewer.md",
-				Raw:     []byte("---\nname: reviewer\ndescription: Reviews\n---\nReview.\n"),
+func TestAssessConvertsNativeOnlyAgentsFromTheirVariant(t *testing.T) {
+	native := func(frontmatter string) *agent.Definition {
+		return &agent.Definition{
+			ID: "reviewer",
+			Variants: map[agent.HarnessID]*agent.VariantFile{
+				agent.Claude: {
+					Harness: agent.Claude,
+					Path:    ".claude/agents/reviewer.md",
+					Raw: []byte("---\nname: reviewer\ndescription: Reviews\n" + frontmatter +
+						"---\nReview.\n"),
+				},
 			},
-		},
+		}
 	}
-	got := assessAll(def)
+	got := assessAll(native("model: sonnet\ntools: Read, Grep, Glob, Edit, Write, Bash\n"))
 	if got[agent.Claude].Status != install.StatusNative {
 		t.Fatalf("claude: %+v", got[agent.Claude])
 	}
-	if a := got[agent.OMP]; a.Status != install.StatusIncompatible || a.Reason == "" {
-		t.Fatalf("omp: %+v", a)
+	for _, h := range agent.AllHarnesses[1:] {
+		if a := got[h]; a.Status != install.StatusGenerated ||
+			a.SourcePath != ".claude/agents/reviewer.md" {
+			t.Errorf("%s: want generated from the Claude variant, got %+v", h, a)
+		}
+	}
+	hooks := native("hooks:\n  Stop:\n    - command: echo\n")
+	if a := install.Assess(
+		harness.Default(),
+		hooks,
+		agent.OMP,
+	); a.Status != install.StatusIncompatible ||
+		!strings.Contains(a.Reason, "hooks") {
+		t.Fatalf("omp: hooks must refuse conversion, got %+v", a)
 	}
 }
 
