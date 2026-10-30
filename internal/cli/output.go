@@ -9,9 +9,9 @@ import (
 
 	"github.com/bytedance/sonic"
 
-	"github.com/heynemann/agnthub/internal/agent"
-	"github.com/heynemann/agnthub/internal/discovery"
-	"github.com/heynemann/agnthub/internal/source"
+	"github.com/heynemann/agnthub/agent"
+	"github.com/heynemann/agnthub/discovery"
+	"github.com/heynemann/agnthub/source"
 )
 
 var jsonOut = sonic.Config{SortMapKeys: true, EscapeHTML: false}.Froze()

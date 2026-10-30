@@ -9,7 +9,7 @@ import (
 
 	"github.com/bytedance/sonic"
 
-	"github.com/heynemann/agnthub/internal/state"
+	"github.com/heynemann/agnthub/state"
 )
 
 type removeResultJSON struct {

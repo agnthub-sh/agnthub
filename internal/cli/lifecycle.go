@@ -9,15 +9,15 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/internal/agent"
-	"github.com/heynemann/agnthub/internal/discovery"
-	"github.com/heynemann/agnthub/internal/harness"
-	"github.com/heynemann/agnthub/internal/install"
-	"github.com/heynemann/agnthub/internal/platform/env"
-	"github.com/heynemann/agnthub/internal/resolve"
-	"github.com/heynemann/agnthub/internal/skills"
-	"github.com/heynemann/agnthub/internal/source"
-	"github.com/heynemann/agnthub/internal/state"
+	"github.com/heynemann/agnthub/agent"
+	"github.com/heynemann/agnthub/discovery"
+	"github.com/heynemann/agnthub/harness"
+	"github.com/heynemann/agnthub/install"
+	"github.com/heynemann/agnthub/platform/env"
+	"github.com/heynemann/agnthub/resolve"
+	"github.com/heynemann/agnthub/skills"
+	"github.com/heynemann/agnthub/source"
+	"github.com/heynemann/agnthub/state"
 )
 
 // ErrRevisionUnavailable reports locked source bytes that can no longer be fetched.

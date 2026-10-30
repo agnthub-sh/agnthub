@@ -20,7 +20,8 @@ Every install is previewed before anything is written, the project lock
 (`agnthub-lock.json`) pins each agent to a commit, and agnthub never overwrites files it did
 not install or that you changed.
 
-This repository holds the CLI releases. The registry itself is developed privately.
+This repository holds the CLI source and its releases. The hosted registry service is developed
+separately and builds on the packages here.
 
 ## Install
 
@@ -82,13 +83,37 @@ npm install -g agnthub@0.1.0
 
 The npm package has not been published yet; until it is, use the direct download.
 
+### From source
+
+With Go (the version in [go.mod](go.mod)) installed:
+
+```sh
+go install github.com/heynemann/agnthub/cmd/agnthub@latest
+```
+
+This builds the CLI from source without the release checksums; `agnthub --version` reports the
+module version.
+
+## Documentation
+
+- [Using the CLI](docs/cli.md): sources, selection, scopes, Harness settings, dependencies,
+  skills, check/update/restore/remove
+- [CLI contract](docs/cli-contract.md), [glossary](GLOSSARY.md) and
+  [architecture decisions](docs/adr/)
+- [Native Harness agent formats and conversion limits](docs/research/harness-agent-formats.md)
+
 ## Usage reports
 
 After installing agents from a public GitHub repository, the CLI tells the registry
 (`https://api.agnthub.sh`) which repository, commit and agents were installed and into which
-harnesses, so the repository is listed and its installs are counted. No paths, profiles,
-harness settings, credentials, or private and local sources are sent. Set `DO_NOT_TRACK` or
-`DISABLE_TELEMETRY` to any non-empty value to send nothing.
+harnesses, so installs of listed repositories are counted. A report never adds a repository to
+the registry. No paths, profiles, harness settings, credentials, or private and local sources
+are sent. Set `DO_NOT_TRACK` or `DISABLE_TELEMETRY` to any non-empty value to send nothing.
+
+## Contributing
+
+See [CONTRIBUTING](CONTRIBUTING.md). Report security problems privately as described in
+[SECURITY](SECURITY.md).
 
 ## License
 

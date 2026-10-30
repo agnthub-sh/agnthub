@@ -1,0 +1,32 @@
+name: Release
+
+# Pushing a vX.Y.Z tag builds the reproducible archives and publishes the GitHub Release.
+# The npm launcher's checksums are embedded afterwards by a maintainer (see CONTRIBUTING).
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v7
+        with:
+          go-version-file: go.mod
+      - run: go test -race ./...
+      - name: Build archives and SHA256SUMS
+        run: make dist-release
+      - name: Publish the GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "$TAG" --verify-tag --title "agnthub $TAG" \
+            --notes "Verify downloads with \`sha256sum --ignore-missing -c SHA256SUMS\`. Install instructions: https://github.com/${GITHUB_REPOSITORY}#install" \
+            dist/*.tar.gz dist/*.zip dist/SHA256SUMS

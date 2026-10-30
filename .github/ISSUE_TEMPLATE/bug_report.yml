@@ -1,0 +1,60 @@
+name: Bug report
+description: The agnthub CLI or npm launcher did something wrong
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Security problems go through [private vulnerability reporting](https://github.com/heynemann/agnthub/security/advisories/new), not here.
+        Remove credentials, private repository names and private paths from anything you paste.
+  - type: input
+    id: version
+    attributes:
+      label: agnthub version
+      description: Output of `agnthub --version` (or the npm launcher version)
+      placeholder: agnthub version 0.2.0 (commit …)
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Operating system and architecture
+      placeholder: macOS 15 arm64, Ubuntu 24.04 amd64, Windows 11 amd64
+    validations:
+      required: true
+  - type: dropdown
+    id: harnesses
+    attributes:
+      label: Harnesses involved
+      multiple: true
+      options:
+        - Claude Code
+        - Codex
+        - OpenCode
+        - GitHub Copilot CLI
+        - Cursor
+        - Gemini CLI
+        - omp
+        - none / not harness-specific
+  - type: textarea
+    id: command
+    attributes:
+      label: Command
+      description: The exact command you ran, and the source (public owner/repo, or a description of a private one)
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: Output, the plan, or `--json` output where relevant
+      render: text
+    validations:
+      required: true

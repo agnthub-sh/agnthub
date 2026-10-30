@@ -12,9 +12,9 @@ import (
 	"github.com/bytedance/sonic"
 
 	"github.com/heynemann/agnthub/internal/cli"
-	"github.com/heynemann/agnthub/internal/platform/env"
-	"github.com/heynemann/agnthub/internal/source"
-	"github.com/heynemann/agnthub/internal/state"
+	"github.com/heynemann/agnthub/platform/env"
+	"github.com/heynemann/agnthub/source"
+	"github.com/heynemann/agnthub/state"
 )
 
 // lifecycleRun configures one CLI invocation for lifecycle tests.

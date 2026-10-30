@@ -7,15 +7,17 @@ import (
 	"fmt"
 	"io"
 	"os/exec"
+	"runtime/debug"
+	"strings"
 	"time"
 
 	"github.com/spf13/cobra"
 
-	"github.com/heynemann/agnthub/internal/adoption"
-	"github.com/heynemann/agnthub/internal/harness"
-	"github.com/heynemann/agnthub/internal/platform/env"
-	"github.com/heynemann/agnthub/internal/skills"
-	"github.com/heynemann/agnthub/internal/source"
+	"github.com/heynemann/agnthub/adoption"
+	"github.com/heynemann/agnthub/harness"
+	"github.com/heynemann/agnthub/platform/env"
+	"github.com/heynemann/agnthub/skills"
+	"github.com/heynemann/agnthub/source"
 )
 
 // Version and Commit are set at build time (see .goreleaser.yaml).
@@ -23,6 +25,17 @@ var (
 	Version = "dev"
 	Commit  = ""
 )
+
+// A `go install github.com/heynemann/agnthub/cmd/agnthub@vX.Y.Z` build carries no
+// ldflags; it reports the module version Go recorded instead.
+func init() {
+	if Version != "dev" {
+		return
+	}
+	if info, ok := debug.ReadBuildInfo(); ok && strings.HasPrefix(info.Main.Version, "v") {
+		Version = strings.TrimPrefix(info.Main.Version, "v")
+	}
+}
 
 // App holds process-level dependencies so commands stay testable.
 type App struct {

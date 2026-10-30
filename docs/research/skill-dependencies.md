@@ -1,6 +1,6 @@
 # Skill Dependencies: backend mapping and Harness skill discovery
 
-Researched and runtime-tested 2026-10-29 for ticket #9 with skills.sh 1.7.4 (`npx skills`), Claude Code 2.1.309, Codex CLI 0.164.0, OpenCode 2.1.3 (and 1.19.5 from source), GitHub Copilot CLI 1.0.105, Cursor CLI 2026.10.22-27dcf5f, Gemini CLI 0.66.0 and omp 18.13.3. Every experiment used a temporary `HOME` and project. **[RUN]** = observed at runtime, **[SRC]** = read in the shipped code, **[DOC]** = vendor documentation. Harness behavior changes between releases; this is the tested matrix, not a compatibility promise.
+Researched and runtime-tested 2026-10-29 with skills.sh 1.7.4 (`npx skills`), Claude Code 2.1.309, Codex CLI 0.164.0, OpenCode 2.1.3 (and 1.19.5 from source), GitHub Copilot CLI 1.0.105, Cursor CLI 2026.10.22-27dcf5f, Gemini CLI 0.66.0 and omp 18.13.3. Every experiment used a temporary `HOME` and project. **[RUN]** = observed at runtime, **[SRC]** = read in the shipped code, **[DOC]** = vendor documentation. Harness behavior changes between releases; this is the tested matrix, not a compatibility promise.
 
 ## skills.sh destinations [RUN][SRC]
 

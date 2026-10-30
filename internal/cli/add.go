@@ -10,15 +10,15 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/heynemann/agnthub/internal/adoption"
-	"github.com/heynemann/agnthub/internal/agent"
-	"github.com/heynemann/agnthub/internal/discovery"
-	"github.com/heynemann/agnthub/internal/harness"
-	"github.com/heynemann/agnthub/internal/install"
-	"github.com/heynemann/agnthub/internal/resolve"
-	"github.com/heynemann/agnthub/internal/skills"
-	"github.com/heynemann/agnthub/internal/source"
-	"github.com/heynemann/agnthub/internal/state"
+	"github.com/heynemann/agnthub/adoption"
+	"github.com/heynemann/agnthub/agent"
+	"github.com/heynemann/agnthub/discovery"
+	"github.com/heynemann/agnthub/harness"
+	"github.com/heynemann/agnthub/install"
+	"github.com/heynemann/agnthub/resolve"
+	"github.com/heynemann/agnthub/skills"
+	"github.com/heynemann/agnthub/source"
+	"github.com/heynemann/agnthub/state"
 )
 
 type addOptions struct {

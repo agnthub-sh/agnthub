@@ -10,7 +10,7 @@ import (
 	"golang.org/x/term"
 
 	"github.com/heynemann/agnthub/internal/cli"
-	"github.com/heynemann/agnthub/internal/platform/env"
+	"github.com/heynemann/agnthub/platform/env"
 )
 
 func main() {

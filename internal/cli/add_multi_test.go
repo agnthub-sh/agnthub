@@ -12,9 +12,9 @@ import (
 
 	"github.com/bytedance/sonic"
 
-	"github.com/heynemann/agnthub/internal/agent"
+	"github.com/heynemann/agnthub/agent"
 	"github.com/heynemann/agnthub/internal/cli"
-	"github.com/heynemann/agnthub/internal/platform/env"
+	"github.com/heynemann/agnthub/platform/env"
 )
 
 // scriptedPrompter answers prompts in order: a nil selection keeps the preselected

@@ -1,0 +1,58 @@
+version: "2"
+run:
+  timeout: 5m
+linters:
+  default: standard # errcheck, govet, ineffassign, staticcheck, unused
+  enable:
+    - bodyclose
+    - contextcheck
+    - errorlint
+    - forbidigo
+    - gocritic
+    - gosec
+    - noctx
+    - revive
+  settings:
+    forbidigo:
+      analyze-types: true
+      forbid:
+        - pattern: ^sync\.(Mutex|RWMutex|Map)$
+          msg: use xsync (github.com/puzpuzpuz/xsync/v4) or sync/atomic
+        - pattern: ^(fmt\.Print(f|ln)?|print(ln)?)$
+          msg: write CLI output to an injected io.Writer
+        - pattern: .*
+          pkg: ^(encoding/json|github\.com/json-iterator/go|github\.com/goccy/go-json)$
+          msg: use github.com/bytedance/sonic
+        - pattern: ^os\.(Getenv|LookupEnv|Environ|Setenv|Unsetenv)$
+          msg: read the environment through platform/env
+        - pattern: ^time\.Sleep$
+          msg: wait on a channel, context or timer
+    govet:
+      enable-all: true
+      disable: [fieldalignment, shadow]
+    errcheck:
+      exclude-functions: [fmt.Fprint, fmt.Fprintf, fmt.Fprintln]
+    gosec:
+      excludes:
+        - G304 # paths come from validated locators and resolved destinations
+    revive:
+      rules:
+        - name: exported
+          disabled: true
+  exclusions:
+    generated: strict
+    rules:
+      - path: _test\.go
+        linters: [gosec, noctx, bodyclose, errcheck]
+formatters:
+  enable:
+    - gofumpt
+    - goimports
+    - golines
+  settings:
+    goimports:
+      local-prefixes: [github.com/heynemann/agnthub]
+    golines:
+      max-len: 100
+  exclusions:
+    generated: strict

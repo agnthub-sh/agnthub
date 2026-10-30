@@ -12,8 +12,8 @@ import (
 	"github.com/bytedance/sonic"
 
 	"github.com/heynemann/agnthub/internal/cli"
-	"github.com/heynemann/agnthub/internal/platform/env"
-	"github.com/heynemann/agnthub/internal/state"
+	"github.com/heynemann/agnthub/platform/env"
+	"github.com/heynemann/agnthub/state"
 )
 
 type harnessT struct {

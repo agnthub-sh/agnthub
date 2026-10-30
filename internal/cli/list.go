@@ -6,7 +6,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/heynemann/agnthub/internal/state"
+	"github.com/heynemann/agnthub/state"
 )
 
 type listOptions struct {

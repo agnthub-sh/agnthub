@@ -9,9 +9,9 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/heynemann/agnthub/internal/harness"
-	"github.com/heynemann/agnthub/internal/install"
-	"github.com/heynemann/agnthub/internal/state"
+	"github.com/heynemann/agnthub/harness"
+	"github.com/heynemann/agnthub/install"
+	"github.com/heynemann/agnthub/state"
 )
 
 // statusUpToDate reports an update or restore with nothing to write.
