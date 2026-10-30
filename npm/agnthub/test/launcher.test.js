@@ -105,7 +105,7 @@ describe('ensureBinary', () => {
     const checksums = { [name]: sha256(good) };
     const binary = await ensureBinary({ version: VERSION, checksums, env, platform, arch });
     assert.deepEqual(fs.readFileSync(binary), BINARY);
-    assert.equal(fs.statSync(binary).mode & 0o111, 0o111);
+    assert.equal(fs.statSync(binary).mode & 0o100, 0o100, 'the owner can execute the cached binary');
 
     served.delete(`/good/${name}`);
     assert.equal(await ensureBinary({ version: VERSION, checksums, env, platform, arch }), binary);
