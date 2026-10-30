@@ -1,0 +1,52 @@
+# CLI release artifacts: `make dist` (snapshot) or `make release` (tagged vX.Y.Z).
+# Archives are reproducible: binaries and archive entries carry the commit timestamp,
+# so the same commit always yields the same SHA256SUMS.
+version: 2
+project_name: agnthub
+
+builds:
+  - id: agnthub
+    main: ./cmd/agnthub
+    binary: agnthub
+    env:
+      - CGO_ENABLED=0
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w
+      - -X github.com/heynemann/agnthub/internal/cli.Version={{ .Version }}
+      - -X github.com/heynemann/agnthub/internal/cli.Commit={{ .FullCommit }}
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+archives:
+  - id: agnthub
+    ids: [agnthub]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    # Only the binary: the npm launcher and README document everything else.
+    files:
+      - none*
+    builds_info:
+      owner: root
+      group: root
+      mode: 0755
+      mtime: "{{ .CommitDate }}"
+
+checksum:
+  name_template: SHA256SUMS
+  algorithm: sha256
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-dev+{{ .ShortCommit }}"
+
+# Releases are published to the public heynemann/agnthub repository with
+# `gh release create` (see `make release`); GoReleaser only builds.
+release:
+  disable: true
+changelog:
+  disable: true

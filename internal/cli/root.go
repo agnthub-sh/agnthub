@@ -18,8 +18,11 @@ import (
 	"github.com/heynemann/agnthub/internal/source"
 )
 
-// Version is set at build time.
-var Version = "dev"
+// Version and Commit are set at build time (see .goreleaser.yaml).
+var (
+	Version = "dev"
+	Commit  = ""
+)
 
 // App holds process-level dependencies so commands stay testable.
 type App struct {
@@ -110,6 +113,9 @@ func (a *App) rootCommand(ctx context.Context) *cobra.Command {
 		Version:       Version,
 		SilenceUsage:  true,
 		SilenceErrors: true,
+	}
+	if Commit != "" {
+		root.SetVersionTemplate("agnthub version {{.Version}} (commit " + Commit + ")\n")
 	}
 	root.AddCommand(
 		a.addCommand(ctx), a.listCommand(), a.removeCommand(ctx),
