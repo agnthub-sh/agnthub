@@ -3,7 +3,7 @@ package harness
 import (
 	"errors"
 
-	"github.com/heynemann/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/agent"
 )
 
 // Generate converts def for installer when it has no authored Variant for that

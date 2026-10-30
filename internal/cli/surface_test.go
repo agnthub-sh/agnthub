@@ -11,9 +11,9 @@ import (
 
 	"github.com/bytedance/sonic"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/internal/cli"
-	"github.com/heynemann/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/internal/cli"
+	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 // runEnv runs the CLI noninteractively with extra environment variables.

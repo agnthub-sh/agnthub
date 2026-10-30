@@ -16,8 +16,8 @@ import (
 
 	"go.yaml.in/yaml/v3"
 
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 // Placeholders substituted into installer arguments.

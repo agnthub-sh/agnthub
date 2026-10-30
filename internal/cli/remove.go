@@ -11,10 +11,10 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/internal/uninstall"
-	"github.com/heynemann/agnthub/state"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/internal/uninstall"
+	"github.com/agnthub-sh/agnthub/state"
 )
 
 type removeOptions struct {

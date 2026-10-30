@@ -13,11 +13,11 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/discovery"
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/skills"
-	"github.com/heynemann/agnthub/source"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/discovery"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/skills"
+	"github.com/agnthub-sh/agnthub/source"
 )
 
 // Resolution failures. Every one stops the plan before any write.

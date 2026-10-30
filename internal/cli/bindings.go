@@ -8,9 +8,9 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/state"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/state"
 )
 
 // Where a binding's Settings came from, as shown next to effective settings.

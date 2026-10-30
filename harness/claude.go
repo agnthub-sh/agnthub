@@ -8,7 +8,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/agent"
 )
 
 // claudeAdapter installs Claude Code subagents (Markdown with YAML frontmatter).

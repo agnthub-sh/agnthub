@@ -7,8 +7,8 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/skills"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/skills"
 )
 
 func writeConfig(t *testing.T, content string) string {

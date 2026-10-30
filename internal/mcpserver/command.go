@@ -5,8 +5,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/harness"
 )
 
 // CommandInput selects what an install command installs, as the site's install builder does.

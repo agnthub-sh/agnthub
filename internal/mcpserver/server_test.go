@@ -12,7 +12,7 @@ import (
 	"github.com/bytedance/sonic"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 
-	"github.com/heynemann/agnthub/internal/mcpserver"
+	"github.com/agnthub-sh/agnthub/internal/mcpserver"
 )
 
 // fakeAPI serves canned registry API responses by path and records the last query.

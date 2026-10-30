@@ -36,7 +36,7 @@ cross: ## compile every release platform
 # --- release (archives for linux/darwin/windows × amd64/arm64 + SHA256SUMS) ---
 
 GORELEASER  := go run github.com/goreleaser/goreleaser/v2@v2.19.0
-PUBLIC_REPO := heynemann/agnthub
+PUBLIC_REPO := agnthub-sh/agnthub
 RELEASE_TAG  = $(shell git describe --exact-match --tags --match 'v*' HEAD 2>/dev/null)
 
 dist: ## snapshot archives + SHA256SUMS for every platform into dist/

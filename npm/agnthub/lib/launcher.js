@@ -14,7 +14,7 @@ const path = require('node:path');
 const zlib = require('node:zlib');
 const { spawn } = require('node:child_process');
 
-const REPOSITORY = 'heynemann/agnthub';
+const REPOSITORY = 'agnthub-sh/agnthub';
 const MAX_ARCHIVE_BYTES = 256 * 1024 * 1024;
 const MAX_REDIRECTS = 5;
 const DOWNLOAD_TIMEOUT_MS = 120 * 1000;

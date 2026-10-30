@@ -12,8 +12,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/source"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/source"
 )
 
 // SkillFile is the file that marks and describes a Skill directory.

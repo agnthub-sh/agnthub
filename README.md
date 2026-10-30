@@ -33,7 +33,7 @@ does not need Node.js.
 ### Direct download
 
 Pick the archive for your platform from the
-[latest release](https://github.com/heynemann/agnthub/releases/latest) and verify it against
+[latest release](https://github.com/agnthub-sh/agnthub/releases/latest) and verify it against
 the release's `SHA256SUMS` before running it.
 
 Linux and macOS:
@@ -42,7 +42,7 @@ Linux and macOS:
 VERSION=0.2.0
 OS=linux       # or darwin
 ARCH=amd64     # or arm64
-BASE=https://github.com/heynemann/agnthub/releases/download/v$VERSION
+BASE=https://github.com/agnthub-sh/agnthub/releases/download/v$VERSION
 curl -fsSLO "$BASE/agnthub_${VERSION}_${OS}_${ARCH}.tar.gz"
 curl -fsSLO "$BASE/SHA256SUMS"
 sha256sum --ignore-missing -c SHA256SUMS     # macOS: shasum -a 256 --ignore-missing -c SHA256SUMS
@@ -56,7 +56,7 @@ Windows (PowerShell):
 ```powershell
 $Version = "0.2.0"
 $Arch = "amd64"   # or arm64
-$Base = "https://github.com/heynemann/agnthub/releases/download/v$Version"
+$Base = "https://github.com/agnthub-sh/agnthub/releases/download/v$Version"
 $Zip = "agnthub_${Version}_windows_$Arch.zip"
 Invoke-WebRequest "$Base/$Zip" -OutFile $Zip
 Invoke-WebRequest "$Base/SHA256SUMS" -OutFile SHA256SUMS
@@ -90,7 +90,7 @@ The npm package has not been published yet; until it is, use the direct download
 With Go (the version in [go.mod](go.mod)) installed:
 
 ```sh
-go install github.com/heynemann/agnthub/cmd/agnthub@latest
+go install github.com/agnthub-sh/agnthub/cmd/agnthub@latest
 ```
 
 This builds the CLI from source without the release checksums; `agnthub --version` reports the

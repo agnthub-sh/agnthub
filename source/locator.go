@@ -10,7 +10,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/heynemann/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 // Kind is the type of a source.

@@ -1,4 +1,4 @@
-module github.com/heynemann/agnthub
+module github.com/agnthub-sh/agnthub
 
 go 1.27
 

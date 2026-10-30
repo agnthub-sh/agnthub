@@ -6,7 +6,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/agent"
 )
 
 // harmlessPortableKeys are descriptive metadata that never change runtime behavior;

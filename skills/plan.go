@@ -10,10 +10,10 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/source"
-	"github.com/heynemann/agnthub/state"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/source"
+	"github.com/agnthub-sh/agnthub/state"
 )
 
 // Need is one dependent's requirement on a Skill for one Harness.

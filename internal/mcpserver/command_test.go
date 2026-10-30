@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/internal/mcpserver"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/internal/mcpserver"
 )
 
 // The cases mirror the site's install builder tests (web/src/lib/command.test.ts).

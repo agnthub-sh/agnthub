@@ -15,9 +15,9 @@ import (
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/spf13/cobra"
 
-	"github.com/heynemann/agnthub/adoption"
-	"github.com/heynemann/agnthub/internal/mcpserver"
-	"github.com/heynemann/agnthub/skills"
+	"github.com/agnthub-sh/agnthub/adoption"
+	"github.com/agnthub-sh/agnthub/internal/mcpserver"
+	"github.com/agnthub-sh/agnthub/skills"
 )
 
 func (a *App) mcpCommand(ctx context.Context) *cobra.Command {

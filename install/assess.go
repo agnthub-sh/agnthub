@@ -3,8 +3,8 @@ package install
 import (
 	"errors"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/harness"
 )
 
 // Status is how an Agent can be represented for one Harness, independent of scope,

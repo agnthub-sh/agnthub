@@ -4,7 +4,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/heynemann/agnthub/skills"
+	"github.com/agnthub-sh/agnthub/skills"
 )
 
 func TestParseVersionAcceptsOnlyStrictSemver(t *testing.T) {

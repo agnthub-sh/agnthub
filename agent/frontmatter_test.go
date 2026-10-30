@@ -3,7 +3,7 @@ package agent_test
 import (
 	"testing"
 
-	"github.com/heynemann/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/agent"
 )
 
 func TestLenientParsingAcceptsUnquotedColonsLikeClaudeCode(t *testing.T) {

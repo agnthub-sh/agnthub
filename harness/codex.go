@@ -9,7 +9,7 @@ import (
 
 	"github.com/pelletier/go-toml/v2"
 
-	"github.com/heynemann/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/agent"
 )
 
 // codexAdapter installs Codex standalone TOML custom agents.

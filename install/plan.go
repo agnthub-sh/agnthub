@@ -9,10 +9,10 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/skills"
-	"github.com/heynemann/agnthub/state"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/skills"
+	"github.com/agnthub-sh/agnthub/state"
 )
 
 // Action is what applying an item will do.

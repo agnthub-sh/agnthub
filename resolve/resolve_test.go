@@ -8,11 +8,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/discovery"
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/resolve"
-	"github.com/heynemann/agnthub/source"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/discovery"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/resolve"
+	"github.com/agnthub-sh/agnthub/source"
 )
 
 // repo is an in-memory source: a manifest plus portable files for each agent.

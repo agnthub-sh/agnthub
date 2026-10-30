@@ -9,7 +9,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/agent"
 )
 
 // omp profile rules mirror omp's normalizeProfileName (pi-utils dirs.ts): lowercase

@@ -5,7 +5,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/agent"
 )
 
 // Extra is one parsed --extra <harness>.<key>=<value> argument.

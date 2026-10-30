@@ -9,8 +9,8 @@ import (
 
 	"go.yaml.in/yaml/v3"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/source"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/source"
 )
 
 type manifestFile struct {

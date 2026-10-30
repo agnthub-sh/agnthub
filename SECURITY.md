@@ -3,7 +3,7 @@
 ## Reporting a vulnerability
 
 Report vulnerabilities privately through GitHub's
-[private vulnerability reporting](https://github.com/heynemann/agnthub/security/advisories/new).
+[private vulnerability reporting](https://github.com/agnthub-sh/agnthub/security/advisories/new).
 Do not open a public issue, pull request or discussion for them.
 
 Include the agnthub version (`agnthub --version`), your platform, the steps or a minimal source

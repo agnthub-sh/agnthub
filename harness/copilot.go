@@ -8,7 +8,7 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/agent"
 )
 
 // copilotAdapter installs GitHub Copilot CLI custom agents. The file name minus

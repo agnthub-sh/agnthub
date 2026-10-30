@@ -20,10 +20,10 @@ import (
 	"github.com/bytedance/sonic"
 	"golang.org/x/net/http/httpproxy"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/platform/env"
-	"github.com/heynemann/agnthub/source"
-	"github.com/heynemann/agnthub/state"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/source"
+	"github.com/agnthub-sh/agnthub/state"
 )
 
 // DefaultAPIURL is the production registry API.

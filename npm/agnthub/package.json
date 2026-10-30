@@ -5,9 +5,9 @@
   "homepage": "https://app.agnthub.sh",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/heynemann/agnthub.git"
+    "url": "git+https://github.com/agnthub-sh/agnthub.git"
   },
-  "bugs": "https://github.com/heynemann/agnthub/issues",
+  "bugs": "https://github.com/agnthub-sh/agnthub/issues",
   "license": "MIT",
   "bin": {
     "agnthub": "bin/agnthub.js"

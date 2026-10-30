@@ -12,10 +12,10 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/adoption"
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/adoption"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 // Apply failures. Either one means no dependent Agent may be written.

@@ -7,10 +7,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/discovery"
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/source"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/discovery"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/source"
 )
 
 func memTree(t *testing.T, files map[string]string) *source.MemTree {

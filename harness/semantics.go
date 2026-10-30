@@ -5,7 +5,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/agent"
 )
 
 // Semantics is the harness-neutral meaning of one Agent: what every Installer

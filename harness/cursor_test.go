@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 func installer(t *testing.T, id agent.HarnessID) harness.Installer {

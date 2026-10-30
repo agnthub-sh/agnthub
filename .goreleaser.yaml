@@ -16,8 +16,8 @@ builds:
       - -trimpath
     ldflags:
       - -s -w
-      - -X github.com/heynemann/agnthub/internal/cli.Version={{ .Version }}
-      - -X github.com/heynemann/agnthub/internal/cli.Commit={{ .FullCommit }}
+      - -X github.com/agnthub-sh/agnthub/internal/cli.Version={{ .Version }}
+      - -X github.com/agnthub-sh/agnthub/internal/cli.Commit={{ .FullCommit }}
     mod_timestamp: "{{ .CommitTimestamp }}"
 
 archives:

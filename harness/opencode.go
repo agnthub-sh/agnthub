@@ -8,7 +8,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/agent"
 )
 
 // opencodeAdapter installs OpenCode agents (Markdown with YAML frontmatter).

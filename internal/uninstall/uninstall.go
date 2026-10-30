@@ -12,8 +12,8 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/skills"
-	"github.com/heynemann/agnthub/state"
+	"github.com/agnthub-sh/agnthub/skills"
+	"github.com/agnthub-sh/agnthub/state"
 )
 
 // Kind distinguishes Agent artifacts from Skill directories.

@@ -8,7 +8,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/agent"
 )
 
 // geminiAdapter installs Gemini CLI subagents (Markdown with YAML frontmatter).

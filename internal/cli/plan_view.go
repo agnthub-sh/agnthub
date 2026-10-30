@@ -8,11 +8,11 @@ import (
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/colorprofile"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/install"
-	"github.com/heynemann/agnthub/skills"
-	"github.com/heynemann/agnthub/state"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/install"
+	"github.com/agnthub-sh/agnthub/skills"
+	"github.com/agnthub-sh/agnthub/state"
 )
 
 // Plan statuses reported in human and JSON output.

@@ -6,9 +6,9 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/heynemann/agnthub/install"
-	"github.com/heynemann/agnthub/skills"
-	"github.com/heynemann/agnthub/state"
+	"github.com/agnthub-sh/agnthub/install"
+	"github.com/agnthub-sh/agnthub/skills"
+	"github.com/agnthub-sh/agnthub/state"
 )
 
 // Locked Agent statuses reported by check, update and restore.

@@ -16,11 +16,11 @@ import (
 
 	"github.com/bytedance/sonic"
 
-	"github.com/heynemann/agnthub/adoption"
-	"github.com/heynemann/agnthub/internal/cli"
-	"github.com/heynemann/agnthub/platform/env"
-	"github.com/heynemann/agnthub/source"
-	"github.com/heynemann/agnthub/state"
+	"github.com/agnthub-sh/agnthub/adoption"
+	"github.com/agnthub-sh/agnthub/internal/cli"
+	"github.com/agnthub-sh/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/source"
+	"github.com/agnthub-sh/agnthub/state"
 )
 
 const toolsRevision = "1111111111111111111111111111111111111111"

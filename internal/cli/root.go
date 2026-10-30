@@ -15,11 +15,11 @@ import (
 	"github.com/charmbracelet/x/term"
 	"github.com/spf13/cobra"
 
-	"github.com/heynemann/agnthub/adoption"
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/platform/env"
-	"github.com/heynemann/agnthub/skills"
-	"github.com/heynemann/agnthub/source"
+	"github.com/agnthub-sh/agnthub/adoption"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/skills"
+	"github.com/agnthub-sh/agnthub/source"
 )
 
 // Version and Commit are set at build time (see .goreleaser.yaml).
@@ -28,7 +28,7 @@ var (
 	Commit  = ""
 )
 
-// A `go install github.com/heynemann/agnthub/cmd/agnthub@vX.Y.Z` build carries no
+// A `go install github.com/agnthub-sh/agnthub/cmd/agnthub@vX.Y.Z` build carries no
 // ldflags; it reports the module version Go recorded instead.
 func init() {
 	if Version != "dev" {

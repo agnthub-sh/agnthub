@@ -8,9 +8,9 @@ import (
 
 	"github.com/pelletier/go-toml/v2"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/harness"
-	"github.com/heynemann/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 func codexInstaller(t *testing.T) harness.Installer {

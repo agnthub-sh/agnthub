@@ -9,7 +9,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/heynemann/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 type fixture struct {

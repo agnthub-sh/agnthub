@@ -9,8 +9,8 @@ import (
 
 	"golang.org/x/term"
 
-	"github.com/heynemann/agnthub/internal/cli"
-	"github.com/heynemann/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/internal/cli"
+	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 func main() {

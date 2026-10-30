@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/harness"
 )
 
 // convert generates an artifact from a portable core, as the planner does.

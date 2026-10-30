@@ -51,7 +51,7 @@ formatters:
     - golines
   settings:
     goimports:
-      local-prefixes: [github.com/heynemann/agnthub]
+      local-prefixes: [github.com/agnthub-sh/agnthub]
     golines:
       max-len: 100
   exclusions:

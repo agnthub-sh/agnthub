@@ -10,8 +10,8 @@ import (
 	"charm.land/lipgloss/v2/table"
 	"github.com/spf13/cobra"
 
-	"github.com/heynemann/agnthub/agent"
-	"github.com/heynemann/agnthub/state"
+	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/state"
 )
 
 type listOptions struct {

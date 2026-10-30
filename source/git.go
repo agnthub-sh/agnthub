@@ -14,7 +14,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/heynemann/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 // Default Git fetch budgets.

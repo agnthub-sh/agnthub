@@ -3,7 +3,7 @@ package source
 import (
 	"testing"
 
-	"github.com/heynemann/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 func TestGenericGitIdentityKeepsPortAndRefusesPasswords(t *testing.T) {
