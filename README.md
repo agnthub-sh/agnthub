@@ -18,7 +18,8 @@ agnthub remove reviewer
 
 Every install is previewed before anything is written, the project lock
 (`agnthub-lock.json`) pins each agent to a commit, and agnthub never overwrites files it did
-not install or that you changed.
+not install or that you changed. The full documentation is at
+[app.agnthub.sh/docs](https://app.agnthub.sh/docs).
 
 This repository holds the CLI source and its releases. The hosted registry service is developed
 separately and builds on the packages here.
@@ -95,6 +96,16 @@ This builds the CLI from source without the release checksums; `agnthub --versio
 module version.
 
 ## Documentation
+
+The user documentation lives on the site, at [app.agnthub.sh/docs](https://app.agnthub.sh/docs):
+[getting started](https://app.agnthub.sh/docs), [installing the CLI](https://app.agnthub.sh/docs/install),
+[commands and flags](https://app.agnthub.sh/docs/commands), [harnesses](https://app.agnthub.sh/docs/harnesses),
+[cross-harness conversion](https://app.agnthub.sh/docs/conversion),
+[dependencies](https://app.agnthub.sh/docs/dependencies), [the lockfile](https://app.agnthub.sh/docs/lockfile),
+[authoring agents](https://app.agnthub.sh/docs/authoring) and
+[privacy and install reports](https://app.agnthub.sh/docs/privacy).
+
+In this repository:
 
 - [Using the CLI](docs/cli.md): sources, selection, scopes, Harness settings, dependencies,
   skills, check/update/restore/remove
