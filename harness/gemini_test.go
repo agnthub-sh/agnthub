@@ -63,6 +63,10 @@ func TestGeminiNativeRefusesWhatGeminiRejectsOrCannotHonor(t *testing.T) {
 			"reviewer",
 			"---\nname: reviewer\ndescription: d\ntools: [read_file, invoke_agent]\n---\nBody\n",
 		},
+		"MCP tool without a tool name": {
+			"reviewer",
+			"---\nname: reviewer\ndescription: d\ntools: [read_file, mcp_github]\n---\nBody\n",
+		},
 		"tools string": {
 			"reviewer",
 			"---\nname: reviewer\ndescription: d\ntools: read_file\n---\nBody\n",
@@ -112,7 +116,7 @@ func TestGeminiConversionIsAValidGeminiAgent(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !artifact.Generated || artifact.Converter != "gemini/v2" || len(artifact.Notes) == 0 {
+	if !artifact.Generated || artifact.Converter != "gemini/v3" || len(artifact.Notes) == 0 {
 		t.Fatalf("generated artifact must record converter and omissions: %+v", artifact)
 	}
 	if _, err := gemini.Native(

@@ -138,7 +138,7 @@ func TestCursorConversionIsReadableByCursor(t *testing.T) {
 		if err != nil {
 			t.Fatalf("%q: %v", description, err)
 		}
-		if !artifact.Generated || artifact.Converter != "cursor/v2" || len(artifact.Notes) == 0 {
+		if !artifact.Generated || artifact.Converter != "cursor/v3" || len(artifact.Notes) == 0 {
 			t.Fatalf("generated artifact must record converter and omissions: %+v", artifact)
 		}
 		// The generated file must pass the same checks as an authored Cursor variant.

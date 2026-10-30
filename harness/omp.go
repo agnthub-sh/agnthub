@@ -417,7 +417,8 @@ func ompToolPolicy(sem *Semantics, names []string) {
 }
 
 // Convert writes an omp task agent. omp's tools list selects built-ins only:
-// MCP, extension and custom tools stay available, and read also fetches URLs.
+// MCP, extension and custom tools stay available, so allowlisted MCP tools
+// need no entry, and read also fetches URLs.
 func (a ompAdapter) Convert(sem *Semantics) (Artifact, error) {
 	if ompReservedNames[strings.ToLower(strings.TrimSpace(sem.ID))] {
 		return Artifact{}, &IncompatibleError{
@@ -450,6 +451,7 @@ func (a ompAdapter) Convert(sem *Semantics) (Artifact, error) {
 		if sem.Tools.Restricted {
 			check.note("omp keeps MCP, extension and custom tools available to agents " +
 				"with a tools list")
+			check.mcpSession()
 		}
 		tools := toolNames(ompTools, effective)
 		if tools == nil {

@@ -55,8 +55,8 @@ func TestAssessPrefersValidVariantsAndRefusesUnsupportedPortableFields(t *testin
 				Harness: agent.Claude,
 				Path:    ".claude/agents/reviewer.md",
 				Raw: []byte(
-					"---\nname: reviewer\ndescription: Reviews\ntools: Read, mcp__db__query\n" +
-						"---\nReview.\n",
+					"---\nname: reviewer\ndescription: Reviews\ntools: Read\n" +
+						"permissionMode: acceptEdits\n---\nReview.\n",
 				),
 			},
 		},

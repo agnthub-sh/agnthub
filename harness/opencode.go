@@ -2,8 +2,10 @@ package harness
 
 import (
 	"fmt"
+	"maps"
 	"path"
 	"path/filepath"
+	"slices"
 	"strings"
 
 	"github.com/heynemann/agnthub/agent"
@@ -480,7 +482,7 @@ func opencodeNormal(action string) string {
 // also register a registry role as a primary agent. Tool policies become a V1
 // permission map, which OpenCode V2 still reads: an allowlist denies "*" first
 // (OpenCode applies the last matching rule, so this also hides MCP tools) and
-// then allows each granted action.
+// then allows each granted action, MCP tools included.
 func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
 	check, err := begin(agent.OpenCode, sem)
 	if err == nil {
@@ -510,6 +512,20 @@ func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
 				}
 			}
 		}
+		mcp, err := check.mcpNames(opencodeMCPAction)
+		if err != nil {
+			return Artifact{}, err
+		}
+		for _, action := range mcp {
+			permission[action] = "allow"
+		}
+		if len(mcp) > 0 {
+			permission[opencodeCodeMode] = "allow"
+			if !sem.Tools.Allows(CapWebFetch) {
+				check.note("excludes web fetch, but OpenCode reaches MCP tools through its " +
+					"Code Mode execute tool, which can also make HTTP requests")
+			}
+		}
 		fields = append(fields, agent.Field{Key: "permission", Value: permission})
 	}
 	if sem.MaxTurns > 0 {
@@ -526,6 +542,37 @@ func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
 		Converter: converterID(agent.OpenCode),
 		Notes:     check.notes,
 	})
+}
+
+// opencodeCodeMode is the action of OpenCode's Code Mode execute tool, through
+// which agents call MCP tools unless a server opts out of Code Mode.
+const opencodeCodeMode = "execute"
+
+// opencodeMCPAction is the permission action OpenCode checks before calling an
+// MCP tool: <server>_<tool>, with characters other than letters, digits, '_'
+// and '-' replaced by '_'; <server>_* matches every tool of the server. An
+// action that would also match a built-in action, or OpenCode's own opencode_
+// tools, is refused rather than granting that built-in.
+func opencodeMCPAction(tool MCPTool) (action, reason string) {
+	server := claudeNormalize(tool.Server)
+	if server == "opencode" {
+		return "", "OpenCode names its own tools opencode_<tool>"
+	}
+	prefix := server + "_"
+	if tool.Tool != "" {
+		action = prefix + claudeNormalize(tool.Tool)
+	} else {
+		action = prefix + "*"
+	}
+	builtins := slices.Concat([]string{opencodeCodeMode},
+		slices.Sorted(maps.Keys(opencodeActions)), slices.Sorted(maps.Keys(opencodeInertActions)))
+	for _, builtin := range builtins {
+		if builtin == action || tool.Tool == "" && strings.HasPrefix(builtin, prefix) {
+			return "", "its OpenCode permission " + action + " would also match the " +
+				"built-in action " + builtin
+		}
+	}
+	return action, ""
 }
 
 func (opencodeAdapter) Detect(ctx Context) bool {

@@ -102,8 +102,8 @@ type ToolPolicy struct {
 	Allowed Capability
 	// Denied are the withheld capabilities when not Restricted.
 	Denied Capability
-	// MCP lists allowlisted MCP tools, as authored.
-	MCP []string
+	// MCP lists allowlisted MCP tools in authored order.
+	MCP []MCPTool
 	// Unknown lists allowlisted tool names with no known capability.
 	Unknown []string
 }
@@ -129,8 +129,29 @@ func (p ToolPolicy) Limited() bool {
 	return p.Restricted || p.Denied != 0
 }
 
+// MCPTool is one allowlisted tool of an MCP server, named as the server
+// publishes it. agnthub never installs or configures MCP servers: a converted
+// Agent reaches the tool only if the target Harness has a server of that name.
+type MCPTool struct {
+	// Server is the MCP server name.
+	Server string
+	// Tool is the tool name, or "" for every tool the server offers.
+	Tool string
+	// Plugin is the Claude Code plugin that provides Server, or "" for a
+	// server the user configures.
+	Plugin string
+}
+
+// String names the tool as server/tool, or server/* for the whole server.
+func (t MCPTool) String() string {
+	if t.Tool == "" {
+		return t.Server + "/*"
+	}
+	return t.Server + "/" + t.Tool
+}
+
 // converterVersion is the conversion contract of every generated artifact.
-const converterVersion = "v2"
+const converterVersion = "v3"
 
 // converterID names the conversion contract for h.
 func converterID(h agent.HarnessID) string {
@@ -138,15 +159,17 @@ func converterID(h agent.HarnessID) string {
 }
 
 // ConverterReproduces reports whether the current converter regenerates
-// artifacts recorded under the converter id recorded. v2 renders a portable core
-// byte for byte like v1 (the only source v1 converted), so a lock written by v1
-// restores when its recorded digest still matches.
+// artifacts recorded under the converter id recorded. Each version renders
+// what its predecessors converted byte for byte (v2 added native Variant
+// sources, v3 MCP tool references), so a lock written by v1 or v2 restores
+// when its recorded digest still matches.
 func ConverterReproduces(recorded, current string) bool {
 	if recorded == current {
 		return true
 	}
 	harnessID, version, ok := strings.Cut(recorded, "/")
-	return ok && version == "v1" && current == converterID(agent.HarnessID(harnessID))
+	return ok && (version == "v1" || version == "v2") &&
+		current == converterID(agent.HarnessID(harnessID))
 }
 
 // PortableSemantics parses the portable core: identity, description and
@@ -191,7 +214,8 @@ type renderCheck struct {
 }
 
 // begin validates the parts every target treats alike and starts the notes:
-// unsupported features and MCP or unknown tools refuse; the model is noted.
+// unsupported features and unknown tools refuse; the model is noted. Renderers
+// map MCP tools themselves, with mcpNames or mcpSession.
 func begin(target agent.HarnessID, sem *Semantics) (*renderCheck, error) {
 	check := &renderCheck{target: target, sem: sem, notes: slices.Clone(sem.Notes)}
 	if len(sem.Unsupported) > 0 {
@@ -201,12 +225,6 @@ func begin(target agent.HarnessID, sem *Semantics) (*renderCheck, error) {
 	}
 	if strings.TrimSpace(sem.Instructions) == "" {
 		return nil, check.refuse("its %s has no instructions", sem.sourceLabel())
-	}
-	if len(sem.Tools.MCP) > 0 {
-		return nil, check.refuse(
-			"it allows MCP tool %s, which depends on an MCP server configured for %s; "+
-				"agnthub cannot carry that server to %s",
-			sem.Tools.MCP[0], sourceName(sem.Source), target)
 	}
 	if len(sem.Tools.Unknown) > 0 {
 		return nil, check.refuse("it allows tool %q, which has no %s equivalent",
@@ -220,6 +238,53 @@ func begin(target agent.HarnessID, sem *Semantics) (*renderCheck, error) {
 		check.notes = append([]string{"converted from the " + sem.sourceLabel()}, check.notes...)
 	}
 	return check, nil
+}
+
+// mcpNames maps every allowlisted MCP tool to the target's native name, or
+// returns the refusal native gives for a tool the target cannot address, and
+// notes the servers the Agent needs.
+func (c *renderCheck) mcpNames(native func(MCPTool) (name, reason string)) ([]string, error) {
+	if len(c.sem.Tools.MCP) == 0 {
+		return nil, nil
+	}
+	names := make([]string, 0, len(c.sem.Tools.MCP))
+	for _, tool := range c.sem.Tools.MCP {
+		name, reason := native(tool)
+		if reason != "" {
+			return nil, c.refuse("it allows MCP tool %s, but %s", tool, reason)
+		}
+		if !slices.Contains(names, name) {
+			names = append(names, name)
+		}
+	}
+	c.noteMCPServers()
+	return names, nil
+}
+
+// mcpSession notes the servers an Agent's MCP tools need on a target that
+// offers every session MCP tool to every agent and cannot limit them; the
+// target's own note states that residual surface.
+func (c *renderCheck) mcpSession() {
+	if len(c.sem.Tools.MCP) > 0 {
+		c.noteMCPServers()
+	}
+}
+
+// noteMCPServers names the MCP servers the Agent's tools come from.
+func (c *renderCheck) noteMCPServers() {
+	var servers []string
+	for _, tool := range c.sem.Tools.MCP {
+		server := tool.Server
+		if tool.Plugin != "" {
+			server += " (provided in Claude Code by plugin " + tool.Plugin + ")"
+		}
+		if !slices.Contains(servers, server) {
+			servers = append(servers, server)
+		}
+	}
+	c.note("needs MCP servers configured for %s under these names: %s; "+
+		"agnthub does not install or configure MCP servers",
+		c.target, strings.Join(servers, ", "))
 }
 
 func sourceName(h agent.HarnessID) string {
@@ -344,17 +409,20 @@ type toolTable struct {
 	tools []nativeTool
 	// helpers are session-only tools whose omission elsewhere is harmless, with why.
 	helpers map[string]string
-	// mcp reports whether a name is an MCP tool.
-	mcp func(name string) bool
+	// mcp reads a name as an MCP tool reference; names it cannot read fall
+	// through to tools, helpers and finally unknown names.
+	mcp func(name string) (MCPTool, bool)
 }
 
 // allow reads an authored allowlist.
 func (s *Semantics) allow(field string, names []string, table toolTable) {
 	s.Tools.Restricted = true
 	for _, name := range names {
-		if table.mcp != nil && table.mcp(name) {
-			s.Tools.MCP = append(s.Tools.MCP, name)
-			continue
+		if table.mcp != nil {
+			if tool, ok := table.mcp(name); ok {
+				s.Tools.MCP = append(s.Tools.MCP, tool)
+				continue
+			}
 		}
 		if c, ok := lookupTool(table.tools, name); ok {
 			s.Tools.Allowed |= c

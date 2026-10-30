@@ -283,7 +283,12 @@ func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Seman
 }
 
 // copilotToolPolicy reads a Copilot tools list. Copilot ignores names it does
-// not know, so they grant nothing; skill and sql are always present.
+// not know, so they grant nothing; skill and sql are always present. An MCP
+// tool is granted by its exposed name, <server>-<tool>; since server names may
+// contain '-', such an entry cannot be read as a server and tool, so a
+// hyphenated name that is not a built-in alias is kept as unknown. Copilot CLI
+// grants nothing for documented <server>/<tool> entries naming session MCP
+// servers.
 func copilotToolPolicy(sem *Semantics, names []string) {
 	if slices.Contains(names, "*") {
 		return
@@ -298,12 +303,47 @@ func copilotToolPolicy(sem *Semantics, names []string) {
 		switch {
 		case lower == "skill" || lower == "sql":
 		case strings.Contains(name, "/"):
-			sem.Tools.MCP = append(sem.Tools.MCP, name)
+			sem.note("omitted tools entry %s: Copilot CLI grants nothing for a "+
+				"<server>/<tool> entry naming a session MCP server", name)
+		case strings.Contains(name, "-"):
+			sem.Tools.Unknown = append(sem.Tools.Unknown, name)
 		default:
 			sem.note("omitted tools entry %s: Copilot CLI ignores it, so it grants nothing", name)
 		}
 	}
 	sem.Tools.Allowed |= CapSkill
+}
+
+// copilotMaxToolName is the longest tool name Copilot CLI keeps; it truncates
+// longer exposed MCP tool names.
+const copilotMaxToolName = 64
+
+// copilotMCPName names an MCP tool as Copilot CLI exposes it, which is also how
+// a tools list selects it: <server>-<tool>, with characters other than
+// letters, digits, '_' and '-' replaced by '-', matched case-insensitively.
+// Copilot CLI has no entry selecting every tool of a server.
+func copilotMCPName(tool MCPTool) (name, reason string) {
+	if tool.Tool == "" {
+		return "", "Copilot CLI cannot select every tool of an MCP server"
+	}
+	name = copilotNormalize(tool.Server) + "-" + copilotNormalize(tool.Tool)
+	if len(name) > copilotMaxToolName {
+		return "", fmt.Sprintf("its Copilot CLI name %s is longer than the %d characters "+
+			"Copilot CLI keeps", name, copilotMaxToolName)
+	}
+	return name, ""
+}
+
+// copilotNormalize spells a server or tool name the way Copilot CLI does in
+// exposed MCP tool names.
+func copilotNormalize(name string) string {
+	return strings.Map(func(r rune) rune {
+		if r == '_' || r == '-' || r >= 'a' && r <= 'z' || r >= 'A' && r <= 'Z' ||
+			r >= '0' && r <= '9' {
+			return r
+		}
+		return '-'
+	}, name)
 }
 
 // Convert writes a Copilot CLI agent. Tool policies become primary aliases;
@@ -332,9 +372,15 @@ func (a copilotAdapter) Convert(sem *Semantics) (Artifact, error) {
 			check.note("Copilot CLI has no tool denylist, so the agent lists its built-in " +
 				"tools and does not get MCP tools")
 		}
-		fields = append(fields, agent.Field{
-			Key: "tools", Value: toolNames(copilotToolNames, sem.Tools.Effective()),
-		})
+		tools := toolNames(copilotToolNames, sem.Tools.Effective())
+		if sem.Tools.Restricted {
+			mcp, err := check.mcpNames(copilotMCPName)
+			if err != nil {
+				return Artifact{}, err
+			}
+			tools = append(tools, mcp...)
+		}
+		fields = append(fields, agent.Field{Key: "tools", Value: tools})
 	}
 	content, err := agent.RenderMarkdown(fields, sem.Instructions)
 	if err != nil {

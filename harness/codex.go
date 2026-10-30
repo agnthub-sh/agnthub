@@ -296,7 +296,7 @@ func (a codexAdapter) Semantics(id string, variant *agent.VariantFile) (*Semanti
 // Convert writes a standalone agent. Codex has no per-agent tool allowlist and
 // no agent-local read-only mode, so an Agent withholding reads, searches or
 // edits is refused; withheld shell becomes features.shell_tool = false. Web
-// search and delegation follow the parent session and are noted.
+// search, delegation and MCP servers follow the parent session and are noted.
 func (a codexAdapter) Convert(sem *Semantics) (Artifact, error) {
 	check, err := begin(agent.Codex, sem)
 	if err == nil {
@@ -322,6 +322,7 @@ func (a codexAdapter) Convert(sem *Semantics) (Artifact, error) {
 		check.note(
 			"Codex agents keep the session's MCP servers; an agent file cannot withhold them",
 		)
+		check.mcpSession()
 	}
 	file := codexAgentFile{
 		Name:                  sem.ID,

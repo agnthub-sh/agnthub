@@ -198,6 +198,9 @@ func geminiTools(value any) string {
 		if tool == geminiAgentTool {
 			return "Gemini CLI subagents cannot invoke other agents; remove " + geminiAgentTool
 		}
+		if strings.HasPrefix(tool, "mcp_") && !geminiValidMCPName(tool) {
+			return "Gemini CLI rejects MCP tool name " + tool
+		}
 	}
 	return ""
 }
@@ -266,14 +269,96 @@ var geminiToolTable = toolTable{
 		"complete_task":   "Gemini CLI adds it to every subagent",
 		"update_topic":    "Gemini CLI removes it from subagents",
 	},
-	mcp: func(name string) bool {
-		return strings.HasPrefix(name, "mcp_") || name == "read_mcp_resource" ||
-			name == "list_mcp_resources"
-	},
+	mcp: geminiMCPTool,
 }
 
 // geminiAllMCP keeps every MCP tool in an enumerated tools list.
 const geminiAllMCP = "mcp_*"
+
+// geminiMaxToolName is the longest MCP tool name Gemini CLI keeps; it shortens
+// longer names in a way a tools list cannot rely on.
+const geminiMaxToolName = 63
+
+// geminiMCPTool reads mcp_<server>_<tool> as Gemini CLI does: the server name
+// ends at the first underscore, and mcp_<server>_* names every tool of the
+// server.
+func geminiMCPTool(name string) (MCPTool, bool) {
+	if name == geminiAllMCP || !geminiValidMCPName(name) {
+		return MCPTool{}, false
+	}
+	server, tool, _ := strings.Cut(strings.TrimPrefix(name, "mcp_"), "_")
+	if tool == "*" {
+		tool = ""
+	}
+	return MCPTool{Server: server, Tool: tool}, true
+}
+
+// geminiValidMCPName reports whether Gemini CLI 0.66 accepts an mcp_ entry in
+// a tools list: mcp_*, or slug server and tool names, the tool possibly *.
+func geminiValidMCPName(name string) bool {
+	if name == geminiAllMCP {
+		return true
+	}
+	rest, ok := strings.CutPrefix(name, "mcp_")
+	if !ok || strings.HasPrefix(rest, "_") {
+		return false
+	}
+	server, tool, found := strings.Cut(rest, "_")
+	if !found || server == "" || tool == "" || !geminiSlug(server) {
+		return false
+	}
+	return tool == "*" || strings.Trim(tool, "_") != "" && geminiSlug(tool)
+}
+
+// geminiSlug matches Gemini CLI's /^[a-z0-9_.:-]+$/i tool-name slug.
+func geminiSlug(text string) bool {
+	for _, r := range text {
+		if !geminiNameRune(r) || r == '*' {
+			return false
+		}
+	}
+	return text != ""
+}
+
+// geminiNameRune reports a character Gemini CLI keeps in MCP tool names; it
+// replaces any other with '_'.
+func geminiNameRune(r rune) bool {
+	return r == '_' || r == '-' || r == '.' || r == ':' || r >= 'a' && r <= 'z' ||
+		r >= 'A' && r <= 'Z' || r >= '0' && r <= '9'
+}
+
+// geminiMCPName names an MCP tool as Gemini CLI registers it: mcp_ (unless the
+// name already starts with it), then <server>_<tool> with characters it does
+// not keep replaced by '_'. Gemini selects a whole server only by a server name
+// without '_', since it ends the server name at the first underscore.
+func geminiMCPName(tool MCPTool) (name, reason string) {
+	if tool.Tool == "" {
+		name = "mcp_" + tool.Server + "_*"
+		if strings.Contains(tool.Server, "_") || !geminiValidMCPName(name) {
+			return "", "Gemini CLI can only select every tool of a server named with " +
+				"letters, digits, '.', ':' and '-'"
+		}
+		return name, ""
+	}
+	name = tool.Server + "_" + tool.Tool
+	if !strings.HasPrefix(name, "mcp_") {
+		name = "mcp_" + name
+	}
+	name = strings.Map(func(r rune) rune {
+		if geminiNameRune(r) {
+			return r
+		}
+		return '_'
+	}, name)
+	switch {
+	case len(name) > geminiMaxToolName:
+		return "", fmt.Sprintf("its Gemini CLI name %s is longer than the %d characters "+
+			"Gemini CLI keeps", name, geminiMaxToolName)
+	case !geminiValidMCPName(name):
+		return "", "Gemini CLI rejects its tool name " + name
+	}
+	return name, ""
+}
 
 func (a geminiAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics, error) {
 	if _, err := a.Native(id, variant); err != nil {
@@ -344,6 +429,11 @@ func (a geminiAdapter) Convert(sem *Semantics) (Artifact, error) {
 		if !sem.Tools.Restricted {
 			tools = append(tools, geminiAllMCP)
 		}
+		mcp, err := check.mcpNames(geminiMCPName)
+		if err != nil {
+			return Artifact{}, err
+		}
+		tools = append(tools, mcp...)
 		if tools == nil {
 			tools = []string{}
 		}

@@ -245,8 +245,8 @@ func (a cursorAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 }
 
 // Convert writes a Cursor subagent. Cursor has no tool allowlist: readonly: true
-// is its only restriction and blocks edits and every shell command together, so
-// an Agent withholding exactly one of them is refused.
+// is its only restriction and blocks edits, every shell command and MCP tool
+// calls together, so an Agent withholding exactly one of them is refused.
 func (a cursorAdapter) Convert(sem *Semantics) (Artifact, error) {
 	check, err := begin(agent.Cursor, sem)
 	if err == nil {
@@ -264,6 +264,9 @@ func (a cursorAdapter) Convert(sem *Semantics) (Artifact, error) {
 	case !readonly && !sem.Tools.Allows(CapShell):
 		err = check.refuse("it excludes shell but allows edits, and Cursor can only " +
 			"withhold shell by making the agent read-only")
+	case readonly && len(sem.Tools.MCP) > 0:
+		err = check.refuse("it allows MCP tool %s without edits, but Cursor's only "+
+			"restriction (readonly) blocks every MCP tool call", sem.Tools.MCP[0])
 	}
 	if err != nil {
 		return Artifact{}, err
@@ -271,6 +274,7 @@ func (a cursorAdapter) Convert(sem *Semantics) (Artifact, error) {
 	check.noteWithheld(CapWeb|CapDelegate, "Cursor cannot withhold them from an agent")
 	if sem.Tools.Restricted && !readonly {
 		check.note("Cursor agents keep the session's MCP tools unless read-only")
+		check.mcpSession()
 	}
 	description := strings.Join(strings.Fields(sem.Description), " ")
 	if description != strings.TrimSpace(sem.Description) {

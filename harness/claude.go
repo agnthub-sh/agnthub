@@ -149,7 +149,64 @@ var claudeTools = toolTable{
 		"BashOutput":      "no longer a Claude Code tool, so it grants nothing",
 		"TaskOutput":      "no longer a Claude Code tool, so it grants nothing",
 	},
-	mcp: func(name string) bool { return strings.HasPrefix(name, "mcp__") },
+	mcp: claudeMCPTool,
+}
+
+// claudeMCPTool reads mcp__<server>__<tool> the way Claude Code splits it: the
+// server name ends at the first double underscore, and mcp__<server> or
+// mcp__<server>__* names every tool of the server. Other wildcards are not
+// read. A plugin server, plugin_<plugin>_<server>, is named by its own server
+// name; plugin names are kebab-case, so the first underscore ends the plugin.
+func claudeMCPTool(name string) (MCPTool, bool) {
+	rest, ok := strings.CutPrefix(name, "mcp__")
+	if !ok {
+		return MCPTool{}, false
+	}
+	server, tool, _ := strings.Cut(rest, "__")
+	if tool == "*" {
+		tool = ""
+	}
+	if server == "" || strings.Contains(server, "*") || strings.Contains(tool, "*") {
+		return MCPTool{}, false
+	}
+	if inner, isPlugin := strings.CutPrefix(server, "plugin_"); isPlugin {
+		plugin, pluginServer, found := strings.Cut(inner, "_")
+		if found && plugin != "" && pluginServer != "" {
+			return MCPTool{Server: pluginServer, Tool: tool, Plugin: plugin}, true
+		}
+	}
+	return MCPTool{Server: server, Tool: tool}, true
+}
+
+// claudeIDEServer is Claude Code's built-in connection to the user's IDE.
+const claudeIDEServer = "ide"
+
+// claudeMCPName names an MCP tool as Claude Code exposes it: server and tool
+// names with characters other than letters, digits, '_' and '-' replaced by '_'.
+func claudeMCPName(tool MCPTool) (name, reason string) {
+	server := claudeNormalize(tool.Server)
+	if tool.Plugin != "" {
+		server = "plugin_" + claudeNormalize(tool.Plugin) + "_" + server
+	}
+	if strings.Contains(server, "__") {
+		return "", "Claude Code ends an MCP server name at its first double underscore"
+	}
+	if tool.Tool == "" {
+		return "mcp__" + server + "__*", ""
+	}
+	return "mcp__" + server + "__" + claudeNormalize(tool.Tool), ""
+}
+
+// claudeNormalize spells a server or tool name the way Claude Code does in
+// MCP tool names.
+func claudeNormalize(name string) string {
+	return strings.Map(func(r rune) rune {
+		if r == '_' || r == '-' || r >= 'a' && r <= 'z' || r >= 'A' && r <= 'Z' ||
+			r >= '0' && r <= '9' {
+			return r
+		}
+		return '_'
+	}, name)
 }
 
 // claudeBehaviors are Claude Code subagent fields with no cross-harness equivalent.
@@ -297,6 +354,12 @@ func claudeToolPolicy(sem *Semantics, hasAllowlist bool, allowed, disallowed []s
 	allowNames := make([]string, 0, len(allowed))
 	for _, name := range allowed {
 		base, scoped := bare(name)
+		if tool, ok := claudeMCPTool(base); ok && tool.Server == claudeIDEServer &&
+			tool.Plugin == "" {
+			sem.note("omitted tools entry %s: Claude Code's built-in IDE connection, "+
+				"which other harnesses do not offer as an MCP server", name)
+			continue
+		}
 		switch {
 		case !scoped:
 		case base == "Agent" || base == "Task":
@@ -339,13 +402,18 @@ func (a claudeAdapter) Convert(sem *Semantics) (Artifact, error) {
 		{Key: "description", Value: sem.Description},
 	}
 	switch {
-	case sem.Tools.Restricted && sem.Tools.Allowed == 0:
+	case sem.Tools.Restricted && sem.Tools.Allowed == 0 && len(sem.Tools.MCP) == 0:
 		return Artifact{}, check.refuse("it allows no tools, and Claude Code refuses to " +
 			"spawn an agent with zero tools")
 	case sem.Tools.Restricted:
+		mcp, err := check.mcpNames(claudeMCPName)
+		if err != nil {
+			return Artifact{}, err
+		}
 		fields = append(fields, agent.Field{
-			Key:   "tools",
-			Value: strings.Join(toolNames(claudeTools.tools, sem.Tools.Allowed), ", "),
+			Key: "tools",
+			Value: strings.Join(
+				append(toolNames(claudeTools.tools, sem.Tools.Allowed), mcp...), ", "),
 		})
 	case sem.Tools.Denied != 0:
 		fields = append(fields, agent.Field{
