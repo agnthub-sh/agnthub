@@ -1,9 +1,10 @@
 // Package adoption reports successful installs from public GitHub repositories to the
-// agnthub registry, which registers the repository and counts reported adoption. Reporting is
-// best-effort: it never changes what was installed or the command's result, it honors the
-// combined DO_NOT_TRACK/DISABLE_TELEMETRY opt-out before anything else, and it sends only a
-// public owner/repo, the installed revision and, per Agent, its id, origin, the Harness ids
-// that received artifacts and an agent-scoped random identity.
+// agnthub registry, which counts reported adoption for Agents it already lists; a report
+// never adds a repository to the registry. Reporting is best-effort: it never changes what
+// was installed or the command's result, it honors the combined DO_NOT_TRACK/DISABLE_TELEMETRY
+// opt-out before anything else, and it sends only a public owner/repo, the installed
+// revision and, per Agent, its id, origin, the Harness ids that received artifacts and an
+// agent-scoped random identity.
 package adoption
 
 import (
@@ -34,7 +35,7 @@ const DefaultGitHubURL = "https://" + source.GitHubHost
 // Timeout bounds all reporting work after one install, checks and requests together.
 const Timeout = 3 * time.Second
 
-// OptOutVariables disable automatic registration and reporting when any is non-empty.
+// OptOutVariables disable install reporting when any is non-empty.
 var OptOutVariables = []string{"DO_NOT_TRACK", "DISABLE_TELEMETRY"}
 
 // OptedOut reports the combined sharing opt-out.
