@@ -14,6 +14,7 @@ agnthub check                                 # newer source content and local d
 agnthub update                                # preview and apply newer content
 agnthub restore                               # recreate exactly what agnthub-lock.json records
 agnthub remove reviewer
+agnthub mcp                                   # MCP server (stdio) for AI agents
 ```
 
 Every install is previewed before anything is written, the project lock
@@ -108,7 +109,7 @@ The user documentation lives on the site, at [app.agnthub.sh/docs](https://app.a
 In this repository:
 
 - [Using the CLI](docs/cli.md): sources, selection, scopes, Harness settings, dependencies,
-  skills, check/update/restore/remove
+  skills, check/update/restore/remove and the [MCP server](docs/cli.md#mcp-server)
 - [CLI contract](docs/cli-contract.md), [glossary](GLOSSARY.md) and
   [architecture decisions](docs/adr/)
 - [Native Harness agent formats and conversion limits](docs/research/harness-agent-formats.md)

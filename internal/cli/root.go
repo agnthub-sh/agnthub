@@ -149,6 +149,7 @@ const (
 	groupManage  = "manage"
 	groupUpdates = "updates"
 	groupProject = "project"
+	groupAgents  = "agents"
 )
 
 func (a *App) rootCommand(ctx context.Context) *cobra.Command {
@@ -181,6 +182,7 @@ overwrites files it does not own.`,
 		&cobra.Group{ID: groupManage, Title: "Manage agents"},
 		&cobra.Group{ID: groupUpdates, Title: "Updates"},
 		&cobra.Group{ID: groupProject, Title: "Project"},
+		&cobra.Group{ID: groupAgents, Title: "AI agents"},
 	)
 	for _, cmd := range []*cobra.Command{a.addCommand(ctx), a.listCommand(), a.removeCommand(ctx)} {
 		cmd.GroupID = groupManage
@@ -193,6 +195,9 @@ overwrites files it does not own.`,
 	restore := a.restoreCommand(ctx)
 	restore.GroupID = groupProject
 	root.AddCommand(restore)
+	mcpCmd := a.mcpCommand(ctx)
+	mcpCmd.GroupID = groupAgents
+	root.AddCommand(mcpCmd)
 	return root
 }
 

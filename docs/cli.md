@@ -30,6 +30,7 @@ The command surface follows [skills.sh](https://skills.sh) (`npx skills`) where 
 | `check [agent...]` | | Show available updates and local drift without writing |
 | `update [agent...]` | `upgrade` | Preview and apply newer content |
 | `restore` | | Recreate exactly what `agnthub-lock.json` records |
+| `mcp` | | Serve agnthub to AI agents over the Model Context Protocol (stdio) |
 | `completion <shell>` | | Print a bash, zsh, fish or PowerShell completion script |
 
 Shared flags: `-g/--global` (user scope instead of the project), `-y/--yes` (no prompts), `--json` (machine-readable output, never prompts), `-a/--agent` (agent definitions), `-H/--harness` (harnesses; skills.sh target names such as `claude-code`, `github-copilot` and `gemini-cli` are accepted), `--extra <harness>.<key>=<value>`, `add -l/--list` and `add --all`. `--agent '*'` selects every agent of the source and `--harness '*'` every supported harness; `--all` is shorthand for `--agent '*' --harness '*' --yes`. `agnthub --help` and `agnthub <command> --help` show grouped commands, flags and examples; `agnthub --version` (or `-v`) prints the version.
@@ -88,5 +89,48 @@ Removing an agent never removes its companion agents or skills. `remove --clean-
 `update [agent...]` (default: every direct agent) resolves the same newer content with its current dependency closure, previews content, Variant, dependency and skill changes plus the plan, and writes only after approval (`--yes` noninteractively). Locally modified or unmanaged files are never overwritten: the plan is refused (or, in a terminal, you may explicitly apply only the valid items). Dependencies the new revision no longer requires stay installed. Every artifact keeps the binding it was recorded with: an omp agent installed while profile `hep` was active is updated in `hep` even when another profile is active now, `--extra` naming a different binding is refused instead of retargeting, and a shared file with several recorded bindings needs `--extra` or a terminal choice.
 
 `restore` recreates the installation the lock records, e.g. in a fresh clone: each agent is fetched at its locked commit, its source bytes must match the locked `sourceDigest`, it is regenerated with the recorded converter (an unsupported converter id/version is refused) and every artifact must equal its locked digest before anything is written; skills are installed through the skill installer pinned to their locked commit and verified against the locked digest. An unavailable commit, changed bytes or a mismatch is an error, never a reason to substitute newer content (`update` is the explicit way forward). Recorded bindings are reused; on a machine without them, Harnesses with settings need an explicit binding (`--extra omp.profile=work`, or a terminal choice). Restore never moves or deletes another profile's installation, never replaces a locally modified file and never replaces a shared file on behalf of a different binding. The lock never contains user-local state: absolute project paths, Harness settings and installation times stay in the ownership records.
+
+## MCP server
+
+`agnthub mcp` runs a [Model Context Protocol](https://modelcontextprotocol.io) server on stdin/stdout so AI agents can find, inspect and install agents. MCP clients start it themselves; it is the same binary as the CLI (`npx -y agnthub mcp`, or the installed `agnthub mcp`).
+
+Read-only tools query the public registry API (`https://api.agnthub.sh`; override with `--api-url`, `AGNTHUB_API_URL` or `apiURL:` in `~/.config/agnthub/config.yaml`) and see exactly what the site shows: only currently listed repositories, instructions only under the licensed policy. Outputs are bounded (at most 20 search results per page, 50 agents per repository, instructions only on request and capped at 32 KiB each).
+
+| Tool | What it does |
+| --- | --- |
+| `search_agents` | Full-text search with harness filters and `relevance`, `recent`, `installs`, `installs_30d`, `installs_7d`, `harness_installs` or `stars` order |
+| `get_agent` | One agent: description, installable harnesses or why not, dependencies, reported installs, agnthub stars, license; instructions with `include_instructions` |
+| `get_repository` | A listed repository with its agents, license, GitHub stats and scan problems |
+| `install_command` | The `npx agnthub add …` command for agents, harnesses, scope and omp profile, built and quoted exactly as the site's install builder does, after checking the agents are listed; warns about harnesses an agent cannot be installed into |
+| `install_agents` | Installs on this machine through the same code as `agnthub add --json`: harness selection, scope, `--extra` settings such as `omp.profile`, dependencies, required skills, the lock and ownership records. Without `confirm` it only returns the plan; with `confirm: true` it applies the plan only when every item is valid, so files agnthub does not own or that were changed locally are never overwritten. Project installs go to `project_dir` (default: the directory the client started the server in). Install reports honor `DO_NOT_TRACK` / `DISABLE_TELEMETRY` |
+
+Client configuration (use `agnthub mcp` instead of `npx -y agnthub mcp` with an installed binary):
+
+- Claude Code: `claude mcp add agnthub -- npx -y agnthub mcp`
+- Codex: `codex mcp add agnthub -- npx -y agnthub mcp`, or in `~/.codex/config.toml`:
+
+  ```toml
+  [mcp_servers.agnthub]
+  command = "npx"
+  args = ["-y", "agnthub", "mcp"]
+  ```
+
+- OpenCode (`opencode.json`):
+
+  ```json
+  { "mcp": { "agnthub": { "type": "local", "command": ["npx", "-y", "agnthub", "mcp"] } } }
+  ```
+
+- Cursor (`.cursor/mcp.json` or `~/.cursor/mcp.json`), Gemini CLI (`.gemini/settings.json` or `~/.gemini/settings.json`) and omp (`.omp/mcp.json` or `~/.omp/agent/mcp.json`):
+
+  ```json
+  { "mcpServers": { "agnthub": { "command": "npx", "args": ["-y", "agnthub", "mcp"] } } }
+  ```
+
+- GitHub Copilot CLI (`~/.copilot/mcp-config.json`):
+
+  ```json
+  { "mcpServers": { "agnthub": { "type": "local", "command": "npx", "args": ["-y", "agnthub", "mcp"], "tools": ["*"] } } }
+  ```
 
 Development: see [CONTRIBUTING](../CONTRIBUTING.md).

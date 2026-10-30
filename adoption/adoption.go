@@ -82,27 +82,37 @@ type Reporter struct {
 	Timeout   time.Duration
 }
 
-// New returns a reporter for e. The API origin is AGNTHUB_API_URL, else configured (the
-// user configuration's apiURL), else DefaultAPIURL. Requests honor the proxy variables of e.
+// New returns a reporter for e that sends to APIURL(e, configured). Requests honor the proxy
+// variables of e.
 func New(e env.Env, version, configured string) *Reporter {
-	apiURL := DefaultAPIURL
-	if configured != "" {
-		apiURL = configured
-	}
-	if override := e.Get("AGNTHUB_API_URL"); override != "" {
-		apiURL = override
-	}
-	transport := http.DefaultTransport.(*http.Transport).Clone()
-	proxy := proxyConfig(e).ProxyFunc()
-	transport.Proxy = func(req *http.Request) (*url.URL, error) { return proxy(req.URL) }
 	return &Reporter{
 		Env:       e,
-		APIURL:    apiURL,
+		APIURL:    APIURL(e, configured),
 		GitHubURL: DefaultGitHubURL,
-		Client:    &http.Client{Transport: transport},
+		Client:    HTTPClient(e),
 		UserAgent: "agnthub/" + version,
 		Timeout:   Timeout,
 	}
+}
+
+// APIURL is the registry API origin: AGNTHUB_API_URL, else configured (the user
+// configuration's apiURL), else DefaultAPIURL.
+func APIURL(e env.Env, configured string) string {
+	if override := e.Get("AGNTHUB_API_URL"); override != "" {
+		return override
+	}
+	if configured != "" {
+		return configured
+	}
+	return DefaultAPIURL
+}
+
+// HTTPClient returns a client whose requests honor the proxy variables of e.
+func HTTPClient(e env.Env) *http.Client {
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	proxy := proxyConfig(e).ProxyFunc()
+	transport.Proxy = func(req *http.Request) (*url.URL, error) { return proxy(req.URL) }
+	return &http.Client{Transport: transport}
 }
 
 func proxyConfig(e env.Env) *httpproxy.Config {
