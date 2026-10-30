@@ -43,9 +43,12 @@ jobs:
 
   npm:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 24] # package.json engines floor and current
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: ${{ matrix.node }}
       - run: make npm-test

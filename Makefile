@@ -60,7 +60,7 @@ release-publish: ## manual fallback for the release workflow: upload dist/ to th
 		dist/*.tar.gz dist/*.zip dist/SHA256SUMS
 
 npm-test: need-node ## npm launcher tests
-	cd npm/agnthub && node --test test/
+	cd npm/agnthub && node --test test/*.test.js
 
 npm-pack: need-node ## npm launcher tarball (after `make release`) into dist/
 	cd npm/agnthub && npm pack --pack-destination ../../dist
