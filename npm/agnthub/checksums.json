@@ -1,0 +1,11 @@
+{
+  "version": "0.1.0",
+  "sha256": {
+    "agnthub_0.1.0_linux_amd64.tar.gz": "ce83d58327c3c7ffd9cbee8cd95dfbc586be8fa7c664125b091e1fa910fa9e0e",
+    "agnthub_0.1.0_linux_arm64.tar.gz": "8ec6987e24612f17084a2f4c49ad051497d80da2be117d330f136fb1eaa1dfb7",
+    "agnthub_0.1.0_darwin_amd64.tar.gz": "1a661869e8fc48968dd19d3efc156532f7177432af734226cd4d4a0a7c08106f",
+    "agnthub_0.1.0_darwin_arm64.tar.gz": "f2319fdc34b5f477943662a65a5112252b284408ef1cb196ad2200074a492096",
+    "agnthub_0.1.0_windows_amd64.zip": "da1bf6b49a598715f5f905f12549de5d6c8a0edaa6409127ceb8c0fac9b9fb2b",
+    "agnthub_0.1.0_windows_arm64.zip": "904683e4ba21c91a8de8a751f15cec6b130b569c7a3ff24ac1144a0ff0e02bfe"
+  }
+}
