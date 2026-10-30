@@ -36,20 +36,30 @@ Pick the archive for your platform from the
 [latest release](https://github.com/agnthub-sh/agnthub/releases/latest) and verify it against
 the release's `SHA256SUMS` before running it.
 
-Linux and macOS:
+Linux and macOS: download, verify and unpack.
 
 ```sh
 VERSION=0.3.0
 OS=linux       # or darwin
 ARCH=amd64     # or arm64
 BASE=https://github.com/agnthub-sh/agnthub/releases/download/v$VERSION
+
+# Download the archive and the release checksums
 curl -fsSLO "$BASE/agnthub_${VERSION}_${OS}_${ARCH}.tar.gz"
 curl -fsSLO "$BASE/SHA256SUMS"
-sha256sum --ignore-missing -c SHA256SUMS     # macOS: shasum -a 256 --ignore-missing -c SHA256SUMS
+
+# Verify the archive; it must print OK (macOS: shasum -a 256 --ignore-missing -c SHA256SUMS)
+sha256sum --ignore-missing -c SHA256SUMS
+
+# Unpack the binary into a directory on your PATH
 tar -xzf "agnthub_${VERSION}_${OS}_${ARCH}.tar.gz" agnthub
-sudo install agnthub /usr/local/bin/agnthub  # or any directory on your PATH
+mkdir -p ~/.local/bin
+mv agnthub ~/.local/bin/
 agnthub --version
 ```
+
+If `agnthub` isn't found afterwards, add `export PATH="$HOME/.local/bin:$PATH"` to your shell
+profile, or put the binary in a system directory instead with `sudo mv agnthub /usr/local/bin/`.
 
 Windows (PowerShell):
 
