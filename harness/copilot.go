@@ -31,12 +31,15 @@ func (copilotAdapter) Identify(filePath string, raw []byte) (NativeAgent, error)
 	if err != nil {
 		return NativeAgent{}, err
 	}
-	if _, err := validateCopilot(doc); err != nil {
-		return NativeAgent{}, fmt.Errorf("%s: %w", filePath, err)
-	}
 	base := path.Base(filePath)
-	id := strings.TrimSuffix(strings.TrimSuffix(base, ".md"), ".agent")
-	return NativeAgent{ID: id, Description: doc.String("description")}, nil
+	identity := NativeAgent{
+		ID:          strings.TrimSuffix(strings.TrimSuffix(base, ".md"), ".agent"),
+		Description: doc.String("description"),
+	}
+	if _, err := validateCopilot(doc); err != nil {
+		return identity, fmt.Errorf("%s: %w", filePath, err)
+	}
+	return identity, nil
 }
 
 // copilotFieldKind is the documented shape of a Copilot CLI frontmatter field.

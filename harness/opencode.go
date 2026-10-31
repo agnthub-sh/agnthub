@@ -30,13 +30,14 @@ func (opencodeAdapter) Identify(filePath string, raw []byte) (NativeAgent, error
 	if err != nil {
 		return NativeAgent{}, err
 	}
-	if err := validateOpenCode(doc); err != nil {
-		return NativeAgent{}, fmt.Errorf("%s: %w", filePath, err)
-	}
-	return NativeAgent{
+	identity := NativeAgent{
 		ID:          strings.TrimSuffix(path.Base(filePath), ".md"),
 		Description: doc.String("description"),
-	}, nil
+	}
+	if err := validateOpenCode(doc); err != nil {
+		return identity, fmt.Errorf("%s: %w", filePath, err)
+	}
+	return identity, nil
 }
 
 // opencodeModes are the documented agent modes; OpenCode drops agents declaring others.

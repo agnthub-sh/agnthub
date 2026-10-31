@@ -415,7 +415,11 @@ func (s *scanner) nativeFile(adapter harness.Adapter, name string) (*candidate, 
 	identity, err := adapter.Identify(name, raw)
 	if err != nil {
 		s.problems = append(s.problems, Problem{Path: name, Message: err.Error()})
-		return nil, nil
+		if identity.ID == "" {
+			return nil, nil
+		}
+		// The file names its agent: it stays that agent's Variant so the plan
+		// refuses it for its Harness rather than installing a conversion instead.
 	}
 	return &candidate{
 		id:      identity.ID,

@@ -40,7 +40,7 @@ func requireNamed(doc *agent.Document) (NativeAgent, error) {
 	}
 	description, ok := doc.Frontmatter["description"].(string)
 	if !ok || strings.TrimSpace(description) == "" {
-		return NativeAgent{}, fmt.Errorf("%s: frontmatter requires a description", doc.Path)
+		return NativeAgent{ID: name}, fmt.Errorf("%s: frontmatter requires a description", doc.Path)
 	}
 	return NativeAgent{ID: name, Description: description}, nil
 }

@@ -73,10 +73,10 @@ func (ompAdapter) Identify(filePath string, raw []byte) (NativeAgent, error) {
 	}
 	identity, err := requireNamed(doc)
 	if err != nil {
-		return NativeAgent{}, err
+		return identity, err
 	}
 	if ompReservedNames[strings.ToLower(strings.TrimSpace(identity.ID))] {
-		return NativeAgent{}, fmt.Errorf(
+		return identity, fmt.Errorf(
 			"%s: name %q is reserved by omp for session rules",
 			filePath,
 			identity.ID,

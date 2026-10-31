@@ -203,6 +203,44 @@ agents:
 	}
 }
 
+func TestInvalidDiscoveredVariantNeverFallsBackToConversion(t *testing.T) {
+	variants := map[string]struct{ path, content string }{
+		"copilot": {
+			".github/agents/reviewer.agent.md",
+			"---\nname: reviewer\ndescription: Copilot reviewer\nhandoffs-to: planner\n---\nbody\n",
+		},
+		"opencode": {
+			".opencode/agents/reviewer.md",
+			"---\ndescription: OpenCode reviewer\nmode: background\n---\nbody\n",
+		},
+		"claude": {".claude/agents/reviewer.md", "---\nname: reviewer\n---\nbody\n"},
+	}
+	for harnessID, variant := range variants {
+		t.Run(harnessID, func(t *testing.T) {
+			h := newHarness(t)
+			h.write("agents/reviewer.md", reviewer)
+			h.write(variant.path, variant.content)
+			code, out := h.run("add", h.source, "--harness", harnessID, "--yes")
+			if code == 0 || !strings.Contains(out, "invalid") {
+				t.Fatalf(
+					"an invalid %s variant must refuse, not convert the portable core; exit %d: %s",
+					harnessID,
+					code,
+					out,
+				)
+			}
+			if entries, _ := os.ReadDir(h.project); len(entries) != 0 {
+				t.Fatalf("nothing may be written when a variant is invalid: %v", entries)
+			}
+			other := "omp"
+			if code, out = h.run("add", h.source, "--harness", other, "--yes"); code != 0 {
+				t.Fatalf("the invalid %s variant must not block %s, exit %d: %s",
+					harnessID, other, code, out)
+			}
+		})
+	}
+}
+
 func TestPortableBehavioralFieldsRefuseConversion(t *testing.T) {
 	h := newHarness(t)
 	h.write(

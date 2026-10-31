@@ -46,13 +46,13 @@ func (cursorAdapter) Identify(filePath string, raw []byte) (NativeAgent, error) 
 	if err != nil {
 		return NativeAgent{}, err
 	}
-	description, ok := doc.Frontmatter["description"].(string)
-	if !ok || strings.TrimSpace(description) == "" {
-		return NativeAgent{}, fmt.Errorf("%s: frontmatter requires a description", filePath)
-	}
 	id, _ := doc.Frontmatter["name"].(string)
 	if id == "" {
 		id = cursorFileName(filePath)
+	}
+	description, ok := doc.Frontmatter["description"].(string)
+	if !ok || strings.TrimSpace(description) == "" {
+		return NativeAgent{ID: id}, fmt.Errorf("%s: frontmatter requires a description", filePath)
 	}
 	return NativeAgent{ID: id, Description: description}, nil
 }

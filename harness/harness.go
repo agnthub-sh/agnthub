@@ -106,7 +106,10 @@ type Adapter interface {
 	ID() agent.HarnessID
 	Name() string
 	Layout() NativeLayout
-	// Identify validates a native file and returns its identity.
+	// Identify validates a native file and returns its identity. When the file
+	// names an agent but is otherwise invalid, the error comes with that identity:
+	// the file still stands for its agent, so an invalid Variant is refused for
+	// its Harness instead of being replaced by a conversion.
 	Identify(path string, raw []byte) (NativeAgent, error)
 	// Settings lists the Harness Settings the adapter accepts.
 	Settings() []SettingSpec

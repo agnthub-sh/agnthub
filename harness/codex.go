@@ -51,15 +51,16 @@ func codexIdentity(filePath string, fields map[string]any) (NativeAgent, error) 
 	name, _ := fields["name"].(string)
 	description, _ := fields["description"].(string)
 	instructions, _ := fields["developer_instructions"].(string)
+	identity := NativeAgent{ID: name, Description: description}
 	switch {
 	case name == "":
 		return NativeAgent{}, fmt.Errorf("%s: requires a string name", filePath)
 	case strings.TrimSpace(description) == "":
-		return NativeAgent{}, fmt.Errorf("%s: requires a description", filePath)
+		return identity, fmt.Errorf("%s: requires a description", filePath)
 	case strings.TrimSpace(instructions) == "":
-		return NativeAgent{}, fmt.Errorf("%s: requires developer_instructions", filePath)
+		return identity, fmt.Errorf("%s: requires developer_instructions", filePath)
 	}
-	return NativeAgent{ID: name, Description: description}, nil
+	return identity, nil
 }
 
 func (codexAdapter) Destination(ctx Context, scope Scope, _ Settings) (Destination, error) {

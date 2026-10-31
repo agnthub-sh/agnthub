@@ -80,6 +80,36 @@ func TestDiscoverRejectsAmbiguousIdentitiesInsteadOfPickingFirst(t *testing.T) {
 	}
 }
 
+func TestDiscoverKeepsInvalidNativeFilesAsTheirAgentsVariants(t *testing.T) {
+	inv := discover(t, memTree(t, map[string]string{
+		"agents/reviewer.md": portable("reviewer", "Reviews"),
+		".github/agents/reviewer.agent.md": "---\ndescription: Reviews\n" +
+			"handoffs-to: planner\n---\nbody\n",
+		".opencode/agents/reviewer.md": "---\ndescription: Reviews\nmode: background\n---\nbody\n",
+		".claude/agents/reviewer.md":   "---\nname: reviewer\n---\nbody\n",
+		".claude/agents/nameless.md":   "---\ndescription: No identity\n---\nbody\n",
+	}))
+	reviewer := inv.Find("reviewer")
+	if reviewer == nil {
+		t.Fatalf("reviewer must stay installable on other Harnesses: %v", inv.Problems)
+	}
+	for _, harnessID := range []agent.HarnessID{agent.Copilot, agent.OpenCode, agent.Claude} {
+		if reviewer.Variant(harnessID) == nil {
+			t.Errorf(
+				"the invalid %s file must remain reviewer's Variant, not be dropped",
+				harnessID,
+			)
+		}
+	}
+	if len(inv.ProblemsFor("reviewer")) != 0 {
+		t.Errorf("a per-Harness invalid Variant must not block selecting the agent: %v",
+			inv.ProblemsFor("reviewer"))
+	}
+	if len(inv.Problems) != 4 {
+		t.Errorf("each invalid file is still reported, got %v", inv.Problems)
+	}
+}
+
 func TestManifestIsAuthoritative(t *testing.T) {
 	inv := discover(t, memTree(t, map[string]string{
 		"agnthub.yaml": `schemaVersion: 1
