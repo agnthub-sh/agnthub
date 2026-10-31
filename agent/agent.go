@@ -122,6 +122,9 @@ type Definition struct {
 	Variants map[HarnessID]*VariantFile
 	// Dependencies apply to every selected Variant.
 	Dependencies Dependencies
+	// Categories lists the category slugs agnthub.yaml declares for this
+	// Agent (see package category); empty means none of its own.
+	Categories []string
 	// FromManifest reports whether agnthub.yaml declared this Agent.
 	FromManifest bool
 }

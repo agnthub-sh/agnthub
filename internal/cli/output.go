@@ -36,16 +36,18 @@ func (p *printer) emitJSON(value any) error {
 }
 
 type inventoryJSON struct {
-	Source   string             `json:"source"`
-	Revision string             `json:"revision,omitempty"`
-	Manifest bool               `json:"manifest"`
-	Agents   []inventoryAgent   `json:"agents"`
-	Problems []inventoryProblem `json:"problems"`
+	Source     string             `json:"source"`
+	Revision   string             `json:"revision,omitempty"`
+	Manifest   bool               `json:"manifest"`
+	Categories []string           `json:"categories,omitempty"`
+	Agents     []inventoryAgent   `json:"agents"`
+	Problems   []inventoryProblem `json:"problems"`
 }
 
 type inventoryAgent struct {
 	ID          string            `json:"id"`
 	Description string            `json:"description"`
+	Categories  []string          `json:"categories,omitempty"`
 	Portable    string            `json:"portable,omitempty"`
 	Variants    map[string]string `json:"variants"`
 }
@@ -58,15 +60,17 @@ type inventoryProblem struct {
 
 func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory) error {
 	payload := inventoryJSON{
-		Source:   snapshot.Locator.Display(),
-		Revision: snapshot.Revision,
-		Manifest: inv.Manifest,
-		Agents:   []inventoryAgent{},
-		Problems: []inventoryProblem{},
+		Source:     snapshot.Locator.Display(),
+		Revision:   snapshot.Revision,
+		Manifest:   inv.Manifest,
+		Categories: inv.Categories,
+		Agents:     []inventoryAgent{},
+		Problems:   []inventoryProblem{},
 	}
 	for _, def := range inv.Agents {
 		item := inventoryAgent{
-			ID: def.ID, Description: def.Description, Variants: map[string]string{},
+			ID: def.ID, Description: def.Description, Categories: inv.CategoriesFor(def),
+			Variants: map[string]string{},
 		}
 		if def.Portable != nil {
 			item.Portable = def.Portable.Path

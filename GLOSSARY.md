@@ -83,3 +83,7 @@ _Avoid_: Agent when referring to a skill
 **Dependency**:
 Another agent or skill required to be installed for an agent to function; declaring it does not promise that the agent can invoke or delegate to it.
 _Avoid_: Variant when referring to a required companion agent or skill
+
+**Category**:
+A stable slug from the shared taxonomy naming what an agent is for (such as `code-review` or `marketing`); listing metadata that never changes what installs.
+_Avoid_: Tag, label, Harness when referring to an agent's purpose

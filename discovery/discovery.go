@@ -66,6 +66,19 @@ type Inventory struct {
 	Problems []Problem
 	// Manifest reports whether agnthub.yaml defined the inventory.
 	Manifest bool
+	// Categories lists the repository-level category slugs agnthub.yaml
+	// declares, deduplicated in declaration order. Slugs are slug-shaped but
+	// may be newer than this module's taxonomy (see package category).
+	Categories []string
+}
+
+// CategoriesFor returns the categories that describe def: its own declared
+// categories when it has any, else the repository-level ones.
+func (inv *Inventory) CategoriesFor(def *agent.Definition) []string {
+	if len(def.Categories) > 0 {
+		return def.Categories
+	}
+	return inv.Categories
 }
 
 // Find returns the Agent with id, or nil.

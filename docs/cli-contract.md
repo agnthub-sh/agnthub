@@ -10,14 +10,17 @@ The installer behavior the agnthub CLI implements: how sources are discovered, h
 - Logical public identity is GitHub host + immutable repository ID + declared agent ID. Display routes/names are mutable locators. A new repository at an old slug cannot inherit counts, suppression or trust. Generic Git/local sources use source-qualified local identities without sending private paths to the service.
 - Manifest paths are repository-relative inert data; reject traversal, symlinks/submodules and executable/remote includes. Repository source must not execute checkout filters, install hooks, builds or template code merely to discover agents.
 - Common dependencies apply to every selected variant; variants may add requirements, not silently subtract common ones. Authors put genuinely target-only dependencies on the variant. Same-repository agent references inherit the selected snapshot; external references name their source and optional Git ref. Conflicting revisions for the same dependency identity fail rather than invoking an undeclared version solver.
+- `categories` (optional, repository level and per agent) lists category slugs from the [category taxonomy](../category/category.go) so the registry can group the repository's agents; an agent's own list replaces the repository list for that agent. Slugs must be slug-shaped (lowercase letters, digits and single hyphens, at most 64 bytes) or the manifest is rejected; slugs the CLI does not know are kept as declared, because the taxonomy grows and the registry decides which it recognizes. Categories are listing metadata only: they never change what installs. Manifests that declare `categories` need agnthub 0.4.0 or newer (earlier versions reject unknown manifest keys).
 
 Illustrative manifest only; these example repositories/agents are not claimed to exist:
 
 ```yaml
 schemaVersion: 1
+categories: [code-review, software-engineering]
 agents:
   reviewer:
     portable: agents/reviewer/AGENT.md
+    categories: [code-review, security]
     variants:
       opencode:
         path: .opencode/agents/reviewer.md

@@ -5,21 +5,25 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"slices"
 	"sort"
 
 	"go.yaml.in/yaml/v3"
 
 	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/category"
 	"github.com/agnthub-sh/agnthub/source"
 )
 
 type manifestFile struct {
 	SchemaVersion int                      `yaml:"schemaVersion"`
+	Categories    []string                 `yaml:"categories"`
 	Agents        map[string]manifestAgent `yaml:"agents"`
 }
 
 type manifestAgent struct {
 	Portable     string                     `yaml:"portable"`
+	Categories   []string                   `yaml:"categories"`
 	Variants     map[string]manifestVariant `yaml:"variants"`
 	Dependencies manifestDependencies       `yaml:"dependencies"`
 }
@@ -75,7 +79,34 @@ func decodeManifest(raw []byte) (*manifestFile, error) {
 	if len(manifest.Agents) == 0 {
 		return nil, manifestErr("declares no agents")
 	}
+	categories, err := manifestCategories("", manifest.Categories)
+	if err != nil {
+		return nil, err
+	}
+	manifest.Categories = categories
 	return &manifest, nil
+}
+
+// manifestCategories validates declared category slugs and drops duplicates,
+// keeping declaration order. Slugs this CLI does not know are kept: the
+// taxonomy grows and the registry decides which slugs it recognizes.
+func manifestCategories(id string, declared []string) ([]string, error) {
+	if len(declared) == 0 {
+		return nil, nil
+	}
+	out := make([]string, 0, len(declared))
+	for _, slug := range declared {
+		if !category.ValidSlug(slug) {
+			if id == "" {
+				return nil, manifestErr("invalid category %q", slug)
+			}
+			return nil, manifestErr("agent %s: invalid category %q", id, slug)
+		}
+		if !slices.Contains(out, slug) {
+			out = append(out, slug)
+		}
+	}
+	return out, nil
 }
 
 func (s *scanner) fromManifest(raw []byte) (*Inventory, error) {
@@ -88,7 +119,7 @@ func (s *scanner) fromManifest(raw []byte) (*Inventory, error) {
 		ids = append(ids, id)
 	}
 	sort.Strings(ids)
-	inv := &Inventory{Manifest: true}
+	inv := &Inventory{Manifest: true, Categories: manifest.Categories}
 	for _, id := range ids {
 		def, err := s.manifestAgent(id, manifest.Agents[id])
 		if err != nil {
@@ -116,6 +147,11 @@ func (s *scanner) manifestAgent(id string, spec manifestAgent) (*agent.Definitio
 		return nil, err
 	}
 	def.Dependencies = deps
+	categories, err := manifestCategories(id, spec.Categories)
+	if err != nil {
+		return nil, err
+	}
+	def.Categories = categories
 	if spec.Portable != "" {
 		raw, err := s.declaredFile(id, spec.Portable)
 		if err != nil {
