@@ -39,7 +39,7 @@ the release's `SHA256SUMS` before running it.
 Linux and macOS: download, verify and unpack.
 
 ```sh
-VERSION=0.3.0
+VERSION=0.3.1
 OS=linux       # or darwin
 ARCH=amd64     # or arm64
 BASE=https://github.com/agnthub-sh/agnthub/releases/download/v$VERSION
@@ -64,7 +64,7 @@ profile, or put the binary in a system directory instead with `sudo mv agnthub /
 Windows (PowerShell):
 
 ```powershell
-$Version = "0.3.0"
+$Version = "0.3.1"
 $Arch = "amd64"   # or arm64
 $Base = "https://github.com/agnthub-sh/agnthub/releases/download/v$Version"
 $Zip = "agnthub_${Version}_windows_$Arch.zip"
@@ -89,8 +89,8 @@ to run anything that does not match, and caches the verified binary (`~/.cache/a
 `~/Library/Caches/agnthub` or `%LOCALAPPDATA%\agnthub\Cache`).
 
 ```sh
-npx agnthub@0.3.0 add owner/repo --list
-npm install -g agnthub@0.3.0
+npx agnthub@0.3.1 add owner/repo --list
+npm install -g agnthub@0.3.1
 ```
 
 The npm package has not been published yet; until it is, use the direct download.

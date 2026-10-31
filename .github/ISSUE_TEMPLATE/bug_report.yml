@@ -12,7 +12,7 @@ body:
     attributes:
       label: agnthub version
       description: Output of `agnthub --version` (or the npm launcher version)
-      placeholder: agnthub version 0.3.0 (commit …)
+      placeholder: agnthub version 0.3.1 (commit …)
     validations:
       required: true
   - type: input
