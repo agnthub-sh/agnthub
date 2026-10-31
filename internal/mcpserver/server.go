@@ -113,7 +113,7 @@ func New(client *Client, opts Options) *mcp.Server {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "install_command",
 		Title:       "Build an agnthub install command",
-		Description: "Builds the `npx agnthub add …` command that installs agents of a listed repository, exactly as agnthub.sh's install builder does. Checks that the repository is listed and the agents exist, and warns about harnesses an agent cannot be installed into. Empty agents or harnesses let the CLI ask interactively.",
+		Description: "Builds the `npx agnthub add …` command that installs agents of a listed repository, exactly as agnthub.sh's install builder does (every supported harness selected becomes `--harness all`). Checks that the repository is listed and the agents exist, and warns about harnesses an agent cannot be installed into. Empty agents or harnesses let the CLI ask interactively.",
 		InputSchema: Schema[commandInput](func(p map[string]*jsonschema.Schema) {
 			p["repository"].Pattern = RepositoryPattern
 			p["agents"].MaxItems = jsonschema.Ptr(maxAgents)

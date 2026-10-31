@@ -36,6 +36,15 @@ type addOptions struct {
 // (--harness '*'), as skills.sh's --skill '*' and --agent '*' do.
 const allSelector = "*"
 
+// allHarnesses is the readable --harness '*': no Harness ID can be "all", while an
+// agent can be named "all", so --agent has no such alias.
+const allHarnesses = "all"
+
+// selectsAllHarnesses reports whether --harness selects every supported harness.
+func selectsAllHarnesses(harnesses []string) bool {
+	return slices.Contains(harnesses, allSelector) || slices.Contains(harnesses, allHarnesses)
+}
+
 // validate rejects contradictory flags before any source is opened.
 func (o *addOptions) validate() error {
 	if o.all && (len(o.agents) > 0 || len(o.harnesses) > 0) {
@@ -44,10 +53,13 @@ func (o *addOptions) validate() error {
 				"drop --all to choose with --agent/--harness",
 		)
 	}
-	for _, selectors := range [][]string{o.agents, o.harnesses} {
-		if slices.Contains(selectors, allSelector) && len(selectors) > 1 {
-			return errors.New("'*' already selects everything; drop the other values")
-		}
+	if slices.Contains(o.agents, allSelector) && len(o.agents) > 1 {
+		return errors.New("--agent '*' already selects every agent; drop the other values")
+	}
+	if selectsAllHarnesses(o.harnesses) && len(o.harnesses) > 1 {
+		return errors.New(
+			"--harness all (or '*') already selects every supported harness; drop the other values",
+		)
 	}
 	return nil
 }
@@ -60,8 +72,9 @@ func (a *App) addCommand(ctx context.Context) *cobra.Command {
 		Short:   "Install agents from a repository or local directory (alias: a)",
 		Long: `Install agents from a GitHub repository (owner/repo[#ref]), a Git URL or an
 explicit local directory (./path). --agent selects agent definitions from the
-source and --harness the coding harnesses to install them into; '*' selects all
-of either. Harness settings use --extra <harness>.<key>=<value>.
+source and --harness the coding harnesses to install them into; --agent '*'
+selects every agent and --harness all (or '*') every supported harness. Harness
+settings use --extra <harness>.<key>=<value>.
 
 In a terminal, add asks which agents and harnesses to install (detected harnesses
 are preselected), previews the plan and asks before writing. --yes, --all and
@@ -76,6 +89,7 @@ install first through the skill installer (skills.sh, or skillInstaller in
   agnthub add owner/repo
   agnthub add ./my-agents --agent reviewer --harness claude --harness codex
   agnthub add owner/repo#v1.2.0 --agent '*' --harness claude --yes
+  agnthub add owner/repo --agent reviewer --harness all --yes
   agnthub add owner/repo --harness omp --global --extra omp.profile=work
   # Every agent into every harness, without prompting
   agnthub add owner/repo --all
@@ -90,7 +104,7 @@ install first through the skill installer (skills.sh, or skillInstaller in
 	flags.StringArrayVarP(&opts.agents, "agent", "a", nil,
 		"agent to install (repeatable; '*' for all agents)")
 	flags.StringArrayVarP(&opts.harnesses, "harness", "H", nil,
-		"harness to install into (repeatable; '*' for all supported harnesses)")
+		"harness to install into (repeatable; all or '*' for every supported harness)")
 	flags.StringArrayVar(&opts.extras, "extra", nil,
 		"harness setting <harness>.<key>=<value> (repeatable), e.g. omp.profile=work")
 	flags.BoolVarP(
@@ -102,7 +116,7 @@ install first through the skill installer (skills.sh, or skillInstaller in
 	)
 	flags.BoolVarP(&opts.yes, "yes", "y", false, "apply without prompting")
 	flags.BoolVar(&opts.json, "json", false, "print machine-readable JSON; never prompts")
-	flags.BoolVar(&opts.all, "all", false, "shorthand for --agent '*' --harness '*' --yes")
+	flags.BoolVar(&opts.all, "all", false, "shorthand for --agent '*' --harness all --yes")
 	return cmd
 }
 
@@ -499,7 +513,7 @@ func (a *App) selectHarnesses(
 	interactive bool,
 ) ([]agent.HarnessID, error) {
 	switch {
-	case opts.all || slices.Contains(opts.harnesses, allSelector):
+	case opts.all || selectsAllHarnesses(opts.harnesses):
 		return a.supportedHarnesses(), nil
 	case len(opts.harnesses) > 0:
 		ids := make([]agent.HarnessID, 0, len(opts.harnesses))

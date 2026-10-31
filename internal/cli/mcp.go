@@ -124,7 +124,7 @@ func (a *App) addInstallTool(server *mcp.Server) {
 			p["agents"].Items.Pattern = `^(\*|[a-z0-9][a-z0-9_-]{0,63})$`
 			p["harnesses"].MinItems = jsonschema.Ptr(1)
 			p["harnesses"].UniqueItems = true
-			p["harnesses"].Items.Enum = append(mcpserver.HarnessEnum(), allSelector)
+			p["harnesses"].Items.Enum = append(mcpserver.HarnessEnum(), allHarnesses, allSelector)
 			p["scope"].Enum = []any{"project", "global"}
 			p["scope"].Default = []byte(`"project"`)
 			p["extra"].MaxItems = jsonschema.Ptr(16)

@@ -24,8 +24,9 @@ type CommandInput struct {
 }
 
 // BuildCommand renders the `npx agnthub add …` command exactly as the site's install builder
-// (web/src/lib/command.ts) does: harnesses in display order, defaults omitted, every token
-// shell-quoted. An omp profile that does not apply (omp not selected) is left out.
+// (web/src/lib/command.ts) does: harnesses in display order, or `--harness all` when every
+// supported harness is selected, defaults omitted, every token shell-quoted. An omp profile
+// that does not apply (omp not selected) is left out.
 func BuildCommand(in *CommandInput) (string, error) {
 	args := []string{"npx", "agnthub", "add", in.Source}
 	if in.All {
@@ -34,9 +35,13 @@ func BuildCommand(in *CommandInput) (string, error) {
 		for _, id := range in.Agents {
 			args = append(args, "--agent", id)
 		}
-		for _, h := range agent.AllHarnesses {
-			if slices.Contains(in.Harnesses, h) {
-				args = append(args, "--harness", string(h))
+		if selectsEveryHarness(in.Harnesses) {
+			args = append(args, "--harness", "all")
+		} else {
+			for _, h := range agent.AllHarnesses {
+				if slices.Contains(in.Harnesses, h) {
+					args = append(args, "--harness", string(h))
+				}
 			}
 		}
 	}
@@ -59,6 +64,16 @@ func BuildCommand(in *CommandInput) (string, error) {
 		quoted[i] = ShellQuote(arg)
 	}
 	return strings.Join(quoted, " "), nil
+}
+
+// selectsEveryHarness reports whether harnesses include every supported harness.
+func selectsEveryHarness(harnesses []agent.HarnessID) bool {
+	for _, h := range agent.AllHarnesses {
+		if !slices.Contains(harnesses, h) {
+			return false
+		}
+	}
+	return true
 }
 
 // safeArg matches arguments that never need quoting in POSIX sh, bash or zsh. A leading

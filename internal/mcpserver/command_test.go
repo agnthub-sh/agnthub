@@ -48,6 +48,31 @@ func TestBuildCommandMatchesTheSiteBuilder(t *testing.T) {
 			},
 			want: "npx agnthub add octo/agents --harness codex",
 		},
+		{
+			name: "every harness becomes --harness all",
+			in: mcpserver.CommandInput{
+				Source: "octo/agents", Agents: []string{"reviewer"},
+				Harnesses: []agent.HarnessID{
+					agent.OMP, agent.Gemini, agent.Cursor, agent.Copilot,
+					agent.Codex, agent.OpenCode, agent.Claude,
+				},
+				OMPProfile: "work",
+			},
+			want: "npx agnthub add octo/agents --agent reviewer --harness all " +
+				"--extra omp.profile=work",
+		},
+		{
+			name: "one harness short keeps the explicit list",
+			in: mcpserver.CommandInput{
+				Source: "octo/agents",
+				Harnesses: []agent.HarnessID{
+					agent.Claude, agent.OpenCode, agent.Codex, agent.Copilot,
+					agent.Cursor, agent.Gemini,
+				},
+			},
+			want: "npx agnthub add octo/agents --harness claude --harness opencode " +
+				"--harness codex --harness copilot --harness cursor --harness gemini",
+		},
 	}
 	for _, tc := range cases {
 		got, err := mcpserver.BuildCommand(&tc.in)

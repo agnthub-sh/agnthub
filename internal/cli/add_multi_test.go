@@ -152,6 +152,50 @@ func TestAllRejectsExplicitSelectors(t *testing.T) {
 	}
 }
 
+func TestHarnessAllSelectsEverySupportedHarness(t *testing.T) {
+	for _, selector := range []string{"all", "*"} {
+		t.Run(selector, func(t *testing.T) {
+			h := newHarness(t)
+			h.writeTwoAgents()
+			code, out := h.run(
+				"add", h.source, "--agent", "reviewer", "--harness", selector, "--yes", "--json",
+			)
+			if code != 0 {
+				t.Fatalf("exit %d: %s", code, out)
+			}
+			plan := decodePlan(t, out)
+			seen := map[string]bool{}
+			for _, item := range plan.Items {
+				if item.Agent != "reviewer" {
+					t.Fatalf("only reviewer was selected, got %s", item.Agent)
+				}
+				seen[item.Harness] = true
+			}
+			if plan.Status != "applied" || len(seen) != len(agent.AllHarnesses) ||
+				len(plan.Items) != len(agent.AllHarnesses) {
+				t.Fatalf("want reviewer applied into every harness, got %s %v", plan.Status, seen)
+			}
+		})
+	}
+}
+
+func TestHarnessAllRefusesNamedHarnesses(t *testing.T) {
+	h := newHarness(t)
+	h.writeTwoAgents()
+	for _, harnesses := range [][]string{{"all", "claude"}, {"claude", "all"}, {"all", "*"}} {
+		args := []string{"add", h.source, "--agent", "reviewer", "--yes"}
+		for _, name := range harnesses {
+			args = append(args, "--harness", name)
+		}
+		if code, out := h.run(args...); code == 0 {
+			t.Fatalf("%v must be refused as contradictory: %s", harnesses, out)
+		}
+	}
+	if files := writtenUnder(t, h.project); len(files) != 0 {
+		t.Fatalf("refused selections wrote %v", files)
+	}
+}
+
 func TestAllInstallsEveryAgentIntoEverySupportedHarness(t *testing.T) {
 	for _, scope := range []string{"project", "global"} {
 		t.Run(scope, func(t *testing.T) {

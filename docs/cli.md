@@ -8,6 +8,7 @@ make build
 ./bin/agnthub add ./path/to/source                      # choose agents and harnesses interactively
 ./bin/agnthub add ./path/to/source --agent reviewer --harness claude --harness codex
 ./bin/agnthub add owner/repo --agent '*' --harness claude --yes
+./bin/agnthub add owner/repo --agent reviewer --harness all --yes
 ./bin/agnthub add owner/repo --all --global --extra omp.profile=work
 ./bin/agnthub ls                                        # list (alias ls), -H claude to filter
 ./bin/agnthub check                                     # source changes and local drift, no writes
@@ -33,7 +34,7 @@ The command surface follows [skills.sh](https://skills.sh) (`npx skills`) where 
 | `mcp` | | Serve agnthub to AI agents over the Model Context Protocol (stdio) |
 | `completion <shell>` | | Print a bash, zsh, fish or PowerShell completion script |
 
-Shared flags: `-g/--global` (user scope instead of the project), `-y/--yes` (no prompts), `--json` (machine-readable output, never prompts), `-a/--agent` (agent definitions), `-H/--harness` (harnesses; skills.sh target names such as `claude-code`, `github-copilot` and `gemini-cli` are accepted), `--extra <harness>.<key>=<value>`, `add -l/--list` and `add --all`. `--agent '*'` selects every agent of the source and `--harness '*'` every supported harness; `--all` is shorthand for `--agent '*' --harness '*' --yes`. `agnthub --help` and `agnthub <command> --help` show grouped commands, flags and examples; `agnthub --version` (or `-v`) prints the version.
+Shared flags: `-g/--global` (user scope instead of the project), `-y/--yes` (no prompts), `--json` (machine-readable output, never prompts), `-a/--agent` (agent definitions), `-H/--harness` (harnesses; skills.sh target names such as `claude-code`, `github-copilot` and `gemini-cli` are accepted), `--extra <harness>.<key>=<value>`, `add -l/--list` and `add --all`. `--agent '*'` selects every agent of the source and `--harness all` (or `--harness '*'`) every supported harness; either cannot be combined with other values of the same flag. `--agent` has no `all` alias because an agent can be named `all`. `--all` is shorthand for `--agent '*' --harness all --yes`. `agnthub --help` and `agnthub <command> --help` show grouped commands, flags and examples; `agnthub --version` (or `-v`) prints the version.
 
 Output: in a terminal, plans, tables, errors and help are styled (lipgloss/fang) and slow steps (fetching sources, resolving dependencies, running the skill installer) show a transient spinner on stderr. Redirected output, `NO_COLOR` and `TERM=dumb` give plain text without colors or spinners, errors become a single `error: ...` line on stderr, and `--json` prints only JSON on stdout.
 
@@ -101,7 +102,7 @@ Read-only tools query the public registry API (`https://api.agnthub.sh`; overrid
 | `search_agents` | Full-text search with harness filters and `relevance`, `recent`, `installs`, `installs_30d`, `installs_7d`, `harness_installs` or `stars` order |
 | `get_agent` | One agent: description, installable harnesses or why not, dependencies, reported installs, agnthub stars, license; instructions with `include_instructions` |
 | `get_repository` | A listed repository with its agents, license, GitHub stats and scan problems |
-| `install_command` | The `npx agnthub add …` command for agents, harnesses, scope and omp profile, built and quoted exactly as the site's install builder does, after checking the agents are listed; warns about harnesses an agent cannot be installed into |
+| `install_command` | The `npx agnthub add …` command for agents, harnesses, scope and omp profile, built and quoted exactly as the site's install builder does (every supported harness selected becomes `--harness all`), after checking the agents are listed; warns about harnesses an agent cannot be installed into |
 | `install_agents` | Installs on this machine through the same code as `agnthub add --json`: harness selection, scope, `--extra` settings such as `omp.profile`, dependencies, required skills, the lock and ownership records. Without `confirm` it only returns the plan; with `confirm: true` it applies the plan only when every item is valid, so files agnthub does not own or that were changed locally are never overwritten. Project installs go to `project_dir` (default: the directory the client started the server in). Install reports honor `DO_NOT_TRACK` / `DISABLE_TELEMETRY` |
 
 Client configuration (use `agnthub mcp` instead of `npx -y agnthub mcp` with an installed binary):

@@ -115,8 +115,8 @@ func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory)
 	}
 	if len(payload.Agents) > 0 {
 		fmt.Fprintln(p.w, s.dim.Render(
-			"Install with --agent <id> (repeatable, '*' for all) and --harness <id>, or run "+
-				"add without them to choose interactively."))
+			"Install with --agent <id> (repeatable, '*' for all) and --harness <id> (all for "+
+				"every harness), or run add without them to choose interactively."))
 	}
 	return nil
 }
