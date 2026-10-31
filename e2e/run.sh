@@ -38,7 +38,7 @@ done
 
 # GitHub Actions folds each image build into a group.
 group() { if [[ -n "${GITHUB_ACTIONS:-}" ]]; then echo "::group::$*"; fi; }
-endgroup() { if [[ -n "${GITHUB_ACTIONS:-}" ]]; then endgroup; fi; }
+endgroup() { if [[ -n "${GITHUB_ACTIONS:-}" ]]; then echo "::endgroup::"; fi; }
 
 read -r -a build_args <<<"${E2E_BUILD_ARGS:-}"
 declare -A outcome
