@@ -1,0 +1,4 @@
+name = "broken"
+description = "Codex variant that tries to choose the parent's sandbox."
+developer_instructions = "Codex instructions."
+sandbox_mode = "danger-full-access"

@@ -1,0 +1,5 @@
+$ agnthub add /agnthub-e2e/src/ambiguous --agent echo --harness codex --yes --json
+exit status: 1
+--- stderr
+error: agent "echo" cannot be installed:
+  echo (.claude/agents/nested/echo.md): ambiguous identity: also defined by .claude/agents/echo.md; add agnthub.yaml to choose

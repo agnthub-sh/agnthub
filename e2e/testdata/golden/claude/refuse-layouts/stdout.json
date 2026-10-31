@@ -1,0 +1,34 @@
+{
+  "status": "refused",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/layouts"
+  },
+  "harnesses": [
+    {
+      "id": "claude",
+      "name": "Claude Code",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "modelled",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native claude variant"
+    }
+  ],
+  "summary": {
+    "incompatible": 1
+  }
+}

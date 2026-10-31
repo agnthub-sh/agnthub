@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/ambiguous --agent solo --harness copilot --yes --json
+exit status: 0

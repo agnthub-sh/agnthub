@@ -1,0 +1,37 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/ambiguous"
+  },
+  "harnesses": [
+    {
+      "id": "gemini",
+      "name": "Gemini CLI",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "solo",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/solo.md",
+      "variant": "generated",
+      "sourcePath": "agents/solo.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/ambiguous"
+      },
+      "origin": "direct",
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 1
+  }
+}

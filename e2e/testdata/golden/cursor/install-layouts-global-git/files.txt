@@ -1,0 +1,14 @@
+0644 home/.config/agnthub/config.yaml
+0644 home/.config/agnthub/global-lock.json
+0644 home/.cursor/agents/cu-native.md
+0644 home/.cursor/agents/dual.md
+0644 home/.cursor/agents/fixer.md
+0644 home/.cursor/agents/gh-native.md
+0644 home/.cursor/agents/gm-native.md
+0644 home/.cursor/agents/oc-native.md
+0644 home/.cursor/agents/omp-native.md
+0644 home/.cursor/agents/planner.md
+0644 home/.cursor/agents/researcher.md
+0644 home/.cursor/agents/root-helper.md
+0644 home/.cursor/agents/tagged.md
+0600 home/.local/state/agnthub/installations.json

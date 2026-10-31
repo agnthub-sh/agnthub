@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/layouts --agent broken --agent cu-native --agent guarded --agent modelled --harness copilot --yes --json
+exit status: 1

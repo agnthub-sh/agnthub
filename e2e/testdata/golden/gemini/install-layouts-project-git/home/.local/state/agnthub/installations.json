@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/cu-native.md",
+      "digest": "sha256:3f3fb877d04007370dc9f55402880205949b0f1f6b30c3dae14e9be898d09c49",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cu-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/cx-native.md",
+      "digest": "sha256:0c812101ad01269ef0854e2c3fe6900836d961b6b686b906136f73910676f7a2",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cx-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/dual.md",
+      "digest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "dual",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/fixer.md",
+      "digest": "sha256:7089acfee6e7d38b633dd2082c9c464537e3a5c23afd054a637b2354859276a8",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "fixer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/gh-native.md",
+      "digest": "sha256:922cc9faf4673787d1c9ddc6bd0e55293d1b67aa191a3c622e9f4d2e9da8a938",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "gh-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/gm-native.md",
+      "digest": "sha256:ab77641ac4f6666fa0d80ee36d4fdf2332dbd2f1bc5d0106cd69fb9446f670e9",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "gm-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/issue-reader.md",
+      "digest": "sha256:9e81073450be5f5188ab51210338da43cfe7558b6dc97361a3a01dd1cbf99fb7",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "issue-reader",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/oc-native.md",
+      "digest": "sha256:63c13a48cafeac56e6ef103551430c6e0549fadb9fa2c57094d2477e7a9c46db",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "oc-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/omp-native.md",
+      "digest": "sha256:9a5f208535b5e081394880760159089d3acb17115d59000ad07f6269bc95048c",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "omp-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/planner.md",
+      "digest": "sha256:54e13fd735b5360bc11d7c3ad899a9c0eada9db11dfaf204af45db749f1d8e58",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "planner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/researcher.md",
+      "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "researcher",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/reviewer.md",
+      "digest": "sha256:965ef5a12ac3212363f719987e00418854db7b25912dc3048b0f092ec4c1b5b8",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "reviewer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/root-helper.md",
+      "digest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/tagged.md",
+      "digest": "sha256:ae21c1e2605ac84b36d9a0c26c183998cac584ef45e006af52b7f9316d6f23a0",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

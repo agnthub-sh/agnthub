@@ -1,0 +1,215 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/broken.md",
+      "digest": "sha256:77cf7118ed525fa97f1cf1bc688fe6ee33bc4d9f02aa685e15255b9c886a9413",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "broken",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/cu-native.md",
+      "digest": "sha256:9fd70714a268b58c7665ccba39b6fbd24c0327c8fca7dcc748609b5cb9fe6922",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cu-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/cx-native.md",
+      "digest": "sha256:9d92584b2a9cd98842addf79e63b12f675be2c7e07dd9d78848388eb18de63fe",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cx-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/dual.md",
+      "digest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "dual",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/fixer.md",
+      "digest": "sha256:4d3acfe5bcdcb8e9dc19b44e3a265793aa87fb48426801da26b2f2190b39356e",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "fixer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/gh-native.md",
+      "digest": "sha256:3219d129d30a833f0229d3ad443fe63dda5585c93d02646b008adb18d2bbee00",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "gh-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/gm-native.md",
+      "digest": "sha256:beabd83f6ba4a9baa4a2c815607d7cf2399a0ecc326f1ca869cce53fa9837a62",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "gm-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/issue-reader.md",
+      "digest": "sha256:57728afd08f5f4d0bb64a927deec613a70db6c9db17dcc1318180c043a000caa",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "issue-reader",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/oc-native.md",
+      "digest": "sha256:c01e1590c4ed79f79bc9623da53cc4ce0e098d17937ec057e5bfb6cd34b87c15",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "oc-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/omp-native.md",
+      "digest": "sha256:f0e791fe64b2035a1eab0136e814e470e570bd86b6b2a69dffdf2b3661a0611a",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "omp-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/planner.md",
+      "digest": "sha256:54e13fd735b5360bc11d7c3ad899a9c0eada9db11dfaf204af45db749f1d8e58",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "planner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/researcher.md",
+      "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "researcher",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/reviewer.md",
+      "digest": "sha256:f028b6ee3e67e20672505d81299e3438dfdd2ecd6b55fe0e4c0aef0c08253990",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "reviewer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/root-helper.md",
+      "digest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/tagged.md",
+      "digest": "sha256:ae21c1e2605ac84b36d9a0c26c183998cac584ef45e006af52b7f9316d6f23a0",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

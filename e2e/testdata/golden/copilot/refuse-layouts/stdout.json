@@ -1,0 +1,74 @@
+{
+  "status": "refused",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/layouts"
+  },
+  "harnesses": [
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot CLI",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "broken",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "invalid",
+      "reason": "invalid copilot variant .github/agents/broken.agent.md: handoffs-to is not a Copilot CLI agent field; the CLI would silently ignore it"
+    },
+    {
+      "agent": "cu-native",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it uses web search, but Copilot CLI has no web search tool"
+    },
+    {
+      "agent": "guarded",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which copilot cannot express"
+    },
+    {
+      "agent": "modelled",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native copilot variant"
+    }
+  ],
+  "summary": {
+    "incompatible": 3,
+    "invalid": 1
+  }
+}

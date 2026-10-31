@@ -1,0 +1,2 @@
+$ agnthub add https://localhost:8443/manifest.git --agent '*' --harness gemini --json
+exit status: 1

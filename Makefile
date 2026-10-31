@@ -2,7 +2,7 @@ BINARY := agnthub
 PKG    := ./cmd/$(BINARY)
 
 .PHONY: build install test lint fmt fmt-check cross need-golangci-lint need-node \
-	dist dist-release release release-verify release-publish npm-test npm-pack
+	dist dist-release release release-verify release-publish npm-test npm-pack e2e e2e-update
 
 need-golangci-lint:
 	@golangci-lint version 2>/dev/null | grep -q 'version 2\.' || { echo "golangci-lint v2 is required: https://golangci-lint.run/welcome/install/" >&2; exit 1; }
@@ -27,6 +27,15 @@ fmt: need-golangci-lint
 
 fmt-check: need-golangci-lint
 	golangci-lint fmt --diff ./...
+
+# HARNESS limits the end-to-end suite to some Harnesses: make e2e HARNESS="claude codex"
+HARNESS ?=
+
+e2e: ## end-to-end suite in Docker against the real Harness CLIs (see CONTRIBUTING.md)
+	e2e/run.sh $(HARNESS)
+
+e2e-update: ## rewrite the e2e goldens from a run; review the diff before committing
+	e2e/run.sh -update $(HARNESS)
 
 cross: ## compile every release platform
 	@for os in linux darwin windows; do for arch in amd64 arm64; do \

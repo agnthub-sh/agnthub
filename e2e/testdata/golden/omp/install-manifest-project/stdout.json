@@ -1,0 +1,179 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/manifest.git",
+    "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+  },
+  "harnesses": [
+    {
+      "id": "omp",
+      "name": "omp",
+      "detected": true,
+      "settings": [
+        {
+          "key": "profile",
+          "value": "default",
+          "source": "native default"
+        }
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "skill": "e2e-skill",
+      "source": "localhost:8443/skills.git#v1.0.0",
+      "harness": "omp",
+      "settings": {},
+      "requirement": ">=1.0.0 <=2.0.0",
+      "requiredBy": [
+        "lead"
+      ],
+      "decision": "install",
+      "path": "/agnthub-e2e/project/.agents/skills/e2e-skill",
+      "location": "project .agents/skills",
+      "scope": "project",
+      "version": "1.4.0",
+      "revision": "21f36aec981afd5f3a2141ea1d52b9ca2f691f48",
+      "target": "universal",
+      "command": [
+        "skills",
+        "add",
+        "https://localhost:8443/skills.git#21f36aec981afd5f3a2141ea1d52b9ca2f691f48",
+        "--skill",
+        "e2e-skill",
+        "--agent",
+        "universal",
+        "--yes"
+      ]
+    }
+  ],
+  "skillRuns": [
+    {
+      "skill": "e2e-skill",
+      "path": "/agnthub-e2e/project/.agents/skills/e2e-skill",
+      "command": [
+        "skills",
+        "add",
+        "https://localhost:8443/skills.git#21f36aec981afd5f3a2141ea1d52b9ca2f691f48",
+        "--skill",
+        "e2e-skill",
+        "--agent",
+        "universal",
+        "--yes"
+      ],
+      "harnesses": [
+        "omp"
+      ],
+      "exitCode": 0,
+      "output": "<skill installer output>"
+    }
+  ],
+  "skillEffects": [
+    {
+      "path": "/agnthub-e2e/project/.agents/skills/e2e-skill",
+      "change": "created"
+    },
+    {
+      "path": "/agnthub-e2e/project/skills-lock.json",
+      "change": "created"
+    }
+  ],
+  "items": [
+    {
+      "agent": "lead",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/lead.md",
+      "variant": "generated",
+      "sourcePath": "agents/lead/AGENT.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "native-only",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/native-only.md",
+      "variant": "generated",
+      "sourcePath": "native/claude/native-only.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
+    },
+    {
+      "agent": "helper",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/helper.md",
+      "variant": "generated",
+      "sourcePath": "agents/helper.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "dependency",
+      "requiredBy": [
+        "lead"
+      ],
+      "action": "create"
+    },
+    {
+      "agent": "companion",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/companion.md",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/companion.git",
+        "ref": "v1",
+        "revision": "d44d9ad4d7b9f161791d47d5d820ec931baea53f"
+      },
+      "origin": "dependency",
+      "requiredBy": [
+        "lead"
+      ],
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 4
+  },
+  "skillSummary": {
+    "install": 1
+  }
+}

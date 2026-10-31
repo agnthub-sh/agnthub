@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/solo.toml",
+      "digest": "sha256:1e294141831b85707c6c83b7e45fdb78c13ff0f8eeb15f102098813f5d3542e4",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/ambiguous",
+      "agent": "solo",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

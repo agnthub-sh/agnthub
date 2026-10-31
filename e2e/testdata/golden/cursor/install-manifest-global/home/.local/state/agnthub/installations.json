@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/home/.agents/skills/e2e-skill",
+      "digest": "sha256:9e1273b9f24ac263d489209397035669c0cb9f0ce2a21e1e767ed08c17a65064",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "~/.agents/skills",
+      "source": "git:localhost:8443/skills.git",
+      "agent": "",
+      "skill": "e2e-skill",
+      "origin": "dependency",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.cursor/agents/companion.md",
+      "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/companion.git",
+      "agent": "companion",
+      "origin": "dependency",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.cursor/agents/helper.md",
+      "digest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/manifest.git",
+      "agent": "helper",
+      "origin": "dependency",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.cursor/agents/lead.md",
+      "digest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/manifest.git",
+      "agent": "lead",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.cursor/agents/native-only.md",
+      "digest": "sha256:b83763edb9f40f5b2169737e34dc9d20cb70671701486d9d8357c9d5a27a98b7",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/manifest.git",
+      "agent": "native-only",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

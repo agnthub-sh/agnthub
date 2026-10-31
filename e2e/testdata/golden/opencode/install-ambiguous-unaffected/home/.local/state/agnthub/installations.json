@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/solo.md",
+      "digest": "sha256:039453b748fcf72fb28bfc84ec0cd1ca708ae751478417ac3a55fb73f8031b22",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/ambiguous",
+      "agent": "solo",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

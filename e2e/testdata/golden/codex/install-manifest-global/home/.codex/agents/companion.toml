@@ -1,0 +1,5 @@
+name = 'companion'
+description = 'Companion agent fetched from another Git source.'
+developer_instructions = """
+Assist the lead from another repository.
+"""

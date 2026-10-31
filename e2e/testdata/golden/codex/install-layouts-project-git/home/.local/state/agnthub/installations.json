@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/cx-native.toml",
+      "digest": "sha256:a885e8934fcddf4cf363afdb2c3f69d15dec952f974f37fcfd39c1c7a66bc1a1",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cx-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/dual.toml",
+      "digest": "sha256:71caaca253f108db60d5b6fb7777baedfb1a2fbdc62cb2b834a20fa8ffc2002a",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "dual",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/fixer.toml",
+      "digest": "sha256:7af97c32c4f2d1777d6042198ed803c05dc8ad6a415739c3dd6474d0df63dd3b",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "fixer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/planner.toml",
+      "digest": "sha256:8deba390f39ab25d9c83dcac3ecfda0a2f9296abced19191234230805cc043d1",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "planner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/researcher.toml",
+      "digest": "sha256:965f989679b4b96f53cc49da9969320ece8ba8ef2de68cd52afc808a6ccea1e3",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "researcher",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/root-helper.toml",
+      "digest": "sha256:719a6d4ab1dcf138b888656a78027e5d2ceaab015e818620b40d07cda0a84394",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/tagged.toml",
+      "digest": "sha256:f403eafd5a3861502263a0d51f84ba43692b128a9e0fec9d0b4ab0b1400cc733",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

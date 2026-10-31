@@ -1,0 +1,2 @@
+$ agnthub add https://localhost:8443/layouts.git#v1.0.0 --agent cu-native --agent dual --agent fixer --agent gh-native --agent gm-native --agent oc-native --agent omp-native --agent planner --agent researcher --agent root-helper --agent tagged --harness cursor --global --yes --json
+exit status: 0

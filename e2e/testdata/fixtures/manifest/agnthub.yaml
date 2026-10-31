@@ -1,0 +1,32 @@
+schemaVersion: 1
+categories: [software-engineering, project-management]
+agents:
+  lead:
+    portable: agents/lead/AGENT.md
+    categories: [software-architecture]
+    variants:
+      opencode:
+        path: .opencode/agents/lead.md
+      codex:
+        path: .codex/agents/lead.toml
+        dependencies:
+          agents:
+            - agent: codex-helper
+    dependencies:
+      agents:
+        - agent: helper
+        - agent: companion
+          source: https://localhost:8443/companion.git#v1
+      skills:
+        - source: https://localhost:8443/skills.git#v1.0.0
+          skill: e2e-skill
+          minVersion: "1.0.0"
+          maxVersion: "2.0.0"
+  helper:
+    portable: agents/helper.md
+  codex-helper:
+    portable: agents/codex-helper.md
+  native-only:
+    variants:
+      claude:
+        path: native/claude/native-only.md

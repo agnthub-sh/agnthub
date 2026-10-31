@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/companion.git",
+        "ref": "v1",
+        "revision": "d44d9ad4d7b9f161791d47d5d820ec931baea53f"
+      },
+      "agent": "companion",
+      "origin": "dependency",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "agents/companion.md",
+          "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/companion.md",
+          "digest": "sha256:7d3f9a795bad13166e76e115d6e8f9e5aaf4ebdad9ab62ebb62bc9cb57dcf987",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "agent": "helper",
+      "origin": "dependency",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "agents/helper.md",
+          "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/helper.md",
+          "digest": "sha256:ba079e88403d4925a38e044106317520303d8b37e4039278ef7165ac99863e88",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "agent": "lead",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "native",
+          "sourcePath": ".opencode/agents/lead.md",
+          "sourceDigest": "sha256:28363340f9f63d0ac8bb65da987c4ed1903817ce46e0687842259253621d7809",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/lead.md",
+          "digest": "sha256:28363340f9f63d0ac8bb65da987c4ed1903817ce46e0687842259253621d7809",
+          "requires": [
+            "agent:git:localhost:8443/companion.git::companion",
+            "agent:git:localhost:8443/manifest.git::helper",
+            "skill:e2e-skill"
+          ]
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "agent": "native-only",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "native/claude/native-only.md",
+          "sourceDigest": "sha256:0ed4be951d129f063ef866308d751ceb8a44f77dce1f570061a1baca2581cd99",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/native-only.md",
+          "digest": "sha256:5a23d5fc7bdd156dba00c32439d5f6550ebdc86003513dd7e0e18d548dab79dc",
+          "requires": []
+        }
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "skill": "e2e-skill",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/skills.git",
+        "ref": "v1.0.0",
+        "revision": "21f36aec981afd5f3a2141ea1d52b9ca2f691f48"
+      },
+      "version": "1.4.0",
+      "digest": "sha256:9e1273b9f24ac263d489209397035669c0cb9f0ce2a21e1e767ed08c17a65064",
+      "path": "/agnthub-e2e/home/.agents/skills/e2e-skill",
+      "scope": "global",
+      "harnesses": [
+        "opencode"
+      ],
+      "mode": "installed"
+    }
+  ]
+}

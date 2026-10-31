@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/solo.md",
+      "digest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/ambiguous",
+      "agent": "solo",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

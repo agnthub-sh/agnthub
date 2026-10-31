@@ -1,0 +1,5 @@
+name = 'helper'
+description = 'Helps the lead agent.'
+developer_instructions = """
+Help the lead.
+"""

@@ -1,0 +1,300 @@
+{
+  "status": "refused",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/layouts"
+  },
+  "harnesses": [
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "broken",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "invalid",
+      "reason": "invalid cursor variant .cursor/agents/broken.md: Cursor reads one line per key; write the description on a single line"
+    },
+    {
+      "agent": "cu-native",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/cu-native.md",
+      "variant": "native",
+      "sourcePath": ".cursor/agents/cu-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "cx-native",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes shell but allows edits, and Cursor can only withhold shell by making the agent read-only"
+    },
+    {
+      "agent": "dual",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/dual.md",
+      "variant": "generated",
+      "sourcePath": "agents/dual.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "fixer",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/fixer.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/team/fixer.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "Cursor agents keep the session's MCP tools unless read-only"
+      ]
+    },
+    {
+      "agent": "gh-native",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/gh-native.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-native.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent"
+      ]
+    },
+    {
+      "agent": "gm-native",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/gm-native.md",
+      "variant": "generated",
+      "sourcePath": ".gemini/agents/gm-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the gemini variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent"
+      ]
+    },
+    {
+      "agent": "guarded",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which cursor cannot express"
+    },
+    {
+      "agent": "issue-reader",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes search, but Cursor cannot withhold it"
+    },
+    {
+      "agent": "modelled",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native cursor variant"
+    },
+    {
+      "agent": "oc-native",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/oc-native.md",
+      "variant": "generated",
+      "sourcePath": ".opencode/agents/oc-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the opencode variant"
+      ]
+    },
+    {
+      "agent": "omp-native",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/omp-native.md",
+      "variant": "generated",
+      "sourcePath": ".omp/agents/omp-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the omp variant",
+        "excludes web search, delegation, but Cursor cannot withhold them from an agent"
+      ]
+    },
+    {
+      "agent": "planner",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/planner.md",
+      "variant": "generated",
+      "sourcePath": "agents/planner.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "researcher",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/researcher.md",
+      "variant": "generated",
+      "sourcePath": "agents/researcher/AGENT.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "reviewer",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it uses shell without edits, but Cursor's only restriction (readonly) blocks every shell command"
+    },
+    {
+      "agent": "root-helper",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/root-helper.md",
+      "variant": "generated",
+      "sourcePath": "AGENT.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "tagged",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/tagged.md",
+      "variant": "generated",
+      "sourcePath": "agents/tagged.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted descriptive metadata: author, tags, version"
+      ]
+    }
+  ],
+  "summary": {
+    "create": 11,
+    "incompatible": 5,
+    "invalid": 1
+  }
+}

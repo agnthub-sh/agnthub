@@ -1,0 +1,85 @@
+name: E2E
+
+# The end-to-end suite (e2e/, see CONTRIBUTING.md): every Harness CLI in its own
+# container, at the versions pinned in e2e/Dockerfile on pushes and pull
+# requests, and at its latest release every night. A nightly failure opens (or
+# comments on) one issue per Harness, so a Harness release that breaks agnthub is
+# noticed before users report it.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "23 4 * * *"
+  workflow_dispatch:
+    inputs:
+      versions:
+        description: Harness versions to test
+        type: choice
+        options: [pinned, latest]
+        default: pinned
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-${{ github.ref }}-${{ github.event_name }}
+  cancel-in-progress: true
+
+env:
+  LATEST: ${{ github.event_name == 'schedule' || inputs.versions == 'latest' }}
+
+jobs:
+  e2e:
+    name: ${{ matrix.harness }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { harness: claude, version: CLAUDE_VERSION }
+          - { harness: opencode, version: OPENCODE_VERSION }
+          - { harness: codex, version: CODEX_VERSION }
+          - { harness: copilot, version: COPILOT_VERSION }
+          - { harness: cursor, version: CURSOR_VERSION }
+          - { harness: gemini, version: GEMINI_VERSION }
+          - { harness: omp, version: OMP_VERSION }
+    steps:
+      - uses: actions/checkout@v7
+      - name: Use the latest ${{ matrix.harness }} release
+        if: env.LATEST == 'true'
+        run: echo "E2E_BUILD_ARGS=--pull --no-cache --build-arg ${{ matrix.version }}=latest" >> "$GITHUB_ENV"
+      - name: Run the suite
+        env:
+          E2E_LOG_DIR: e2e-logs
+        run: e2e/run.sh ${{ matrix.harness }}
+      - name: Keep the log
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: e2e-${{ matrix.harness }}
+          path: e2e-logs/
+          if-no-files-found: ignore
+      - name: Report a nightly failure
+        if: failure() && env.LATEST == 'true' && github.event_name == 'schedule'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          HARNESS: ${{ matrix.harness }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          title="Nightly e2e: ${HARNESS} fails with its latest release"
+          version="$(grep -m1 -o 'harness version: .*' "e2e-logs/${HARNESS}.log" 2>/dev/null || echo 'harness version: unknown (image build failed?)')"
+          body="$(printf 'The end-to-end suite failed against the latest %s release.\n\n- %s\n- run: %s\n\nReproduce with `E2E_BUILD_ARGS="--pull --no-cache --build-arg %s=latest" make e2e HARNESS=%s`. If the new behavior is intended, update the goldens (`make e2e-update`) and bump the pinned version in e2e/Dockerfile (see CONTRIBUTING.md).' \
+            "${HARNESS}" "${version}" "${RUN_URL}" "${{ matrix.version }}" "${HARNESS}")"
+          number="$(gh issue list --repo "${GITHUB_REPOSITORY}" --state open --search "in:title \"${title}\"" --json number,title \
+            --jq "map(select(.title == \"${title}\"))[0].number // empty")"
+          if [ -n "${number}" ]; then
+            gh issue comment "${number}" --repo "${GITHUB_REPOSITORY}" --body "${body}"
+          else
+            gh issue create --repo "${GITHUB_REPOSITORY}" --title "${title}" --body "${body}"
+          fi
+    permissions:
+      contents: read
+      issues: write

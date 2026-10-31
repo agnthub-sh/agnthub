@@ -1,0 +1,2 @@
+# Fixtures and goldens are compared byte for byte (one fixture has CRLF line endings).
+e2e/testdata/** -text

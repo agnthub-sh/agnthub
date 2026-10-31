@@ -1,0 +1,157 @@
+{
+  "status": "applied",
+  "scope": "global",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/layouts.git",
+    "ref": "v1.0.0",
+    "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+  },
+  "harnesses": [
+    {
+      "id": "codex",
+      "name": "Codex",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "cx-native",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/cx-native.toml",
+      "variant": "native",
+      "sourcePath": ".codex/agents/cx-native.toml",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "dual",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/dual.toml",
+      "variant": "generated",
+      "sourcePath": "agents/dual.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "fixer",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/fixer.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/team/fixer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ]
+    },
+    {
+      "agent": "planner",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/planner.toml",
+      "variant": "generated",
+      "sourcePath": "agents/planner.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "researcher",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/researcher.toml",
+      "variant": "generated",
+      "sourcePath": "agents/researcher/AGENT.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "root-helper",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/root-helper.toml",
+      "variant": "generated",
+      "sourcePath": "AGENT.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "tagged",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/tagged.toml",
+      "variant": "generated",
+      "sourcePath": "agents/tagged.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted descriptive metadata: author, tags, version"
+      ]
+    }
+  ],
+  "summary": {
+    "create": 7
+  }
+}

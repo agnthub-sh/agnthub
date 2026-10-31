@@ -1,0 +1,45 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/ambiguous"
+  },
+  "harnesses": [
+    {
+      "id": "omp",
+      "name": "omp",
+      "detected": true,
+      "settings": [
+        {
+          "key": "profile",
+          "value": "default",
+          "source": "native default"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "agent": "solo",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/solo.md",
+      "variant": "generated",
+      "sourcePath": "agents/solo.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/ambiguous"
+      },
+      "origin": "direct",
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 1
+  }
+}

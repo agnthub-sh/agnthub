@@ -1,0 +1,137 @@
+{
+  "source": "/agnthub-e2e/src/layouts",
+  "manifest": false,
+  "agents": [
+    {
+      "id": "broken",
+      "description": "Portable core of an agent whose Gemini CLI variant is invalid.",
+      "portable": "agents/broken.md",
+      "variants": {
+        "codex": ".codex/agents/broken.toml",
+        "copilot": ".github/agents/broken.agent.md",
+        "cursor": ".cursor/agents/broken.md",
+        "gemini": ".gemini/agents/broken.md",
+        "opencode": ".opencode/agents/broken.md"
+      }
+    },
+    {
+      "id": "cu-native",
+      "description": "Cursor-native read-only agent.",
+      "variants": {
+        "cursor": ".cursor/agents/cu-native.md"
+      }
+    },
+    {
+      "id": "cx-native",
+      "description": "Codex-native agent without the shell.",
+      "variants": {
+        "codex": ".codex/agents/cx-native.toml"
+      }
+    },
+    {
+      "id": "dual",
+      "description": "Portable core of the dual agent.",
+      "portable": "agents/dual.md",
+      "variants": {
+        "claude": ".claude/agents/dual.md",
+        "opencode": ".opencode/agents/dual.md"
+      }
+    },
+    {
+      "id": "fixer",
+      "description": "Fixes failing tests with minimal edits.",
+      "variants": {
+        "claude": ".claude/agents/team/fixer.md"
+      }
+    },
+    {
+      "id": "gh-native",
+      "description": "Copilot CLI native agent that reads and searches.",
+      "variants": {
+        "copilot": ".github/agents/gh-native.agent.md"
+      }
+    },
+    {
+      "id": "gm-native",
+      "description": "Gemini CLI native agent that reads and searches.",
+      "variants": {
+        "gemini": ".gemini/agents/gm-native.md"
+      }
+    },
+    {
+      "id": "guarded",
+      "description": "Runs with a Claude Code permission mode no other harness has.",
+      "variants": {
+        "claude": ".claude/agents/guarded.md"
+      }
+    },
+    {
+      "id": "issue-reader",
+      "description": "Reads GitHub issues through the GitHub MCP server.",
+      "variants": {
+        "claude": ".claude/agents/issue-reader.md"
+      }
+    },
+    {
+      "id": "modelled",
+      "description": "Portable agent that pins a model, which no portable target can honor.",
+      "portable": "agents/modelled.md",
+      "variants": {}
+    },
+    {
+      "id": "oc-native",
+      "description": "OpenCode-native subagent that may only read.",
+      "variants": {
+        "opencode": ".opencode/agents/oc-native.md"
+      }
+    },
+    {
+      "id": "omp-native",
+      "description": "omp-native agent with read and search tools.",
+      "variants": {
+        "omp": ".omp/agents/omp-native.md"
+      }
+    },
+    {
+      "id": "planner",
+      "description": "Plans work: splits a goal into ordered steps — naïve résumé café ✓",
+      "portable": "agents/planner.md",
+      "variants": {}
+    },
+    {
+      "id": "researcher",
+      "description": "Researches a topic across the codebase and summarizes the findings.",
+      "portable": "agents/researcher/AGENT.md",
+      "variants": {}
+    },
+    {
+      "id": "reviewer",
+      "description": "Reviews diffs for correctness. Use after every change.",
+      "variants": {
+        "claude": ".claude/agents/reviewer.md"
+      }
+    },
+    {
+      "id": "root-helper",
+      "description": "Portable root agent that answers questions about the repository.",
+      "portable": "AGENT.md",
+      "variants": {}
+    },
+    {
+      "id": "tagged",
+      "description": "Formats changelog entries",
+      "portable": "agents/tagged.md",
+      "variants": {}
+    }
+  ],
+  "problems": [
+    {
+      "path": ".github/agents/broken.agent.md",
+      "message": ".github/agents/broken.agent.md: handoffs-to is not a Copilot CLI agent field; the CLI would silently ignore it"
+    },
+    {
+      "path": ".opencode/agents/broken.md",
+      "message": ".opencode/agents/broken.md: mode must be primary, subagent or all, got background"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+$ agnthub add https://localhost:8443/manifest.git --agent '*' --harness opencode --json
+exit status: 1
+--- stderr
+error: --json never prompts; rerun with --yes to apply this plan

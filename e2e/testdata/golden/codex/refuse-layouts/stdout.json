@@ -1,0 +1,152 @@
+{
+  "status": "refused",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/layouts"
+  },
+  "harnesses": [
+    {
+      "id": "codex",
+      "name": "Codex",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "broken",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "invalid",
+      "reason": "invalid codex variant .codex/agents/broken.toml: \"sandbox_mode\" is parent session configuration that a Codex agent file cannot override"
+    },
+    {
+      "agent": "cu-native",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
+      "agent": "gh-native",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
+      "agent": "gm-native",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
+      "agent": "guarded",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which codex cannot express"
+    },
+    {
+      "agent": "issue-reader",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes search, edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
+      "agent": "modelled",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native codex variant"
+    },
+    {
+      "agent": "oc-native",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
+      "agent": "omp-native",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
+      "agent": "reviewer",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    }
+  ],
+  "summary": {
+    "incompatible": 9,
+    "invalid": 1
+  }
+}

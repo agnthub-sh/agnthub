@@ -1,0 +1,61 @@
+{
+  "status": "refused",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/layouts"
+  },
+  "harnesses": [
+    {
+      "id": "opencode",
+      "name": "OpenCode",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "broken",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "invalid",
+      "reason": "invalid opencode variant .opencode/agents/broken.md: mode must be primary, subagent or all, got background"
+    },
+    {
+      "agent": "guarded",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which opencode cannot express"
+    },
+    {
+      "agent": "modelled",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native opencode variant"
+    }
+  ],
+  "summary": {
+    "incompatible": 2,
+    "invalid": 1
+  }
+}

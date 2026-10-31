@@ -1,0 +1,290 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "cx-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".codex/agents/cx-native.toml",
+          "sourceDigest": "sha256:a885e8934fcddf4cf363afdb2c3f69d15dec952f974f37fcfd39c1c7a66bc1a1",
+          "converter": "copilot/v3",
+          "path": "/agnthub-e2e/home/.copilot/agents/cx-native.agent.md",
+          "digest": "sha256:41d232a0e2f5fcd0f345c6bb85dbb29da3a0f3ae048e766e007239c4ff37d06a",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "dual",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": "agents/dual.md",
+          "sourceDigest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
+          "converter": "copilot/v3",
+          "path": "/agnthub-e2e/home/.copilot/agents/dual.agent.md",
+          "digest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "fixer",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/team/fixer.md",
+          "sourceDigest": "sha256:11404f0e334d2b363d7bc45e6d952817a29d4568e08f2545c04cf83eaa5686e8",
+          "converter": "copilot/v3",
+          "path": "/agnthub-e2e/home/.copilot/agents/fixer.agent.md",
+          "digest": "sha256:0ec789ff2d5fc997b73c3a8795133605c275576cea9c6c44c6634883e207b169",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "gh-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "native",
+          "sourcePath": ".github/agents/gh-native.agent.md",
+          "sourceDigest": "sha256:864618375986b42a604b63514ac52ca854ba652da1b19574df74aac49db3acc3",
+          "path": "/agnthub-e2e/home/.copilot/agents/gh-native.agent.md",
+          "digest": "sha256:864618375986b42a604b63514ac52ca854ba652da1b19574df74aac49db3acc3",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "gm-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".gemini/agents/gm-native.md",
+          "sourceDigest": "sha256:ab77641ac4f6666fa0d80ee36d4fdf2332dbd2f1bc5d0106cd69fb9446f670e9",
+          "converter": "copilot/v3",
+          "path": "/agnthub-e2e/home/.copilot/agents/gm-native.agent.md",
+          "digest": "sha256:25749cf40f61bde1fbd3935f448e382c07271a4863fd943b2e5de841b2b5c5e0",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "issue-reader",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/issue-reader.md",
+          "sourceDigest": "sha256:c5cf513142027c5ce8dcbea7dfacadf3fd23fbd5e748c9fc999dd1fd00902358",
+          "converter": "copilot/v3",
+          "path": "/agnthub-e2e/home/.copilot/agents/issue-reader.agent.md",
+          "digest": "sha256:7d6e083cb825b54bd3186886c8a4101c6da46ac26d23681364973cabe960cbf4",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "oc-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".opencode/agents/oc-native.md",
+          "sourceDigest": "sha256:5951d5e75a6de4429a8f579c654bb4589d12db75deba1844913b6c4b421cf5d0",
+          "converter": "copilot/v3",
+          "path": "/agnthub-e2e/home/.copilot/agents/oc-native.agent.md",
+          "digest": "sha256:020f87c65510d79e34ef451f17d796f0ce7a37e12ee12d452150feff979e6ed1",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "omp-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".omp/agents/omp-native.md",
+          "sourceDigest": "sha256:f0e791fe64b2035a1eab0136e814e470e570bd86b6b2a69dffdf2b3661a0611a",
+          "converter": "copilot/v3",
+          "path": "/agnthub-e2e/home/.copilot/agents/omp-native.agent.md",
+          "digest": "sha256:52956ce4f4b03292675dea060b885bdde11241cb51899f8d49155f47c232ffe8",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "planner",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": "agents/planner.md",
+          "sourceDigest": "sha256:6e67f8119738e58371e61f662e332d971058192a6dc99791e7c19094691376f2",
+          "converter": "copilot/v3",
+          "path": "/agnthub-e2e/home/.copilot/agents/planner.agent.md",
+          "digest": "sha256:54e13fd735b5360bc11d7c3ad899a9c0eada9db11dfaf204af45db749f1d8e58",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "researcher",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": "agents/researcher/AGENT.md",
+          "sourceDigest": "sha256:dd13ee557398466dd574705483ce5697cfb0b3352c2ef6e815509612dc32282b",
+          "converter": "copilot/v3",
+          "path": "/agnthub-e2e/home/.copilot/agents/researcher.agent.md",
+          "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "reviewer",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/reviewer.md",
+          "sourceDigest": "sha256:a9c4c55855bdcff3eb2fa4bd246ff94f4de189219525d61086c93cac478e5070",
+          "converter": "copilot/v3",
+          "path": "/agnthub-e2e/home/.copilot/agents/reviewer.agent.md",
+          "digest": "sha256:1eb2545859175434551ddac641b9e601c758ec56b0e05cc22e15c63d2a42aea6",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "root-helper",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": "AGENT.md",
+          "sourceDigest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+          "converter": "copilot/v3",
+          "path": "/agnthub-e2e/home/.copilot/agents/root-helper.agent.md",
+          "digest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "tagged",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": "agents/tagged.md",
+          "sourceDigest": "sha256:c2e1fd2aa97993885900bee70813de29afe532bcc2833e7742ec2a604eceadf9",
+          "converter": "copilot/v3",
+          "path": "/agnthub-e2e/home/.copilot/agents/tagged.agent.md",
+          "digest": "sha256:ae21c1e2605ac84b36d9a0c26c183998cac584ef45e006af52b7f9316d6f23a0",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

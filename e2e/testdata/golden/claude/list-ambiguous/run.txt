@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/ambiguous --list --json
+exit status: 0

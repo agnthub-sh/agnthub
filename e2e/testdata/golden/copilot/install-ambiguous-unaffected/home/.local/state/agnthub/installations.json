@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.github/agents/solo.agent.md",
+      "digest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/ambiguous",
+      "agent": "solo",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

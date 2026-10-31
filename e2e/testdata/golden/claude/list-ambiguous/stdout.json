@@ -1,0 +1,24 @@
+{
+  "source": "/agnthub-e2e/src/ambiguous",
+  "manifest": false,
+  "agents": [
+    {
+      "id": "solo",
+      "description": "The only unambiguous agent in this source.",
+      "portable": "agents/solo.md",
+      "variants": {}
+    }
+  ],
+  "problems": [
+    {
+      "agent": "echo",
+      "path": ".claude/agents/nested/echo.md",
+      "message": "ambiguous identity: also defined by .claude/agents/echo.md; add agnthub.yaml to choose"
+    },
+    {
+      "agent": "twin",
+      "path": "agents/twin.md",
+      "message": "ambiguous identity: also defined by agents/twin/AGENT.md; add agnthub.yaml to choose"
+    }
+  ]
+}

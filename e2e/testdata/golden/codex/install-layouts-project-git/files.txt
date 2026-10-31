@@ -1,0 +1,10 @@
+0644 home/.config/agnthub/config.yaml
+0600 home/.local/state/agnthub/installations.json
+0644 project/.codex/agents/cx-native.toml
+0644 project/.codex/agents/dual.toml
+0644 project/.codex/agents/fixer.toml
+0644 project/.codex/agents/planner.toml
+0644 project/.codex/agents/researcher.toml
+0644 project/.codex/agents/root-helper.toml
+0644 project/.codex/agents/tagged.toml
+0644 project/agnthub-lock.json

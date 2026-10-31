@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/layouts --agent '*' --harness omp --json
+exit status: 1

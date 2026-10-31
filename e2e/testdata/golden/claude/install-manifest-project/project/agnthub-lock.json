@@ -1,0 +1,112 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/companion.git",
+        "ref": "v1",
+        "revision": "d44d9ad4d7b9f161791d47d5d820ec931baea53f"
+      },
+      "agent": "companion",
+      "origin": "dependency",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": "agents/companion.md",
+          "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+          "converter": "claude/v3",
+          "path": ".claude/agents/companion.md",
+          "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "agent": "helper",
+      "origin": "dependency",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": "agents/helper.md",
+          "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
+          "converter": "claude/v3",
+          "path": ".claude/agents/helper.md",
+          "digest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "agent": "lead",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": "agents/lead/AGENT.md",
+          "sourceDigest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
+          "converter": "claude/v3",
+          "path": ".claude/agents/lead.md",
+          "digest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
+          "requires": [
+            "agent:git:localhost:8443/companion.git::companion",
+            "agent:git:localhost:8443/manifest.git::helper",
+            "skill:e2e-skill"
+          ]
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "agent": "native-only",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": "native/claude/native-only.md",
+          "sourceDigest": "sha256:0ed4be951d129f063ef866308d751ceb8a44f77dce1f570061a1baca2581cd99",
+          "path": ".claude/agents/native-only.md",
+          "digest": "sha256:0ed4be951d129f063ef866308d751ceb8a44f77dce1f570061a1baca2581cd99",
+          "requires": []
+        }
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "skill": "e2e-skill",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/skills.git",
+        "ref": "v1.0.0",
+        "revision": "21f36aec981afd5f3a2141ea1d52b9ca2f691f48"
+      },
+      "version": "1.4.0",
+      "digest": "sha256:9e1273b9f24ac263d489209397035669c0cb9f0ce2a21e1e767ed08c17a65064",
+      "path": ".claude/skills/e2e-skill",
+      "scope": "project",
+      "harnesses": [
+        "claude"
+      ],
+      "mode": "installed"
+    }
+  ]
+}

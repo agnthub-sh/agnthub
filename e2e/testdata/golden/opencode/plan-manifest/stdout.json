@@ -1,0 +1,146 @@
+{
+  "status": "planned",
+  "scope": "project",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/manifest.git",
+    "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+  },
+  "harnesses": [
+    {
+      "id": "opencode",
+      "name": "OpenCode",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "skills": [
+    {
+      "skill": "e2e-skill",
+      "source": "localhost:8443/skills.git#v1.0.0",
+      "harness": "opencode",
+      "settings": {},
+      "requirement": ">=1.0.0 <=2.0.0",
+      "requiredBy": [
+        "lead"
+      ],
+      "decision": "install",
+      "path": "/agnthub-e2e/project/.agents/skills/e2e-skill",
+      "location": "project .agents/skills",
+      "scope": "project",
+      "version": "1.4.0",
+      "revision": "21f36aec981afd5f3a2141ea1d52b9ca2f691f48",
+      "target": "opencode",
+      "command": [
+        "skills",
+        "add",
+        "https://localhost:8443/skills.git#21f36aec981afd5f3a2141ea1d52b9ca2f691f48",
+        "--skill",
+        "e2e-skill",
+        "--agent",
+        "opencode",
+        "--yes"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "agent": "codex-helper",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/codex-helper.md",
+      "variant": "generated",
+      "sourcePath": "agents/codex-helper.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "helper",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/helper.md",
+      "variant": "generated",
+      "sourcePath": "agents/helper.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "lead",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/lead.md",
+      "variant": "native",
+      "sourcePath": ".opencode/agents/lead.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "native-only",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/native-only.md",
+      "variant": "generated",
+      "sourcePath": "native/claude/native-only.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "companion",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/companion.md",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/companion.git",
+        "ref": "v1",
+        "revision": "d44d9ad4d7b9f161791d47d5d820ec931baea53f"
+      },
+      "origin": "dependency",
+      "requiredBy": [
+        "lead"
+      ],
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 5
+  },
+  "skillSummary": {
+    "install": 1
+  }
+}

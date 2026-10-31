@@ -1,0 +1,8 @@
+0644 home/.agents/skills/e2e-skill/SKILL.md
+0644 home/.config/agnthub/config.yaml
+0644 home/.config/agnthub/global-lock.json
+0644 home/.copilot/agents/companion.agent.md
+0644 home/.copilot/agents/helper.agent.md
+0644 home/.copilot/agents/lead.agent.md
+0644 home/.copilot/agents/native-only.agent.md
+0600 home/.local/state/agnthub/installations.json

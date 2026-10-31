@@ -1,0 +1,312 @@
+{
+  "status": "refused",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/layouts"
+  },
+  "harnesses": [
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot CLI",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "broken",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "invalid",
+      "reason": "invalid copilot variant .github/agents/broken.agent.md: handoffs-to is not a Copilot CLI agent field; the CLI would silently ignore it"
+    },
+    {
+      "agent": "cu-native",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it uses web search, but Copilot CLI has no web search tool"
+    },
+    {
+      "agent": "cx-native",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/cx-native.agent.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-native.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "Copilot CLI has no tool denylist, so the agent lists its built-in tools and does not get MCP tools"
+      ]
+    },
+    {
+      "agent": "dual",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/dual.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/dual.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "fixer",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/fixer.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/team/fixer.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "gh-native",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/gh-native.agent.md",
+      "variant": "native",
+      "sourcePath": ".github/agents/gh-native.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "gm-native",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/gm-native.agent.md",
+      "variant": "generated",
+      "sourcePath": ".gemini/agents/gm-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the gemini variant"
+      ]
+    },
+    {
+      "agent": "guarded",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which copilot cannot express"
+    },
+    {
+      "agent": "issue-reader",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/issue-reader.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/issue-reader.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "needs MCP servers configured for copilot under these names: github; agnthub does not install or configure MCP servers"
+      ]
+    },
+    {
+      "agent": "modelled",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native copilot variant"
+    },
+    {
+      "agent": "oc-native",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/oc-native.agent.md",
+      "variant": "generated",
+      "sourcePath": ".opencode/agents/oc-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the opencode variant",
+        "Copilot CLI has no tool denylist, so the agent lists its built-in tools and does not get MCP tools"
+      ]
+    },
+    {
+      "agent": "omp-native",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/omp-native.agent.md",
+      "variant": "generated",
+      "sourcePath": ".omp/agents/omp-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the omp variant"
+      ]
+    },
+    {
+      "agent": "planner",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/planner.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/planner.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "researcher",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/researcher.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/researcher/AGENT.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "reviewer",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/reviewer.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/reviewer.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted color: cosmetic",
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model"
+      ]
+    },
+    {
+      "agent": "root-helper",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/root-helper.agent.md",
+      "variant": "generated",
+      "sourcePath": "AGENT.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "tagged",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/tagged.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/tagged.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted descriptive metadata: author, tags, version"
+      ]
+    }
+  ],
+  "summary": {
+    "create": 13,
+    "incompatible": 3,
+    "invalid": 1
+  }
+}

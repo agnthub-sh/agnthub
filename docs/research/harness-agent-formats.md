@@ -82,7 +82,7 @@ A2A (remote-agent communication) and MCP (tool/server connectivity) are differen
 
 ## Runtime-verified installer findings
 
-Checked against the shipped CLIs (cursor-agent 2026.10.22-27dcf5f, Gemini CLI 0.66.0) while implementing the installers; these override documentation where they differ.
+Checked against the shipped CLIs (cursor-agent 2026.10.22-27dcf5f, Gemini CLI 0.66.0) while implementing the installers; these override documentation where they differ. The [end-to-end suite](../../CONTRIBUTING.md#end-to-end-suite) keeps checking installs against every Harness at the versions pinned in `e2e/Dockerfile` and, nightly, at each Harness's latest release.
 
 - **Cursor reads frontmatter line by line, not as YAML.** Each `key: value` line sets a lowercased key to the raw trimmed value; quotes are kept, block scalars read as `>`/`|`, nested lines also match, and only the text `true` enables `readonly`/`is_background` (`background` is an alias). Files with an empty body are skipped. The installer therefore checks what Cursor's reader sees, not only the YAML: a quoted, commented, nested or multi-line declaration that would change identity, description or read-only mode is refused.
 - **cursor-agent scans workspace `.cursor/agents` (plus `.claude/agents` and `.grok/agents`) and plugin subagents only.** This build does not read `~/.cursor/agents`; user-scope installs follow the documented editor location and were not proven loadable from the CLI.

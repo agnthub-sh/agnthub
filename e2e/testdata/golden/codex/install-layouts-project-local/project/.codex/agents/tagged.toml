@@ -1,0 +1,5 @@
+name = 'tagged'
+description = 'Formats changelog entries'
+developer_instructions = """
+Format each change as a changelog entry.
+"""

@@ -1,0 +1,121 @@
+{
+  "status": "refused",
+  "scope": "project",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/manifest.git",
+    "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+  },
+  "harnesses": [
+    {
+      "id": "gemini",
+      "name": "Gemini CLI",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "skills": [
+    {
+      "skill": "e2e-skill",
+      "source": "localhost:8443/skills.git#v1.0.0",
+      "harness": "gemini",
+      "settings": {},
+      "requirement": ">=1.0.0 <=2.0.0",
+      "requiredBy": [
+        "lead"
+      ],
+      "decision": "unsupported",
+      "reason": "the gemini-cli backend target installs into /agnthub-e2e/project/.agents/skills, which gemini does not discover: Gemini CLI ignores project skills until /agnthub-e2e/project is a trusted folder (trust it in Gemini CLI, or set GEMINI_CLI_TRUST_WORKSPACE=true)"
+    }
+  ],
+  "items": [
+    {
+      "agent": "lead",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/lead.md",
+      "variant": "generated",
+      "sourcePath": "agents/lead/AGENT.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "companion agents are installed for the main Gemini CLI session; Gemini subagents cannot invoke other agents",
+        "waits on skill e2e-skill, which is unsupported for gemini"
+      ]
+    },
+    {
+      "agent": "native-only",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/native-only.md",
+      "variant": "generated",
+      "sourcePath": "native/claude/native-only.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "helper",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/helper.md",
+      "variant": "generated",
+      "sourcePath": "agents/helper.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "dependency",
+      "requiredBy": [
+        "lead"
+      ],
+      "action": "create"
+    },
+    {
+      "agent": "companion",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/companion.md",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/companion.git",
+        "ref": "v1",
+        "revision": "d44d9ad4d7b9f161791d47d5d820ec931baea53f"
+      },
+      "origin": "dependency",
+      "requiredBy": [
+        "lead"
+      ],
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 4
+  },
+  "skillSummary": {
+    "unsupported": 1
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "status": "refused",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/layouts"
+  },
+  "harnesses": [
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "broken",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "invalid",
+      "reason": "invalid cursor variant .cursor/agents/broken.md: Cursor reads one line per key; write the description on a single line"
+    },
+    {
+      "agent": "cx-native",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes shell but allows edits, and Cursor can only withhold shell by making the agent read-only"
+    },
+    {
+      "agent": "guarded",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which cursor cannot express"
+    },
+    {
+      "agent": "issue-reader",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes search, but Cursor cannot withhold it"
+    },
+    {
+      "agent": "modelled",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native cursor variant"
+    },
+    {
+      "agent": "reviewer",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it uses shell without edits, but Cursor's only restriction (readonly) blocks every shell command"
+    }
+  ],
+  "summary": {
+    "incompatible": 5,
+    "invalid": 1
+  }
+}

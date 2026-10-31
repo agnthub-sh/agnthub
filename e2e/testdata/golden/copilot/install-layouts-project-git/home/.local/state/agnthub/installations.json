@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.github/agents/cx-native.agent.md",
+      "digest": "sha256:41d232a0e2f5fcd0f345c6bb85dbb29da3a0f3ae048e766e007239c4ff37d06a",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cx-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/dual.agent.md",
+      "digest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "dual",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/fixer.agent.md",
+      "digest": "sha256:0ec789ff2d5fc997b73c3a8795133605c275576cea9c6c44c6634883e207b169",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "fixer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/gh-native.agent.md",
+      "digest": "sha256:864618375986b42a604b63514ac52ca854ba652da1b19574df74aac49db3acc3",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "gh-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/gm-native.agent.md",
+      "digest": "sha256:25749cf40f61bde1fbd3935f448e382c07271a4863fd943b2e5de841b2b5c5e0",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "gm-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/issue-reader.agent.md",
+      "digest": "sha256:7d6e083cb825b54bd3186886c8a4101c6da46ac26d23681364973cabe960cbf4",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "issue-reader",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/oc-native.agent.md",
+      "digest": "sha256:020f87c65510d79e34ef451f17d796f0ce7a37e12ee12d452150feff979e6ed1",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "oc-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/omp-native.agent.md",
+      "digest": "sha256:52956ce4f4b03292675dea060b885bdde11241cb51899f8d49155f47c232ffe8",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "omp-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/planner.agent.md",
+      "digest": "sha256:54e13fd735b5360bc11d7c3ad899a9c0eada9db11dfaf204af45db749f1d8e58",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "planner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/researcher.agent.md",
+      "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "researcher",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/reviewer.agent.md",
+      "digest": "sha256:1eb2545859175434551ddac641b9e601c758ec56b0e05cc22e15c63d2a42aea6",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "reviewer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/root-helper.agent.md",
+      "digest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/tagged.agent.md",
+      "digest": "sha256:ae21c1e2605ac84b36d9a0c26c183998cac584ef45e006af52b7f9316d6f23a0",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

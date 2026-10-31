@@ -1,0 +1,5 @@
+name = 'dual'
+description = 'Portable core of the dual agent.'
+developer_instructions = """
+Portable instructions for the dual agent.
+"""

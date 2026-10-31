@@ -1,0 +1,313 @@
+{
+  "status": "refused",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/layouts"
+  },
+  "harnesses": [
+    {
+      "id": "claude",
+      "name": "Claude Code",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "broken",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/broken.md",
+      "variant": "generated",
+      "sourcePath": "agents/broken.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "cu-native",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/cu-native.md",
+      "variant": "generated",
+      "sourcePath": ".cursor/agents/cu-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the cursor variant",
+        "Cursor readonly: converted without edits, shell, MCP tools or delegation"
+      ]
+    },
+    {
+      "agent": "cx-native",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/cx-native.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-native.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant"
+      ]
+    },
+    {
+      "agent": "dual",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/dual.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/dual.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "fixer",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/fixer.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/team/fixer.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "gh-native",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/gh-native.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-native.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant"
+      ]
+    },
+    {
+      "agent": "gm-native",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/gm-native.md",
+      "variant": "generated",
+      "sourcePath": ".gemini/agents/gm-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the gemini variant"
+      ]
+    },
+    {
+      "agent": "guarded",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/guarded.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/guarded.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "issue-reader",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/issue-reader.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/issue-reader.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "modelled",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native claude variant"
+    },
+    {
+      "agent": "oc-native",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/oc-native.md",
+      "variant": "generated",
+      "sourcePath": ".opencode/agents/oc-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the opencode variant"
+      ]
+    },
+    {
+      "agent": "omp-native",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/omp-native.md",
+      "variant": "generated",
+      "sourcePath": ".omp/agents/omp-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the omp variant"
+      ]
+    },
+    {
+      "agent": "planner",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/planner.md",
+      "variant": "generated",
+      "sourcePath": "agents/planner.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "researcher",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/researcher.md",
+      "variant": "generated",
+      "sourcePath": "agents/researcher/AGENT.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "reviewer",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/reviewer.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/reviewer.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "root-helper",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/root-helper.md",
+      "variant": "generated",
+      "sourcePath": "AGENT.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "tagged",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/tagged.md",
+      "variant": "generated",
+      "sourcePath": "agents/tagged.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted descriptive metadata: author, tags, version"
+      ]
+    }
+  ],
+  "summary": {
+    "create": 16,
+    "incompatible": 1
+  }
+}

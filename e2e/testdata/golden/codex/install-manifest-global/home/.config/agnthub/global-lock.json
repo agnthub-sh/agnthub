@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/companion.git",
+        "ref": "v1",
+        "revision": "d44d9ad4d7b9f161791d47d5d820ec931baea53f"
+      },
+      "agent": "companion",
+      "origin": "dependency",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": "agents/companion.md",
+          "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+          "converter": "codex/v3",
+          "path": "/agnthub-e2e/home/.codex/agents/companion.toml",
+          "digest": "sha256:fca1ae6b7d4fdb1a7650b1772a792b8e6d4ec7ea187a6bca55106fe92706751a",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "agent": "codex-helper",
+      "origin": "dependency",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": "agents/codex-helper.md",
+          "sourceDigest": "sha256:cc9e4a2f0fa702786f557b65d4873335bccec56f434a4db14408ca4e8538a750",
+          "converter": "codex/v3",
+          "path": "/agnthub-e2e/home/.codex/agents/codex-helper.toml",
+          "digest": "sha256:9fbc05be9d76978bcd342dfb10c42138c5343fed0585b12f6dfe4ee13fedb096",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "agent": "helper",
+      "origin": "dependency",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": "agents/helper.md",
+          "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
+          "converter": "codex/v3",
+          "path": "/agnthub-e2e/home/.codex/agents/helper.toml",
+          "digest": "sha256:5645bf993fe1898678077834fc6b86d110fad89a8d01b31b0d831324e55c1e8f",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "agent": "lead",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "native",
+          "sourcePath": ".codex/agents/lead.toml",
+          "sourceDigest": "sha256:2b7f6c82ae358ad594ec32e341057b973795ad9fa3d9888cec4ecb081dfa160c",
+          "path": "/agnthub-e2e/home/.codex/agents/lead.toml",
+          "digest": "sha256:2b7f6c82ae358ad594ec32e341057b973795ad9fa3d9888cec4ecb081dfa160c",
+          "requires": [
+            "agent:git:localhost:8443/companion.git::companion",
+            "agent:git:localhost:8443/manifest.git::codex-helper",
+            "agent:git:localhost:8443/manifest.git::helper",
+            "skill:e2e-skill"
+          ]
+        }
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "skill": "e2e-skill",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/skills.git",
+        "ref": "v1.0.0",
+        "revision": "21f36aec981afd5f3a2141ea1d52b9ca2f691f48"
+      },
+      "version": "1.4.0",
+      "digest": "sha256:9e1273b9f24ac263d489209397035669c0cb9f0ce2a21e1e767ed08c17a65064",
+      "path": "/agnthub-e2e/home/.agents/skills/e2e-skill",
+      "scope": "global",
+      "harnesses": [
+        "codex"
+      ],
+      "mode": "installed"
+    }
+  ]
+}

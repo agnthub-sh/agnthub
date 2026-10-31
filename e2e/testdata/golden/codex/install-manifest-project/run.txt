@@ -1,0 +1,2 @@
+$ agnthub add https://localhost:8443/manifest.git --agent lead --harness codex --yes --json
+exit status: 0

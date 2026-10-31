@@ -1,0 +1,5 @@
+$ agnthub add /agnthub-e2e/src/ambiguous --agent twin --harness copilot --yes --json
+exit status: 1
+--- stderr
+error: agent "twin" cannot be installed:
+  twin (agents/twin.md): ambiguous identity: also defined by agents/twin/AGENT.md; add agnthub.yaml to choose

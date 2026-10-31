@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/ambiguous"
+      },
+      "agent": "solo",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": "agents/solo.md",
+          "sourceDigest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
+          "converter": "omp/v3",
+          "path": ".omp/agents/solo.md",
+          "digest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

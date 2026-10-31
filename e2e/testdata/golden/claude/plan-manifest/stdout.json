@@ -1,0 +1,143 @@
+{
+  "status": "planned",
+  "scope": "project",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/manifest.git",
+    "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+  },
+  "harnesses": [
+    {
+      "id": "claude",
+      "name": "Claude Code",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "skills": [
+    {
+      "skill": "e2e-skill",
+      "source": "localhost:8443/skills.git#v1.0.0",
+      "harness": "claude",
+      "settings": {},
+      "requirement": ">=1.0.0 <=2.0.0",
+      "requiredBy": [
+        "lead"
+      ],
+      "decision": "install",
+      "path": "/agnthub-e2e/project/.claude/skills/e2e-skill",
+      "location": "project .claude/skills",
+      "scope": "project",
+      "version": "1.4.0",
+      "revision": "21f36aec981afd5f3a2141ea1d52b9ca2f691f48",
+      "target": "claude-code",
+      "command": [
+        "skills",
+        "add",
+        "https://localhost:8443/skills.git#21f36aec981afd5f3a2141ea1d52b9ca2f691f48",
+        "--skill",
+        "e2e-skill",
+        "--agent",
+        "claude-code",
+        "--yes"
+      ]
+    }
+  ],
+  "items": [
+    {
+      "agent": "codex-helper",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/codex-helper.md",
+      "variant": "generated",
+      "sourcePath": "agents/codex-helper.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "helper",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/helper.md",
+      "variant": "generated",
+      "sourcePath": "agents/helper.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "lead",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/lead.md",
+      "variant": "generated",
+      "sourcePath": "agents/lead/AGENT.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "native-only",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/native-only.md",
+      "variant": "native",
+      "sourcePath": "native/claude/native-only.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "companion",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/companion.md",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/companion.git",
+        "ref": "v1",
+        "revision": "d44d9ad4d7b9f161791d47d5d820ec931baea53f"
+      },
+      "origin": "dependency",
+      "requiredBy": [
+        "lead"
+      ],
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 5
+  },
+  "skillSummary": {
+    "install": 1
+  }
+}

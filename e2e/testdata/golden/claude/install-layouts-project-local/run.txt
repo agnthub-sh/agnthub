@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/layouts --agent broken --agent cu-native --agent cx-native --agent dual --agent fixer --agent gh-native --agent gm-native --agent guarded --agent issue-reader --agent oc-native --agent omp-native --agent planner --agent researcher --agent reviewer --agent root-helper --agent tagged --harness claude --yes --json
+exit status: 0

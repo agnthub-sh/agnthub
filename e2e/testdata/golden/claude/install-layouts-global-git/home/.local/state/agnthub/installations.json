@@ -1,0 +1,181 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/broken.md",
+      "digest": "sha256:77cf7118ed525fa97f1cf1bc688fe6ee33bc4d9f02aa685e15255b9c886a9413",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "broken",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/cu-native.md",
+      "digest": "sha256:9b65cebbc3cfbe043f620ebf44dc1d1a5aa66d8c28b1c08f287c6499bc55e247",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cu-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/cx-native.md",
+      "digest": "sha256:a9420ff7e4667ff482eb69e93ec11b1e78bc48f0a2607f59d47e81e3fa80980f",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cx-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/dual.md",
+      "digest": "sha256:a65a4e2cfb0f1b96162b11d80259e6f3c224311fcc3334d20a54c6231a55b3d7",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "dual",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/fixer.md",
+      "digest": "sha256:11404f0e334d2b363d7bc45e6d952817a29d4568e08f2545c04cf83eaa5686e8",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "fixer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/gh-native.md",
+      "digest": "sha256:fc1aba874b6c109afed219b571a45b8175f740d59da2651bfe2fcd531fe6bca8",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "gh-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/gm-native.md",
+      "digest": "sha256:923689d0bb52a1e1eeb14dada6f34d67c8a7d574630c71a73768650502d0017e",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "gm-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/guarded.md",
+      "digest": "sha256:c52c61d02d1de9e0dc83eb2f0177aa3eed75462c291a2f1358247f6940f96378",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "guarded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/issue-reader.md",
+      "digest": "sha256:c5cf513142027c5ce8dcbea7dfacadf3fd23fbd5e748c9fc999dd1fd00902358",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "issue-reader",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/oc-native.md",
+      "digest": "sha256:5ab835484767cf62ce5aff88c2a365aee8bcd52369908331dd72898b73bfcc00",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "oc-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/omp-native.md",
+      "digest": "sha256:dffea6d4379deb7453e22f3aa0d280234987e50cdf358d4b1cdd18b5ea3e61e7",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "omp-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/planner.md",
+      "digest": "sha256:54e13fd735b5360bc11d7c3ad899a9c0eada9db11dfaf204af45db749f1d8e58",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "planner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/researcher.md",
+      "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "researcher",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/reviewer.md",
+      "digest": "sha256:a9c4c55855bdcff3eb2fa4bd246ff94f4de189219525d61086c93cac478e5070",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "reviewer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/root-helper.md",
+      "digest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/tagged.md",
+      "digest": "sha256:ae21c1e2605ac84b36d9a0c26c183998cac584ef45e006af52b7f9316d6f23a0",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

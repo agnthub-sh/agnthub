@@ -1,0 +1,304 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "broken",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": "agents/broken.md",
+          "sourceDigest": "sha256:77cf7118ed525fa97f1cf1bc688fe6ee33bc4d9f02aa685e15255b9c886a9413",
+          "converter": "omp/v3",
+          "path": ".omp/agents/broken.md",
+          "digest": "sha256:77cf7118ed525fa97f1cf1bc688fe6ee33bc4d9f02aa685e15255b9c886a9413",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "cu-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".cursor/agents/cu-native.md",
+          "sourceDigest": "sha256:90e2a7aaee545f416f39f918470e649abfde0a5d1d00e05c5f3eb07cd57778bd",
+          "converter": "omp/v3",
+          "path": ".omp/agents/cu-native.md",
+          "digest": "sha256:9fd70714a268b58c7665ccba39b6fbd24c0327c8fca7dcc748609b5cb9fe6922",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "cx-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".codex/agents/cx-native.toml",
+          "sourceDigest": "sha256:a885e8934fcddf4cf363afdb2c3f69d15dec952f974f37fcfd39c1c7a66bc1a1",
+          "converter": "omp/v3",
+          "path": ".omp/agents/cx-native.md",
+          "digest": "sha256:9d92584b2a9cd98842addf79e63b12f675be2c7e07dd9d78848388eb18de63fe",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "dual",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": "agents/dual.md",
+          "sourceDigest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
+          "converter": "omp/v3",
+          "path": ".omp/agents/dual.md",
+          "digest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "fixer",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/team/fixer.md",
+          "sourceDigest": "sha256:11404f0e334d2b363d7bc45e6d952817a29d4568e08f2545c04cf83eaa5686e8",
+          "converter": "omp/v3",
+          "path": ".omp/agents/fixer.md",
+          "digest": "sha256:4d3acfe5bcdcb8e9dc19b44e3a265793aa87fb48426801da26b2f2190b39356e",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "gh-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".github/agents/gh-native.agent.md",
+          "sourceDigest": "sha256:864618375986b42a604b63514ac52ca854ba652da1b19574df74aac49db3acc3",
+          "converter": "omp/v3",
+          "path": ".omp/agents/gh-native.md",
+          "digest": "sha256:3219d129d30a833f0229d3ad443fe63dda5585c93d02646b008adb18d2bbee00",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "gm-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".gemini/agents/gm-native.md",
+          "sourceDigest": "sha256:ab77641ac4f6666fa0d80ee36d4fdf2332dbd2f1bc5d0106cd69fb9446f670e9",
+          "converter": "omp/v3",
+          "path": ".omp/agents/gm-native.md",
+          "digest": "sha256:beabd83f6ba4a9baa4a2c815607d7cf2399a0ecc326f1ca869cce53fa9837a62",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "issue-reader",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/issue-reader.md",
+          "sourceDigest": "sha256:c5cf513142027c5ce8dcbea7dfacadf3fd23fbd5e748c9fc999dd1fd00902358",
+          "converter": "omp/v3",
+          "path": ".omp/agents/issue-reader.md",
+          "digest": "sha256:57728afd08f5f4d0bb64a927deec613a70db6c9db17dcc1318180c043a000caa",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "oc-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".opencode/agents/oc-native.md",
+          "sourceDigest": "sha256:5951d5e75a6de4429a8f579c654bb4589d12db75deba1844913b6c4b421cf5d0",
+          "converter": "omp/v3",
+          "path": ".omp/agents/oc-native.md",
+          "digest": "sha256:c01e1590c4ed79f79bc9623da53cc4ce0e098d17937ec057e5bfb6cd34b87c15",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "omp-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "native",
+          "sourcePath": ".omp/agents/omp-native.md",
+          "sourceDigest": "sha256:f0e791fe64b2035a1eab0136e814e470e570bd86b6b2a69dffdf2b3661a0611a",
+          "path": ".omp/agents/omp-native.md",
+          "digest": "sha256:f0e791fe64b2035a1eab0136e814e470e570bd86b6b2a69dffdf2b3661a0611a",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "planner",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": "agents/planner.md",
+          "sourceDigest": "sha256:6e67f8119738e58371e61f662e332d971058192a6dc99791e7c19094691376f2",
+          "converter": "omp/v3",
+          "path": ".omp/agents/planner.md",
+          "digest": "sha256:54e13fd735b5360bc11d7c3ad899a9c0eada9db11dfaf204af45db749f1d8e58",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "researcher",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": "agents/researcher/AGENT.md",
+          "sourceDigest": "sha256:dd13ee557398466dd574705483ce5697cfb0b3352c2ef6e815509612dc32282b",
+          "converter": "omp/v3",
+          "path": ".omp/agents/researcher.md",
+          "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "reviewer",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/reviewer.md",
+          "sourceDigest": "sha256:a9c4c55855bdcff3eb2fa4bd246ff94f4de189219525d61086c93cac478e5070",
+          "converter": "omp/v3",
+          "path": ".omp/agents/reviewer.md",
+          "digest": "sha256:f028b6ee3e67e20672505d81299e3438dfdd2ecd6b55fe0e4c0aef0c08253990",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "root-helper",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": "AGENT.md",
+          "sourceDigest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+          "converter": "omp/v3",
+          "path": ".omp/agents/root-helper.md",
+          "digest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "tagged",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": "agents/tagged.md",
+          "sourceDigest": "sha256:c2e1fd2aa97993885900bee70813de29afe532bcc2833e7742ec2a604eceadf9",
+          "converter": "omp/v3",
+          "path": ".omp/agents/tagged.md",
+          "digest": "sha256:ae21c1e2605ac84b36d9a0c26c183998cac584ef45e006af52b7f9316d6f23a0",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

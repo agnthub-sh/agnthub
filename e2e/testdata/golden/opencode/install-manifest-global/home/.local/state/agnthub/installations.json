@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/home/.agents/skills/e2e-skill",
+      "digest": "sha256:9e1273b9f24ac263d489209397035669c0cb9f0ce2a21e1e767ed08c17a65064",
+      "harness": "opencode",
+      "scope": "global",
+      "destination": "~/.agents/skills",
+      "source": "git:localhost:8443/skills.git",
+      "agent": "",
+      "skill": "e2e-skill",
+      "origin": "dependency",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.config/opencode/agents/companion.md",
+      "digest": "sha256:7d3f9a795bad13166e76e115d6e8f9e5aaf4ebdad9ab62ebb62bc9cb57dcf987",
+      "harness": "opencode",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/companion.git",
+      "agent": "companion",
+      "origin": "dependency",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.config/opencode/agents/helper.md",
+      "digest": "sha256:ba079e88403d4925a38e044106317520303d8b37e4039278ef7165ac99863e88",
+      "harness": "opencode",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/manifest.git",
+      "agent": "helper",
+      "origin": "dependency",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.config/opencode/agents/lead.md",
+      "digest": "sha256:28363340f9f63d0ac8bb65da987c4ed1903817ce46e0687842259253621d7809",
+      "harness": "opencode",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/manifest.git",
+      "agent": "lead",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.config/opencode/agents/native-only.md",
+      "digest": "sha256:5a23d5fc7bdd156dba00c32439d5f6550ebdc86003513dd7e0e18d548dab79dc",
+      "harness": "opencode",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/manifest.git",
+      "agent": "native-only",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

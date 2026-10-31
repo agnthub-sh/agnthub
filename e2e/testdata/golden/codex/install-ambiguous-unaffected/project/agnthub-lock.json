@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/ambiguous"
+      },
+      "agent": "solo",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": "agents/solo.md",
+          "sourceDigest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
+          "converter": "codex/v3",
+          "path": ".codex/agents/solo.toml",
+          "digest": "sha256:1e294141831b85707c6c83b7e45fdb78c13ff0f8eeb15f102098813f5d3542e4",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

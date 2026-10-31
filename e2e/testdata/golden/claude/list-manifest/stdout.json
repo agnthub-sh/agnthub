@@ -1,0 +1,55 @@
+{
+  "source": "localhost:8443/manifest.git",
+  "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038",
+  "manifest": true,
+  "categories": [
+    "software-engineering",
+    "project-management"
+  ],
+  "agents": [
+    {
+      "id": "codex-helper",
+      "description": "Extra helper only the Codex variant of the lead requires.",
+      "categories": [
+        "software-engineering",
+        "project-management"
+      ],
+      "portable": "agents/codex-helper.md",
+      "variants": {}
+    },
+    {
+      "id": "helper",
+      "description": "Helps the lead agent.",
+      "categories": [
+        "software-engineering",
+        "project-management"
+      ],
+      "portable": "agents/helper.md",
+      "variants": {}
+    },
+    {
+      "id": "lead",
+      "description": "Leads a change end to end and delegates to its companions.",
+      "categories": [
+        "software-architecture"
+      ],
+      "portable": "agents/lead/AGENT.md",
+      "variants": {
+        "codex": ".codex/agents/lead.toml",
+        "opencode": ".opencode/agents/lead.md"
+      }
+    },
+    {
+      "id": "native-only",
+      "description": "Declared in the manifest only as a Claude Code variant.",
+      "categories": [
+        "software-engineering",
+        "project-management"
+      ],
+      "variants": {
+        "claude": "native/claude/native-only.md"
+      }
+    }
+  ],
+  "problems": []
+}

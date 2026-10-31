@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.agents/skills/e2e-skill",
+      "digest": "sha256:9e1273b9f24ac263d489209397035669c0cb9f0ce2a21e1e767ed08c17a65064",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project .agents/skills",
+      "source": "git:localhost:8443/skills.git",
+      "agent": "",
+      "skill": "e2e-skill",
+      "origin": "dependency",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/companion.agent.md",
+      "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/companion.git",
+      "agent": "companion",
+      "origin": "dependency",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/helper.agent.md",
+      "digest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/manifest.git",
+      "agent": "helper",
+      "origin": "dependency",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/lead.agent.md",
+      "digest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/manifest.git",
+      "agent": "lead",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/native-only.agent.md",
+      "digest": "sha256:bae8c514339bc1aace514ab3aeca0c33092084f8ea007973a98c048f3a0c7c21",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/manifest.git",
+      "agent": "native-only",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

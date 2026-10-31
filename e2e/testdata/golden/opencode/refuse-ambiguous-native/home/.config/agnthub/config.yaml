@@ -1,0 +1,5 @@
+skillInstaller:
+  executable: skills
+  args: [add, "{source}", --skill, "{skill}", --agent, "{target}", --yes]
+  projectArgs: []
+  globalArgs: [--global]

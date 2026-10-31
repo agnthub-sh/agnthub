@@ -1,0 +1,17 @@
+0644 home/.config/agnthub/config.yaml
+0644 home/.config/agnthub/global-lock.json
+0644 home/.gemini/agents/cu-native.md
+0644 home/.gemini/agents/cx-native.md
+0644 home/.gemini/agents/dual.md
+0644 home/.gemini/agents/fixer.md
+0644 home/.gemini/agents/gh-native.md
+0644 home/.gemini/agents/gm-native.md
+0644 home/.gemini/agents/issue-reader.md
+0644 home/.gemini/agents/oc-native.md
+0644 home/.gemini/agents/omp-native.md
+0644 home/.gemini/agents/planner.md
+0644 home/.gemini/agents/researcher.md
+0644 home/.gemini/agents/reviewer.md
+0644 home/.gemini/agents/root-helper.md
+0644 home/.gemini/agents/tagged.md
+0600 home/.local/state/agnthub/installations.json

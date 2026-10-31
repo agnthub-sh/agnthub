@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/layouts --agent broken --agent guarded --agent modelled --harness gemini --yes --json
+exit status: 1

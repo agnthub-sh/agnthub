@@ -1,0 +1,311 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "cu-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".cursor/agents/cu-native.md",
+          "sourceDigest": "sha256:90e2a7aaee545f416f39f918470e649abfde0a5d1d00e05c5f3eb07cd57778bd",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/cu-native.md",
+          "digest": "sha256:13cbfe463cc8e78c41f7443b4a9e8e8acee8fd47a939300d8647d64a4e091809",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "cx-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".codex/agents/cx-native.toml",
+          "sourceDigest": "sha256:a885e8934fcddf4cf363afdb2c3f69d15dec952f974f37fcfd39c1c7a66bc1a1",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/cx-native.md",
+          "digest": "sha256:9ab72ec15b12b37bc7ab8c99cffd31ad4dfd49f65c9881d06f898593a00f4bdc",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "dual",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "native",
+          "sourcePath": ".opencode/agents/dual.md",
+          "sourceDigest": "sha256:e124a4dc313d2d36bbe3197e3b159ba0c2131867d7530a41bf60cd960b2b41da",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/dual.md",
+          "digest": "sha256:e124a4dc313d2d36bbe3197e3b159ba0c2131867d7530a41bf60cd960b2b41da",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "fixer",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/team/fixer.md",
+          "sourceDigest": "sha256:11404f0e334d2b363d7bc45e6d952817a29d4568e08f2545c04cf83eaa5686e8",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/fixer.md",
+          "digest": "sha256:371fc99c4fcfa1f2644f8182fa2fd15f3e81d42e66a0bdd1c338254b1d98716d",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "gh-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".github/agents/gh-native.agent.md",
+          "sourceDigest": "sha256:864618375986b42a604b63514ac52ca854ba652da1b19574df74aac49db3acc3",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/gh-native.md",
+          "digest": "sha256:12d050a633a98f969b78f769b9ea09ebe8f7f2e4f5bbc0990c0fb5557ee51b25",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "gm-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".gemini/agents/gm-native.md",
+          "sourceDigest": "sha256:ab77641ac4f6666fa0d80ee36d4fdf2332dbd2f1bc5d0106cd69fb9446f670e9",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/gm-native.md",
+          "digest": "sha256:77f5014064540bdb636ff3f1c18d0a1404f6800414fbad683175fac842f089e9",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "issue-reader",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/issue-reader.md",
+          "sourceDigest": "sha256:c5cf513142027c5ce8dcbea7dfacadf3fd23fbd5e748c9fc999dd1fd00902358",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/issue-reader.md",
+          "digest": "sha256:174556f7405ed2b14233f965f7387f63ca38b9e557a6662c5771032de338c061",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "oc-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "native",
+          "sourcePath": ".opencode/agents/oc-native.md",
+          "sourceDigest": "sha256:5951d5e75a6de4429a8f579c654bb4589d12db75deba1844913b6c4b421cf5d0",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/oc-native.md",
+          "digest": "sha256:5951d5e75a6de4429a8f579c654bb4589d12db75deba1844913b6c4b421cf5d0",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "omp-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".omp/agents/omp-native.md",
+          "sourceDigest": "sha256:f0e791fe64b2035a1eab0136e814e470e570bd86b6b2a69dffdf2b3661a0611a",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/omp-native.md",
+          "digest": "sha256:c60c0ce441f7b79c27062028e59f10f8172e8b55458744d8257a190808ddd331",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "planner",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "agents/planner.md",
+          "sourceDigest": "sha256:6e67f8119738e58371e61f662e332d971058192a6dc99791e7c19094691376f2",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/planner.md",
+          "digest": "sha256:ab1b0cdd6f27e0f1e45c169d0ee8f219385d57ee9e53aee7962edaf959de7b23",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "researcher",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "agents/researcher/AGENT.md",
+          "sourceDigest": "sha256:dd13ee557398466dd574705483ce5697cfb0b3352c2ef6e815509612dc32282b",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/researcher.md",
+          "digest": "sha256:dc0efd3e8c1d9d2ba25920384aa0717785dc606950562c972aac8f062b80bf76",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "reviewer",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/reviewer.md",
+          "sourceDigest": "sha256:a9c4c55855bdcff3eb2fa4bd246ff94f4de189219525d61086c93cac478e5070",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/reviewer.md",
+          "digest": "sha256:acae1eea87efd5f2a1973c5a6f92ea7720631cfdd451d6183dcf329e3d2db9ab",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "root-helper",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "AGENT.md",
+          "sourceDigest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/root-helper.md",
+          "digest": "sha256:7ae604646386426c1e7ff3226345d0a5b9d54be37429882173072b975ddfee78",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+      },
+      "agent": "tagged",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "agents/tagged.md",
+          "sourceDigest": "sha256:c2e1fd2aa97993885900bee70813de29afe532bcc2833e7742ec2a604eceadf9",
+          "converter": "opencode/v3",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/tagged.md",
+          "digest": "sha256:27e72323fba5fb6dba91c90c3916378ba682739ff9b42f706a180d25103f8654",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

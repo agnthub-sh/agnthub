@@ -1,0 +1,37 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/ambiguous"
+  },
+  "harnesses": [
+    {
+      "id": "codex",
+      "name": "Codex",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "solo",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/solo.toml",
+      "variant": "generated",
+      "sourcePath": "agents/solo.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/ambiguous"
+      },
+      "origin": "direct",
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 1
+  }
+}

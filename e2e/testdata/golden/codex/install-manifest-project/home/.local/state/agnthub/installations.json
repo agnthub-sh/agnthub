@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.agents/skills/e2e-skill",
+      "digest": "sha256:9e1273b9f24ac263d489209397035669c0cb9f0ce2a21e1e767ed08c17a65064",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project .agents/skills",
+      "source": "git:localhost:8443/skills.git",
+      "agent": "",
+      "skill": "e2e-skill",
+      "origin": "dependency",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/codex-helper.toml",
+      "digest": "sha256:9fbc05be9d76978bcd342dfb10c42138c5343fed0585b12f6dfe4ee13fedb096",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/manifest.git",
+      "agent": "codex-helper",
+      "origin": "dependency",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/companion.toml",
+      "digest": "sha256:fca1ae6b7d4fdb1a7650b1772a792b8e6d4ec7ea187a6bca55106fe92706751a",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/companion.git",
+      "agent": "companion",
+      "origin": "dependency",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/helper.toml",
+      "digest": "sha256:5645bf993fe1898678077834fc6b86d110fad89a8d01b31b0d831324e55c1e8f",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/manifest.git",
+      "agent": "helper",
+      "origin": "dependency",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/lead.toml",
+      "digest": "sha256:2b7f6c82ae358ad594ec32e341057b973795ad9fa3d9888cec4ecb081dfa160c",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/manifest.git",
+      "agent": "lead",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

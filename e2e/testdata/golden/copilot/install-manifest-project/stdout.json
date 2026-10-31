@@ -1,0 +1,163 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/manifest.git",
+    "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+  },
+  "harnesses": [
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot CLI",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "skills": [
+    {
+      "skill": "e2e-skill",
+      "source": "localhost:8443/skills.git#v1.0.0",
+      "harness": "copilot",
+      "settings": {},
+      "requirement": ">=1.0.0 <=2.0.0",
+      "requiredBy": [
+        "lead"
+      ],
+      "decision": "install",
+      "path": "/agnthub-e2e/project/.agents/skills/e2e-skill",
+      "location": "project .agents/skills",
+      "scope": "project",
+      "version": "1.4.0",
+      "revision": "21f36aec981afd5f3a2141ea1d52b9ca2f691f48",
+      "target": "github-copilot",
+      "command": [
+        "skills",
+        "add",
+        "https://localhost:8443/skills.git#21f36aec981afd5f3a2141ea1d52b9ca2f691f48",
+        "--skill",
+        "e2e-skill",
+        "--agent",
+        "github-copilot",
+        "--yes"
+      ]
+    }
+  ],
+  "skillRuns": [
+    {
+      "skill": "e2e-skill",
+      "path": "/agnthub-e2e/project/.agents/skills/e2e-skill",
+      "command": [
+        "skills",
+        "add",
+        "https://localhost:8443/skills.git#21f36aec981afd5f3a2141ea1d52b9ca2f691f48",
+        "--skill",
+        "e2e-skill",
+        "--agent",
+        "github-copilot",
+        "--yes"
+      ],
+      "harnesses": [
+        "copilot"
+      ],
+      "exitCode": 0,
+      "output": "<skill installer output>"
+    }
+  ],
+  "skillEffects": [
+    {
+      "path": "/agnthub-e2e/project/.agents/skills/e2e-skill",
+      "change": "created"
+    },
+    {
+      "path": "/agnthub-e2e/project/skills-lock.json",
+      "change": "created"
+    }
+  ],
+  "items": [
+    {
+      "agent": "lead",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/lead.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/lead/AGENT.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "native-only",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/native-only.agent.md",
+      "variant": "generated",
+      "sourcePath": "native/claude/native-only.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "helper",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/helper.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/helper.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+      },
+      "origin": "dependency",
+      "requiredBy": [
+        "lead"
+      ],
+      "action": "create"
+    },
+    {
+      "agent": "companion",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/companion.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/companion.git",
+        "ref": "v1",
+        "revision": "d44d9ad4d7b9f161791d47d5d820ec931baea53f"
+      },
+      "origin": "dependency",
+      "requiredBy": [
+        "lead"
+      ],
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 4
+  },
+  "skillSummary": {
+    "install": 1
+  }
+}

@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/layouts --agent cx-native --agent dual --agent fixer --agent planner --agent researcher --agent root-helper --agent tagged --harness codex --yes --json
+exit status: 0

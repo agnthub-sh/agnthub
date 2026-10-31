@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/layouts --agent guarded --agent modelled --harness omp --yes --json
+exit status: 1

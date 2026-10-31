@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/layouts --agent broken --agent cx-native --agent guarded --agent issue-reader --agent modelled --agent reviewer --harness cursor --yes --json
+exit status: 1
