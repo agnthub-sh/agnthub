@@ -140,6 +140,33 @@ agents:
 	}
 }
 
+func TestManifestKeepsInvalidVariantsWithoutBlockingTheAgent(t *testing.T) {
+	inv := discover(t, memTree(t, map[string]string{
+		"agnthub.yaml": `schemaVersion: 1
+agents:
+  reviewer:
+    portable: agents/reviewer.md
+    variants:
+      claude:
+        path: native/claude.md
+`,
+		"agents/reviewer.md": portable("reviewer", "Reviews"),
+		"native/claude.md":   "---\nname: reviewer\n---\nno description\n",
+	}))
+	reviewer := inv.Find("reviewer")
+	if reviewer == nil || reviewer.Variant(agent.Claude) == nil {
+		t.Fatalf("the invalid declared Variant must stay reviewer's Variant: %+v", inv.Agents)
+	}
+	if len(inv.ProblemsFor("reviewer")) != 0 {
+		t.Errorf("an invalid declared Variant must not block selecting the agent "+
+			"(or resolving it as a dependency) for other Harnesses: %v",
+			inv.ProblemsFor("reviewer"))
+	}
+	if len(inv.Problems) != 1 {
+		t.Errorf("the invalid Variant is still reported, got %v", inv.Problems)
+	}
+}
+
 func TestManifestRejectsUnsafeOrUnknownContent(t *testing.T) {
 	cases := map[string]map[string]string{
 		"traversal": {

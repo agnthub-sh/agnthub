@@ -214,9 +214,14 @@ func (s *scanner) manifestVariant(def *agent.Definition, name string, spec manif
 		identity, identifyErr := adapter.Identify(cleaned, raw)
 		switch {
 		case identifyErr != nil:
+			// Like an invalid native file without a manifest, the Variant stays
+			// the agent's: the plan refuses its Harness instead of converting,
+			// and the agent remains selectable (and resolvable as a dependency)
+			// for every other Harness.
 			s.problems = append(s.problems, Problem{
-				Agent: def.ID, Path: cleaned,
-				Message: "invalid explicit variant: " + identifyErr.Error(),
+				Path: cleaned,
+				Message: fmt.Sprintf("invalid %s variant of %s: %v",
+					harnessID, def.ID, identifyErr),
 			})
 		case def.Description == "":
 			def.Description = identity.Description
