@@ -15,6 +15,61 @@
   ],
   "items": [
     {
+      "agent": "backgrounder",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant runs the agent in the background, which codex cannot express"
+    },
+    {
+      "agent": "bom",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/bom.toml",
+      "variant": "generated",
+      "sourcePath": "agents/bom.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "bom-native",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes search, edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
+      "agent": "bounded",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant limits the agent to 5 turns, which codex cannot express"
+    },
+    {
       "agent": "broken",
       "harness": "codex",
       "settings": {},
@@ -26,6 +81,35 @@
       "origin": "direct",
       "action": "invalid",
       "reason": "invalid codex variant .codex/agents/broken.toml: \"sandbox_mode\" is parent session configuration that a Codex agent file cannot override"
+    },
+    {
+      "agent": "colon",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/colon.toml",
+      "variant": "generated",
+      "sourcePath": "agents/colon.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "colon-native",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
       "agent": "cu-native",
@@ -55,6 +139,19 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "delegator",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
       "agent": "dual",
@@ -107,6 +204,45 @@
       "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
+      "agent": "gh-plain",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
+      "agent": "gm-camel",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "cannot convert: invalid gemini variant .gemini/agents/gm-camel.md: Gemini CLI rejects \"mcpServers\" in a local agent"
+    },
+    {
+      "agent": "gm-mcp",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its gemini variant declares mcp_servers (MCP servers scoped to the agent), which codex cannot express"
+    },
+    {
       "agent": "gm-native",
       "harness": "codex",
       "settings": {},
@@ -146,6 +282,35 @@
       "reason": "it excludes search, edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
+      "agent": "literal",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/literal.toml",
+      "variant": "generated",
+      "sourcePath": "agents/literal.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "mcp-wide",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes search, edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
       "agent": "modelled",
       "harness": "codex",
       "settings": {},
@@ -157,6 +322,25 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "portable definition declares \"model\", which has no verified equivalent; author a native codex variant"
+    },
+    {
+      "agent": "no-shell",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/no-shell.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/no-shell.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
     },
     {
       "agent": "oc-native",
@@ -263,11 +447,24 @@
       "notes": [
         "omitted descriptive metadata: author, tags, version"
       ]
+    },
+    {
+      "agent": "web-searcher",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes search, edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     }
   ],
   "summary": {
-    "create": 7,
-    "incompatible": 9,
+    "create": 11,
+    "incompatible": 19,
     "invalid": 1
   }
 }

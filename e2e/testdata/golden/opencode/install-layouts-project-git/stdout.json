@@ -4,7 +4,7 @@
   "source": {
     "kind": "git",
     "locator": "localhost:8443/layouts.git",
-    "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+    "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
   },
   "harnesses": [
     {
@@ -15,6 +15,100 @@
     }
   ],
   "items": [
+    {
+      "agent": "bom",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/bom.md",
+      "variant": "generated",
+      "sourcePath": "agents/bom.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "bom-native",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/bom-native.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/bom-native.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "bounded",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/bounded.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/bounded.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "colon",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/colon.md",
+      "variant": "generated",
+      "sourcePath": "agents/colon.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "colon-native",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/colon-native.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/colon-native.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
     {
       "agent": "cu-native",
       "harness": "opencode",
@@ -27,7 +121,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -48,12 +142,32 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the codex variant"
+      ]
+    },
+    {
+      "agent": "delegator",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/delegator.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/delegator.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
       ]
     },
     {
@@ -68,7 +182,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -85,7 +199,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -105,7 +219,27 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant"
+      ]
+    },
+    {
+      "agent": "gh-plain",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/gh-plain.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-plain.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -125,7 +259,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -145,7 +279,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -153,6 +287,65 @@
         "converted from the claude variant",
         "needs MCP servers configured for opencode under these names: github; agnthub does not install or configure MCP servers",
         "excludes web fetch, but OpenCode reaches MCP tools through its Code Mode execute tool, which can also make HTTP requests"
+      ]
+    },
+    {
+      "agent": "literal",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/literal.md",
+      "variant": "generated",
+      "sourcePath": "agents/literal.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "mcp-wide",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/mcp-wide.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/mcp-wide.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "needs MCP servers configured for opencode under these names: github; agnthub does not install or configure MCP servers",
+        "excludes web fetch, but OpenCode reaches MCP tools through its Code Mode execute tool, which can also make HTTP requests"
+      ]
+    },
+    {
+      "agent": "no-shell",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/no-shell.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/no-shell.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
       ]
     },
     {
@@ -167,7 +360,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -184,7 +377,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -204,7 +397,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -221,7 +414,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -238,7 +431,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -260,7 +453,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -277,16 +470,36 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "omitted descriptive metadata: author, tags, version"
       ]
+    },
+    {
+      "agent": "web-searcher",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/web-searcher.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/web-searcher.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
     }
   ],
   "summary": {
-    "create": 14
+    "create": 25
   }
 }

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/drifter.md",
+      "digest": "sha256:01ba7b1c547b2e5f2bcd7b36198905e6aab5634893233019ce95c672e68d3ee9",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/evolving.git",
+      "agent": "drifter",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

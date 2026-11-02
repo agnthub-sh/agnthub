@@ -1,0 +1,177 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/companion"
+  },
+  "harnesses": [
+    {
+      "id": "claude",
+      "name": "Claude Code",
+      "detected": false,
+      "settings": []
+    },
+    {
+      "id": "opencode",
+      "name": "OpenCode",
+      "detected": false,
+      "settings": []
+    },
+    {
+      "id": "codex",
+      "name": "Codex",
+      "detected": false,
+      "settings": []
+    },
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot CLI",
+      "detected": false,
+      "settings": []
+    },
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "detected": false,
+      "settings": []
+    },
+    {
+      "id": "gemini",
+      "name": "Gemini CLI",
+      "detected": false,
+      "settings": []
+    },
+    {
+      "id": "omp",
+      "name": "omp",
+      "detected": true,
+      "settings": [
+        {
+          "key": "profile",
+          "value": "default",
+          "source": "native default"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "agent": "companion",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/companion.md",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "companion",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/companion.md",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "companion",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/companion.toml",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "companion",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/companion.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "companion",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/companion.md",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "companion",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/companion.md",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "companion",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/companion.md",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "origin": "direct",
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 7
+  }
+}

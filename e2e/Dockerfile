@@ -38,9 +38,13 @@ RUN apt-get update \
 ENV NO_UPDATE_NOTIFIER=1 NPM_CONFIG_UPDATE_NOTIFIER=false NPM_CONFIG_FUND=false
 RUN npm install -g "skills@${SKILLS_VERSION}"
 
+# Each image holds one Harness; the e2e suite asserts that no other Harness's CLI,
+# installation or configuration is present (isolation_test.go), so the version
+# checks below remove whatever configuration they created.
 FROM base AS harness-claude
 ARG CLAUDE_VERSION
-RUN npm install -g "@anthropic-ai/claude-code@${CLAUDE_VERSION}" && claude --version
+RUN npm install -g "@anthropic-ai/claude-code@${CLAUDE_VERSION}" && claude --version \
+ && rm -rf /root/.claude /root/.claude.json
 
 FROM base AS harness-opencode
 ARG OPENCODE_VERSION
@@ -49,20 +53,25 @@ RUN set -eux; \
     if [ "$OPENCODE_VERSION" = latest ]; then set --; else set -- --version "$OPENCODE_VERSION"; fi; \
     curl -fsSL https://opencode.ai/v2/install | HOME=/opt/opencode bash -s -- --no-modify-path "$@"; \
     ln -s /opt/opencode/.opencode/bin/opencode /usr/local/bin/opencode; \
-    opencode --version
+    opencode --version; \
+    rm -rf /root/.config/opencode /root/.local/share/opencode /root/.local/state/opencode \
+      /root/.cache/opencode
 
 FROM base AS harness-codex
 ARG CODEX_VERSION
-RUN npm install -g "@openai/codex@${CODEX_VERSION}" && codex --version
+RUN npm install -g "@openai/codex@${CODEX_VERSION}" && codex --version && rm -rf /root/.codex
 
 FROM base AS harness-copilot
 ARG COPILOT_VERSION
-RUN npm install -g "@github/copilot@${COPILOT_VERSION}" && copilot --version
+RUN npm install -g "@github/copilot@${COPILOT_VERSION}" && copilot --version \
+ && rm -rf /root/.copilot /root/.cache/copilot
 
 FROM base AS harness-cursor
 ARG CURSOR_VERSION
 # A pinned version downloads that build directly (as the official installer does);
-# "latest" runs the official installer.
+# "latest" runs the official installer. The same release's agent-cli-local build
+# (Cursor Private Inference) goes beside it: it runs without a Cursor login against
+# an OpenAI-compatible endpoint, which the native check needs (see native_test.go).
 RUN set -eux; \
     case "$(uname -m)" in x86_64) arch=x64 ;; aarch64) arch=arm64 ;; *) exit 1 ;; esac; \
     if [ "$CURSOR_VERSION" = latest ]; then \
@@ -74,11 +83,17 @@ RUN set -eux; \
         | tar --strip-components=1 -xzf - -C "$dir"; \
     fi; \
     ln -s "$dir/cursor-agent" /usr/local/bin/cursor-agent; \
-    cursor-agent --version
+    version="$(cursor-agent --version)"; \
+    mkdir -p /opt/cursor-local; \
+    curl -fsSL "https://downloads.cursor.com/lab/$version/linux/$arch/agent-cli-local-package.tar.gz" \
+      | tar --strip-components=1 -xzf - -C /opt/cursor-local; \
+    ln -s /opt/cursor-local/cursor-agent-local /usr/local/bin/cursor-agent-local; \
+    cursor-agent-local --version; \
+    rm -rf /root/.cursor /root/.config/cursor
 
 FROM base AS harness-gemini
 ARG GEMINI_VERSION
-RUN npm install -g "@google/gemini-cli@${GEMINI_VERSION}" && gemini --version
+RUN npm install -g "@google/gemini-cli@${GEMINI_VERSION}" && gemini --version && rm -rf /root/.gemini
 
 FROM base AS harness-omp
 ARG BUN_VERSION
@@ -86,7 +101,8 @@ ARG OMP_VERSION
 ENV BUN_INSTALL=/opt/bun PATH=/opt/bun/bin:$PATH
 RUN npm install -g "bun@${BUN_VERSION}" \
  && bun install -g "@oh-my-pi/pi-coding-agent@${OMP_VERSION}" \
- && omp --version
+ && omp --version \
+ && rm -rf /root/.omp
 
 # --- one runnable image per Harness ---------------------------------------------------
 FROM harness-claude AS e2e-claude

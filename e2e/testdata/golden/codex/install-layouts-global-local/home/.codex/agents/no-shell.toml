@@ -1,0 +1,8 @@
+name = 'no-shell'
+description = 'May use every tool except the shell.'
+developer_instructions = """
+Work without running commands.
+"""
+
+[features]
+shell_tool = false

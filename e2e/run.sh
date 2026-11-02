@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Runs the end-to-end suite in Docker, one container per Harness.
 #
-#   e2e/run.sh [-update] [harness...]      (default: every Harness)
+#   e2e/run.sh [-update | -live] [harness...]      (default: every Harness)
 #
 # Each Harness image (e2e/Dockerfile, target e2e-<harness>) holds that Harness's
 # CLI at the version pinned in the Dockerfile, plus agnthub and the e2e test
@@ -9,10 +9,17 @@
 # fixture repositories are served over HTTPS on its loopback interface and every
 # Harness check is offline. testdata is mounted read-only unless -update.
 #
+# -live runs the live tier instead (TestLive): with the network on, it installs
+# the live fixture and runs the installed agent with a real model. Each Harness
+# needs its secret in the environment (OPENROUTER_API_KEY, GEMINI_API_KEY or
+# CURSOR_API_KEY, see e2e/COVERAGE.md); without it that Harness is skipped.
+# Secrets are passed by name (docker run -e NAME), never on a command line.
+#
 # Environment:
 #   E2E_BUILD_ARGS  extra docker build arguments, e.g.
 #                   "--build-arg CLAUDE_VERSION=latest --pull --no-cache"
 #   E2E_LOG_DIR     also write each Harness's test output to <dir>/<harness>.log
+#   E2E_LIVE_MODEL  (with -live) the model every Harness uses instead of its default
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
@@ -20,11 +27,22 @@ all=(claude opencode codex copilot cursor gemini omp)
 
 update=()
 mount=ro
-if [[ "${1:-}" == "-update" ]]; then
+run=(--network none)
+tests=()
+live=
+case "${1:-}" in
+-update)
 	update=(-update)
 	mount=rw
 	shift
-fi
+	;;
+-live)
+	run=(-e E2E_LIVE=1 -e E2E_LIVE_MODEL -e OPENROUTER_API_KEY -e GEMINI_API_KEY -e CURSOR_API_KEY)
+	tests=(-test.run '^TestLive$')
+	live=1
+	shift
+	;;
+esac
 harnesses=("$@")
 if [[ ${#harnesses[@]} -eq 0 ]]; then
 	harnesses=("${all[@]}")
@@ -54,18 +72,23 @@ for harness in "${harnesses[@]}"; do
 		continue
 	fi
 	endgroup
-	log=/dev/null
-	if [[ -n "${E2E_LOG_DIR:-}" ]]; then
-		mkdir -p "${E2E_LOG_DIR}"
-		log="${E2E_LOG_DIR}/${harness}.log"
-	fi
-	if docker run --rm --network none \
+	log="$(mktemp)"
+	if docker run --rm "${run[@]}" \
 		--volume "${PWD}/e2e/testdata:/e2e/testdata:${mount}" \
-		"${image}" -test.v -test.count=1 "${update[@]}" 2>&1 | tee "${log}"; then
+		"${image}" -test.v -test.count=1 "${tests[@]}" "${update[@]}" 2>&1 | tee "${log}"; then
 		outcome[$harness]="PASS"
+		if [[ -n "${live}" ]] && grep -q -- '--- SKIP: TestLive' "${log}"; then
+			outcome[$harness]="SKIP (its live-tier secret is not set)"
+		fi
 	else
 		outcome[$harness]="FAIL"
 		failed=1
+	fi
+	if [[ -n "${E2E_LOG_DIR:-}" ]]; then
+		mkdir -p "${E2E_LOG_DIR}"
+		mv "${log}" "${E2E_LOG_DIR}/${harness}.log"
+	else
+		rm -f "${log}"
 	fi
 done
 

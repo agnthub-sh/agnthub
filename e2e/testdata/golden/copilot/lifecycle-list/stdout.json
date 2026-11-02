@@ -1,0 +1,23 @@
+[
+  {
+    "agent": "drifter",
+    "source": {
+      "kind": "git",
+      "locator": "localhost:8443/evolving.git",
+      "ref": "v1",
+      "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
+    },
+    "origin": "direct",
+    "artifacts": [
+      {
+        "harness": "copilot",
+        "variant": "generated",
+        "path": "/agnthub-e2e/project/.github/agents/drifter.agent.md",
+        "status": "ok",
+        "bindings": [
+          {}
+        ]
+      }
+    ]
+  }
+]

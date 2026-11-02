@@ -72,11 +72,13 @@ func snapshot(t *testing.T) map[string]file {
 	return files
 }
 
-// goldenFiles is what a step's golden directory holds: the command and its exit
-// status and stderr (run.txt), stdout (stdout.json), every file of the project
-// and home trees with its mode (files.txt) and each file's exact bytes.
+// goldenFiles is what a step's golden directory holds: its setup actions, then
+// the command with its exit status and stderr (run.txt), stdout (stdout.json),
+// every file of the project and home trees with its mode (files.txt) and each
+// file's exact bytes.
 func goldenFiles(env, args []string, res *result) map[string][]byte {
 	var run bytes.Buffer
+	run.Write(res.transcript)
 	fmt.Fprintf(&run, "$ %s\nexit status: %d\n",
 		shellQuote(append(append(slices.Clone(env), "agnthub"), args...)), res.exit)
 	if len(res.stderr) > 0 {
@@ -201,10 +203,16 @@ func lineDiff(golden, actual []byte) string {
 }
 
 // finishGoldens reports (or, with -update, removes) golden directories no step
-// produced, and gives rewritten goldens the owner of the checkout.
+// produced, requires every step stepSpecs declares for this Harness to have run,
+// and gives rewritten goldens the owner of the checkout.
 func (s *suite) finishGoldens(t *testing.T) {
 	t.Helper()
 	if run := flag.Lookup("test.run"); run == nil || run.Value.String() == "" {
+		for name, spec := range stepSpecs {
+			if spec.appliesTo(s.harness) && !slices.Contains(s.ran, name) {
+				t.Errorf("stepSpecs declares %s for %s, but the run skipped it", name, s.harness)
+			}
+		}
 		entries, err := os.ReadDir(s.golden)
 		if err != nil && !os.IsNotExist(err) {
 			t.Fatal(err)

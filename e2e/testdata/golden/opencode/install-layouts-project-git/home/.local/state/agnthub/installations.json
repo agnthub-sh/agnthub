@@ -2,6 +2,66 @@
   "version": 1,
   "records": [
     {
+      "path": "/agnthub-e2e/project/.opencode/agents/bom-native.md",
+      "digest": "sha256:b0f84396deeb5de5e7c3684307c03c9f5d38e7aa6d0f2eb2f2f8e2617424435e",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "bom-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/bom.md",
+      "digest": "sha256:cd74f9e3e63db4abd7603cf089c749003924267863e1f3bb45c8295792d54f2c",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "bom",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/bounded.md",
+      "digest": "sha256:4da5ee1b237e29e3f24e6ad2ec49ecb9df6cf04fd434ed99ba2718a76f3a7239",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "bounded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/colon-native.md",
+      "digest": "sha256:3ee9936e34d741f026cb5e036a3622fb9f8368bc5c21a59c13b6487d3e232e0a",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "colon-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/colon.md",
+      "digest": "sha256:c94dd7fedc12be1a06cf19aab88f1cf4941d295899c627c7f74b4ff0da104794",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "colon",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.opencode/agents/cu-native.md",
       "digest": "sha256:13cbfe463cc8e78c41f7443b4a9e8e8acee8fd47a939300d8647d64a4e091809",
       "harness": "opencode",
@@ -22,6 +82,18 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "cx-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/delegator.md",
+      "digest": "sha256:0386679b684d067907687784d9cb94b35f4f9d6de966a64385edfa089a240511",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "delegator",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -62,6 +134,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.opencode/agents/gh-plain.md",
+      "digest": "sha256:61897df0355e3f08a5ff72eb28151e74e4036191fe2ef96e864eb4bb08ac37ca",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "gh-plain",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.opencode/agents/gm-native.md",
       "digest": "sha256:77f5014064540bdb636ff3f1c18d0a1404f6800414fbad683175fac842f089e9",
       "harness": "opencode",
@@ -82,6 +166,42 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "issue-reader",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/literal.md",
+      "digest": "sha256:28b8d7a0e5ad94158144be7da53cc4a77221bc62f82c37f84122f41e0d23743d",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "literal",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/mcp-wide.md",
+      "digest": "sha256:5a61db0c986b368f8865eaf771b314c418442af0f811db860f877eedee49fe4e",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "mcp-wide",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/no-shell.md",
+      "digest": "sha256:668b6a941babae2672e7ad60cd840aa14deeb45d1f6a29a13e49519cc59bc358",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "no-shell",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -166,6 +286,18 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/web-searcher.md",
+      "digest": "sha256:9ea49a14f63c36f7edf42fb90122f6f8aae62211e8171a557cd1eea4255f9d13",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "web-searcher",
       "origin": "direct",
       "installedAt": "<time>"
     }

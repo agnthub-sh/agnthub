@@ -1,10 +1,10 @@
 {
-  "status": "planned",
+  "status": "refused",
   "scope": "project",
   "source": {
     "kind": "git",
     "locator": "localhost:8443/manifest.git",
-    "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+    "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
   },
   "harnesses": [
     {
@@ -56,7 +56,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+        "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
       },
       "origin": "direct",
       "action": "create"
@@ -73,7 +73,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+        "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
       },
       "origin": "direct",
       "action": "create"
@@ -90,7 +90,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+        "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
       },
       "origin": "direct",
       "action": "create"
@@ -107,10 +107,24 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+        "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "strict",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
+      },
+      "origin": "direct",
+      "action": "invalid",
+      "reason": "invalid claude variant native/claude/strict.md: native/claude/strict.md: frontmatter requires a description"
     },
     {
       "agent": "companion",
@@ -125,7 +139,7 @@
         "kind": "git",
         "locator": "localhost:8443/companion.git",
         "ref": "v1",
-        "revision": "d44d9ad4d7b9f161791d47d5d820ec931baea53f"
+        "revision": "7baafb2b236dce93aac4d851eb49196b5ff5c534"
       },
       "origin": "dependency",
       "requiredBy": [
@@ -135,7 +149,8 @@
     }
   ],
   "summary": {
-    "create": 5
+    "create": 5,
+    "invalid": 1
   },
   "skillSummary": {
     "install": 1

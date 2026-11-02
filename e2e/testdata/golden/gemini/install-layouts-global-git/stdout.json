@@ -5,7 +5,7 @@
     "kind": "git",
     "locator": "localhost:8443/layouts.git",
     "ref": "v1.0.0",
-    "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+    "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
   },
   "harnesses": [
     {
@@ -16,6 +16,105 @@
     }
   ],
   "items": [
+    {
+      "agent": "bom",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/bom.md",
+      "variant": "generated",
+      "sourcePath": "agents/bom.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "bom-native",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/bom-native.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/bom-native.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "bounded",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/bounded.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/bounded.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "colon",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/colon.md",
+      "variant": "generated",
+      "sourcePath": "agents/colon.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "colon-native",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/colon-native.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/colon-native.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
     {
       "agent": "cu-native",
       "harness": "gemini",
@@ -29,7 +128,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -51,7 +150,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -72,7 +171,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -90,7 +189,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -111,12 +210,54 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the copilot variant"
+      ]
+    },
+    {
+      "agent": "gh-plain",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/gh-plain.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-plain.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant"
+      ]
+    },
+    {
+      "agent": "gm-mcp",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/gm-mcp.md",
+      "variant": "native",
+      "sourcePath": ".gemini/agents/gm-mcp.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "declares mcp_servers, which runs when the agent is used"
       ]
     },
     {
@@ -132,7 +273,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -150,13 +291,74 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the claude variant",
         "needs MCP servers configured for gemini under these names: github; agnthub does not install or configure MCP servers"
+      ]
+    },
+    {
+      "agent": "literal",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/literal.md",
+      "variant": "generated",
+      "sourcePath": "agents/literal.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "mcp-wide",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/mcp-wide.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/mcp-wide.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "needs MCP servers configured for gemini under these names: github; agnthub does not install or configure MCP servers"
+      ]
+    },
+    {
+      "agent": "no-shell",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/no-shell.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/no-shell.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
       ]
     },
     {
@@ -172,7 +374,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -193,7 +395,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -214,7 +416,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -232,7 +434,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -250,7 +452,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -273,7 +475,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -291,16 +493,37 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "omitted descriptive metadata: author, tags, version"
       ]
+    },
+    {
+      "agent": "web-searcher",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/web-searcher.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/web-searcher.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
     }
   ],
   "summary": {
-    "create": 14
+    "create": 25
   }
 }

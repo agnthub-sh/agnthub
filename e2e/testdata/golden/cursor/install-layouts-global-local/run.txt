@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/layouts --agent backgrounder --agent bom --agent colon --agent colon-native --agent cu-native --agent delegator --agent dual --agent fixer --agent gh-native --agent gh-plain --agent gm-native --agent literal --agent oc-native --agent omp-native --agent planner --agent researcher --agent root-helper --agent tagged --harness cursor --global --yes --json
+exit status: 0

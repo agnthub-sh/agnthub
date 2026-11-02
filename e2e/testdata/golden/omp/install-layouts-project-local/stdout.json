@@ -21,22 +21,86 @@
   ],
   "items": [
     {
-      "agent": "broken",
+      "agent": "bom",
       "harness": "omp",
       "settings": {},
       "effectiveSettings": {
         "profile": "default"
       },
       "destination": "project, shared by every omp profile; verify with default profile",
-      "path": "/agnthub-e2e/project/.omp/agents/broken.md",
+      "path": "/agnthub-e2e/project/.omp/agents/bom.md",
       "variant": "generated",
-      "sourcePath": "agents/broken.md",
+      "sourcePath": "agents/bom.md",
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "bom-native",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/bom-native.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/bom-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
+    },
+    {
+      "agent": "colon",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/colon.md",
+      "variant": "generated",
+      "sourcePath": "agents/colon.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "colon-native",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/colon-native.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/colon-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
     },
     {
       "agent": "cu-native",
@@ -80,6 +144,29 @@
       "action": "create",
       "notes": [
         "converted from the codex variant"
+      ]
+    },
+    {
+      "agent": "delegator",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/delegator.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/delegator.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
       ]
     },
     {
@@ -147,6 +234,29 @@
       ]
     },
     {
+      "agent": "gh-plain",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/gh-plain.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-plain.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
+    },
+    {
       "agent": "gm-native",
       "harness": "omp",
       "settings": {},
@@ -191,6 +301,69 @@
         "excludes web fetch, but omp's read tool also fetches URLs",
         "omp keeps MCP, extension and custom tools available to agents with a tools list",
         "needs MCP servers configured for omp under these names: github; agnthub does not install or configure MCP servers"
+      ]
+    },
+    {
+      "agent": "literal",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/literal.md",
+      "variant": "generated",
+      "sourcePath": "agents/literal.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "mcp-wide",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/mcp-wide.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/mcp-wide.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list",
+        "needs MCP servers configured for omp under these names: github; agnthub does not install or configure MCP servers"
+      ]
+    },
+    {
+      "agent": "no-shell",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/no-shell.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/no-shell.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
       ]
     },
     {
@@ -334,9 +507,31 @@
       "notes": [
         "omitted descriptive metadata: author, tags, version"
       ]
+    },
+    {
+      "agent": "web-searcher",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/web-searcher.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/web-searcher.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
     }
   ],
   "summary": {
-    "create": 15
+    "create": 24
   }
 }

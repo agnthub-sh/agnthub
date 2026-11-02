@@ -1,0 +1,85 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "",
+    "locator": ""
+  },
+  "harnesses": [
+    {
+      "id": "omp",
+      "name": "omp",
+      "detected": true,
+      "settings": [
+        {
+          "key": "profile",
+          "value": "default",
+          "source": "recorded binding"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "agent": "drifter",
+      "harness": "omp",
+      "settings": {
+        "profile": "default"
+      },
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/drifter.md",
+      "variant": "generated",
+      "sourcePath": "agents/drifter.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/evolving.git",
+        "ref": "v1",
+        "revision": "c46127b4737635d713c65463fd0376cf617e9494"
+      },
+      "origin": "direct",
+      "action": "replace"
+    }
+  ],
+  "summary": {
+    "replace": 1
+  },
+  "changes": {
+    "command": "update",
+    "lock": "agnthub-lock.json",
+    "agents": [
+      {
+        "agent": "drifter",
+        "source": {
+          "kind": "git",
+          "locator": "localhost:8443/evolving.git",
+          "ref": "v1",
+          "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
+        },
+        "origin": "direct",
+        "status": "update-available",
+        "revision": "c46127b4737635d713c65463fd0376cf617e9494",
+        "drift": false,
+        "artifacts": [
+          {
+            "harness": "omp",
+            "path": "/agnthub-e2e/project/.omp/agents/drifter.md",
+            "variant": "generated",
+            "change": "content",
+            "local": "ok",
+            "bindings": [
+              {
+                "profile": "default"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "summary": {
+      "update-available": 1
+    }
+  }
+}

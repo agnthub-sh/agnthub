@@ -1,0 +1,477 @@
+{
+  "status": "applied",
+  "scope": "global",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/layouts"
+  },
+  "harnesses": [
+    {
+      "id": "gemini",
+      "name": "Gemini CLI",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "bom",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/bom.md",
+      "variant": "generated",
+      "sourcePath": "agents/bom.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "bom-native",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/bom-native.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/bom-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "bounded",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/bounded.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/bounded.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "colon",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/colon.md",
+      "variant": "generated",
+      "sourcePath": "agents/colon.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "colon-native",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/colon-native.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/colon-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "cu-native",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/cu-native.md",
+      "variant": "generated",
+      "sourcePath": ".cursor/agents/cu-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the cursor variant",
+        "Cursor readonly: converted without edits, shell, MCP tools or delegation"
+      ]
+    },
+    {
+      "agent": "cx-native",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/cx-native.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-native.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant"
+      ]
+    },
+    {
+      "agent": "dual",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/dual.md",
+      "variant": "generated",
+      "sourcePath": "agents/dual.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "fixer",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/fixer.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/team/fixer.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "gh-native",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/gh-native.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-native.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant"
+      ]
+    },
+    {
+      "agent": "gh-plain",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/gh-plain.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-plain.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant"
+      ]
+    },
+    {
+      "agent": "gm-mcp",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/gm-mcp.md",
+      "variant": "native",
+      "sourcePath": ".gemini/agents/gm-mcp.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "declares mcp_servers, which runs when the agent is used"
+      ]
+    },
+    {
+      "agent": "gm-native",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/gm-native.md",
+      "variant": "native",
+      "sourcePath": ".gemini/agents/gm-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "issue-reader",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/issue-reader.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/issue-reader.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "needs MCP servers configured for gemini under these names: github; agnthub does not install or configure MCP servers"
+      ]
+    },
+    {
+      "agent": "literal",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/literal.md",
+      "variant": "generated",
+      "sourcePath": "agents/literal.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "mcp-wide",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/mcp-wide.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/mcp-wide.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "needs MCP servers configured for gemini under these names: github; agnthub does not install or configure MCP servers"
+      ]
+    },
+    {
+      "agent": "no-shell",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/no-shell.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/no-shell.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "oc-native",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/oc-native.md",
+      "variant": "generated",
+      "sourcePath": ".opencode/agents/oc-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the opencode variant"
+      ]
+    },
+    {
+      "agent": "omp-native",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/omp-native.md",
+      "variant": "generated",
+      "sourcePath": ".omp/agents/omp-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the omp variant"
+      ]
+    },
+    {
+      "agent": "planner",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/planner.md",
+      "variant": "generated",
+      "sourcePath": "agents/planner.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "researcher",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/researcher.md",
+      "variant": "generated",
+      "sourcePath": "agents/researcher/AGENT.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "reviewer",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/reviewer.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/reviewer.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted color: cosmetic",
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model"
+      ]
+    },
+    {
+      "agent": "root-helper",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/root-helper.md",
+      "variant": "generated",
+      "sourcePath": "AGENT.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "tagged",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/tagged.md",
+      "variant": "generated",
+      "sourcePath": "agents/tagged.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted descriptive metadata: author, tags, version"
+      ]
+    },
+    {
+      "agent": "web-searcher",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/web-searcher.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/web-searcher.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    }
+  ],
+  "summary": {
+    "create": 25
+  }
+}

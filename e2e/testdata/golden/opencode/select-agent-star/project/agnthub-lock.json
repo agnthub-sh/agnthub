@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "agent": "companion",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "agents/companion.md",
+          "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+          "converter": "opencode/v3",
+          "path": ".opencode/agents/companion.md",
+          "digest": "sha256:7d3f9a795bad13166e76e115d6e8f9e5aaf4ebdad9ab62ebb62bc9cb57dcf987",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "agent": "sidekick",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "agents/sidekick.md",
+          "sourceDigest": "sha256:47843ea71bee050cacb41e460bb1b0f57fac11dc56b53318c5fd9273d2835506",
+          "converter": "opencode/v3",
+          "path": ".opencode/agents/sidekick.md",
+          "digest": "sha256:5689662c7e87c3d293b87fbe0f9e9b99d9392f56ff1392539e319746c7648dfe",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

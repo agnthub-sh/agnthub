@@ -21,6 +21,81 @@
   ],
   "items": [
     {
+      "agent": "backgrounder",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant runs the agent in the background, which omp cannot express"
+    },
+    {
+      "agent": "bounded",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant limits the agent to 5 turns, which omp cannot express"
+    },
+    {
+      "agent": "broken",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "invalid",
+      "reason": "invalid omp variant .omp/agents/broken.md: .omp/agents/broken.md: frontmatter requires a description"
+    },
+    {
+      "agent": "gm-camel",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "cannot convert: invalid gemini variant .gemini/agents/gm-camel.md: Gemini CLI rejects \"mcpServers\" in a local agent"
+    },
+    {
+      "agent": "gm-mcp",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its gemini variant declares mcp_servers (MCP servers scoped to the agent), which omp cannot express"
+    },
+    {
       "agent": "guarded",
       "harness": "omp",
       "settings": {},
@@ -52,6 +127,7 @@
     }
   ],
   "summary": {
-    "incompatible": 2
+    "incompatible": 6,
+    "invalid": 1
   }
 }

@@ -1,0 +1,72 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "",
+    "locator": ""
+  },
+  "harnesses": [
+    {
+      "id": "gemini",
+      "name": "Gemini CLI",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "drifter",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/drifter.md",
+      "variant": "generated",
+      "sourcePath": "agents/drifter.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/evolving.git",
+        "ref": "v1",
+        "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
+      },
+      "origin": "direct",
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 1
+  },
+  "changes": {
+    "command": "restore",
+    "lock": "agnthub-lock.json",
+    "agents": [
+      {
+        "agent": "drifter",
+        "source": {
+          "kind": "git",
+          "locator": "localhost:8443/evolving.git",
+          "ref": "v1",
+          "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
+        },
+        "origin": "direct",
+        "status": "up-to-date",
+        "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e",
+        "drift": true,
+        "artifacts": [
+          {
+            "harness": "gemini",
+            "path": "/agnthub-e2e/project/.gemini/agents/drifter.md",
+            "variant": "generated",
+            "change": "unchanged",
+            "local": "missing",
+            "bindings": []
+          }
+        ]
+      }
+    ],
+    "summary": {
+      "drift": 1,
+      "up-to-date": 1
+    }
+  }
+}

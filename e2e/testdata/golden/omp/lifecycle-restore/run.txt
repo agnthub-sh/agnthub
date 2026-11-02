@@ -1,0 +1,14 @@
+$ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness omp --yes
+exit status: 0
+--- stdout
+Installed · project scope · from localhost:8443/evolving.git#v1 @ 5286a739a333
+  Harnesses
+    omp       omp                 detected  profile=default (native default)
+  Agents
+    drifter
+      + create       omp       generated  /agnthub-e2e/project/.omp/agents/drifter.md
+          project, shared by every omp profile; verify with default profile
+  1 create
+# keep only agnthub-lock.json: delete the installed files and the user's ownership records, as in a fresh clone on another machine
+$ agnthub restore --yes --json --extra omp.profile=default
+exit status: 0

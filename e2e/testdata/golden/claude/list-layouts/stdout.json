@@ -3,15 +3,57 @@
   "manifest": false,
   "agents": [
     {
+      "id": "backgrounder",
+      "description": "Always runs in the background.",
+      "variants": {
+        "claude": ".claude/agents/backgrounder.md"
+      }
+    },
+    {
+      "id": "bom",
+      "description": "Portable agent saved with a UTF-8 byte order mark.",
+      "portable": "agents/bom.md",
+      "variants": {}
+    },
+    {
+      "id": "bom-native",
+      "description": "Claude Code agent saved with a UTF-8 byte order mark.",
+      "variants": {
+        "claude": ".claude/agents/bom-native.md"
+      }
+    },
+    {
+      "id": "bounded",
+      "description": "Stops after five turns.",
+      "variants": {
+        "claude": ".claude/agents/bounded.md"
+      }
+    },
+    {
       "id": "broken",
       "description": "Portable core of an agent whose Gemini CLI variant is invalid.",
       "portable": "agents/broken.md",
       "variants": {
+        "claude": ".claude/agents/broken.md",
         "codex": ".codex/agents/broken.toml",
         "copilot": ".github/agents/broken.agent.md",
         "cursor": ".cursor/agents/broken.md",
         "gemini": ".gemini/agents/broken.md",
+        "omp": ".omp/agents/broken.md",
         "opencode": ".opencode/agents/broken.md"
+      }
+    },
+    {
+      "id": "colon",
+      "description": "Reviews code: finds bugs, then explains them",
+      "portable": "agents/colon.md",
+      "variants": {}
+    },
+    {
+      "id": "colon-native",
+      "description": "Claude Code agent with an unquoted colon: still one description",
+      "variants": {
+        "claude": ".claude/agents/colon-native.md"
       }
     },
     {
@@ -26,6 +68,13 @@
       "description": "Codex-native agent without the shell.",
       "variants": {
         "codex": ".codex/agents/cx-native.toml"
+      }
+    },
+    {
+      "id": "delegator",
+      "description": "Reads code and delegates subtasks to other agents.",
+      "variants": {
+        "claude": ".claude/agents/delegator.md"
       }
     },
     {
@@ -52,6 +101,27 @@
       }
     },
     {
+      "id": "gh-plain",
+      "description": "Copilot CLI agent in a plain .md file that reads and searches.",
+      "variants": {
+        "copilot": ".github/agents/gh-plain.md"
+      }
+    },
+    {
+      "id": "gm-camel",
+      "description": "Gemini CLI agent declaring mcpServers, which Gemini CLI rejects.",
+      "variants": {
+        "gemini": ".gemini/agents/gm-camel.md"
+      }
+    },
+    {
+      "id": "gm-mcp",
+      "description": "Gemini CLI agent with its own MCP server and one of its tools.",
+      "variants": {
+        "gemini": ".gemini/agents/gm-mcp.md"
+      }
+    },
+    {
       "id": "gm-native",
       "description": "Gemini CLI native agent that reads and searches.",
       "variants": {
@@ -73,10 +143,30 @@
       }
     },
     {
+      "id": "literal",
+      "description": "Portable agent whose description is a literal block scalar.",
+      "portable": "agents/literal.md",
+      "variants": {}
+    },
+    {
+      "id": "mcp-wide",
+      "description": "Uses every tool of the GitHub MCP server.",
+      "variants": {
+        "claude": ".claude/agents/mcp-wide.md"
+      }
+    },
+    {
       "id": "modelled",
       "description": "Portable agent that pins a model, which no portable target can honor.",
       "portable": "agents/modelled.md",
       "variants": {}
+    },
+    {
+      "id": "no-shell",
+      "description": "May use every tool except the shell.",
+      "variants": {
+        "claude": ".claude/agents/no-shell.md"
+      }
     },
     {
       "id": "oc-native",
@@ -122,12 +212,27 @@
       "description": "Formats changelog entries",
       "portable": "agents/tagged.md",
       "variants": {}
+    },
+    {
+      "id": "web-searcher",
+      "description": "Searches the web and fetches pages.",
+      "variants": {
+        "claude": ".claude/agents/web-searcher.md"
+      }
     }
   ],
   "problems": [
     {
+      "path": ".claude/agents/broken.md",
+      "message": ".claude/agents/broken.md: frontmatter requires a description"
+    },
+    {
       "path": ".github/agents/broken.agent.md",
       "message": ".github/agents/broken.agent.md: handoffs-to is not a Copilot CLI agent field; the CLI would silently ignore it"
+    },
+    {
+      "path": ".omp/agents/broken.md",
+      "message": ".omp/agents/broken.md: frontmatter requires a description"
     },
     {
       "path": ".opencode/agents/broken.md",

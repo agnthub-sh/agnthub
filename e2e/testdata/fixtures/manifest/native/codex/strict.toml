@@ -1,0 +1,4 @@
+name = "strict"
+description = "Codex variant that sets the parent approval policy."
+developer_instructions = "Codex instructions."
+approval_policy = "never"

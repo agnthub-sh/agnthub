@@ -1,0 +1,32 @@
+{
+  "command": "check",
+  "lock": "agnthub-lock.json",
+  "agents": [
+    {
+      "agent": "drifter",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/evolving.git",
+        "ref": "v1",
+        "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
+      },
+      "origin": "direct",
+      "status": "up-to-date",
+      "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e",
+      "drift": false,
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "path": "/agnthub-e2e/project/.github/agents/drifter.agent.md",
+          "variant": "generated",
+          "change": "unchanged",
+          "local": "ok",
+          "bindings": []
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "up-to-date": 1
+  }
+}

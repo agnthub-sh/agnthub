@@ -1,6 +1,6 @@
 {
   "source": "localhost:8443/manifest.git",
-  "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038",
+  "revision": "23ce82da460220450fa388be0be34d10804fa7b0",
   "manifest": true,
   "categories": [
     "software-engineering",
@@ -49,7 +49,42 @@
       "variants": {
         "claude": "native/claude/native-only.md"
       }
+    },
+    {
+      "id": "strict",
+      "description": "Portable core of an agent whose every declared Variant is invalid.",
+      "categories": [
+        "software-engineering",
+        "project-management"
+      ],
+      "portable": "agents/strict.md",
+      "variants": {
+        "claude": "native/claude/strict.md",
+        "codex": "native/codex/strict.toml",
+        "copilot": "native/copilot/strict.agent.md",
+        "cursor": "native/cursor/strict.md",
+        "gemini": "native/gemini/strict.md",
+        "omp": "native/omp/strict.md",
+        "opencode": "native/opencode/strict.md"
+      }
     }
   ],
-  "problems": []
+  "problems": [
+    {
+      "path": "native/claude/strict.md",
+      "message": "invalid claude variant of strict: native/claude/strict.md: frontmatter requires a description"
+    },
+    {
+      "path": "native/copilot/strict.agent.md",
+      "message": "invalid copilot variant of strict: native/copilot/strict.agent.md: infer-from is not a Copilot CLI agent field; the CLI would silently ignore it"
+    },
+    {
+      "path": "native/omp/strict.md",
+      "message": "invalid omp variant of strict: native/omp/strict.md: frontmatter requires a description"
+    },
+    {
+      "path": "native/opencode/strict.md",
+      "message": "invalid opencode variant of strict: native/opencode/strict.md: mode must be primary, subagent or all, got background"
+    }
+  ]
 }

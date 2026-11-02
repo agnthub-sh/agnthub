@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/companion.md",
+      "digest": "sha256:7d3f9a795bad13166e76e115d6e8f9e5aaf4ebdad9ab62ebb62bc9cb57dcf987",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/companion",
+      "agent": "companion",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/sidekick.md",
+      "digest": "sha256:5689662c7e87c3d293b87fbe0f9e9b99d9392f56ff1392539e319746c7648dfe",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/companion",
+      "agent": "sidekick",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

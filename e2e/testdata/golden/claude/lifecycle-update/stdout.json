@@ -1,0 +1,71 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "",
+    "locator": ""
+  },
+  "harnesses": [
+    {
+      "id": "claude",
+      "name": "Claude Code",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "drifter",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/drifter.md",
+      "variant": "generated",
+      "sourcePath": "agents/drifter.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/evolving.git",
+        "ref": "v1",
+        "revision": "c46127b4737635d713c65463fd0376cf617e9494"
+      },
+      "origin": "direct",
+      "action": "replace"
+    }
+  ],
+  "summary": {
+    "replace": 1
+  },
+  "changes": {
+    "command": "update",
+    "lock": "agnthub-lock.json",
+    "agents": [
+      {
+        "agent": "drifter",
+        "source": {
+          "kind": "git",
+          "locator": "localhost:8443/evolving.git",
+          "ref": "v1",
+          "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
+        },
+        "origin": "direct",
+        "status": "update-available",
+        "revision": "c46127b4737635d713c65463fd0376cf617e9494",
+        "drift": false,
+        "artifacts": [
+          {
+            "harness": "claude",
+            "path": "/agnthub-e2e/project/.claude/agents/drifter.md",
+            "variant": "generated",
+            "change": "content",
+            "local": "ok",
+            "bindings": []
+          }
+        ]
+      }
+    ],
+    "summary": {
+      "update-available": 1
+    }
+  }
+}

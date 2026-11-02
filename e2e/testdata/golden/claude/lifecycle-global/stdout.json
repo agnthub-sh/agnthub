@@ -1,0 +1,27 @@
+{
+  "status": "applied",
+  "mode": "remove",
+  "scope": "global",
+  "lock": "/agnthub-e2e/home/.config/agnthub/global-lock.json",
+  "items": [
+    {
+      "kind": "agent",
+      "name": "drifter",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/evolving.git",
+        "ref": "v1",
+        "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
+      },
+      "origin": "direct",
+      "harness": "claude",
+      "settings": {},
+      "path": "/agnthub-e2e/home/.claude/agents/drifter.md",
+      "action": "delete",
+      "result": "removed"
+    }
+  ],
+  "summary": {
+    "removed": 1
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "status": "refused",
+  "scope": "global",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/companion"
+  },
+  "harnesses": [
+    {
+      "id": "omp",
+      "name": "omp",
+      "detected": true,
+      "settings": [
+        {
+          "key": "profile",
+          "value": "work",
+          "source": "explicit"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "agent": "companion",
+      "harness": "omp",
+      "settings": {
+        "profile": "work"
+      },
+      "effectiveSettings": {
+        "profile": "work"
+      },
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "omp profile \"work\" does not exist at /agnthub-e2e/home/.omp/profiles/work; agnthub does not initialize omp profiles (run `omp --profile work` once, or choose another --extra omp.profile)"
+    }
+  ],
+  "summary": {
+    "incompatible": 1
+  }
+}

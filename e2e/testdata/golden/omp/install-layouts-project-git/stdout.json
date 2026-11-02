@@ -4,7 +4,7 @@
   "source": {
     "kind": "git",
     "locator": "localhost:8443/layouts.git",
-    "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+    "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
   },
   "harnesses": [
     {
@@ -22,23 +22,90 @@
   ],
   "items": [
     {
-      "agent": "broken",
+      "agent": "bom",
       "harness": "omp",
       "settings": {},
       "effectiveSettings": {
         "profile": "default"
       },
       "destination": "project, shared by every omp profile; verify with default profile",
-      "path": "/agnthub-e2e/project/.omp/agents/broken.md",
+      "path": "/agnthub-e2e/project/.omp/agents/bom.md",
       "variant": "generated",
-      "sourcePath": "agents/broken.md",
+      "sourcePath": "agents/bom.md",
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "bom-native",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/bom-native.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/bom-native.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
+    },
+    {
+      "agent": "colon",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/colon.md",
+      "variant": "generated",
+      "sourcePath": "agents/colon.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "colon-native",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/colon-native.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/colon-native.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
     },
     {
       "agent": "cu-native",
@@ -54,7 +121,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -78,12 +145,36 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the codex variant"
+      ]
+    },
+    {
+      "agent": "delegator",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/delegator.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/delegator.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
       ]
     },
     {
@@ -100,7 +191,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -119,7 +210,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -143,7 +234,31 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
+    },
+    {
+      "agent": "gh-plain",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/gh-plain.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-plain.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -167,7 +282,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -191,7 +306,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -200,6 +315,72 @@
         "excludes web fetch, but omp's read tool also fetches URLs",
         "omp keeps MCP, extension and custom tools available to agents with a tools list",
         "needs MCP servers configured for omp under these names: github; agnthub does not install or configure MCP servers"
+      ]
+    },
+    {
+      "agent": "literal",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/literal.md",
+      "variant": "generated",
+      "sourcePath": "agents/literal.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "mcp-wide",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/mcp-wide.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/mcp-wide.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list",
+        "needs MCP servers configured for omp under these names: github; agnthub does not install or configure MCP servers"
+      ]
+    },
+    {
+      "agent": "no-shell",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/no-shell.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/no-shell.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
       ]
     },
     {
@@ -216,7 +397,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -238,7 +419,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -260,7 +441,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -279,7 +460,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -298,7 +479,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
@@ -324,7 +505,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create"
@@ -343,16 +524,39 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "5a9914580411b811e02e604fb4584d415f6ebd8f"
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "omitted descriptive metadata: author, tags, version"
       ]
+    },
+    {
+      "agent": "web-searcher",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/web-searcher.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/web-searcher.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
     }
   ],
   "summary": {
-    "create": 15
+    "create": 24
   }
 }

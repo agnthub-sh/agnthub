@@ -15,6 +15,67 @@
   ],
   "items": [
     {
+      "agent": "backgrounder",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant runs the agent in the background, which copilot cannot express"
+    },
+    {
+      "agent": "bom",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/bom.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/bom.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "bom-native",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/bom-native.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/bom-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "bounded",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant limits the agent to 5 turns, which copilot cannot express"
+    },
+    {
       "agent": "broken",
       "harness": "copilot",
       "settings": {},
@@ -26,6 +87,41 @@
       "origin": "direct",
       "action": "invalid",
       "reason": "invalid copilot variant .github/agents/broken.agent.md: handoffs-to is not a Copilot CLI agent field; the CLI would silently ignore it"
+    },
+    {
+      "agent": "colon",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/colon.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/colon.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "colon-native",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/colon-native.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/colon-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
     },
     {
       "agent": "cu-native",
@@ -58,6 +154,25 @@
       "notes": [
         "converted from the codex variant",
         "Copilot CLI has no tool denylist, so the agent lists its built-in tools and does not get MCP tools"
+      ]
+    },
+    {
+      "agent": "delegator",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/delegator.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/delegator.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
       ]
     },
     {
@@ -112,6 +227,48 @@
       "action": "create"
     },
     {
+      "agent": "gh-plain",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/gh-plain.agent.md",
+      "variant": "native",
+      "sourcePath": ".github/agents/gh-plain.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "gm-camel",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "cannot convert: invalid gemini variant .gemini/agents/gm-camel.md: Gemini CLI rejects \"mcpServers\" in a local agent"
+    },
+    {
+      "agent": "gm-mcp",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its gemini variant declares mcp_servers (MCP servers scoped to the agent), which copilot cannot express"
+    },
+    {
       "agent": "gm-native",
       "harness": "copilot",
       "settings": {},
@@ -164,6 +321,35 @@
       ]
     },
     {
+      "agent": "literal",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/literal.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/literal.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "mcp-wide",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it allows MCP tool github/*, but Copilot CLI cannot select every tool of an MCP server"
+    },
+    {
       "agent": "modelled",
       "harness": "copilot",
       "settings": {},
@@ -175,6 +361,26 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "portable definition declares \"model\", which has no verified equivalent; author a native copilot variant"
+    },
+    {
+      "agent": "no-shell",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/no-shell.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/no-shell.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "Copilot CLI has no tool denylist, so the agent lists its built-in tools and does not get MCP tools"
+      ]
     },
     {
       "agent": "oc-native",
@@ -302,11 +508,24 @@
       "notes": [
         "omitted descriptive metadata: author, tags, version"
       ]
+    },
+    {
+      "agent": "web-searcher",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it uses web search, but Copilot CLI has no web search tool"
     }
   ],
   "summary": {
-    "create": 13,
-    "incompatible": 3,
+    "create": 21,
+    "incompatible": 9,
     "invalid": 1
   }
 }

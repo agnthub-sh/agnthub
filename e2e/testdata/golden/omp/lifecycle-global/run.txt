@@ -1,0 +1,80 @@
+$ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness omp --global --yes
+exit status: 0
+--- stdout
+Installed · global scope · from localhost:8443/evolving.git#v1 @ 5286a739a333
+  Harnesses
+    omp       omp                 detected  profile=default (native default)
+  Agents
+    drifter
+      + create       omp       generated  /agnthub-e2e/home/.omp/agent/agents/drifter.md
+          default profile
+  1 create
+$ agnthub list --global --json
+exit status: 0
+--- stdout
+[
+  {
+    "agent": "drifter",
+    "source": {
+      "kind": "git",
+      "locator": "localhost:8443/evolving.git",
+      "ref": "v1",
+      "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
+    },
+    "origin": "direct",
+    "artifacts": [
+      {
+        "harness": "omp",
+        "variant": "generated",
+        "path": "/agnthub-e2e/home/.omp/agent/agents/drifter.md",
+        "status": "ok",
+        "bindings": [
+          {
+            "profile": "default"
+          }
+        ]
+      }
+    ]
+  }
+]
+$ agnthub check --global --json
+exit status: 0
+--- stdout
+{
+  "command": "check",
+  "lock": "/agnthub-e2e/home/.config/agnthub/global-lock.json",
+  "agents": [
+    {
+      "agent": "drifter",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/evolving.git",
+        "ref": "v1",
+        "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
+      },
+      "origin": "direct",
+      "status": "up-to-date",
+      "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e",
+      "drift": false,
+      "artifacts": [
+        {
+          "harness": "omp",
+          "path": "/agnthub-e2e/home/.omp/agent/agents/drifter.md",
+          "variant": "generated",
+          "change": "unchanged",
+          "local": "ok",
+          "bindings": [
+            {
+              "profile": "default"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "up-to-date": 1
+  }
+}
+$ agnthub remove drifter --global --yes --json
+exit status: 0

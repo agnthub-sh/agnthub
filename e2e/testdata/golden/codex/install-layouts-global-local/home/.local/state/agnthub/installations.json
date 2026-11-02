@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/bom.toml",
+      "digest": "sha256:4d60e3ba4834998e527766c7c8173b828b4083a5ffa40f458e32df67688d2770",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "bom",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/colon.toml",
+      "digest": "sha256:019ce62a02bd0e4f72ee3c2a5363f90bf920d3877b7fd417f01b4b7fe6d994a4",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "colon",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/cx-native.toml",
+      "digest": "sha256:a885e8934fcddf4cf363afdb2c3f69d15dec952f974f37fcfd39c1c7a66bc1a1",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/dual.toml",
+      "digest": "sha256:71caaca253f108db60d5b6fb7777baedfb1a2fbdc62cb2b834a20fa8ffc2002a",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "dual",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/fixer.toml",
+      "digest": "sha256:7af97c32c4f2d1777d6042198ed803c05dc8ad6a415739c3dd6474d0df63dd3b",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "fixer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/literal.toml",
+      "digest": "sha256:8e35fdde028d1c7b6f54a078c6349ef3d259c1a098df02d0e7e464230e74abce",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "literal",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/no-shell.toml",
+      "digest": "sha256:d7c2805ed389f320e74f7f987997e434eda8518a7dd524ac9a8b8cc16b4b0899",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "no-shell",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/planner.toml",
+      "digest": "sha256:8deba390f39ab25d9c83dcac3ecfda0a2f9296abced19191234230805cc043d1",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "planner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/researcher.toml",
+      "digest": "sha256:965f989679b4b96f53cc49da9969320ece8ba8ef2de68cd52afc808a6ccea1e3",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "researcher",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/root-helper.toml",
+      "digest": "sha256:719a6d4ab1dcf138b888656a78027e5d2ceaab015e818620b40d07cda0a84394",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/tagged.toml",
+      "digest": "sha256:f403eafd5a3861502263a0d51f84ba43692b128a9e0fec9d0b4ab0b1400cc733",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "skills": {
+    "e2e-skill": {
+      "source": "https://localhost:8443/skills.git",
+      "sourceUrl": "https://localhost:8443/skills.git",
+      "ref": "21f36aec981afd5f3a2141ea1d52b9ca2f691f48",
+      "sourceType": "git",
+      "skillPath": "skills/e2e-skill/SKILL.md",
+      "computedHash": "06d3fc2ecda624c6834cf921357173848603dcd48c40bb11d17d1e4d0605450b"
+    }
+  }
+}

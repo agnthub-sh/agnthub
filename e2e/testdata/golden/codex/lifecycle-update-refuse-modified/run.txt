@@ -1,0 +1,15 @@
+$ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness codex --yes
+exit status: 0
+--- stdout
+Installed · project scope · from localhost:8443/evolving.git#v1 @ 5286a739a333
+  Harnesses
+    codex     Codex               detected
+  Agents
+    drifter
+      + create       codex     generated  /agnthub-e2e/project/.codex/agents/drifter.toml
+          project
+  1 create
+# append a line to the installed drifter
+# move tag v1 of evolving.git to its next revision
+$ agnthub update --yes --json
+exit status: 1

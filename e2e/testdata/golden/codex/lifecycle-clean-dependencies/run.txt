@@ -1,0 +1,41 @@
+$ agnthub add https://localhost:8443/manifest.git --agent lead --harness codex --yes
+exit status: 0
+--- stdout
+Installed · project scope · from localhost:8443/manifest.git @ 23ce82da4602
+  Harnesses
+    codex     Codex               detected
+  Skills
+    e2e-skill  >=1.0.0 <=2.0.0 from localhost:8443/skills.git#v1.0.0, required by lead
+      + install      codex     1.4.0      /agnthub-e2e/project/.agents/skills/e2e-skill
+          project .agents/skills
+          runs skills add 'https://localhost:8443/skills.git#21f36aec981afd5f3a2141ea1d52b9ca2f691f48' --skill e2e-skill --agent codex --yes
+  Skill installer runs
+    e2e-skill for codex: ok
+      skills add 'https://localhost:8443/skills.git#21f36aec981afd5f3a2141ea1d52b9ca2f691f48' --skill e2e-skill --agent codex --yes
+  Changes observed in skill locations
+    created  /agnthub-e2e/project/.agents/skills/e2e-skill
+    created  /agnthub-e2e/project/skills-lock.json
+  Agents
+    lead
+      + create       codex     native     /agnthub-e2e/project/.codex/agents/lead.toml
+          project
+    helper  dependency of lead, from localhost:8443/manifest.git @ 23ce82da4602
+      + create       codex     generated  /agnthub-e2e/project/.codex/agents/helper.toml
+          project
+    companion  dependency of lead, from localhost:8443/companion.git#v1 @ 7baafb2b236d
+      + create       codex     generated  /agnthub-e2e/project/.codex/agents/companion.toml
+          project
+    codex-helper  dependency of lead, from localhost:8443/manifest.git @ 23ce82da4602
+      + create       codex     generated  /agnthub-e2e/project/.codex/agents/codex-helper.toml
+          project
+  4 create  ·  skills: 1 install
+$ agnthub remove lead --yes
+exit status: 0
+--- stdout
+Remove: done · project scope · agnthub-lock.json
+  removed   lead                       codex    .codex/agents/lead.toml
+Dependencies stay installed: companion (agent), codex-helper (agent), helper (agent), e2e-skill (skill)
+  clean up the ones no longer required with: agnthub remove --clean-dependencies
+Summary: 1 removed
+$ agnthub remove --clean-dependencies --yes --json
+exit status: 0

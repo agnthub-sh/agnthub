@@ -1,0 +1,10 @@
+---
+name: colon-native
+description: 'Claude Code agent with an unquoted colon: still one description'
+tools:
+  - read
+  - grep
+  - glob
+  - find
+---
+Answer: briefly.

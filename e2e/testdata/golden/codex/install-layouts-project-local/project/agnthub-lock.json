@@ -6,6 +6,46 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "bom",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": "agents/bom.md",
+          "sourceDigest": "sha256:4a06ac5e6bf431ff6070e79391195c1ff4e3c7e8f0b093dbfa06fb32e692f629",
+          "converter": "codex/v3",
+          "path": ".codex/agents/bom.toml",
+          "digest": "sha256:4d60e3ba4834998e527766c7c8173b828b4083a5ffa40f458e32df67688d2770",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "colon",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": "agents/colon.md",
+          "sourceDigest": "sha256:89cfd9750c6cd78419f7c04dc07bbc55508cbd9e43767be467bca82fefd1bd34",
+          "converter": "codex/v3",
+          "path": ".codex/agents/colon.toml",
+          "digest": "sha256:019ce62a02bd0e4f72ee3c2a5363f90bf920d3877b7fd417f01b4b7fe6d994a4",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "cx-native",
       "origin": "direct",
       "artifacts": [
@@ -56,6 +96,46 @@
           "converter": "codex/v3",
           "path": ".codex/agents/fixer.toml",
           "digest": "sha256:7af97c32c4f2d1777d6042198ed803c05dc8ad6a415739c3dd6474d0df63dd3b",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "literal",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": "agents/literal.md",
+          "sourceDigest": "sha256:b973b211d0f1640b3dec85aa413b974bd3a3bd92b362105f58b2044100ffdf23",
+          "converter": "codex/v3",
+          "path": ".codex/agents/literal.toml",
+          "digest": "sha256:8e35fdde028d1c7b6f54a078c6349ef3d259c1a098df02d0e7e464230e74abce",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "no-shell",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/no-shell.md",
+          "sourceDigest": "sha256:63a2ad194c53901523f07f8f3ec3303517e950b53a482f2f2e13b84902d155f3",
+          "converter": "codex/v3",
+          "path": ".codex/agents/no-shell.toml",
+          "digest": "sha256:d7c2805ed389f320e74f7f987997e434eda8518a7dd524ac9a8b8cc16b4b0899",
           "requires": []
         }
       ]

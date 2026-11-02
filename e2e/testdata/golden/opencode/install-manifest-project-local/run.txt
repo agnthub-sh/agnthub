@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/manifest --agent lead --agent native-only --harness opencode --yes --json
+exit status: 0

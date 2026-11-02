@@ -1,0 +1,4 @@
+$ agnthub add /agnthub-e2e/src/companion --agent companion --harness cursor --extra omp.profile=work --yes --json
+exit status: 1
+--- stderr
+error: --extra "omp.profile=work": harness omp is not selected; add --harness omp

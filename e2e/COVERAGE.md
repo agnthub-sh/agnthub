@@ -1,0 +1,258 @@
+# End-to-end coverage
+
+What the end-to-end suite proves for every agent type agnthub supports, in every Harness,
+in each scope (project, global) and from each source kind (local directory, Git over
+HTTPS), and what it does not prove, with the reason. The matrix below is generated from
+the goldens by `go test ./e2e -run TestCoverage -update-coverage`; `TestCoverage` (part of
+`go test ./...`) fails when a cell loses its evidence, when a step or Harness has no
+golden, or when this file is stale. The scenarios and steps are declared in
+[coverage.go](coverage.go).
+
+## Agent-type taxonomy
+
+The CLI's own model (packages `discovery`, `harness`, `install`, `resolve`, `skills`;
+[CLI contract](../docs/cli-contract.md)), which the scenarios cover:
+
+| Dimension | What exists |
+|---|---|
+| Portable layouts | root `AGENT.md` (needs `name`), `agents/<id>.md`, `agents/<id>/AGENT.md`; `AGENTS.md`/`README.md` are not agents. Portable core = `name`, `description`, body; descriptive metadata (`version`, `tags`, `author`, `license`, `homepage`, `metadata`) is noted and omitted; any other key (e.g. `model`) makes the agent unconvertible. |
+| Native layouts | `.claude/agents/**/*.md` (recursive, lenient YAML), `.opencode/agents/*.md` (id = file name), `.codex/agents/*.toml`, `.github/agents/*.agent.md` and `*.md` (id = file name), `.cursor/agents/*.md` (one-line keys), `.gemini/agents/*.md`, `.omp/agents/*.md`. |
+| Manifest | `agnthub.yaml` is the whole inventory: declared ids, `categories`, `portable`, per-Harness `variants` (any path), common and Variant-only `dependencies.agents` (same repository or external Git source with ref) and `dependencies.skills` (source, skill, version bounds). |
+| Variant selection | An authored Variant for the target installs byte for byte after native validation; otherwise the portable core is converted, else another authored Variant (claude, opencode, codex, copilot, cursor, gemini, omp order). An invalid Variant for the target is refused, never replaced by a conversion. |
+| Conversion | Name, description and instructions carry; tool allowlists, denylists, read-only, MCP tool references, `maxTurns` and background map by capability into each Harness's form or are refused when the target cannot enforce them; model strings are dropped with a note; cosmetic fields are noted; permission modes, hooks, agent-scoped MCP servers are refused everywhere. |
+| Identity | Ambiguous identities (two portable files, two native files of one Harness) refuse that agent only. |
+| Selection | `--agent`/`'*'`, `--harness`/`all`, `--all`, `--global`, `--yes` (never reduces a plan), `--extra omp.profile=<name>` (omp only; refused for unselected Harnesses; profiles must exist). |
+| Lifecycle | `list`, `check` (updates, drift), `update` (locked ref, refuses local edits), `restore` (lock only, byte-identical, refuses mismatches), `remove` (owned and unchanged files only), `remove --clean-dependencies`. |
+| Dependencies | Agent Dependencies install with the selection (origin `dependency`); Skill Dependencies install through skills.sh into the Harness's skill directory, refused where the Harness would not load them (Gemini CLI untrusted project). |
+
+## How each Harness is asked whether it loaded the agents (`N`)
+
+After every install step the real Harness CLI of the image, offline and without a login,
+reports which agents it loaded; an agent counts only when it is the file agnthub wrote
+(Gemini CLI, omp and Cursor: the listed description must be the installed one, so a
+built-in or another file of the same name does not count).
+
+| Harness | Real CLI command |
+|---|---|
+| claude | `claude -p --agent <unknown>` lists every discovered agent before any model call |
+| opencode | `opencode debug agents` (resolved agents of its service) |
+| codex | `codex debug prompt-input` renders the model input; custom agents are spawn roles (project trusted) |
+| copilot | `copilot -p --agent <unknown>` names the available agents (BYOK provider never contacted) |
+| gemini | `gemini -p` with an API key against a local model stub: the first request's system instruction lists the registered subagents. Project agents are acknowledged first, as Gemini CLI's own prompt would (it registers a project agent only after the user acknowledged that file's SHA-256). Any `Agent loading error` fails the check. |
+| omp | `omp -p --model stub/stub-model` (a `models.yml` provider pointing at the stub, in the step's omp profile): its `task` tool lists every discovered agent |
+| cursor | `cursor-agent-local --authless -p` (the same release's agent-cli-local build, installed beside `cursor-agent`; every `cursor-agent` command needs a signed-in account) against the stub: its `Task` tool lists the workspace subagents. User scope: the check asserts Cursor's CLI still does **not** load `~/.cursor/agents` (`N0`). |
+
+The model stub (`modelstub_test.go`) answers on the container's loopback; the suite runs
+with `--network none`, so no check reaches a real model or account.
+
+## Proof level per Harness
+
+| Harness | Pinned version | Load proof (every install step) | Live run (`make e2e-live`, 2026-11-02) |
+|---|---|---|---|
+| claude | Claude Code 2.1.309 | real CLI, project and user scope | ran `live-probe` through OpenRouter (`anthropic/claude-haiku-4.5`) |
+| opencode | OpenCode 2.1.3 | real CLI, project and user scope | ran `live-probe` through OpenRouter (`anthropic/claude-haiku-4.5`) |
+| codex | Codex 0.164.0 | real CLI, project and user scope | main agent spawned the `live-probe` role through OpenRouter (`openai/gpt-5-mini`) |
+| copilot | Copilot CLI 1.0.105 | real CLI, project and user scope | ran `live-probe` with OpenRouter as BYOK provider (`anthropic/claude-haiku-4.5`) |
+| cursor | cursor-agent 2026.10.22-27dcf5f | real Cursor CLI build (agent-cli-local of the same release), project scope; user scope proven not loaded (`N0`) | not run: needs `CURSOR_API_KEY` (cursor-agent has no keyless headless mode; agent-cli-local ignores subagent instructions) |
+| gemini | Gemini CLI 0.66.0 | real CLI headless against the stub, project (acknowledged) and user scope | not run: needs `GEMINI_API_KEY` (Gemini CLI speaks only the Gemini API) |
+| omp | omp 18.13.3 | real CLI headless against the stub, project, user and named-profile scope | main agent ran `live-probe` via `task` through OpenRouter (`anthropic/claude-haiku-4.5`) |
+
+## Isolation
+
+- Each image holds one Harness: `TestHarness/image-isolation` fails if another Harness's
+  CLI is on `PATH`, another Harness's installation exists, or any Harness configuration
+  directory exists in the image's home.
+- Every step runs in an empty project and home. The golden of each step lists every file
+  written anywhere in the project and home (`files.txt`, with modes and bytes), and
+  `requireOwnDirectories` fails any step selecting one Harness that writes outside that
+  Harness's agent/skill directories and agnthub's own lock, configuration and state.
+- Refusals, plans, inventories, `list` and `check` must leave the project and home
+  byte-identical (`requireUnchanged`).
+
+## Matrix
+
+Cell codes: `W` the golden shows the agent written (files, lock and ownership byte for byte)
+in every scope and source of the row; `R` the golden shows it refused and nothing written;
+`A` the goldens show the agent is not installed for that Harness (not part of its
+selection); `✓` the step's golden output (inventory, selection, lifecycle) with exit status
+0; `N` the real Harness CLI loaded what the step installed; `N0` the real CLI provably does
+not load that scope (see Exclusions). Scope · source lists where the row's steps run.
+
+<!-- coverage:begin (generated by go test ./e2e -run TestCoverage -update-coverage) -->
+
+### Discovery layouts
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| root `AGENT.md` (portable) | `root-helper` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| `agents/<id>.md` (portable) | `planner` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| `agents/<id>/AGENT.md` (portable) | `researcher` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| `.claude/agents/*.md` (Claude Code native) | `reviewer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | R | W N | W N |
+| `.claude/agents/<dir>/*.md` (recursive) | `fixer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| `.opencode/agents/*.md` (OpenCode native, CRLF) | `oc-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
+| `.codex/agents/*.toml` (Codex TOML) | `cx-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | R | W N | W N |
+| `.github/agents/*.agent.md` (Copilot CLI) | `gh-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
+| `.github/agents/*.md` (Copilot CLI, plain suffix) | `gh-plain` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
+| `.cursor/agents/*.md` (Cursor, `readonly`) | `cu-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | W N N0 | W N | W N |
+| `.gemini/agents/*.md` (Gemini CLI) | `gm-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
+| `.omp/agents/*.md` (omp) | `omp-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
+| `AGENTS.md` and `README.md` are not agents (inventory) | — | inventory · local | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+### agnthub.yaml manifest
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| declared ids are the inventory (undeclared agent left out), categories | — | inventory · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| declared Variants (OpenCode, Codex) with a portable core | `lead` | global · git<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| agent declared only as a Claude Code Variant | `native-only` | global · git<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
+| same-repository Agent Dependency | `helper` | global · git<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| Agent Dependency from another Git repository | `companion` | global · git<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| dependency only the Codex Variant adds (elsewhere provably not installed) | `codex-helper` | global · git<br>project · git<br>project · local | A | A | W N | A | A | A | A |
+| Skill Dependency installed by skills.sh into the Harness's skill directory | — | global · git<br>project · git<br>project · local | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N N0 | ✓ R N | ✓ N |
+| every declared Variant invalid: refused, never falls back to the portable core | `strict` | global · git<br>project · git<br>project · local | R | R | R | R | R | R | R |
+
+### Variants and conversion
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| authored native Variant wins over conversion (portable + Claude + OpenCode) | `dual` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| invalid native Variant for the target: refused, never converted instead | `broken` | global · git<br>global · local<br>project · git<br>project · local | R | R | R | R | R | R | R |
+| portable core with descriptive metadata (noted, omitted) | `tagged` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| Claude-only `permissionMode`: native on Claude Code, refused elsewhere | `guarded` | global · git<br>global · local<br>project · git<br>project · local | W N | R | R | R | R | R | R |
+
+### Tool restrictions
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| allowlist Read/Grep/Glob/Bash | `reviewer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | R | W N | W N |
+| allowlist with edit and shell | `fixer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| read-only allowlist (Read, Grep) | `colon-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
+| OpenCode `permission` edit/bash deny | `oc-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
+| Cursor `readonly: true` | `cu-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | W N N0 | W N | W N |
+| Codex `features.shell_tool = false` | `cx-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | R | W N | W N |
+| denylist (`disallowedTools: Bash`) | `no-shell` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | R | W N | W N |
+| MCP tool reference (`mcp__github__get_issue`) | `issue-reader` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | R | W N | W N |
+| whole MCP server (`mcp__github__*`) | `mcp-wide` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | R | W N | W N |
+| web fetch and web search | `web-searcher` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | R | W N | W N |
+| delegation (`Agent`) | `delegator` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | R | W N |
+| turn limit (`maxTurns`) | `bounded` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | R | W N | R |
+| background execution (`background: true`) | `backgrounder` | global · git<br>global · local<br>project · git<br>project · local | W N | R | R | R | W N N0 | R | R |
+| Gemini `mcp_servers` + `mcp_<server>_<tool>`: native on Gemini CLI | `gm-mcp` | global · git<br>global · local<br>project · git<br>project · local | R | R | R | R | R | W N | R |
+| Gemini `mcpServers` (camelCase), which Gemini CLI rejects: refused | `gm-camel` | global · git<br>global · local<br>project · git<br>project · local | R | R | R | R | R | R | R |
+
+### Model fields
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| native `model: sonnet` kept byte-for-byte, dropped with a note on conversion | `reviewer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | R | W N | W N |
+| portable `model`: uninstallable everywhere | `modelled` | global · git<br>global · local<br>project · git<br>project · local | R | R | R | R | R | R | R |
+
+### Frontmatter edge cases
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| unquoted colon in a portable description | `colon` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| unquoted colon in a Claude Code Variant | `colon-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
+| CRLF portable core | `researcher` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| CRLF native Variant (installed with its CRLF) | `oc-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
+| UTF-8 BOM portable core | `bom` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| UTF-8 BOM Claude Code Variant | `bom-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | R | W N | W N |
+| non-ASCII description and body | `planner` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| folded description (`>-`) | `researcher` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| literal block description (`|`) | `literal` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+
+### Ambiguous identities
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| two portable files, one id: refused | — | inventory · local<br>project · local | ✓ R | ✓ R | ✓ R | ✓ R | ✓ R | ✓ R | ✓ R |
+| two Claude Code files (recursive), one id: refused | — | project · local | R | R | R | R | R | R | R |
+| an unambiguous agent of the same source installs | `solo` | project · local | W N | W N | W N | W N | W N | W N | W N |
+
+### Selection
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| `--agent '*'` selects every agent of the source | — | project · local | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N |
+| `--harness all` installs into every Harness (detection: only this one) | — | project · local | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N |
+| `--all` = every agent, every Harness, no prompt | — | project · local | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N |
+| `--yes` never reduces a plan: one refused agent fails the run | — | project · local | R | R | R | R | R | R | R |
+| `--extra omp.profile`: omp profile destinations; other Harnesses refuse it | — | global · local<br>project · local | R | R | R | R | R | R | ✓ R N |
+
+### Lifecycle
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| `list` shows installed agents and bindings | — | project · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `check`: up to date | — | project · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `check`: local drift (modified file) | — | project · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `update`: newer revision of the locked ref | — | project · git | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N |
+| `update` refuses to overwrite a locally modified file | — | project · git | R | R | R | R | R | R | R |
+| `restore` recreates the lock's files byte for byte (omp: a machine without recorded bindings must name the profile) | — | project · git | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N | ✓ R N |
+| `restore` refuses when a locked file was modified | — | project · git | R | R | R | R | R | R | R |
+| `remove` deletes only owned files (unmanaged neighbor kept) | — | project · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `remove` refuses a modified file | — | project · git | R | R | R | R | R | R | R |
+| `remove --clean-dependencies` removes unused companions and skills | — | project · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| user scope: `add -g`, `list -g`, `check -g`, `remove -g` | — | global · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+
+### Exclusions
+
+- native check, cursor × global scope (`N0`): cursor-agent loads only workspace agents (.cursor/.claude/.grok agents of the project); agnthub installs user agents where Cursor documents them (~/.cursor/agents, read by the Cursor editor). The native check runs the real CLI and asserts it still does not load them, so a Cursor release that starts loading user agents fails the nightly run and removes this exclusion.
+
+### Live tier
+
+| Harness | Secret (first set wins) | How the installed agent is run |
+|---|---|---|
+| claude | `OPENROUTER_API_KEY` | `claude -p --agent live-probe` through OpenRouter's Anthropic-compatible API (`ANTHROPIC_BASE_URL=https://openrouter.ai/api`) |
+| opencode | `OPENROUTER_API_KEY` | `opencode run --agent live-probe -m openrouter/<model>` |
+| codex | `OPENROUTER_API_KEY` | `codex exec --json` with an OpenRouter Responses provider; the main agent spawns the `live-probe` role (Codex has no direct agent flag) |
+| copilot | `OPENROUTER_API_KEY` | `copilot -p --agent live-probe` with OpenRouter as BYOK provider (`COPILOT_PROVIDER_BASE_URL`), no GitHub login |
+| cursor | `CURSOR_API_KEY` | `cursor-agent -p` signed in with a Cursor API key; the main agent runs the `live-probe` subagent through its Task tool |
+| gemini | `GEMINI_API_KEY` | `gemini -p` with a Gemini API key; the main agent invokes the `live-probe` subagent (`invoke_agent`) |
+| omp | `OPENROUTER_API_KEY` | `omp -p --model openrouter/<model>`; the main agent runs `live-probe` via `task` |
+<!-- coverage:end -->
+
+## Gemini CLI agent-scoped MCP servers
+
+The docs/runtime question (`mcpServers` documented vs `mcp_servers` seen at runtime) is
+settled by the suite at the pinned version and nightly at the latest: Gemini CLI's local
+agent schema accepts `mcp_servers` and rejects `mcpServers` ("Unrecognized key(s) in
+object: 'mcpServers'", observed with 0.66.0, which is also the latest release on
+2026-11-02). agnthub agrees: a native Gemini Variant with `mcp_servers` installs and loads
+(`gemini-mcp-servers`, `N`), one with `mcpServers` is refused as invalid
+(`gemini-mcp-camel`). The converter never writes an agent-scoped MCP server field for
+Gemini (agent-scoped servers are refused on every target); it writes MCP tool references
+as `mcp_<server>_<tool>` / `mcp_<server>_*` entries of `tools`, which Gemini CLI loads
+(`tools-mcp-tool`, `tools-mcp-server`).
+
+## Not proven by this suite, and why
+
+- **Cursor user scope loading.** cursor-agent loads only workspace agents; agnthub installs
+  user agents in `~/.cursor/agents`, where Cursor documents them for the editor. The native
+  check asserts the CLI still ignores them, so the nightly run flags the day it starts
+  loading them.
+- **Cursor offline run.** agent-cli-local lists custom subagents but does not put their
+  instructions into the subagent's prompt (verified with the stub: the subagent request
+  carries no part of the agent body), so only the live tier with a Cursor API key can show
+  a Cursor subagent running its installed instructions.
+- **Live runs without their secret.** The live tier skips a Harness whose secret is not
+  set; locally only `OPENROUTER_API_KEY` was available, so Gemini CLI and Cursor live runs
+  are implemented but were not exercised (see the Live tier table).
+- **Gemini CLI project agents in headless runs.** Gemini CLI uses a project agent only after
+  it was acknowledged in an interactive session (a security prompt keyed by the file's
+  SHA-256); a fresh `gemini -p` run silently skips unacknowledged project agents. The
+  native check acknowledges exactly the installed files; agnthub does not write Gemini's
+  acknowledgment store.
+- **skills.sh's own lock after dependency cleanup.** `remove --clean-dependencies` deletes
+  the skill directory agnthub's skill installer created, but skills.sh's project
+  `skills-lock.json` (a file agnthub does not own) keeps the skill's entry, so a later
+  `skills experimental_install` would bring it back. The `lifecycle-clean-dependencies`
+  goldens record this; agnthub has no skill-installer removal command to delegate to.
+- **Behaviors proven by unit tests only** (not by the containerized suite, because they do
+  not depend on a Harness CLI): dependency cycles, conflicting dependency revisions and
+  missing or ambiguous dependency agents (`resolve/resolve_test.go`), dependency failures
+  leaving the project untouched (`internal/cli/add_deps_test.go`); conversion from
+  non-portable Variants and the portable core's precedence over them
+  (`harness/convert_test.go`); manifest path safety and discovery budgets (`discovery`);
+  SSH transports and install reports to the registry (`source`, `internal/cli`); Windows
+  and macOS destinations (`harness`, cross builds).

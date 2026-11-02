@@ -1,0 +1,58 @@
+{
+  "status": "applied",
+  "mode": "cleanup",
+  "scope": "project",
+  "lock": "/agnthub-e2e/project/agnthub-lock.json",
+  "items": [
+    {
+      "kind": "agent",
+      "name": "companion",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/companion.git",
+        "ref": "v1",
+        "revision": "7baafb2b236dce93aac4d851eb49196b5ff5c534"
+      },
+      "origin": "dependency",
+      "harness": "claude",
+      "settings": {},
+      "path": "/agnthub-e2e/project/.claude/agents/companion.md",
+      "action": "delete",
+      "result": "removed"
+    },
+    {
+      "kind": "agent",
+      "name": "helper",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/manifest.git",
+        "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
+      },
+      "origin": "dependency",
+      "harness": "claude",
+      "settings": {},
+      "path": "/agnthub-e2e/project/.claude/agents/helper.md",
+      "action": "delete",
+      "result": "removed"
+    },
+    {
+      "kind": "skill",
+      "name": "e2e-skill",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/skills.git",
+        "ref": "v1.0.0",
+        "revision": "21f36aec981afd5f3a2141ea1d52b9ca2f691f48"
+      },
+      "origin": "dependency",
+      "harness": "claude",
+      "settings": {},
+      "path": "/agnthub-e2e/project/.claude/skills/e2e-skill",
+      "action": "delete",
+      "result": "removed"
+    }
+  ],
+  "summary": {
+    "removed": 3
+  }
+}

@@ -15,6 +15,19 @@
   ],
   "items": [
     {
+      "agent": "backgrounder",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant runs the agent in the background, which gemini cannot express"
+    },
+    {
       "agent": "broken",
       "harness": "gemini",
       "settings": {},
@@ -26,6 +39,32 @@
       "origin": "direct",
       "action": "invalid",
       "reason": "invalid gemini variant .gemini/agents/broken.md: Gemini CLI rejects \"color\" in a local agent"
+    },
+    {
+      "agent": "delegator",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it uses delegation, but Gemini CLI subagents cannot invoke other agents"
+    },
+    {
+      "agent": "gm-camel",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "invalid",
+      "reason": "invalid gemini variant .gemini/agents/gm-camel.md: Gemini CLI rejects \"mcpServers\" in a local agent"
     },
     {
       "agent": "guarded",
@@ -55,7 +94,7 @@
     }
   ],
   "summary": {
-    "incompatible": 2,
-    "invalid": 1
+    "incompatible": 4,
+    "invalid": 2
   }
 }

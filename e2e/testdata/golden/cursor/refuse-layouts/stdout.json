@@ -15,6 +15,32 @@
   ],
   "items": [
     {
+      "agent": "bom-native",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes search, but Cursor cannot withhold it"
+    },
+    {
+      "agent": "bounded",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant limits the agent to 5 turns, which cursor cannot express"
+    },
+    {
       "agent": "broken",
       "harness": "cursor",
       "settings": {},
@@ -39,6 +65,32 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "it excludes shell but allows edits, and Cursor can only withhold shell by making the agent read-only"
+    },
+    {
+      "agent": "gm-camel",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "cannot convert: invalid gemini variant .gemini/agents/gm-camel.md: Gemini CLI rejects \"mcpServers\" in a local agent"
+    },
+    {
+      "agent": "gm-mcp",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its gemini variant declares mcp_servers (MCP servers scoped to the agent), which cursor cannot express"
     },
     {
       "agent": "guarded",
@@ -67,6 +119,19 @@
       "reason": "it excludes search, but Cursor cannot withhold it"
     },
     {
+      "agent": "mcp-wide",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes search, but Cursor cannot withhold it"
+    },
+    {
       "agent": "modelled",
       "harness": "cursor",
       "settings": {},
@@ -80,6 +145,19 @@
       "reason": "portable definition declares \"model\", which has no verified equivalent; author a native cursor variant"
     },
     {
+      "agent": "no-shell",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes shell but allows edits, and Cursor can only withhold shell by making the agent read-only"
+    },
+    {
       "agent": "reviewer",
       "harness": "cursor",
       "settings": {},
@@ -91,10 +169,23 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "it uses shell without edits, but Cursor's only restriction (readonly) blocks every shell command"
+    },
+    {
+      "agent": "web-searcher",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes search, but Cursor cannot withhold it"
     }
   ],
   "summary": {
-    "incompatible": 5,
+    "incompatible": 12,
     "invalid": 1
   }
 }

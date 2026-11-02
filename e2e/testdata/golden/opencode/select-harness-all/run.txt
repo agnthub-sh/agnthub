@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/companion --agent companion --harness all --yes --json
+exit status: 0

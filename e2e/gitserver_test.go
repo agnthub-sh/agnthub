@@ -48,6 +48,9 @@ var fixtureCommitEnv = []string{
 
 // publishFixtures copies every fixture tree to root/src/<name> (the local
 // sources) and publishes each as a bare repository under root/git/<name>.git.
+// The fixture tags name its first commit; a tree under testdata/revisions/<name>
+// is laid over it as a second commit on main, so a tag can later be moved to
+// main (moveTag) to publish a newer revision of the source.
 func publishFixtures(t *testing.T, fixtures, root string) {
 	t.Helper()
 	entries, err := os.ReadDir(fixtures)
@@ -67,6 +70,12 @@ func publishFixtures(t *testing.T, fixtures, root string) {
 		for _, tag := range fixtureTags {
 			git(t, work, "tag", tag)
 		}
+		revision := filepath.Join(filepath.Dir(fixtures), "revisions", name)
+		if _, err := os.Stat(revision); err == nil {
+			copyTree(t, revision, work)
+			git(t, work, "-c", "core.autocrlf=false", "add", "--all")
+			git(t, work, "commit", "--quiet", "--no-gpg-sign", "-m", "fixture "+name+" revision 2")
+		}
 		bare := filepath.Join(root, "git", name+".git")
 		git(t, root, "clone", "--quiet", "--bare", work, bare)
 		// The local source is the plain directory, not a checkout.
@@ -74,6 +83,15 @@ func publishFixtures(t *testing.T, fixtures, root string) {
 			t.Fatal(err)
 		}
 	}
+}
+
+// moveTag points tag of the published repository name at main, the revision
+// after the one the tag names, and restores it when the test ends.
+func moveTag(t *testing.T, root, name, tag string) {
+	t.Helper()
+	bare := filepath.Join(root, "git", name+".git")
+	git(t, bare, "tag", "--force", tag, "main")
+	t.Cleanup(func() { git(t, bare, "tag", "--force", tag, "main~1") })
 }
 
 func git(t *testing.T, dir string, args ...string) {

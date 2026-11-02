@@ -15,6 +15,19 @@
   ],
   "items": [
     {
+      "agent": "backgrounder",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant runs the agent in the background, which opencode cannot express"
+    },
+    {
       "agent": "broken",
       "harness": "opencode",
       "settings": {},
@@ -26,6 +39,32 @@
       "origin": "direct",
       "action": "invalid",
       "reason": "invalid opencode variant .opencode/agents/broken.md: mode must be primary, subagent or all, got background"
+    },
+    {
+      "agent": "gm-camel",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "cannot convert: invalid gemini variant .gemini/agents/gm-camel.md: Gemini CLI rejects \"mcpServers\" in a local agent"
+    },
+    {
+      "agent": "gm-mcp",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its gemini variant declares mcp_servers (MCP servers scoped to the agent), which opencode cannot express"
     },
     {
       "agent": "guarded",
@@ -55,7 +94,7 @@
     }
   ],
   "summary": {
-    "incompatible": 2,
+    "incompatible": 5,
     "invalid": 1
   }
 }

@@ -15,6 +15,32 @@
   ],
   "items": [
     {
+      "agent": "backgrounder",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant runs the agent in the background, which copilot cannot express"
+    },
+    {
+      "agent": "bounded",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant limits the agent to 5 turns, which copilot cannot express"
+    },
+    {
       "agent": "broken",
       "harness": "copilot",
       "settings": {},
@@ -41,6 +67,32 @@
       "reason": "it uses web search, but Copilot CLI has no web search tool"
     },
     {
+      "agent": "gm-camel",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "cannot convert: invalid gemini variant .gemini/agents/gm-camel.md: Gemini CLI rejects \"mcpServers\" in a local agent"
+    },
+    {
+      "agent": "gm-mcp",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its gemini variant declares mcp_servers (MCP servers scoped to the agent), which copilot cannot express"
+    },
+    {
       "agent": "guarded",
       "harness": "copilot",
       "settings": {},
@@ -54,6 +106,19 @@
       "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which copilot cannot express"
     },
     {
+      "agent": "mcp-wide",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it allows MCP tool github/*, but Copilot CLI cannot select every tool of an MCP server"
+    },
+    {
       "agent": "modelled",
       "harness": "copilot",
       "settings": {},
@@ -65,10 +130,23 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "portable definition declares \"model\", which has no verified equivalent; author a native copilot variant"
+    },
+    {
+      "agent": "web-searcher",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it uses web search, but Copilot CLI has no web search tool"
     }
   ],
   "summary": {
-    "incompatible": 3,
+    "incompatible": 9,
     "invalid": 1
   }
 }

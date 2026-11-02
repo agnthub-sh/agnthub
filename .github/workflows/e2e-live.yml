@@ -1,0 +1,57 @@
+name: E2E live
+
+# The live tier of the end-to-end suite (make e2e-live, see e2e/COVERAGE.md): each
+# Harness CLI installs a fixture agent with agnthub and runs it with a real, cheap
+# model, asserting the fixed reply only the installed agent knows. It needs model
+# credentials, so it runs nightly and on demand only: never for pull requests
+# (forks get no secrets). A Harness whose secret is not configured is skipped.
+#
+# Repository secrets:
+#   OPENROUTER_API_KEY  claude, opencode, codex, copilot, omp
+#   GEMINI_API_KEY      gemini
+#   CURSOR_API_KEY      cursor
+
+on:
+  schedule:
+    - cron: "47 4 * * *"
+  workflow_dispatch:
+    inputs:
+      model:
+        description: Model for every Harness instead of its default (optional)
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-live
+  cancel-in-progress: false
+
+jobs:
+  live:
+    name: live ${{ matrix.harness }}
+    if: github.repository == 'agnthub-sh/agnthub'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        harness: [claude, opencode, codex, copilot, cursor, gemini, omp]
+    steps:
+      - uses: actions/checkout@v7
+      - name: Run the live tier
+        env:
+          E2E_LOG_DIR: e2e-logs
+          E2E_LIVE_MODEL: ${{ inputs.model }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CURSOR_API_KEY: ${{ secrets.CURSOR_API_KEY }}
+        run: e2e/run.sh -live ${{ matrix.harness }}
+      - name: Keep the log
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: e2e-live-${{ matrix.harness }}
+          path: e2e-logs/
+          if-no-files-found: ignore

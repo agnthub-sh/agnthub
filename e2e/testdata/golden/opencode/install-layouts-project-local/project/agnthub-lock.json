@@ -6,6 +6,106 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "bom",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "agents/bom.md",
+          "sourceDigest": "sha256:4a06ac5e6bf431ff6070e79391195c1ff4e3c7e8f0b093dbfa06fb32e692f629",
+          "converter": "opencode/v3",
+          "path": ".opencode/agents/bom.md",
+          "digest": "sha256:cd74f9e3e63db4abd7603cf089c749003924267863e1f3bb45c8295792d54f2c",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "bom-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/bom-native.md",
+          "sourceDigest": "sha256:4625951c9f6cb88f9476953c5a7dcb191bb1ccb2ff8ad6bbdd98a2c9baeb593c",
+          "converter": "opencode/v3",
+          "path": ".opencode/agents/bom-native.md",
+          "digest": "sha256:b0f84396deeb5de5e7c3684307c03c9f5d38e7aa6d0f2eb2f2f8e2617424435e",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "bounded",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/bounded.md",
+          "sourceDigest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
+          "converter": "opencode/v3",
+          "path": ".opencode/agents/bounded.md",
+          "digest": "sha256:4da5ee1b237e29e3f24e6ad2ec49ecb9df6cf04fd434ed99ba2718a76f3a7239",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "colon",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "agents/colon.md",
+          "sourceDigest": "sha256:89cfd9750c6cd78419f7c04dc07bbc55508cbd9e43767be467bca82fefd1bd34",
+          "converter": "opencode/v3",
+          "path": ".opencode/agents/colon.md",
+          "digest": "sha256:c94dd7fedc12be1a06cf19aab88f1cf4941d295899c627c7f74b4ff0da104794",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "colon-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/colon-native.md",
+          "sourceDigest": "sha256:35d1f81dc452f8003feecba40b8e861f9bb90ba1dbba87c219cb1e540b5249d7",
+          "converter": "opencode/v3",
+          "path": ".opencode/agents/colon-native.md",
+          "digest": "sha256:3ee9936e34d741f026cb5e036a3622fb9f8368bc5c21a59c13b6487d3e232e0a",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "cu-native",
       "origin": "direct",
       "artifacts": [
@@ -37,6 +137,26 @@
           "converter": "opencode/v3",
           "path": ".opencode/agents/cx-native.md",
           "digest": "sha256:9ab72ec15b12b37bc7ab8c99cffd31ad4dfd49f65c9881d06f898593a00f4bdc",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "delegator",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/delegator.md",
+          "sourceDigest": "sha256:d55cbc4849ca6e3c63b9d2d51bd5489a1979c2f519369759a3dd2bd55b7d3bce",
+          "converter": "opencode/v3",
+          "path": ".opencode/agents/delegator.md",
+          "digest": "sha256:0386679b684d067907687784d9cb94b35f4f9d6de966a64385edfa089a240511",
           "requires": []
         }
       ]
@@ -105,6 +225,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "gh-plain",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".github/agents/gh-plain.md",
+          "sourceDigest": "sha256:00d467065c9f6ab9e2344d19d1262dd45ed81922b8d89907de43b5bc8a9e8fea",
+          "converter": "opencode/v3",
+          "path": ".opencode/agents/gh-plain.md",
+          "digest": "sha256:61897df0355e3f08a5ff72eb28151e74e4036191fe2ef96e864eb4bb08ac37ca",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "gm-native",
       "origin": "direct",
       "artifacts": [
@@ -136,6 +276,66 @@
           "converter": "opencode/v3",
           "path": ".opencode/agents/issue-reader.md",
           "digest": "sha256:174556f7405ed2b14233f965f7387f63ca38b9e557a6662c5771032de338c061",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "literal",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "agents/literal.md",
+          "sourceDigest": "sha256:b973b211d0f1640b3dec85aa413b974bd3a3bd92b362105f58b2044100ffdf23",
+          "converter": "opencode/v3",
+          "path": ".opencode/agents/literal.md",
+          "digest": "sha256:28b8d7a0e5ad94158144be7da53cc4a77221bc62f82c37f84122f41e0d23743d",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "mcp-wide",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/mcp-wide.md",
+          "sourceDigest": "sha256:f364f5a6fbed5ae66025777291f65b8f33e48ec39a3d09f9119ac30f9e054fb1",
+          "converter": "opencode/v3",
+          "path": ".opencode/agents/mcp-wide.md",
+          "digest": "sha256:5a61db0c986b368f8865eaf771b314c418442af0f811db860f877eedee49fe4e",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "no-shell",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/no-shell.md",
+          "sourceDigest": "sha256:63a2ad194c53901523f07f8f3ec3303517e950b53a482f2f2e13b84902d155f3",
+          "converter": "opencode/v3",
+          "path": ".opencode/agents/no-shell.md",
+          "digest": "sha256:668b6a941babae2672e7ad60cd840aa14deeb45d1f6a29a13e49519cc59bc358",
           "requires": []
         }
       ]
@@ -275,6 +475,26 @@
           "converter": "opencode/v3",
           "path": ".opencode/agents/tagged.md",
           "digest": "sha256:27e72323fba5fb6dba91c90c3916378ba682739ff9b42f706a180d25103f8654",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "web-searcher",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/web-searcher.md",
+          "sourceDigest": "sha256:445f4b734cae55d1068397452bb0a8ae3cdb891d2f5c18ce8014b6f2ff54ecde",
+          "converter": "opencode/v3",
+          "path": ".opencode/agents/web-searcher.md",
+          "digest": "sha256:9ea49a14f63c36f7edf42fb90122f6f8aae62211e8171a557cd1eea4255f9d13",
           "requires": []
         }
       ]

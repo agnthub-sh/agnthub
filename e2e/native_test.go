@@ -15,6 +15,8 @@ import (
 	"time"
 
 	"github.com/bytedance/sonic"
+
+	"github.com/agnthub-sh/agnthub/agent"
 )
 
 // missingAgent is an agent name no fixture defines; Harnesses that list their
@@ -22,17 +24,18 @@ import (
 const missingAgent = "agnthub-e2e-no-such-agent"
 
 // nativeContext is what a native check needs: where the Harness runs (the
-// project, or a directory outside it for user scope) and which agents agnthub
-// installed where.
+// project, or a directory outside it for user scope), which agents agnthub
+// reports installed where, and the omp profile to run in.
 type nativeContext struct {
-	scope  scope
-	dir    string
-	agents map[string]string
+	scope   scope
+	dir     string
+	agents  map[string]string
+	profile string
 }
 
 type nativeCheck func(t *testing.T, n nativeContext)
 
-// nativeChecks ask each real Harness, offline and without signing in, which
+// nativeChecks ask each real Harness CLI, offline and without signing in, which
 // agents it loads.
 var nativeChecks = map[string]nativeCheck{
 	"claude":   checkClaude,
@@ -44,10 +47,20 @@ var nativeChecks = map[string]nativeCheck{
 	"omp":      checkOMP,
 }
 
-func (s *suite) nativeContext(sc scope, res *result) nativeContext {
-	n := nativeContext{scope: sc, dir: projectDir, agents: res.plan.installed(s.harness)}
-	if sc == scopeGlobal {
+// nativeContext asks agnthub (agnthub list --json) what the step installed for
+// this Harness, so lifecycle steps are checked like installs.
+func (s *suite) nativeContext(t *testing.T, st step) nativeContext {
+	t.Helper()
+	n := nativeContext{
+		scope: st.native, dir: projectDir, agents: map[string]string{}, profile: st.ompProfile,
+	}
+	if st.native == scopeGlobal {
 		n.dir = elsewhereDir
+	}
+	for _, a := range s.installed(t, st.native == scopeGlobal) {
+		if st.ompProfile == "" || a.profile == st.ompProfile {
+			n.agents[a.agent] = a.path
+		}
 	}
 	return n
 }
@@ -108,6 +121,74 @@ func requireLoaded(t *testing.T, n nativeContext, loaded []string, output []byte
 	t.Logf("loaded all %d installed agents (%s scope)", len(n.agents), n.scope)
 }
 
+// describedAgents returns the agents a Harness listed whose description is the
+// one agnthub installed, so an agent shadowed by a built-in or another file of
+// the same name does not count as loaded. Cursor reads frontmatter values
+// verbatim, so a description YAML had to quote is listed with its quotes, which
+// agnthub accepts as the same description.
+func describedAgents(t *testing.T, n nativeContext, listed map[string]string) []string {
+	t.Helper()
+	var loaded []string
+	for id, path := range n.agents {
+		description, ok := listed[id]
+		if !ok {
+			continue
+		}
+		raw, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		doc, err := agent.ParseMarkdownLenient(path, raw)
+		if err != nil {
+			t.Fatalf("installed %s: %v", path, err)
+		}
+		want := oneLine(doc.String("description"))
+		if got := oneLine(description); got == want || unquoted(got) == want {
+			loaded = append(loaded, id)
+		} else {
+			t.Logf("%s: the Harness lists %q, agnthub installed %q", id, description,
+				doc.String("description"))
+		}
+	}
+	return loaded
+}
+
+func oneLine(s string) string { return strings.Join(strings.Fields(s), " ") }
+
+// unquoted strips one pair of matching YAML quotes.
+func unquoted(s string) string {
+	if len(s) >= 2 && s[0] == s[len(s)-1] && (s[0] == '"' || s[0] == '\'') {
+		return s[1 : len(s)-1]
+	}
+	return s
+}
+
+// jsonArray decodes the first line-leading JSON array in out into v.
+func jsonArray(out []byte, v any) bool {
+	for start := 0; start < len(out); {
+		i := bytes.IndexByte(out[start:], '[')
+		if i < 0 {
+			return false
+		}
+		at := start + i
+		if (at == 0 || out[at-1] == '\n') && sonic.Unmarshal(out[at:], v) == nil {
+			return true
+		}
+		start = at + 1
+	}
+	return false
+}
+
+// listedAgents collects name → description from every match of pattern
+// (two groups) in text.
+func listedAgents(pattern *regexp.Regexp, text string) map[string]string {
+	listed := map[string]string{}
+	for _, m := range pattern.FindAllStringSubmatch(text, -1) {
+		listed[m[1]] = m[2]
+	}
+	return listed
+}
+
 var claudeAgents = regexp.MustCompile(`Available agents: (.*)`)
 
 // checkClaude: Claude Code lists every agent it discovered when asked for an
@@ -128,26 +209,10 @@ var codexRole = regexp.MustCompile(`(?:Available roles:|\\n)([A-Za-z0-9_.-]+): \
 // load only from a trusted project.
 func checkCodex(t *testing.T, n nativeContext) {
 	codexHome := filepath.Join(homeDir, ".codex")
-	if err := os.MkdirAll(codexHome, 0o755); err != nil {
-		t.Fatal(err)
-	}
-	trust := "[projects.\"" + projectDir + "\"]\ntrust_level = \"trusted\"\n"
-	if err := os.WriteFile(
-		filepath.Join(codexHome, "config.toml"),
-		[]byte(trust),
-		0o644,
-	); err != nil {
-		t.Fatal(err)
-	}
-	out := harnessOutput(
-		t,
-		n,
-		[]string{"CODEX_HOME=" + codexHome},
-		"codex",
-		"debug",
-		"prompt-input",
-		"x",
-	)
+	writeFile(t, filepath.Join(codexHome, "config.toml"),
+		"[projects.\""+projectDir+"\"]\ntrust_level = \"trusted\"\n")
+	out := harnessOutput(t, n, []string{"CODEX_HOME=" + codexHome},
+		"codex", "debug", "prompt-input", "x")
 	_, roles, found := bytes.Cut(out, []byte("Available roles:"))
 	if !found {
 		t.Fatalf("codex rendered no custom agent roles:\n%s", out)
@@ -173,13 +238,9 @@ func checkOpenCode(t *testing.T, n nativeContext) {
 			ID string `json:"id"`
 		}
 		loaded = nil
-		if start := bytes.IndexByte(
-			out,
-			'[',
-		); start >= 0 &&
-			sonic.Unmarshal(out[start:], &agents) == nil {
-			for _, agent := range agents {
-				loaded = append(loaded, agent.ID)
+		if jsonArray(out, &agents) {
+			for _, a := range agents {
+				loaded = append(loaded, a.ID)
 			}
 		}
 		if allLoaded(n, loaded) {
@@ -216,123 +277,155 @@ func checkCopilot(t *testing.T, n nativeContext) {
 	requireLoaded(t, n, strings.Split(strings.TrimSpace(string(match[1])), ", "), out)
 }
 
-// checkGemini runs Gemini CLI's own agent loader and storage paths (see
-// testdata/checks/gemini.mjs): the installed agents must load from the directory
-// Gemini reads for that scope, with no loading error.
+// geminiSubagent is how Gemini CLI lists available subagents in its system
+// instruction: "- <name> -> <description>".
+var geminiSubagent = regexp.MustCompile(`(?m)^- ([a-z0-9_-]+) -> (.*)$`)
+
+// checkGemini runs Gemini CLI headless (-p) with an API key against the model
+// stub: its first model request lists the subagents it registered. Gemini CLI
+// registers a project agent only after the user acknowledged that file (it asks
+// on the next interactive start, keyed by the file's SHA-256); the check
+// acknowledges exactly the files agnthub installed, as that prompt would.
 func checkGemini(t *testing.T, n nativeContext) {
-	out := harnessOutput(t, n, nil, "node", checkScript(t, "gemini.mjs"))
-	var report map[string]struct {
-		Dir    string `json:"dir"`
-		Agents []struct {
-			Name string `json:"name"`
-		} `json:"agents"`
-		Errors []string `json:"errors"`
+	stub := startModelStub(t)
+	geminiDir := filepath.Join(homeDir, ".gemini")
+	writeFile(t, filepath.Join(geminiDir, "settings.json"),
+		`{"security":{"auth":{"selectedType":"gemini-api-key"}}}`)
+	if n.scope == scopeProject {
+		acknowledgeGeminiAgents(t, n.agents)
 	}
-	if err := sonic.Unmarshal(lastLine(out), &report); err != nil {
-		t.Fatalf("gemini loader: %v\n%s", err, out)
-	}
-	tier := report["project"]
-	if n.scope == scopeGlobal {
-		tier = report["user"]
-	}
-	for _, path := range n.agents {
-		if filepath.Dir(path) != tier.Dir {
-			t.Errorf(
-				"agnthub installed %s, but Gemini CLI reads %s agents from %s",
-				path,
-				n.scope,
-				tier.Dir,
-			)
+	out := harnessOutput(t, n, []string{
+		"GEMINI_API_KEY=agnthub-e2e",
+		"GOOGLE_GEMINI_BASE_URL=" + stub.url,
+		"GEMINI_CLI_TRUST_WORKSPACE=true",
+	}, "gemini", "-m", "gemini-2.5-flash", "-p", "x", "-o", "text")
+	for _, failure := range []string{"Agent loading error", "Error registering"} {
+		if bytes.Contains(out, []byte(failure)) {
+			t.Errorf("Gemini CLI reported %q:\n%s", failure, out)
 		}
 	}
-	if len(tier.Errors) > 0 {
-		t.Errorf("Gemini CLI reported loading errors: %v", tier.Errors)
+	var system strings.Builder
+	for _, req := range stub.received() {
+		if !strings.Contains(req.path, ":streamGenerateContent") {
+			continue
+		}
+		var body struct {
+			SystemInstruction struct {
+				Parts []struct {
+					Text string `json:"text"`
+				} `json:"parts"`
+			} `json:"systemInstruction"`
+		}
+		if err := sonic.Unmarshal(req.body, &body); err != nil {
+			t.Fatal(err)
+		}
+		for _, p := range body.SystemInstruction.Parts {
+			system.WriteString(p.Text)
+		}
+		break
 	}
-	loaded := make([]string, 0, len(tier.Agents))
-	for _, agent := range tier.Agents {
-		loaded = append(loaded, agent.Name)
+	if system.Len() == 0 {
+		t.Fatalf("Gemini CLI sent no model request:\n%s", out)
 	}
-	requireLoaded(t, n, loaded, out)
+	requireLoaded(t, n, describedAgents(t, n, listedAgents(geminiSubagent, system.String())), out)
 }
 
-// checkOMP runs omp's own agent discovery (see testdata/checks/omp.ts): each
-// installed agent must be found at the file agnthub wrote, not shadowed.
+// ompTaskAgent is how omp's task tool lists the agents it can run:
+// "- `<name>` (notes): <description>".
+var ompTaskAgent = regexp.MustCompile("(?m)^- `([^`]+)`(?: \\([^)]*\\))?: (.*)$")
+
+// checkOMP runs omp headless (-p) with a models.yml provider pointing at the
+// model stub, in the step's omp profile: the task tool of its first model
+// request lists every agent it discovered.
 func checkOMP(t *testing.T, n nativeContext) {
-	cli, err := exec.LookPath("omp")
-	if err != nil {
-		t.Fatal(err)
+	stub := startModelStub(t)
+	agentDir := filepath.Join(homeDir, ".omp", "agent")
+	args := []string{"-p", "--no-session", "--model", "stub/stub-model", "x"}
+	if n.profile != "" {
+		agentDir = filepath.Join(homeDir, ".omp", "profiles", n.profile, "agent")
+		args = append([]string{"--profile", n.profile}, args...)
 	}
-	cli, err = filepath.EvalSymlinks(cli)
-	if err != nil {
-		t.Fatal(err)
-	}
-	pkg := filepath.Dir(filepath.Dir(cli)) // <package>/dist/cli.js
-	out := harnessOutput(t, n, nil, "bun", checkScript(t, "omp.ts"), pkg)
-	var report struct {
-		Agents []struct {
-			Name     string `json:"name"`
-			FilePath string `json:"filePath"`
-		} `json:"agents"`
-	}
-	if err := sonic.Unmarshal(lastLine(out), &report); err != nil {
-		t.Fatalf("omp discovery: %v\n%s", err, out)
-	}
-	var loaded []string
-	for _, agent := range report.Agents {
-		if n.agents[agent.Name] == agent.FilePath {
-			loaded = append(loaded, agent.Name)
+	writeFile(t, filepath.Join(agentDir, "models.yml"), "providers:\n  stub:\n    baseUrl: "+
+		stub.url+"/v1\n    auth: none\n    api: openai-completions\n    models:\n      - id: stub-model\n")
+	out := harnessOutput(t, n, nil, "omp", args...)
+	description := ""
+	for _, req := range stub.received() {
+		if description = chatToolDescription(t, req, "task"); description != "" {
+			break
 		}
 	}
-	requireLoaded(t, n, loaded, out)
+	if description == "" {
+		t.Fatalf("omp sent no model request with its task tool:\n%s", out)
+	}
+	requireLoaded(t, n, describedAgents(t, n, listedAgents(ompTaskAgent, description)), out)
 }
 
-// checkCursor runs cursor-agent's own workspace subagent loader sliced out of its
-// bundle (see testdata/checks/cursor.cjs); every cursor-agent command needs a
-// signed-in account.
+// cursorSubagent is how Cursor's Task tool lists subagents: "- <name>: <description>".
+var cursorSubagent = regexp.MustCompile(`(?m)^- ([A-Za-z0-9_.-]+): (.*)$`)
+
+// checkCursor runs Cursor's agent CLI headless against the model stub. Every
+// cursor-agent command needs a signed-in account, so the check runs the same
+// release's agent-cli-local build (Cursor Private Inference, installed beside
+// cursor-agent in the image), which runs without Cursor auth (--authless)
+// against an OpenAI-compatible endpoint and shares cursor-agent's workspace
+// subagent loader: its Task tool lists the subagents it loaded.
 func checkCursor(t *testing.T, n nativeContext) {
-	if n.scope == scopeGlobal {
-		// Recorded in docs/research/harness-agent-formats.md: agnthub installs user
-		// agents where Cursor documents them (~/.cursor/agents), but cursor-agent
-		// only loads the workspace's .cursor, .claude and .grok agent folders.
-		t.Skip("cursor-agent loads no user-scope agents; ~/.cursor/agents is the editor's location")
-	}
-	cli, err := exec.LookPath("cursor-agent")
-	if err != nil {
-		t.Fatal(err)
-	}
-	cli, err = filepath.EvalSymlinks(cli)
-	if err != nil {
-		t.Fatal(err)
-	}
-	out := harnessOutput(t, n, nil, "node", checkScript(t, "cursor.cjs"), filepath.Dir(cli), n.dir)
-	var report struct {
-		Agents []struct {
-			Name     string `json:"name"`
-			FullPath string `json:"fullPath"`
-		} `json:"agents"`
-	}
-	if err := sonic.Unmarshal(lastLine(out), &report); err != nil {
-		t.Fatalf("cursor loader: %v\n%s", err, out)
-	}
-	var loaded []string
-	for _, agent := range report.Agents {
-		if n.agents[agent.Name] == agent.FullPath {
-			loaded = append(loaded, agent.Name)
+	stub := startModelStub(t)
+	out := harnessOutput(t, n, []string{"CURSOR_LOCAL_AGENT_BASE_URL=" + stub.url + "/v1"},
+		"cursor-agent-local", "--authless", "-p", "--trust", "--model", "stub-model", "x")
+	description := ""
+	for _, req := range stub.received() {
+		if description = chatToolDescription(t, req, "Task"); description != "" {
+			break
 		}
+	}
+	if description == "" {
+		t.Fatalf("cursor-agent-local sent no model request with its Task tool:\n%s", out)
+	}
+	loaded := describedAgents(t, n, listedAgents(cursorSubagent, description))
+	if reason, excluded := nativeExclusions["cursor"][string(n.scope)]; excluded {
+		if len(loaded) > 0 {
+			t.Errorf("Cursor's CLI now loads %s-scope agents %v; remove the nativeExclusions "+
+				"entry in coverage.go (%s)", n.scope, loaded, reason)
+			return
+		}
+		t.Logf("as recorded in nativeExclusions, Cursor's CLI loads none of the %d %s-scope agents",
+			len(n.agents), n.scope)
+		return
 	}
 	requireLoaded(t, n, loaded, out)
 }
 
-func checkScript(t *testing.T, name string) string {
+// chatToolDescription returns the description of the tool named name in a Chat
+// Completions request, or "".
+func chatToolDescription(t *testing.T, req stubRequest, name string) string {
 	t.Helper()
-	path, err := filepath.Abs(filepath.Join("testdata", "checks", name))
-	if err != nil {
+	if !strings.HasSuffix(req.path, "/chat/completions") {
+		return ""
+	}
+	var body struct {
+		Tools []struct {
+			Function struct {
+				Name        string `json:"name"`
+				Description string `json:"description"`
+			} `json:"function"`
+		} `json:"tools"`
+	}
+	if err := sonic.Unmarshal(req.body, &body); err != nil {
 		t.Fatal(err)
 	}
-	return path
+	for _, tool := range body.Tools {
+		if tool.Function.Name == name {
+			return tool.Function.Description
+		}
+	}
+	return ""
 }
 
-func lastLine(out []byte) []byte {
-	lines := bytes.Split(bytes.TrimSpace(out), []byte("\n"))
-	return lines[len(lines)-1]
+func writeFile(t *testing.T, path, content string) {
+	t.Helper()
+	mkdirAll(t, filepath.Dir(path))
+	if err := os.WriteFile(path, []byte(content), 0o644); err != nil {
+		t.Fatal(err)
+	}
 }

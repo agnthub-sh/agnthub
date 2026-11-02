@@ -15,6 +15,45 @@
   ],
   "items": [
     {
+      "agent": "broken",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "invalid",
+      "reason": "invalid claude variant .claude/agents/broken.md: .claude/agents/broken.md: frontmatter requires a description"
+    },
+    {
+      "agent": "gm-camel",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "cannot convert: invalid gemini variant .gemini/agents/gm-camel.md: Gemini CLI rejects \"mcpServers\" in a local agent"
+    },
+    {
+      "agent": "gm-mcp",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its gemini variant declares mcp_servers (MCP servers scoped to the agent), which claude cannot express"
+    },
+    {
       "agent": "modelled",
       "harness": "claude",
       "settings": {},
@@ -29,6 +68,7 @@
     }
   ],
   "summary": {
-    "incompatible": 1
+    "incompatible": 3,
+    "invalid": 1
   }
 }

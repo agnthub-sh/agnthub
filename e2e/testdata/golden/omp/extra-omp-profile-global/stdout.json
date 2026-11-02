@@ -1,0 +1,47 @@
+{
+  "status": "applied",
+  "scope": "global",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/companion"
+  },
+  "harnesses": [
+    {
+      "id": "omp",
+      "name": "omp",
+      "detected": true,
+      "settings": [
+        {
+          "key": "profile",
+          "value": "work",
+          "source": "explicit"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "agent": "companion",
+      "harness": "omp",
+      "settings": {
+        "profile": "work"
+      },
+      "effectiveSettings": {
+        "profile": "work"
+      },
+      "destination": "profile work",
+      "path": "/agnthub-e2e/home/.omp/profiles/work/agent/agents/companion.md",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "origin": "direct",
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 1
+  }
+}

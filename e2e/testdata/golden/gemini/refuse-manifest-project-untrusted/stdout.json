@@ -4,7 +4,7 @@
   "source": {
     "kind": "git",
     "locator": "localhost:8443/manifest.git",
-    "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+    "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
   },
   "harnesses": [
     {
@@ -41,7 +41,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+        "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
       },
       "origin": "direct",
       "action": "create",
@@ -62,7 +62,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+        "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
       },
       "origin": "direct",
       "action": "create",
@@ -82,7 +82,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "8e9d5f4bcf89b7bd429b85f3b655b00361a14038"
+        "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
       },
       "origin": "dependency",
       "requiredBy": [
@@ -103,7 +103,7 @@
         "kind": "git",
         "locator": "localhost:8443/companion.git",
         "ref": "v1",
-        "revision": "d44d9ad4d7b9f161791d47d5d820ec931baea53f"
+        "revision": "7baafb2b236dce93aac4d851eb49196b5ff5c534"
       },
       "origin": "dependency",
       "requiredBy": [

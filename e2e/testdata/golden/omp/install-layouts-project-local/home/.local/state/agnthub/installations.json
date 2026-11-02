@@ -2,8 +2,8 @@
   "version": 1,
   "records": [
     {
-      "path": "/agnthub-e2e/project/.omp/agents/broken.md",
-      "digest": "sha256:77cf7118ed525fa97f1cf1bc688fe6ee33bc4d9f02aa685e15255b9c886a9413",
+      "path": "/agnthub-e2e/project/.omp/agents/bom-native.md",
+      "digest": "sha256:10712619e6b57bb8220547f83f831e12d82648a884fce68f53abdd19d8bfb1b2",
       "harness": "omp",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -12,7 +12,52 @@
       },
       "destination": "project, shared by every omp profile; verify with default profile",
       "source": "local:/agnthub-e2e/src/layouts",
-      "agent": "broken",
+      "agent": "bom-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/bom.md",
+      "digest": "sha256:153b3d74ed17217d3add75e5a05821e72eeda1b02b4edfbe91542b1fa2adcb62",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "bom",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/colon-native.md",
+      "digest": "sha256:053a1c386fa65ce49ce0e7a0860d7c21f6f25d2ea527890cc71fa76c2531437d",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "colon-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/colon.md",
+      "digest": "sha256:ec277a9554a398e568c45ee3d061abd25e0e952506d01c5654be2e6c265f1c1f",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "colon",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -43,6 +88,21 @@
       "destination": "project, shared by every omp profile; verify with default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "cx-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/delegator.md",
+      "digest": "sha256:a34e86c6ae114dfc732c82dee32ced9e286e3fdfa889d4aa632a4f3d1bb45cf6",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "delegator",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -92,6 +152,21 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.omp/agents/gh-plain.md",
+      "digest": "sha256:4e30d98ac8fd30109286da4a99c501467105ff3a4e8deb3ba19714a70bdc3f78",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "gh-plain",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.omp/agents/gm-native.md",
       "digest": "sha256:beabd83f6ba4a9baa4a2c815607d7cf2399a0ecc326f1ca869cce53fa9837a62",
       "harness": "omp",
@@ -118,6 +193,51 @@
       "destination": "project, shared by every omp profile; verify with default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "issue-reader",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/literal.md",
+      "digest": "sha256:a378de546edf844a868e42125c07f521c84f9cd546e6b742c56b508905e5392a",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "literal",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/mcp-wide.md",
+      "digest": "sha256:777a16ec9aca50dd0bac1e664d34a19f3de11ac320791be7a853d93557ad87c7",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "mcp-wide",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/no-shell.md",
+      "digest": "sha256:c896ffde57a374fbdbd54d8930cdb2efa566308f4d3204cb92a3f5c643606268",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "no-shell",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -223,6 +343,21 @@
       "destination": "project, shared by every omp profile; verify with default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/web-searcher.md",
+      "digest": "sha256:59f7971e97c20ac86debecf8f158b453d9ae637437ff18b91a9a48b1d787616a",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "web-searcher",
       "origin": "direct",
       "installedAt": "<time>"
     }

@@ -30,47 +30,65 @@ CI runs the same checks on every push and pull request.
 
 ## End-to-end suite
 
-`e2e/` is the regression suite that proves every supported layout installs exactly as
+`e2e/` is the regression suite that proves every supported agent type installs exactly as
 expected into each real Harness, and keeps proving it as Harnesses release new versions.
-For each of the seven Harnesses it builds a container (`e2e/Dockerfile`, target
-`e2e-<harness>`) with that Harness's CLI at a pinned version, skills.sh, and the `agnthub`
-and e2e test binaries built from your checkout, then runs the suite offline
-(`--network none`):
+[e2e/COVERAGE.md](e2e/COVERAGE.md) is its coverage matrix: every scenario × Harness, with
+scope, source and what each cell proves. For each of the seven Harnesses it builds a
+container (`e2e/Dockerfile`, target `e2e-<harness>`) holding only that Harness's CLI at a
+pinned version, skills.sh, and the `agnthub` and e2e test binaries built from your
+checkout, then runs the suite offline (`--network none`):
 
 1. The fixture repositories in `e2e/testdata/fixtures/` are published as Git repositories
    served over HTTPS on the container's loopback (`https://localhost:8443/<name>.git`), and
    also used as local directories, so both source paths are exercised. `layouts` covers the
-   portable layouts (root `AGENT.md`, `agents/<id>.md`, `agents/<id>/AGENT.md`), every
-   Harness's native directory and suffix, native-over-portable Variant precedence, an
-   invalid native Variant, unusual frontmatter (unquoted colons, folded descriptions,
-   Unicode, CRLF), harmless metadata, tool lists that convert or refuse and MCP tool
-   references. `ambiguous` has duplicate identities; `manifest` is an `agnthub.yaml` with
-   Variants, same-repository, external (`companion`) and Variant-only Agent Dependencies
-   and a Skill Dependency on `skills`.
-2. Each step runs `agnthub add … --json` in a fresh project and home and compares the exit
-   status, stderr, stdout and every file written to the project and home (bytes and modes)
-   with `e2e/testdata/golden/<harness>/<step>/`. Refusals and plans must write nothing.
-3. After each install the real Harness is asked, without a model call or a login, which
-   agents it loads: `claude -p --agent <unknown>` (lists agents), `codex debug
-   prompt-input` (custom agents appear as roles; the project is trusted in a temporary
-   `CODEX_HOME`), `opencode debug agents`, `copilot -p x --agent <unknown>` (with a dummy
-   BYOK provider that is never contacted), and, for the Harnesses without such a command,
-   their own shipped loader code: Gemini CLI's `loadAgentsFromDirectory` with its storage
-   paths, omp's `discoverAgents`, and cursor-agent's workspace subagent loader (see
-   `e2e/testdata/checks/`). cursor-agent does not load user-scope agents, so that check is
-   skipped for global installs.
+   portable layouts, every Harness's native directory and suffix, Variant precedence,
+   invalid Variants, frontmatter edge cases (unquoted colons, BOM, CRLF, folded and
+   literal descriptions, Unicode), metadata, tool restrictions and MCP references that
+   convert or refuse, model fields and turn/background limits. `ambiguous` has duplicate
+   identities; `manifest` is an `agnthub.yaml` with Variants, same-repository, external
+   (`companion`) and Variant-only Agent Dependencies, a Skill Dependency on `skills` and an
+   agent whose every Variant is invalid; `evolving` gets a second revision
+   (`e2e/testdata/revisions/`) that a step publishes by moving its `v1` tag, for `check`,
+   `update` and `restore`.
+2. Each step runs agnthub in a fresh project and home (after recorded setup actions such
+   as an install, a local edit or a moved tag) and compares the exit status, stderr, stdout
+   and every file written to the project and home (bytes and modes) with
+   `e2e/testdata/golden/<harness>/<step>/`. Refusals, plans, `list` and `check` must
+   change nothing, and a step that selects one Harness may write only that Harness's
+   directories and agnthub's own files. The image itself must hold no other Harness.
+3. After each install the real Harness CLI is asked, without a login, which agents it
+   loaded: `claude -p --agent <unknown>`, `codex debug prompt-input`, `opencode debug
+   agents`, `copilot -p x --agent <unknown>` (dummy BYOK provider, never contacted), and,
+   for Gemini CLI, omp and Cursor, a headless run against a model stub on the loopback
+   whose first request lists the loaded subagents (Cursor through the same release's
+   agent-cli-local build, since every `cursor-agent` command needs an account). Details
+   per Harness are in [e2e/COVERAGE.md](e2e/COVERAGE.md).
 
 ```sh
 make e2e                              # every Harness
 make e2e HARNESS=claude               # one Harness (several: HARNESS="claude codex")
 make e2e-update HARNESS=claude        # rewrite its goldens from this run
 E2E_BUILD_ARGS="--pull --no-cache --build-arg CLAUDE_VERSION=latest" make e2e HARNESS=claude
+make e2e-live HARNESS=claude          # live tier: run the installed agent with a real model
+go test ./e2e -run TestCoverage -update-coverage   # regenerate the matrix in e2e/COVERAGE.md
 ```
 
-`go test ./...` does not run the suite: its tests carry the `e2e` build tag and skip
-outside their container. When a change alters what agnthub installs, run `make
-e2e-update` and review the golden diff like code: it is the exact change users get. Add a
-fixture or step for every new layout, field or Harness behavior.
+`go test ./...` does not run the containerized suite (its tests carry the `e2e` build tag
+and skip outside their container), but it runs `TestCoverage`, the coverage guard: it
+fails when a supported Harness has no image or CI job, when a step has no golden, when a
+(scenario, Harness) cell in [e2e/coverage.go](e2e/coverage.go) has neither a golden
+proving it nor a justified exclusion, or when `e2e/COVERAGE.md` is stale. When a change
+alters what agnthub installs, run `make e2e-update` and review the golden diff like code:
+it is the exact change users get. Add a fixture, a step and a scenario for every new
+layout, field or Harness behavior.
+
+The live tier (`make e2e-live`, `TestLive`) installs `e2e/testdata/fixtures/live` and runs
+the installed agent with a real, cheap model, asserting a token only that agent's
+instructions contain. It needs the network and each Harness's secret
+(`OPENROUTER_API_KEY` for Claude Code, OpenCode, Codex, Copilot CLI and omp;
+`GEMINI_API_KEY`; `CURSOR_API_KEY`), passed to the container by name; a Harness without its
+secret is skipped. The [E2E live workflow](.github/workflows/e2e-live.yml) runs it nightly
+and on demand with the repository secrets of the same names, never for pull requests.
 
 The [E2E workflow](.github/workflows/e2e.yml) runs the suite per Harness on every push and
 pull request at the pinned versions, and nightly with each Harness's latest release. A

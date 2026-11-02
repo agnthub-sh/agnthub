@@ -6,17 +6,113 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
-      "agent": "broken",
+      "agent": "backgrounder",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/backgrounder.md",
+          "sourceDigest": "sha256:db764d016ee2d92946ed60cf836c8b3fc1f08052face2ee6fc019dbb27de0bc2",
+          "path": ".claude/agents/backgrounder.md",
+          "digest": "sha256:db764d016ee2d92946ed60cf836c8b3fc1f08052face2ee6fc019dbb27de0bc2",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "bom",
       "origin": "direct",
       "artifacts": [
         {
           "harness": "claude",
           "variant": "generated",
-          "sourcePath": "agents/broken.md",
-          "sourceDigest": "sha256:77cf7118ed525fa97f1cf1bc688fe6ee33bc4d9f02aa685e15255b9c886a9413",
+          "sourcePath": "agents/bom.md",
+          "sourceDigest": "sha256:4a06ac5e6bf431ff6070e79391195c1ff4e3c7e8f0b093dbfa06fb32e692f629",
           "converter": "claude/v3",
-          "path": ".claude/agents/broken.md",
-          "digest": "sha256:77cf7118ed525fa97f1cf1bc688fe6ee33bc4d9f02aa685e15255b9c886a9413",
+          "path": ".claude/agents/bom.md",
+          "digest": "sha256:153b3d74ed17217d3add75e5a05821e72eeda1b02b4edfbe91542b1fa2adcb62",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "bom-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/bom-native.md",
+          "sourceDigest": "sha256:4625951c9f6cb88f9476953c5a7dcb191bb1ccb2ff8ad6bbdd98a2c9baeb593c",
+          "path": ".claude/agents/bom-native.md",
+          "digest": "sha256:4625951c9f6cb88f9476953c5a7dcb191bb1ccb2ff8ad6bbdd98a2c9baeb593c",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "bounded",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/bounded.md",
+          "sourceDigest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
+          "path": ".claude/agents/bounded.md",
+          "digest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "colon",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": "agents/colon.md",
+          "sourceDigest": "sha256:89cfd9750c6cd78419f7c04dc07bbc55508cbd9e43767be467bca82fefd1bd34",
+          "converter": "claude/v3",
+          "path": ".claude/agents/colon.md",
+          "digest": "sha256:ec277a9554a398e568c45ee3d061abd25e0e952506d01c5654be2e6c265f1c1f",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "colon-native",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/colon-native.md",
+          "sourceDigest": "sha256:35d1f81dc452f8003feecba40b8e861f9bb90ba1dbba87c219cb1e540b5249d7",
+          "path": ".claude/agents/colon-native.md",
+          "digest": "sha256:35d1f81dc452f8003feecba40b8e861f9bb90ba1dbba87c219cb1e540b5249d7",
           "requires": []
         }
       ]
@@ -57,6 +153,25 @@
           "converter": "claude/v3",
           "path": ".claude/agents/cx-native.md",
           "digest": "sha256:a9420ff7e4667ff482eb69e93ec11b1e78bc48f0a2607f59d47e81e3fa80980f",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "delegator",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/delegator.md",
+          "sourceDigest": "sha256:d55cbc4849ca6e3c63b9d2d51bd5489a1979c2f519369759a3dd2bd55b7d3bce",
+          "path": ".claude/agents/delegator.md",
+          "digest": "sha256:d55cbc4849ca6e3c63b9d2d51bd5489a1979c2f519369759a3dd2bd55b7d3bce",
           "requires": []
         }
       ]
@@ -124,6 +239,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "gh-plain",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": ".github/agents/gh-plain.md",
+          "sourceDigest": "sha256:00d467065c9f6ab9e2344d19d1262dd45ed81922b8d89907de43b5bc8a9e8fea",
+          "converter": "claude/v3",
+          "path": ".claude/agents/gh-plain.md",
+          "digest": "sha256:77f4918d0c38d5e36897fcd53e215a65db5d37ae837677e7716d362824a673eb",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "gm-native",
       "origin": "direct",
       "artifacts": [
@@ -173,6 +308,64 @@
           "sourceDigest": "sha256:c5cf513142027c5ce8dcbea7dfacadf3fd23fbd5e748c9fc999dd1fd00902358",
           "path": ".claude/agents/issue-reader.md",
           "digest": "sha256:c5cf513142027c5ce8dcbea7dfacadf3fd23fbd5e748c9fc999dd1fd00902358",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "literal",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": "agents/literal.md",
+          "sourceDigest": "sha256:b973b211d0f1640b3dec85aa413b974bd3a3bd92b362105f58b2044100ffdf23",
+          "converter": "claude/v3",
+          "path": ".claude/agents/literal.md",
+          "digest": "sha256:a378de546edf844a868e42125c07f521c84f9cd546e6b742c56b508905e5392a",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "mcp-wide",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/mcp-wide.md",
+          "sourceDigest": "sha256:f364f5a6fbed5ae66025777291f65b8f33e48ec39a3d09f9119ac30f9e054fb1",
+          "path": ".claude/agents/mcp-wide.md",
+          "digest": "sha256:f364f5a6fbed5ae66025777291f65b8f33e48ec39a3d09f9119ac30f9e054fb1",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "no-shell",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/no-shell.md",
+          "sourceDigest": "sha256:63a2ad194c53901523f07f8f3ec3303517e950b53a482f2f2e13b84902d155f3",
+          "path": ".claude/agents/no-shell.md",
+          "digest": "sha256:63a2ad194c53901523f07f8f3ec3303517e950b53a482f2f2e13b84902d155f3",
           "requires": []
         }
       ]
@@ -312,6 +505,25 @@
           "converter": "claude/v3",
           "path": ".claude/agents/tagged.md",
           "digest": "sha256:ae21c1e2605ac84b36d9a0c26c183998cac584ef45e006af52b7f9316d6f23a0",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "web-searcher",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/web-searcher.md",
+          "sourceDigest": "sha256:445f4b734cae55d1068397452bb0a8ae3cdb891d2f5c18ce8014b6f2ff54ecde",
+          "path": ".claude/agents/web-searcher.md",
+          "digest": "sha256:445f4b734cae55d1068397452bb0a8ae3cdb891d2f5c18ce8014b6f2ff54ecde",
           "requires": []
         }
       ]

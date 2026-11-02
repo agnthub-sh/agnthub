@@ -1,0 +1,2 @@
+$ GEMINI_CLI_TRUST_WORKSPACE=true agnthub add /agnthub-e2e/src/manifest --agent lead --agent native-only --harness gemini --yes --json
+exit status: 0

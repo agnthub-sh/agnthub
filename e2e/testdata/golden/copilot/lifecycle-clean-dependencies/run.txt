@@ -1,0 +1,38 @@
+$ agnthub add https://localhost:8443/manifest.git --agent lead --harness copilot --yes
+exit status: 0
+--- stdout
+Installed · project scope · from localhost:8443/manifest.git @ 23ce82da4602
+  Harnesses
+    copilot   GitHub Copilot CLI  detected
+  Skills
+    e2e-skill  >=1.0.0 <=2.0.0 from localhost:8443/skills.git#v1.0.0, required by lead
+      + install      copilot   1.4.0      /agnthub-e2e/project/.agents/skills/e2e-skill
+          project .agents/skills
+          runs skills add 'https://localhost:8443/skills.git#21f36aec981afd5f3a2141ea1d52b9ca2f691f48' --skill e2e-skill --agent github-copilot --yes
+  Skill installer runs
+    e2e-skill for copilot: ok
+      skills add 'https://localhost:8443/skills.git#21f36aec981afd5f3a2141ea1d52b9ca2f691f48' --skill e2e-skill --agent github-copilot --yes
+  Changes observed in skill locations
+    created  /agnthub-e2e/project/.agents/skills/e2e-skill
+    created  /agnthub-e2e/project/skills-lock.json
+  Agents
+    lead
+      + create       copilot   generated  /agnthub-e2e/project/.github/agents/lead.agent.md
+          project
+    helper  dependency of lead, from localhost:8443/manifest.git @ 23ce82da4602
+      + create       copilot   generated  /agnthub-e2e/project/.github/agents/helper.agent.md
+          project
+    companion  dependency of lead, from localhost:8443/companion.git#v1 @ 7baafb2b236d
+      + create       copilot   generated  /agnthub-e2e/project/.github/agents/companion.agent.md
+          project
+  3 create  ·  skills: 1 install
+$ agnthub remove lead --yes
+exit status: 0
+--- stdout
+Remove: done · project scope · agnthub-lock.json
+  removed   lead                       copilot  .github/agents/lead.agent.md
+Dependencies stay installed: companion (agent), helper (agent), e2e-skill (skill)
+  clean up the ones no longer required with: agnthub remove --clean-dependencies
+Summary: 1 removed
+$ agnthub remove --clean-dependencies --yes --json
+exit status: 0

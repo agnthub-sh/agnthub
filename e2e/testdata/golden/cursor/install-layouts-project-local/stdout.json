@@ -15,6 +15,77 @@
   ],
   "items": [
     {
+      "agent": "backgrounder",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/backgrounder.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/backgrounder.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "bom",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/bom.md",
+      "variant": "generated",
+      "sourcePath": "agents/bom.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "colon",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/colon.md",
+      "variant": "generated",
+      "sourcePath": "agents/colon.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "colon-native",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/colon-native.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/colon-native.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent"
+      ]
+    },
+    {
       "agent": "cu-native",
       "harness": "cursor",
       "settings": {},
@@ -29,6 +100,26 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "delegator",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/delegator.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/delegator.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, but Cursor cannot withhold them from an agent"
+      ]
     },
     {
       "agent": "dual",
@@ -88,6 +179,26 @@
       ]
     },
     {
+      "agent": "gh-plain",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/gh-plain.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-plain.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent"
+      ]
+    },
+    {
       "agent": "gm-native",
       "harness": "cursor",
       "settings": {},
@@ -106,6 +217,22 @@
         "converted from the gemini variant",
         "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent"
       ]
+    },
+    {
+      "agent": "literal",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/literal.md",
+      "variant": "generated",
+      "sourcePath": "agents/literal.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
     },
     {
       "agent": "oc-native",
@@ -215,6 +342,6 @@
     }
   ],
   "summary": {
-    "create": 11
+    "create": 18
   }
 }

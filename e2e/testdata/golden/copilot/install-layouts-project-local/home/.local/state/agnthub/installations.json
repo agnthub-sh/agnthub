@@ -2,6 +2,54 @@
   "version": 1,
   "records": [
     {
+      "path": "/agnthub-e2e/project/.github/agents/bom-native.agent.md",
+      "digest": "sha256:10712619e6b57bb8220547f83f831e12d82648a884fce68f53abdd19d8bfb1b2",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "bom-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/bom.agent.md",
+      "digest": "sha256:153b3d74ed17217d3add75e5a05821e72eeda1b02b4edfbe91542b1fa2adcb62",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "bom",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/colon-native.agent.md",
+      "digest": "sha256:d0ec2110dd6f67f1d19fd8d9b0e715b110da7f1149c19549eb5db944c7dc02f0",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "colon-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/colon.agent.md",
+      "digest": "sha256:ec277a9554a398e568c45ee3d061abd25e0e952506d01c5654be2e6c265f1c1f",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "colon",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.github/agents/cx-native.agent.md",
       "digest": "sha256:41d232a0e2f5fcd0f345c6bb85dbb29da3a0f3ae048e766e007239c4ff37d06a",
       "harness": "copilot",
@@ -10,6 +58,18 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "cx-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/delegator.agent.md",
+      "digest": "sha256:6a6960b843ed2efe9bc102edcc1a808da5edade76be4798f4dc78e67d82940d3",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "delegator",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -50,6 +110,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.github/agents/gh-plain.agent.md",
+      "digest": "sha256:00d467065c9f6ab9e2344d19d1262dd45ed81922b8d89907de43b5bc8a9e8fea",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "gh-plain",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.github/agents/gm-native.agent.md",
       "digest": "sha256:25749cf40f61bde1fbd3935f448e382c07271a4863fd943b2e5de841b2b5c5e0",
       "harness": "copilot",
@@ -70,6 +142,30 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "issue-reader",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/literal.agent.md",
+      "digest": "sha256:a378de546edf844a868e42125c07f521c84f9cd546e6b742c56b508905e5392a",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "literal",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/no-shell.agent.md",
+      "digest": "sha256:93dc7c41704cf941425eb56a648b0ad48778de9447751cb3bd1d897993824558",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "no-shell",
       "origin": "direct",
       "installedAt": "<time>"
     },

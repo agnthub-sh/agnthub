@@ -1,0 +1,74 @@
+$ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness gemini --global --yes
+exit status: 0
+--- stdout
+Installed · global scope · from localhost:8443/evolving.git#v1 @ 5286a739a333
+  Harnesses
+    gemini    Gemini CLI          detected
+  Agents
+    drifter
+      + create       gemini    generated  /agnthub-e2e/home/.gemini/agents/drifter.md
+          user
+  1 create
+$ agnthub list --global --json
+exit status: 0
+--- stdout
+[
+  {
+    "agent": "drifter",
+    "source": {
+      "kind": "git",
+      "locator": "localhost:8443/evolving.git",
+      "ref": "v1",
+      "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
+    },
+    "origin": "direct",
+    "artifacts": [
+      {
+        "harness": "gemini",
+        "variant": "generated",
+        "path": "/agnthub-e2e/home/.gemini/agents/drifter.md",
+        "status": "ok",
+        "bindings": [
+          {}
+        ]
+      }
+    ]
+  }
+]
+$ agnthub check --global --json
+exit status: 0
+--- stdout
+{
+  "command": "check",
+  "lock": "/agnthub-e2e/home/.config/agnthub/global-lock.json",
+  "agents": [
+    {
+      "agent": "drifter",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/evolving.git",
+        "ref": "v1",
+        "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
+      },
+      "origin": "direct",
+      "status": "up-to-date",
+      "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e",
+      "drift": false,
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "path": "/agnthub-e2e/home/.gemini/agents/drifter.md",
+          "variant": "generated",
+          "change": "unchanged",
+          "local": "ok",
+          "bindings": []
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "up-to-date": 1
+  }
+}
+$ agnthub remove drifter --global --yes --json
+exit status: 0

@@ -1,0 +1,8 @@
+name = "cx-native"
+description = "Codex-native agent without the shell."
+developer_instructions = """
+Explain the code without running commands.
+"""
+
+[features]
+shell_tool = false

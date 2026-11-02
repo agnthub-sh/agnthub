@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/companion --agent companion --harness omp --global --extra omp.profile=work --yes --json
+exit status: 1

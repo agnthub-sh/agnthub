@@ -1,0 +1,49 @@
+$ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness claude --yes
+exit status: 0
+--- stdout
+Installed · project scope · from localhost:8443/evolving.git#v1 @ 5286a739a333
+  Harnesses
+    claude    Claude Code         detected
+  Agents
+    drifter
+      + create       claude    generated  /agnthub-e2e/project/.claude/agents/drifter.md
+          project
+  1 create
+# move tag v1 of evolving.git to its next revision
+$ agnthub check --json
+exit status: 0
+--- stdout
+{
+  "command": "check",
+  "lock": "agnthub-lock.json",
+  "agents": [
+    {
+      "agent": "drifter",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/evolving.git",
+        "ref": "v1",
+        "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
+      },
+      "origin": "direct",
+      "status": "update-available",
+      "revision": "c46127b4737635d713c65463fd0376cf617e9494",
+      "drift": false,
+      "artifacts": [
+        {
+          "harness": "claude",
+          "path": "/agnthub-e2e/project/.claude/agents/drifter.md",
+          "variant": "generated",
+          "change": "content",
+          "local": "ok",
+          "bindings": []
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "update-available": 1
+  }
+}
+$ agnthub update --yes --json
+exit status: 0

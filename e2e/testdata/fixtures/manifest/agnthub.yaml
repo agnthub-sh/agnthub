@@ -30,3 +30,20 @@ agents:
     variants:
       claude:
         path: native/claude/native-only.md
+  strict:
+    portable: agents/strict.md
+    variants:
+      claude:
+        path: native/claude/strict.md
+      opencode:
+        path: native/opencode/strict.md
+      codex:
+        path: native/codex/strict.toml
+      copilot:
+        path: native/copilot/strict.agent.md
+      cursor:
+        path: native/cursor/strict.md
+      gemini:
+        path: native/gemini/strict.md
+      omp:
+        path: native/omp/strict.md
