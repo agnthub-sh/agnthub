@@ -136,7 +136,7 @@ Client configuration (use `agnthub mcp` instead of `npx -y agnthub-cli mcp` with
 - GitHub Copilot CLI (`~/.copilot/mcp-config.json`):
 
   ```json
-  { "mcpServers": { "agnthub": { "type": "local", "command": "npx", "args": ["-y", "agnthub", "mcp"], "tools": ["*"] } } }
+  { "mcpServers": { "agnthub": { "type": "local", "command": "npx", "args": ["-y", "agnthub-cli", "mcp"], "tools": ["*"] } } }
   ```
 
 Development: see [CONTRIBUTING](../CONTRIBUTING.md).
