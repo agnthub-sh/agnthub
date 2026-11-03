@@ -122,6 +122,9 @@ var stepSpecs = map[string]stepSpec{
 	"install-marketplace-global-git":    {scope: scopeUser, source: sourceGit, native: true},
 	stepRefuseMkt:                       {scope: scopeProj, source: sourceLocal},
 
+	"list-large":                {scope: scopeNone, source: sourceGit},
+	"install-large-project-git": {scope: scopeProj, source: sourceGit, native: true},
+
 	"select-harness-all": {scope: scopeProj, source: sourceLocal, native: true},
 	"select-agent-star":  {scope: scopeProj, source: sourceLocal, native: true},
 	"select-all":         {scope: scopeProj, source: sourceLocal, native: true},
@@ -319,6 +322,16 @@ var scenarios = []scenario{
 		"mk-guarded"),
 	plugin("plugin-root-variable",
 		"instructions that use `${CLAUDE_PLUGIN_ROOT}` need their plugin: refused", "mk-rooted"),
+
+	{
+		id: "source-large", group: "Sources",
+		title: "repository too large to fetch whole (20 MiB of other files, a 4 MiB binary): " +
+			"listed and installed from its trees and candidate files, under 1 MiB fetched",
+		agent: "large-probe",
+		all: evidence{
+			steps: []string{"list-large"}, install: []string{"install-large-project-git"},
+		},
+	},
 
 	conversion("Variants and conversion", "variant-precedence",
 		"authored native Variant wins over conversion (portable + Claude + OpenCode)", "dual"),

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/fs"
 	"path"
-	"slices"
 	"strings"
 
 	"github.com/bytedance/sonic"
@@ -59,64 +58,14 @@ type pluginRef struct {
 	origin string
 }
 
-// PluginPaths are the files plugin discovery reads beyond its manifests.
-type PluginPaths struct {
-	// Files are the agent files plugins list in their agents fields.
-	Files []string
-	// Dirs are the agents directories of plugins without an agents field; every
-	// .md file below one, at any depth, is read.
-	Dirs []string
-}
-
-// Contains reports whether discovery reads name as a plugin agent.
-func (p *PluginPaths) Contains(name string) bool {
-	if slices.Contains(p.Files, name) {
-		return true
-	}
-	if !strings.HasSuffix(name, ".md") {
-		return false
-	}
-	for _, dir := range p.Dirs {
-		if strings.HasPrefix(name, dir+"/") {
-			return true
-		}
-	}
-	return false
-}
-
-// IsPluginManifest reports whether name is a file plugin discovery may read
-// before it knows the repository's plugins: the root marketplace and any
-// plugin manifest.
-func IsPluginManifest(name string) bool {
-	return name == MarketplaceFile || name == PluginManifestFile ||
-		strings.HasSuffix(name, "/"+PluginManifestFile)
-}
-
-// ListPluginPaths reads only the plugin manifests of tree and returns the agent
-// files and directories Discover would read for them, without reading those.
-// A caller that retains only some files of a snapshot (an archive streamed
-// once) retains the manifests (IsPluginManifest), lists the paths, then
-// retains them too. Directories a partial tree does not show are assumed to
-// exist. Problems are left to Discover; only budget failures are errors.
-func ListPluginPaths(tree source.Tree, limits Limits) (*PluginPaths, error) {
-	s := &scanner{tree: tree, limits: limits, claimed: map[string]bool{}, listing: &PluginPaths{}}
-	if _, err := s.pluginCandidates(); err != nil {
-		return nil, err
-	}
-	return s.listing, nil
-}
-
 // pluginCandidates reads the Claude Code plugins a repository packages: those
 // its marketplace lists with a source inside the repository, and the root
 // plugin. Their agents are Claude Code native files. Remote plugin sources are
 // never fetched; they are reported as problems.
 func (s *scanner) pluginCandidates() ([]candidate, error) {
-	var claude harness.Adapter
-	if s.listing == nil {
-		var ok bool
-		if claude, ok = s.registry.Get(agent.Claude); !ok {
-			return nil, nil
-		}
+	claude, ok := s.registry.Get(agent.Claude)
+	if !ok {
+		return nil, nil
 	}
 	refs, err := s.marketplacePlugins()
 	if err != nil {
@@ -197,6 +146,9 @@ func (s *scanner) readPluginJSON(name string, out any) (bool, error) {
 func (s *scanner) marketplacePlugins() ([]pluginRef, error) {
 	var market marketplaceManifest
 	ok, err := s.readPluginJSON(MarketplaceFile, &market)
+	if errors.Is(err, errDeferred) {
+		return nil, nil // planning: its plugins are known once it is fetched
+	}
 	if err != nil || !ok {
 		return nil, err
 	}
@@ -255,8 +207,6 @@ func (s *scanner) entryRoot(label string, src any, pluginRoot string) (string, b
 		}
 		entry, err := s.tree.Stat(root)
 		switch {
-		case errors.Is(err, fs.ErrNotExist) && s.listing != nil:
-			return root, true // a partial tree omits directories it retained nothing from
 		case errors.Is(err, fs.ErrNotExist):
 			s.problem(MarketplaceFile, "%s: source %q not found", label, src)
 			return "", false
@@ -315,6 +265,9 @@ func (s *scanner) pluginAgents(claude harness.Adapter, ref pluginRef) ([]candida
 	manifestPath := path.Join(ref.root, PluginManifestFile)
 	var manifest pluginManifest
 	hasManifest, err := s.readPluginJSON(manifestPath, &manifest)
+	if errors.Is(err, errDeferred) {
+		return nil, nil // planning: its agents are known once it is fetched
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -350,12 +303,7 @@ func (s *scanner) pluginAgents(claude harness.Adapter, ref pluginRef) ([]candida
 		paths, declared = append(paths, entryPaths...), true
 	}
 	if !declared {
-		dir := path.Join(ref.root, pluginAgentsDir)
-		if s.listing != nil {
-			s.listing.Dirs = append(s.listing.Dirs, dir)
-			return nil, nil
-		}
-		return s.pluginAgentsDir(claude, name, dir)
+		return s.pluginAgentsDir(claude, name, path.Join(ref.root, pluginAgentsDir))
 	}
 	var found []candidate
 	for _, rel := range paths {
@@ -368,10 +316,6 @@ func (s *scanner) pluginAgents(claude harness.Adapter, ref pluginRef) ([]candida
 		}
 		if reason != "" {
 			s.problem(manifestPath, "plugin %q: agents path %q %s", name, rel, reason)
-			continue
-		}
-		if s.listing != nil {
-			s.listing.Files = append(s.listing.Files, full)
 			continue
 		}
 		c, err := s.pluginAgentFile(claude, name, full)
@@ -468,6 +412,9 @@ func (s *scanner) pluginAgentFile(
 		return nil, err
 	}
 	raw, err := s.read(name)
+	if errors.Is(err, errDeferred) {
+		return nil, nil
+	}
 	if err != nil {
 		if errors.Is(err, ErrBudgetExceeded) {
 			return nil, err

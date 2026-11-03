@@ -99,6 +99,7 @@ func TestHarness(t *testing.T) {
 	s.layouts(t)
 	s.manifest(t)
 	s.marketplace(t)
+	s.large(t)
 	s.selection(t)
 	s.lifecycle(t)
 
@@ -248,6 +249,26 @@ func (s *suite) marketplace(t *testing.T) {
 		name: stepRefuseMkt, refused: true,
 		args: argv("add", local, agentFlags(refused), h, "--yes", "--json"),
 	})
+}
+
+// large: a repository whose whole fetch exceeds the CLI's budget (20 MiB of
+// files that are not agents beside a binary above the per-file limit) is
+// fetched sparsely, its trees and then only the files discovery reads, and its
+// agent lists and installs like any other.
+func (s *suite) large(t *testing.T) {
+	git, h := gitBase+largeFixture+".git", s.harnessFlag()
+	uploads.reset()
+	s.run(t, step{
+		name: "list-large", planOnly: true,
+		args: argv("add", git, "--list", "--json"),
+	})
+	uploads.requireSparse(t)
+	uploads.reset()
+	s.run(t, step{
+		name: "install-large-project-git", native: scopeProject,
+		args: argv("add", git, "--agent", "large-probe", h, "--yes", "--json"),
+	})
+	uploads.requireSparse(t)
 }
 
 // selection: --harness all, --all and --extra omp.profile.

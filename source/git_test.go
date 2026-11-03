@@ -2,10 +2,12 @@ package source
 
 import (
 	"context"
+	"crypto/rand"
 	"errors"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -143,18 +145,21 @@ func TestGitFetchResolvesRefsToImmutableCommits(t *testing.T) {
 		{first, first, "v1\n"},
 	}
 	for _, tc := range cases {
-		snapshot, err := f.fetch(fetcher, tc.ref)
-		if err != nil {
-			t.Fatalf("ref %q: %v", tc.ref, err)
-		}
-		if snapshot.Revision != tc.revision {
-			t.Fatalf("ref %q resolved to %s, want %s", tc.ref, snapshot.Revision, tc.revision)
-		}
-		if got := read(t, snapshot.Tree, "agents/reviewer.md"); got != tc.content {
-			t.Fatalf("ref %q: content %q, want %q", tc.ref, got, tc.content)
-		}
-		if err := snapshot.Close(); err != nil {
-			t.Fatal(err)
+		for _, fullFetchBytes := range []int64{0, 1} {
+			fetcher.FullFetchBytes = fullFetchBytes
+			snapshot, err := f.fetch(fetcher, tc.ref)
+			if err != nil {
+				t.Fatalf("ref %q: %v", tc.ref, err)
+			}
+			if snapshot.Revision != tc.revision {
+				t.Fatalf("ref %q resolved to %s, want %s", tc.ref, snapshot.Revision, tc.revision)
+			}
+			if got := read(t, snapshot.Tree, "agents/reviewer.md"); got != tc.content {
+				t.Fatalf("ref %q: content %q, want %q", tc.ref, got, tc.content)
+			}
+			if err := snapshot.Close(); err != nil {
+				t.Fatal(err)
+			}
 		}
 	}
 	leftovers, err := os.ReadDir(fetcher.TempDir)
@@ -185,43 +190,184 @@ func TestGitFetchRefusesUnknownRefs(t *testing.T) {
 	}
 }
 
+// modes runs a test against a whole fetch and a sparse fetch of the same source.
+func modes(t *testing.T, test func(t *testing.T, fullFetchBytes int64)) {
+	t.Helper()
+	t.Run("whole", func(t *testing.T) { test(t, 0) })
+	t.Run("sparse", func(t *testing.T) { test(t, 1) })
+}
+
 func TestGitTreeExposesLinksAndSubmodulesWithoutContent(t *testing.T) {
-	f := newFixture(t)
-	f.write("agents/real.md", "real\n")
-	if err := os.Symlink("/etc/passwd", filepath.Join(f.dir, "agents", "link.md")); err != nil {
+	modes(t, func(t *testing.T, fullFetchBytes int64) {
+		f := newFixture(t)
+		f.write("agents/real.md", "real\n")
+		if err := os.Symlink("/etc/passwd", filepath.Join(f.dir, "agents", "link.md")); err != nil {
+			t.Fatal(err)
+		}
+		big := strings.Repeat("x", int(DefaultMaxBlobBytes)+1)
+		f.write("agents/big.md", big)
+		head := f.commit("first")
+		f.git("-C", f.dir, "update-index", "--add", "--cacheinfo", "160000,"+head+",vendor/sub")
+		f.git("-C", f.dir, "commit", "--quiet", "--no-verify", "-m", "submodule")
+
+		fetcher := f.fetcher("")
+		fetcher.FullFetchBytes = fullFetchBytes
+		snapshot, err := f.fetch(fetcher, "")
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer func() { _ = snapshot.Close() }()
+		tree := snapshot.Tree
+		for name, want := range map[string]EntryKind{
+			"agents/real.md": EntryFile,
+			"agents/link.md": EntrySymlink,
+			"vendor/sub":     EntrySubmodule,
+			"vendor/sub/x":   EntrySubmodule,
+			"agents":         EntryDir,
+		} {
+			entry, err := tree.Stat(name)
+			if err != nil || entry.Kind != want {
+				t.Fatalf("%s: got %v %v, want %v", name, entry.Kind, err, want)
+			}
+		}
+		if _, err := tree.Stat("agents/missing.md"); !errors.Is(err, os.ErrNotExist) {
+			t.Fatalf("missing file: want ErrNotExist, got %v", err)
+		}
+		entries, err := tree.ReadDir("agents")
+		if err != nil || len(entries) != 3 || entries[0].Name != "big.md" ||
+			entries[2].Name != "real.md" {
+			t.Fatalf("agents listing: %v %v", entries, err)
+		}
+		if _, err := tree.ReadFile("agents/link.md", DefaultMaxBlobBytes); err == nil {
+			t.Fatal("symlink content must not be readable")
+		}
+		_, err = tree.ReadFile("agents/big.md", DefaultMaxBlobBytes)
+		if !errors.Is(err, ErrTooLarge) {
+			t.Fatalf("blob above the fetch limit: want ErrTooLarge, got %v", err)
+		}
+		if got := read(t, tree, "agents/real.md"); got != "real\n" {
+			t.Fatalf("unexpected content %q", got)
+		}
+	})
+}
+
+// local reports whether the snapshot's object store holds the blob at name.
+func local(t *testing.T, snapshot *Snapshot, name string) bool {
+	t.Helper()
+	tree := snapshot.Tree.(*gitTree)
+	e, err := tree.resolve("stat", name)
+	if err != nil {
 		t.Fatal(err)
 	}
-	big := strings.Repeat("x", int(DefaultMaxBlobBytes)+1)
-	f.write("agents/big.md", big)
-	head := f.commit("first")
-	f.git("-C", f.dir, "update-index", "--add", "--cacheinfo", "160000,"+head+",vendor/sub")
-	f.git("-C", f.dir, "commit", "--quiet", "--no-verify", "-m", "submodule")
+	sizes, err := tree.sizes([]string{e.oid})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, ok := sizes[e.oid]
+	return ok
+}
 
-	snapshot, err := f.fetch(f.fetcher(""), "")
+func TestGitFetchOfALargeSourceFetchesOnlyWhatIsRead(t *testing.T) {
+	f := newFixture(t)
+	f.write("agents/reviewer.md", "reviewer\n")
+	f.write("agents/writer.md", "writer\n")
+	noise := func(size int) string {
+		data := make([]byte, size)
+		if _, err := rand.Read(data); err != nil {
+			t.Fatal(err)
+		}
+		return string(data)
+	}
+	f.write("assets/blob.bin", noise(3<<20))
+	sources := map[string]string{}
+	for i := range 200 {
+		name := filepath.Join("src", strconv.Itoa(i)+".txt")
+		sources[name] = noise(4096)
+		f.write(name, sources[name])
+	}
+	f.commit("large")
+	fetcher := f.fetcher("")
+	fetcher.FullFetchBytes = 256 << 10
+	snapshot, err := f.fetch(fetcher, "")
 	if err != nil {
 		t.Fatal(err)
 	}
 	defer func() { _ = snapshot.Close() }()
-	tree := snapshot.Tree
-	for name, want := range map[string]EntryKind{
-		"agents/real.md": EntryFile,
-		"agents/link.md": EntrySymlink,
-		"vendor/sub":     EntrySubmodule,
-		"vendor/sub/x":   EntrySubmodule,
-	} {
-		entry, err := tree.Stat(name)
-		if err != nil || entry.Kind != want {
-			t.Fatalf("%s: got %v %v, want %v", name, entry.Kind, err, want)
+	tree, ok := snapshot.Tree.(Partial)
+	if !ok || !snapshot.Tree.(*gitTree).sparse {
+		t.Fatal("a source above FullFetchBytes must be fetched sparsely")
+	}
+	if tree.Fetched("agents/reviewer.md") || local(t, snapshot, "agents/reviewer.md") {
+		t.Fatal("no file content may be fetched before it is asked for")
+	}
+	if entry, err := tree.Stat("agents/reviewer.md"); err != nil || entry.Size != UnknownSize {
+		t.Fatalf("unfetched file: size %d (%v), want UnknownSize", entry.Size, err)
+	}
+	if err := tree.Fetch([]string{"agents/reviewer.md", "agents/writer.md", "nope"}); err != nil {
+		t.Fatal(err)
+	}
+	if !tree.Fetched("agents/reviewer.md") || !local(t, snapshot, "agents/writer.md") {
+		t.Fatal("fetched files must be held")
+	}
+	if entry, err := tree.Stat("agents/writer.md"); err != nil || entry.Size != 7 {
+		t.Fatalf("fetched file: size %d (%v), want 7", entry.Size, err)
+	}
+	for _, name := range []string{"assets/blob.bin", "src/7.txt"} {
+		if local(t, snapshot, name) {
+			t.Fatalf("%s was fetched but never read", name)
 		}
 	}
-	if _, err := tree.ReadFile("agents/link.md", DefaultMaxBlobBytes); err == nil {
-		t.Fatal("symlink content must not be readable")
+	if got := read(t, tree, "src/7.txt"); got != sources["src/7.txt"] {
+		t.Fatal("reading an unfetched file fetches it")
 	}
-	if _, err := tree.ReadFile("agents/big.md", DefaultMaxBlobBytes); !errors.Is(err, ErrTooLarge) {
-		t.Fatalf("blob above the fetch limit: want ErrTooLarge, got %v", err)
+	if local(t, snapshot, "src/8.txt") {
+		t.Fatal("a single read fetches that file alone")
 	}
-	if got := read(t, tree, "agents/real.md"); got != "real\n" {
-		t.Fatalf("unexpected content %q", got)
+}
+
+func TestGitFetchBoundsWhatASparseSourceFetches(t *testing.T) {
+	f := newFixture(t)
+	noise := make([]byte, 256<<10)
+	if _, err := rand.Read(noise); err != nil {
+		t.Fatal(err)
+	}
+	f.write("agents/a.md", "a\n")
+	f.write("agents/b.md", "b\n")
+	f.write("agents/noise.md", string(noise))
+	f.commit("budgets")
+
+	fetcher := f.fetcher("")
+	fetcher.FullFetchBytes = 1
+	fetcher.MaxFetchFiles = 1
+	snapshot, err := f.fetch(fetcher, "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	err = snapshot.Tree.(Partial).Fetch([]string{"agents/a.md", "agents/b.md"})
+	_ = snapshot.Close()
+	if !errors.Is(err, ErrFetchBudget) {
+		t.Fatalf("more files than MaxFetchFiles: want ErrFetchBudget, got %v", err)
+	}
+
+	fetcher.MaxFetchFiles = 0
+	fetcher.MaxFetchBytes = 64 << 10
+	snapshot, err = f.fetch(fetcher, "")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer func() { _ = snapshot.Close() }()
+	if _, err := snapshot.Tree.ReadFile("agents/noise.md", DefaultMaxBlobBytes); !errors.Is(
+		err, ErrFetchBudget) {
+		t.Fatalf("more bytes than MaxFetchBytes: want ErrFetchBudget, got %v", err)
+	}
+
+	fetcher.MaxFetchBytes = 0
+	fetcher.MaxTreeBytes = 1
+	if snapshot, err := f.fetch(fetcher, ""); !errors.Is(err, ErrFetchBudget) {
+		if snapshot != nil {
+			_ = snapshot.Close()
+		}
+		t.Fatalf("trees above MaxTreeBytes: want ErrFetchBudget, got %v", err)
 	}
 }
 
@@ -259,38 +405,32 @@ func TestGitFetchNeverRunsFiltersOrHooks(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	snapshot, err := f.fetch(fetcher, "")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer func() { _ = snapshot.Close() }()
-	if got := read(t, snapshot.Tree, "agents/reviewer.md"); got != "body\n" {
-		t.Fatalf("content must be the raw blob, got %q", got)
-	}
-	if _, err := os.Stat(marker); !errors.Is(err, os.ErrNotExist) {
-		t.Fatalf("fetching executed repository-selected commands (marker: %v)", err)
+	for _, fullFetchBytes := range []int64{0, 1} {
+		fetcher.FullFetchBytes = fullFetchBytes
+		snapshot, err := f.fetch(fetcher, "")
+		if err != nil {
+			t.Fatal(err)
+		}
+		got := read(t, snapshot.Tree, "agents/reviewer.md")
+		_ = snapshot.Close()
+		if got != "body\n" {
+			t.Fatalf("content must be the raw blob, got %q", got)
+		}
+		if _, err := os.Stat(marker); !errors.Is(err, os.ErrNotExist) {
+			t.Fatalf("fetching executed repository-selected commands (marker: %v)", err)
+		}
 	}
 }
 
-func TestGitFetchRefusesUnsafeTransportsAndOversizedTrees(t *testing.T) {
+func TestGitFetchRefusesUnsafeTransports(t *testing.T) {
 	f := newFixture(t)
-	for i := range 5 {
-		f.write(filepath.Join("d", strings.Repeat("f", i+1)), "x")
-	}
-	f.commit("many")
+	f.write("d/f", "x")
+	f.commit("one")
 	fetcher := f.fetcher("")
 	fetcher.allowFileProtocol = false
 	if snapshot, err := f.fetch(fetcher, ""); err == nil {
 		_ = snapshot.Close()
 		t.Fatal("file transport must be refused")
-	}
-	fetcher = f.fetcher("")
-	fetcher.MaxEntries = 3
-	if snapshot, err := f.fetch(fetcher, ""); !errors.Is(err, ErrTreeTooLarge) {
-		if snapshot != nil {
-			_ = snapshot.Close()
-		}
-		t.Fatalf("want ErrTreeTooLarge, got %v", err)
 	}
 }
 

@@ -1,6 +1,13 @@
 // Package discovery finds logical Agents in a source snapshot by inert, bounded
 // parsing of portable layouts, native Harness directories, the Claude Code
 // plugins the repository packages, and agnthub.yaml.
+//
+// A snapshot that fetches file content on demand (source.Partial) is scanned
+// in planning rounds first: each round runs the scan itself over what is
+// already fetched, collects the files it would read next, and fetches them in
+// one batch (manifests, then the plugin manifests they list, then agent
+// files). The candidate files are therefore exactly the files the scan reads,
+// for every layout, and nothing else of a large repository is downloaded.
 package discovery
 
 import (
@@ -115,9 +122,19 @@ type scanner struct {
 	problems   []Problem
 	// claimed are the files plugins provide as Claude Code agents.
 	claimed map[string]bool
-	// listing, when set, collects plugin agent paths instead of reading them.
-	listing *PluginPaths
+	// partial and pending are set while planning: reading a file partial has
+	// not fetched records it in pending instead (errDeferred).
+	partial source.Partial
+	pending map[string]bool
 }
+
+// errDeferred is a planning read of a file that is not fetched yet. The scan
+// goes on without it; only manifests stop what depends on their content.
+var errDeferred = errors.New("file not fetched yet")
+
+// maxPlanRounds bounds planning: agnthub.yaml or the marketplace, the plugin
+// manifests it lists, their agent files, and a final check.
+const maxPlanRounds = 5
 
 // Discover scans tree and returns its Agent inventory.
 func Discover(
@@ -125,15 +142,65 @@ func Discover(
 	registry *harness.Registry,
 	limits Limits,
 ) (*Inventory, error) {
+	if partial, ok := tree.(source.Partial); ok {
+		if err := prefetch(partial, registry, limits); err != nil {
+			return nil, err
+		}
+	}
 	s := &scanner{tree: tree, registry: registry, limits: limits}
+	return s.scan()
+}
+
+// prefetch fetches the files a scan of tree reads, round by round, until a
+// round needs nothing new. A budget the plan already exceeds is the scan's
+// verdict too (the plan counts no more than the scan); other planning
+// failures are left to the scan to report.
+func prefetch(tree source.Partial, registry *harness.Registry, limits Limits) error {
+	requested := map[string]bool{}
+	for range maxPlanRounds {
+		s := &scanner{
+			tree: tree, registry: registry, limits: limits,
+			partial: tree, pending: map[string]bool{},
+		}
+		if _, err := s.scan(); err != nil && !errors.Is(err, errDeferred) {
+			if errors.Is(err, ErrBudgetExceeded) {
+				return err
+			}
+			return nil
+		}
+		names := make([]string, 0, len(s.pending))
+		for name := range s.pending {
+			if !requested[name] {
+				requested[name] = true
+				names = append(names, name)
+			}
+		}
+		if len(names) == 0 {
+			return nil
+		}
+		sort.Strings(names)
+		if err := tree.Fetch(names); err != nil {
+			if errors.Is(err, source.ErrFetchBudget) {
+				return fmt.Errorf("%w: %w", ErrBudgetExceeded, err)
+			}
+			return err
+		}
+	}
+	return nil
+}
+
+func (s *scanner) scan() (*Inventory, error) {
 	manifest, err := s.readOptional(ManifestFile)
 	if err != nil {
 		return nil, err
 	}
 	var inv *Inventory
-	if manifest != nil {
+	switch {
+	case manifest != nil && s.pending != nil:
+		return nil, s.planManifest(manifest)
+	case manifest != nil:
 		inv, err = s.fromManifest(manifest)
-	} else {
+	default:
 		inv, err = s.fromLayouts()
 	}
 	if err != nil {
@@ -169,7 +236,8 @@ func (s *scanner) countCandidate() error {
 	return nil
 }
 
-// read loads a regular file within the per-file and aggregate budgets.
+// read loads a regular file within the per-file and aggregate budgets. While
+// planning, a file that is not fetched yet is recorded and errDeferred.
 func (s *scanner) read(name string) ([]byte, error) {
 	entry, err := s.tree.Stat(name)
 	if err != nil {
@@ -186,16 +254,23 @@ func (s *scanner) read(name string) ([]byte, error) {
 			s.limits.MaxFileBytes,
 		)
 	}
-	if s.bytes+entry.Size > s.limits.MaxTotalBytes {
+	if entry.Size > 0 && s.bytes+entry.Size > s.limits.MaxTotalBytes {
 		return nil, fmt.Errorf(
 			"%w: definitions exceed %d bytes in total",
 			ErrBudgetExceeded,
 			s.limits.MaxTotalBytes,
 		)
 	}
+	if s.pending != nil && !s.partial.Fetched(name) {
+		s.pending[name] = true
+		if entry.Size > 0 {
+			s.bytes += entry.Size
+		}
+		return nil, errDeferred
+	}
 	data, err := s.tree.ReadFile(name, s.limits.MaxFileBytes)
 	if err != nil {
-		if errors.Is(err, source.ErrTooLarge) {
+		if errors.Is(err, source.ErrTooLarge) || errors.Is(err, source.ErrFetchBudget) {
 			return nil, fmt.Errorf("%w: %w", ErrBudgetExceeded, err)
 		}
 		return nil, err
@@ -349,6 +424,9 @@ func (s *scanner) portableFile(name, impliedID string) (*candidate, error) {
 		return nil, err
 	}
 	raw, err := s.read(name)
+	if errors.Is(err, errDeferred) {
+		return nil, nil
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -433,6 +511,9 @@ func (s *scanner) nativeFile(adapter harness.Adapter, name string) (*candidate, 
 		return nil, err
 	}
 	raw, err := s.read(name)
+	if errors.Is(err, errDeferred) {
+		return nil, nil
+	}
 	if err != nil {
 		return nil, err
 	}

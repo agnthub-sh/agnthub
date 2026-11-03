@@ -3,6 +3,8 @@
 package e2e
 
 import (
+	"bytes"
+	"compress/gzip"
 	"context"
 	"crypto/ecdsa"
 	"crypto/elliptic"
@@ -12,14 +14,19 @@ import (
 	"crypto/x509/pkix"
 	"encoding/pem"
 	"errors"
+	"fmt"
+	"io"
 	"io/fs"
 	"math/big"
+	mathrand "math/rand/v2"
 	"net"
 	"net/http"
 	"net/http/cgi"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
+	"sync/atomic"
 	"testing"
 	"time"
 )
@@ -64,6 +71,9 @@ func publishFixtures(t *testing.T, fixtures, root string) {
 		name := entry.Name()
 		work := filepath.Join(root, "src", name)
 		copyTree(t, filepath.Join(fixtures, name), work)
+		if name == largeFixture {
+			writeLargeContent(t, work)
+		}
 		git(t, work, "init", "--quiet", "--initial-branch=main")
 		git(t, work, "-c", "core.autocrlf=false", "add", "--all")
 		git(t, work, "commit", "--quiet", "--no-gpg-sign", "-m", "fixture "+name)
@@ -136,7 +146,9 @@ func copyTree(t *testing.T, from, to string) {
 }
 
 // serveGit serves root/git over smart HTTP and TLS with git http-backend, and
-// returns the PEM file of the self-signed certificate for GIT_SSL_CAINFO.
+// returns the PEM file of the self-signed certificate for GIT_SSL_CAINFO. Like
+// GitHub, the server accepts partial-clone filters and wants of any object;
+// uploads records what each fetch sent.
 func serveGit(t *testing.T, root string) string {
 	t.Helper()
 	certPEM, keyPEM := selfSigned(t)
@@ -163,10 +175,15 @@ func serveGit(t *testing.T, root string) string {
 			"GIT_HTTP_EXPORT_ALL=1",
 			"GIT_CONFIG_NOSYSTEM=1",
 			"GIT_CONFIG_GLOBAL=/dev/null",
+			"GIT_CONFIG_COUNT=2",
+			"GIT_CONFIG_KEY_0=uploadpack.allowFilter",
+			"GIT_CONFIG_VALUE_0=true",
+			"GIT_CONFIG_KEY_1=uploadpack.allowAnySHA1InWant",
+			"GIT_CONFIG_VALUE_1=true",
 		},
 	}
 	server := &http.Server{
-		Handler: handler,
+		Handler: uploads.record(handler),
 		TLSConfig: &tls.Config{
 			Certificates: []tls.Certificate{pair},
 			MinVersion:   tls.VersionTLS12,
@@ -224,4 +241,116 @@ func selfSigned(t *testing.T) (certPEM, keyPEM []byte) {
 	}
 	return pem.EncodeToMemory(&pem.Block{Type: "CERTIFICATE", Bytes: der}),
 		pem.EncodeToMemory(&pem.Block{Type: "EC PRIVATE KEY", Bytes: keyDER})
+}
+
+// largeFixture is the fixture repository whose whole fetch is too large: next
+// to its agent it holds largeOtherBytes of files that are not agents and a
+// binary above the CLI's per-file limit, generated here (deterministically, so
+// its revision and the goldens are stable).
+const (
+	largeFixture    = "large"
+	largeFiles      = 2560
+	largeFileBytes  = 8 << 10
+	largeOtherBytes = largeFiles * largeFileBytes // 20 MiB, above the CLI's 16 MiB
+	largeBinary     = 4 << 20
+	// largeSparseMax bounds what the sparse fetches of the large fixture may
+	// send: its trees and the files discovery reads, far below largeOtherBytes.
+	largeSparseMax = 1 << 20
+)
+
+func writeLargeContent(t *testing.T, work string) {
+	t.Helper()
+	noise := mathrand.NewChaCha8([32]byte{'a', 'g', 'n', 't', 'h', 'u', 'b'})
+	write := func(rel string, size int) {
+		data := make([]byte, size)
+		_, _ = noise.Read(data)
+		path := filepath.Join(work, rel)
+		if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(path, data, 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	write("assets/model.bin", largeBinary)
+	for i := range largeFiles {
+		write(fmt.Sprintf("vendor/%02d/blob-%04d.dat", i%64, i), largeFileBytes)
+	}
+}
+
+// uploadCounter records the bytes the fake server sent for fetches of the
+// large fixture, by the filter the fetch asked for: whole (blob:limit) or
+// sparse (blob:none: the trees, then files by id).
+type uploadCounter struct {
+	whole, sparse atomic.Int64
+}
+
+var uploads uploadCounter
+
+func (u *uploadCounter) reset() {
+	u.whole.Store(0)
+	u.sparse.Store(0)
+}
+
+func (u *uploadCounter) record(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method != http.MethodPost ||
+			!strings.HasPrefix(r.URL.Path, "/"+largeFixture+".git/git-upload-pack") {
+			next.ServeHTTP(w, r)
+			return
+		}
+		body, err := io.ReadAll(r.Body)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusBadRequest)
+			return
+		}
+		r.Body = io.NopCloser(bytes.NewReader(body))
+		request := body
+		if r.Header.Get("Content-Encoding") == "gzip" {
+			if zr, err := gzip.NewReader(bytes.NewReader(body)); err == nil {
+				request, _ = io.ReadAll(zr)
+			}
+		}
+		counted := &countingWriter{ResponseWriter: w}
+		next.ServeHTTP(counted, r)
+		switch {
+		case bytes.Contains(request, []byte("filter blob:none")):
+			u.sparse.Add(counted.n)
+		case bytes.Contains(request, []byte("filter blob:limit")):
+			u.whole.Add(counted.n)
+		}
+	})
+}
+
+// requireSparse fails unless the last fetches of the large fixture were
+// sparse and sent only a small fraction of the repository.
+func (u *uploadCounter) requireSparse(t *testing.T) {
+	t.Helper()
+	sparse, whole := u.sparse.Load(), u.whole.Load()
+	t.Logf("large fixture: sparse fetches sent %d bytes, the abandoned whole fetch %d",
+		sparse, whole)
+	if sparse == 0 {
+		t.Errorf("the large fixture was not fetched sparsely")
+	}
+	if sparse > largeSparseMax {
+		t.Errorf("sparse fetches sent %d bytes, more than %d: files that are not "+
+			"candidates were fetched", sparse, largeSparseMax)
+	}
+}
+
+type countingWriter struct {
+	http.ResponseWriter
+	n int64
+}
+
+func (c *countingWriter) Write(p []byte) (int, error) {
+	n, err := c.ResponseWriter.Write(p)
+	c.n += int64(n)
+	return n, err
+}
+
+func (c *countingWriter) Flush() {
+	if f, ok := c.ResponseWriter.(http.Flusher); ok {
+		f.Flush()
+	}
 }

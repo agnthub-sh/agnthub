@@ -42,11 +42,20 @@ func (k EntryKind) String() string {
 type Entry struct {
 	Name string
 	Kind EntryKind
+	// Size is a file's size in bytes, or UnknownSize for a file a Partial tree
+	// has not fetched yet.
 	Size int64
 }
 
+// UnknownSize is the Size of a file whose content has not been fetched.
+const UnknownSize int64 = -1
+
 // ErrTooLarge reports a file above the requested read limit.
 var ErrTooLarge = errors.New("file exceeds size limit")
+
+// ErrFetchBudget reports a Partial tree that refused to fetch more content
+// than its budget allows; the snapshot cannot be read completely.
+var ErrFetchBudget = errors.New("source fetch budget exceeded")
 
 // Tree is a read-only, inert view of a source snapshot. Paths are slash-separated
 // and relative to the source root ("." is the root). Implementations never follow
@@ -58,6 +67,31 @@ type Tree interface {
 	ReadDir(dir string) ([]Entry, error)
 	// ReadFile returns a regular file's bytes, failing with ErrTooLarge above limit.
 	ReadFile(name string, limit int64) ([]byte, error)
+}
+
+// Partial is a Tree that holds the listing of its snapshot but fetches file
+// content on demand, such as a repository fetched without its blobs. ReadFile
+// of a file that was not fetched fetches that file alone; a reader of many
+// files first fetches them in one batch with Fetch.
+type Partial interface {
+	Tree
+	// Fetched reports whether reading name needs no fetch: its content is
+	// loaded, or name is not a regular file, or it is known to be too large.
+	Fetched(name string) bool
+	// Fetch loads the content of the named regular files in one batch. Names
+	// that are missing or not regular files are ignored. Exceeding the tree's
+	// fetch budget fails with ErrFetchBudget.
+	Fetch(names []string) error
+}
+
+// Prefetch fetches names in one batch when tree is Partial; other trees hold
+// their content already.
+func Prefetch(tree Tree, names []string) error {
+	partial, ok := tree.(Partial)
+	if !ok || len(names) == 0 {
+		return nil
+	}
+	return partial.Fetch(names)
 }
 
 // CleanPath validates a repository-relative path and returns its clean form.
@@ -225,13 +259,6 @@ func (t *MemTree) Add(name string, kind EntryKind, content []byte) error {
 	}
 	t.content[cleaned] = content
 	return nil
-}
-
-// AddEntry records an entry of the given size without content, for trees that
-// load file bytes on demand.
-func (t *MemTree) AddEntry(name string, kind EntryKind, size int64) error {
-	_, err := t.add(name, kind, size)
-	return err
 }
 
 func (t *MemTree) add(name string, kind EntryKind, size int64) (string, error) {

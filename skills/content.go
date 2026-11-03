@@ -89,17 +89,9 @@ func contentDigest(files []fileDigest) string {
 
 // readSourceSkill reads a Skill directory from an inert source tree. Links,
 // submodules and special files are refused because their bytes cannot be verified.
+// The directory is listed first so a partial tree fetches its files in one batch.
 func readSourceSkill(tree source.Tree, dir string) (Content, error) {
-	raw, err := tree.ReadFile(path.Join(dir, SkillFile), maxSkillMDBytes)
-	if err != nil {
-		return Content{}, err
-	}
-	content, err := parseSkillMD(path.Join(dir, SkillFile), raw)
-	if err != nil {
-		return Content{}, err
-	}
-	var files []fileDigest
-	var total int64
+	var rels []string
 	var walk func(rel string, depth int) error
 	walk = func(rel string, depth int) error {
 		if depth > maxSkillDepth {
@@ -123,15 +115,10 @@ func readSourceSkill(tree source.Tree, dir string) (Content, error) {
 				if ignoredFiles[entry.Name] {
 					continue
 				}
-				if len(files) >= maxSkillFiles {
+				if len(rels) >= maxSkillFiles {
 					return fmt.Errorf("%s: skill has more than %d files", dir, maxSkillFiles)
 				}
-				data, err := tree.ReadFile(path.Join(dir, child), maxSkillBytes-total)
-				if err != nil {
-					return fmt.Errorf("%s: %w", path.Join(dir, child), err)
-				}
-				total += int64(len(data))
-				files = append(files, fileDigest{rel: child, digest: sha256.Sum256(data)})
+				rels = append(rels, child)
 			default:
 				return fmt.Errorf(
 					"%s is a %s; agnthub only verifies regular files in a skill",
@@ -143,6 +130,32 @@ func readSourceSkill(tree source.Tree, dir string) (Content, error) {
 	}
 	if err := walk(".", 0); err != nil {
 		return Content{}, err
+	}
+	names := make([]string, 0, len(rels)+1)
+	names = append(names, path.Join(dir, SkillFile))
+	for _, rel := range rels {
+		names = append(names, path.Join(dir, rel))
+	}
+	if err := source.Prefetch(tree, names); err != nil {
+		return Content{}, err
+	}
+	raw, err := tree.ReadFile(path.Join(dir, SkillFile), maxSkillMDBytes)
+	if err != nil {
+		return Content{}, err
+	}
+	content, err := parseSkillMD(path.Join(dir, SkillFile), raw)
+	if err != nil {
+		return Content{}, err
+	}
+	files := make([]fileDigest, 0, len(rels))
+	var total int64
+	for _, rel := range rels {
+		data, err := tree.ReadFile(path.Join(dir, rel), maxSkillBytes-total)
+		if err != nil {
+			return Content{}, fmt.Errorf("%s: %w", path.Join(dir, rel), err)
+		}
+		total += int64(len(data))
+		files = append(files, fileDigest{rel: rel, digest: sha256.Sum256(data)})
 	}
 	content.Digest = contentDigest(files)
 	return content, nil
@@ -247,7 +260,8 @@ func skillName(dir string) string {
 
 // findSourceSkill locates the one Skill directory named skill in a source tree:
 // a bounded breadth-first walk for SKILL.md files whose frontmatter name matches.
-// Several matches are ambiguous rather than resolved by discovery order.
+// Several matches are ambiguous rather than resolved by discovery order. The
+// SKILL.md files are listed first so a partial tree fetches them in one batch.
 func findSourceSkill(tree source.Tree, skill string) (string, error) {
 	type queued struct {
 		dir   string
@@ -255,7 +269,7 @@ func findSourceSkill(tree source.Tree, skill string) (string, error) {
 	}
 	queue := []queued{{dir: ".", depth: 0}}
 	examined := 0
-	var matches []string
+	var found []string
 	for len(queue) > 0 {
 		current := queue[0]
 		queue = queue[1:]
@@ -272,17 +286,24 @@ func findSourceSkill(tree source.Tree, skill string) (string, error) {
 			child := path.Join(current.dir, entry.Name)
 			switch {
 			case entry.Kind == source.EntryFile && entry.Name == SkillFile:
-				raw, err := tree.ReadFile(child, maxSkillMDBytes)
-				if err != nil {
-					continue
-				}
-				if content, err := parseSkillMD(child, raw); err == nil && content.Name == skill {
-					matches = append(matches, current.dir)
-				}
+				found = append(found, child)
 			case entry.Kind == source.EntryDir && current.depth < maxSourceDepth &&
 				!ignoredDirs[entry.Name] && entry.Name != "node_modules":
 				queue = append(queue, queued{dir: child, depth: current.depth + 1})
 			}
+		}
+	}
+	if err := source.Prefetch(tree, found); err != nil {
+		return "", err
+	}
+	var matches []string
+	for _, name := range found {
+		raw, err := tree.ReadFile(name, maxSkillMDBytes)
+		if err != nil {
+			continue
+		}
+		if content, err := parseSkillMD(name, raw); err == nil && content.Name == skill {
+			matches = append(matches, path.Dir(name))
 		}
 	}
 	switch len(matches) {

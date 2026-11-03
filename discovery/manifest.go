@@ -130,6 +130,47 @@ func (s *scanner) fromManifest(raw []byte) (*Inventory, error) {
 	return inv, nil
 }
 
+// planManifest records the files fromManifest reads, in the order it reads
+// them. The first invalid declaration ends the plan: the scan stops there too.
+func (s *scanner) planManifest(raw []byte) error {
+	manifest, err := decodeManifest(raw)
+	if err != nil {
+		return nil // the scan reports the invalid manifest
+	}
+	ids := make([]string, 0, len(manifest.Agents))
+	for id := range manifest.Agents {
+		ids = append(ids, id)
+	}
+	sort.Strings(ids)
+	for _, id := range ids {
+		spec := manifest.Agents[id]
+		paths := make([]string, 0, 1+len(spec.Variants))
+		if spec.Portable != "" {
+			paths = append(paths, spec.Portable)
+		}
+		names := make([]string, 0, len(spec.Variants))
+		for name := range spec.Variants {
+			names = append(names, name)
+		}
+		sort.Strings(names)
+		for _, name := range names {
+			if p := spec.Variants[name].Path; p != "" {
+				paths = append(paths, p)
+			}
+		}
+		for _, p := range paths {
+			_, err := s.declaredFile(id, p)
+			switch {
+			case errors.Is(err, ErrBudgetExceeded):
+				return err
+			case err != nil && !errors.Is(err, errDeferred):
+				return nil
+			}
+		}
+	}
+	return nil
+}
+
 func (s *scanner) manifestAgent(id string, spec manifestAgent) (*agent.Definition, error) {
 	if !agent.ValidID(id) {
 		return nil, manifestErr("invalid agent identifier %q", id)

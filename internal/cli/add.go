@@ -128,14 +128,17 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	if err != nil {
 		return err
 	}
+	// Discovery of a large source fetches its candidate files, so the
+	// indicator covers it too.
 	done := a.busy(opts.json, "Fetching "+loc.Display())
 	snapshot, err := a.Opener.Open(ctx, loc)
-	done()
 	if err != nil {
+		done()
 		return err
 	}
 	defer func() { _ = snapshot.Close() }()
 	inventory, err := discovery.Discover(snapshot.Tree, a.Registry, discovery.DefaultLimits())
+	done()
 	if err != nil {
 		return err
 	}
