@@ -326,6 +326,22 @@
       "action": "create"
     },
     {
+      "agent": "journaler",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/journaler.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/journaler.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "literal",
       "harness": "claude",
       "settings": {},
@@ -334,6 +350,22 @@
       "path": "/agnthub-e2e/project/.claude/agents/literal.md",
       "variant": "generated",
       "sourcePath": "agents/literal.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "local-notes",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/local-notes.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/local-notes.md",
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
@@ -441,6 +473,38 @@
       "action": "create"
     },
     {
+      "agent": "recaller",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/recaller.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/recaller.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "rememberer",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/rememberer.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/rememberer.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "researcher",
       "harness": "claude",
       "settings": {},
@@ -489,6 +553,38 @@
       "action": "create"
     },
     {
+      "agent": "skilled",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/skilled.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/skilled.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "studio-qa",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/studio-qa.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/studio-qa.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "tagged",
       "harness": "claude",
       "settings": {},
@@ -525,7 +621,7 @@
     }
   ],
   "summary": {
-    "create": 27,
+    "create": 33,
     "incompatible": 3,
     "invalid": 1
   }

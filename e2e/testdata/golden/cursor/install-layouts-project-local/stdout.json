@@ -219,6 +219,28 @@
       ]
     },
     {
+      "agent": "journaler",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/journaler.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/journaler.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "Cursor agents keep the session's MCP tools unless read-only",
+        "persistent memory (memory: user) emulated: cursor has no per-agent memory, so the instructions keep the agent's notes in ~/.cursor/agent-memory/journaler/ (in the user's home directory, for every project)"
+      ]
+    },
+    {
       "agent": "literal",
       "harness": "cursor",
       "settings": {},
@@ -233,6 +255,26 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "local-notes",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/local-notes.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/local-notes.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "persistent memory (memory: local) emulated: cursor has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory-local/local-notes/ (Claude Code's folder; agnthub does not add it to .gitignore)"
+      ]
     },
     {
       "agent": "oc-native",
@@ -290,6 +332,49 @@
       "action": "create"
     },
     {
+      "agent": "recaller",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/recaller.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/recaller.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "persistent memory (memory: user) isn't available on cursor: the agent cannot read and edit files, and agnthub never grants tools for memory; the agent starts each session without its notes"
+      ]
+    },
+    {
+      "agent": "rememberer",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/rememberer.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/rememberer.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "Cursor agents keep the session's MCP tools unless read-only",
+        "persistent memory (memory: project) emulated: cursor has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory/rememberer/ (Claude Code's folder, inside the project and tracked by version control unless ignored)"
+      ]
+    },
+    {
       "agent": "researcher",
       "harness": "cursor",
       "settings": {},
@@ -322,6 +407,28 @@
       "action": "create"
     },
     {
+      "agent": "skilled",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/skilled.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/skilled.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "Cursor agents keep the session's MCP tools unless read-only",
+        "preloaded skills bug-report, release-checklist: cursor cannot preload skills, so the instructions tell the agent to load them; they must be installed for cursor: agnthub does not install skills from this list"
+      ]
+    },
+    {
       "agent": "tagged",
       "harness": "cursor",
       "settings": {},
@@ -342,6 +449,6 @@
     }
   ],
   "summary": {
-    "create": 18
+    "create": 23
   }
 }

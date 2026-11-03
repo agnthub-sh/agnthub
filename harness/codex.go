@@ -326,9 +326,15 @@ func (a codexAdapter) Convert(sem *Semantics) (Artifact, error) {
 		check.mcpSession()
 	}
 	file := codexAgentFile{
-		Name:                  sem.ID,
-		Description:           sem.Description,
-		DeveloperInstructions: sem.Instructions,
+		Name:        sem.ID,
+		Description: sem.Description,
+		DeveloperInstructions: check.carry(additiveSupport{
+			noUserMemory: "Codex's sandbox keeps agents from writing outside the project",
+			loadSkill: "Each one is listed among your available skills with the path of its " +
+				"SKILL.md: read that file.",
+			sessionSkills: true,
+			tools:         sem.Tools,
+		}),
 	}
 	if !sem.Tools.Allows(CapShell) {
 		file.Features = &codexFeatureTable{ShellTool: false}

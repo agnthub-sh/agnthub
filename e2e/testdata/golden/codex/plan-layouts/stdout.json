@@ -282,6 +282,28 @@
       "reason": "it excludes search, edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
+      "agent": "journaler",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/journaler.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/journaler.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them",
+        "persistent memory (memory: user) isn't available on codex: Codex's sandbox keeps agents from writing outside the project; the agent starts each session without its notes"
+      ]
+    },
+    {
       "agent": "literal",
       "harness": "codex",
       "settings": {},
@@ -296,6 +318,26 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "local-notes",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/local-notes.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/local-notes.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "persistent memory (memory: local) emulated: codex has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory-local/local-notes/ (Claude Code's folder; agnthub does not add it to .gitignore)"
+      ]
     },
     {
       "agent": "mcp-wide",
@@ -385,6 +427,41 @@
       "action": "create"
     },
     {
+      "agent": "recaller",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
+      "agent": "rememberer",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/rememberer.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/rememberer.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them",
+        "persistent memory (memory: project) emulated: codex has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory/rememberer/ (Claude Code's folder, inside the project and tracked by version control unless ignored)"
+      ]
+    },
+    {
       "agent": "researcher",
       "harness": "codex",
       "settings": {},
@@ -430,6 +507,41 @@
       "action": "create"
     },
     {
+      "agent": "skilled",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/skilled.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/skilled.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them",
+        "preloaded skills bug-report, release-checklist: codex cannot preload skills, so the instructions tell the agent to load them; they must be installed for codex: agnthub does not install skills from this list"
+      ]
+    },
+    {
+      "agent": "studio-qa",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant limits the agent to 20 turns, which codex cannot express"
+    },
+    {
       "agent": "tagged",
       "harness": "codex",
       "settings": {},
@@ -463,8 +575,8 @@
     }
   ],
   "summary": {
-    "create": 11,
-    "incompatible": 19,
+    "create": 15,
+    "incompatible": 21,
     "invalid": 1
   }
 }

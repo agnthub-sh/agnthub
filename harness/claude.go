@@ -214,8 +214,6 @@ var claudeBehaviors = map[string]string{
 	"permissionMode": "a Claude Code permission mode for tool approvals",
 	"mcpServers":     "MCP servers scoped to the agent",
 	"hooks":          "lifecycle hooks that run commands",
-	"skills":         "skills preloaded into the agent's context",
-	"memory":         "persistent agent memory",
 	"isolation":      "runs the agent in an isolated worktree",
 	"initialPrompt":  "a first prompt submitted when the agent starts a session",
 	"prompt":         "a prompt outside the Markdown body",
@@ -261,6 +259,21 @@ func (a claudeAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 			}
 		case "background":
 			sem.Background = value == true || value == "true"
+		case "memory":
+			scope, ok := readMemoryScope(value)
+			if !ok {
+				sem.note("omitted memory: Claude Code ignores the value %v "+
+					"(valid: user, project, local)", value)
+				continue
+			}
+			sem.Memory = scope
+		case "skills":
+			readSkills(sem, key, value)
+			if len(sem.Skills) > claudeMaxSkills {
+				sem.note("omitted skills after the first %d: Claude Code preloads no more",
+					claudeMaxSkills)
+				sem.Skills = sem.Skills[:claudeMaxSkills]
+			}
 		default:
 			if why, ok := claudeNotes[key]; ok {
 				sem.note("omitted %s: %s", key, why)
@@ -427,7 +440,16 @@ func (a claudeAdapter) Convert(sem *Semantics) (Artifact, error) {
 	if sem.Background {
 		fields = append(fields, agent.Field{Key: "background", Value: true})
 	}
-	content, err := agent.RenderMarkdown(fields, sem.Instructions)
+	if sem.Memory != "" {
+		fields = append(fields, agent.Field{Key: "memory", Value: string(sem.Memory)})
+	}
+	if len(sem.Skills) > 0 {
+		fields = append(fields, agent.Field{Key: "skills", Value: sem.Skills})
+	}
+	instructions := check.carry(additiveSupport{
+		nativeMemory: true, nativeSkills: true, tools: sem.Tools,
+	})
+	content, err := agent.RenderMarkdown(fields, instructions)
 	if err != nil {
 		return Artifact{}, err
 	}

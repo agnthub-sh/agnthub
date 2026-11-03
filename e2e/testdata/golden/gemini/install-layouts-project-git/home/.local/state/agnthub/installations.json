@@ -170,6 +170,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.gemini/agents/journaler.md",
+      "digest": "sha256:48038df0f04a5b4f470a2d793379cab29f4e7dbd6eb36aa0a5ffb6d1017e565c",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "journaler",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.gemini/agents/literal.md",
       "digest": "sha256:a378de546edf844a868e42125c07f521c84f9cd546e6b742c56b508905e5392a",
       "harness": "gemini",
@@ -178,6 +190,18 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "literal",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/local-notes.md",
+      "digest": "sha256:da341fdda1b258814d81f9827b9b49e7167cc7e012071919dd29f739c7c068d6",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "local-notes",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -242,6 +266,30 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.gemini/agents/recaller.md",
+      "digest": "sha256:b6e6d7709799244aa469dda9410963930acfcbe94d0a211dce300f6a44b3e6d1",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "recaller",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/rememberer.md",
+      "digest": "sha256:7e4a1a87dacca9927fe0ab513b04dc2d785fc5019f1e37662aae3f9b360cbec5",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "rememberer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.gemini/agents/researcher.md",
       "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
       "harness": "gemini",
@@ -274,6 +322,30 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/skilled.md",
+      "digest": "sha256:6dda76836cf5bd52daacd61b1a7aeac8b09ba8eb1923a4d7bf40d4eb9dc153c9",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "skilled",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/studio-qa.md",
+      "digest": "sha256:ab8b583563c40f3fd0c18b8b27f1962343bc71b5090ba8fc20bddc7f619aee81",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "studio-qa",
       "origin": "direct",
       "installedAt": "<time>"
     },

@@ -143,10 +143,24 @@
       }
     },
     {
+      "id": "journaler",
+      "description": "Keeps personal notes across every project while it edits code.",
+      "variants": {
+        "claude": ".claude/agents/journaler.md"
+      }
+    },
+    {
       "id": "literal",
       "description": "Portable agent whose description is a literal block scalar.",
       "portable": "agents/literal.md",
       "variants": {}
+    },
+    {
+      "id": "local-notes",
+      "description": "Keeps machine-local notes for this project with every tool.",
+      "variants": {
+        "claude": ".claude/agents/local-notes.md"
+      }
     },
     {
       "id": "mcp-wide",
@@ -189,6 +203,20 @@
       "variants": {}
     },
     {
+      "id": "recaller",
+      "description": "Reads code with memory but cannot write files.",
+      "variants": {
+        "claude": ".claude/agents/recaller.md"
+      }
+    },
+    {
+      "id": "rememberer",
+      "description": "Keeps project notes across sessions while it fixes code.",
+      "variants": {
+        "claude": ".claude/agents/rememberer.md"
+      }
+    },
+    {
       "id": "researcher",
       "description": "Researches a topic across the codebase and summarizes the findings.",
       "portable": "agents/researcher/AGENT.md",
@@ -206,6 +234,20 @@
       "description": "Portable root agent that answers questions about the repository.",
       "portable": "AGENT.md",
       "variants": {}
+    },
+    {
+      "id": "skilled",
+      "description": "Reviews releases with preloaded skills.",
+      "variants": {
+        "claude": ".claude/agents/skilled.md"
+      }
+    },
+    {
+      "id": "studio-qa",
+      "description": "Plans tests with memory, preloaded skills and a turn limit.",
+      "variants": {
+        "claude": ".claude/agents/studio-qa.md"
+      }
     },
     {
       "id": "tagged",

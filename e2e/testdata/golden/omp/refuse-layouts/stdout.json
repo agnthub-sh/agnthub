@@ -124,10 +124,25 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "portable definition declares \"model\", which has no verified equivalent; author a native omp variant"
+    },
+    {
+      "agent": "studio-qa",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant limits the agent to 20 turns, which omp cannot express"
     }
   ],
   "summary": {
-    "incompatible": 6,
+    "incompatible": 7,
     "invalid": 1
   }
 }

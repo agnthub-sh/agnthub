@@ -424,9 +424,15 @@ func (a geminiAdapter) Convert(sem *Semantics) (Artifact, error) {
 		{Key: "name", Value: sem.ID},
 		{Key: "description", Value: sem.Description},
 	}
-	if sem.Tools.Limited() {
-		tools := toolNames(geminiToolTable.tools, sem.Tools.Effective())
-		if !sem.Tools.Restricted {
+	policy := check.skillTools()
+	instructions := check.carry(additiveSupport{
+		noUserMemory: "Gemini CLI's file tools refuse paths outside the workspace",
+		loadSkill:    "Load each one with the `activate_skill` tool.",
+		tools:        policy,
+	})
+	if policy.Limited() {
+		tools := toolNames(geminiToolTable.tools, policy.Effective())
+		if !policy.Restricted {
 			tools = append(tools, geminiAllMCP)
 		}
 		mcp, err := check.mcpNames(geminiMCPName)
@@ -442,7 +448,7 @@ func (a geminiAdapter) Convert(sem *Semantics) (Artifact, error) {
 	if sem.MaxTurns > 0 {
 		fields = append(fields, agent.Field{Key: "max_turns", Value: sem.MaxTurns})
 	}
-	content, err := agent.RenderMarkdown(fields, sem.Instructions)
+	content, err := agent.RenderMarkdown(fields, instructions)
 	if err != nil {
 		return Artifact{}, err
 	}

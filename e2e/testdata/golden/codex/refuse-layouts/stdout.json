@@ -249,6 +249,19 @@
       "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
+      "agent": "recaller",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
       "agent": "reviewer",
       "harness": "codex",
       "settings": {},
@@ -260,6 +273,19 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
+      "agent": "studio-qa",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant limits the agent to 20 turns, which codex cannot express"
     },
     {
       "agent": "web-searcher",
@@ -276,7 +302,7 @@
     }
   ],
   "summary": {
-    "incompatible": 19,
+    "incompatible": 21,
     "invalid": 1
   }
 }

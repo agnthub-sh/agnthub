@@ -5,7 +5,7 @@
     "kind": "git",
     "locator": "localhost:8443/layouts.git",
     "ref": "v1.0.0",
-    "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+    "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
   },
   "harnesses": [
     {
@@ -29,7 +29,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -50,7 +50,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
@@ -68,7 +68,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
@@ -86,7 +86,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -108,7 +108,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
@@ -126,7 +126,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -148,7 +148,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
@@ -166,7 +166,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -189,7 +189,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -211,7 +211,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -233,13 +233,37 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the gemini variant",
         "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent"
+      ]
+    },
+    {
+      "agent": "journaler",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.cursor/agents/journaler.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/journaler.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "Cursor agents keep the session's MCP tools unless read-only",
+        "persistent memory (memory: user) emulated: cursor has no per-agent memory, so the instructions keep the agent's notes in ~/.cursor/agent-memory/journaler/ (in the user's home directory, for every project)"
       ]
     },
     {
@@ -255,10 +279,32 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "local-notes",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.cursor/agents/local-notes.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/local-notes.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "persistent memory (memory: local) emulated: cursor has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory-local/local-notes/ (Claude Code's folder; agnthub does not add it to .gitignore)"
+      ]
     },
     {
       "agent": "oc-native",
@@ -273,7 +319,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -294,7 +340,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -316,10 +362,57 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "recaller",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.cursor/agents/recaller.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/recaller.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "persistent memory (memory: user) isn't available on cursor: the agent cannot read and edit files, and agnthub never grants tools for memory; the agent starts each session without its notes"
+      ]
+    },
+    {
+      "agent": "rememberer",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.cursor/agents/rememberer.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/rememberer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "Cursor agents keep the session's MCP tools unless read-only",
+        "persistent memory (memory: project) emulated: cursor has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory/rememberer/ (Claude Code's folder, inside the project and tracked by version control unless ignored)"
+      ]
     },
     {
       "agent": "researcher",
@@ -334,7 +427,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
@@ -352,10 +445,34 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "skilled",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.cursor/agents/skilled.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/skilled.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "Cursor agents keep the session's MCP tools unless read-only",
+        "preloaded skills bug-report, release-checklist: cursor cannot preload skills, so the instructions tell the agent to load them; they must be installed for cursor: agnthub does not install skills from this list"
+      ]
     },
     {
       "agent": "tagged",
@@ -370,7 +487,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -380,6 +497,6 @@
     }
   ],
   "summary": {
-    "create": 18
+    "create": 23
   }
 }

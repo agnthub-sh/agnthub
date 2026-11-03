@@ -152,8 +152,8 @@ func TestClaudeAgentsConvertToEveryHarnessTheirToolsAllow(t *testing.T) {
 					t.Errorf("%s → %s: %v", tc.name, target, err)
 					continue
 				}
-				if !artifact.Generated || !strings.HasSuffix(artifact.Converter, "/v3") {
-					t.Errorf("%s → %s: not a v3 generated artifact: %+v", tc.name, target, artifact)
+				if !artifact.Generated || !strings.HasSuffix(artifact.Converter, "/v4") {
+					t.Errorf("%s → %s: not a v4 generated artifact: %+v", tc.name, target, artifact)
 				}
 				if !hasNote(artifact.Notes, "harness default model") {
 					t.Errorf("%s → %s: the source model must be noted, got %q",
@@ -244,7 +244,6 @@ func TestBehavioralFieldsRefuseConversion(t *testing.T) {
 		"permissionMode: acceptEdits\n",
 		"mcpServers:\n  - github\n",
 		"isolation: worktree\n",
-		"memory: project\n",
 	} {
 		source := strings.Replace(claudeAgent("Read", "Edit", "Write", "Bash"),
 			"color: blue\n", "color: blue\n"+field, 1)
@@ -417,14 +416,14 @@ func TestPortableCoreIsPreferredOverOtherVariants(t *testing.T) {
 
 func TestOlderLocksRestoreUnderTheCurrentConverter(t *testing.T) {
 	for _, h := range agent.AllHarnesses {
-		for _, old := range []string{"v1", "v2"} {
-			if !harness.ConverterReproduces(string(h)+"/"+old, string(h)+"/v3") {
-				t.Errorf("%s: v3 must restore %s locks", h, old)
+		for _, old := range []string{"v1", "v2", "v3"} {
+			if !harness.ConverterReproduces(string(h)+"/"+old, string(h)+"/v4") {
+				t.Errorf("%s: v4 must restore %s locks", h, old)
 			}
 		}
 	}
-	if harness.ConverterReproduces("claude/v2", "codex/v3") ||
-		harness.ConverterReproduces("claude/v4", "claude/v3") {
+	if harness.ConverterReproduces("claude/v2", "codex/v4") ||
+		harness.ConverterReproduces("claude/v5", "claude/v4") {
 		t.Fatal("only the same harness's older converters are reproducible")
 	}
 }

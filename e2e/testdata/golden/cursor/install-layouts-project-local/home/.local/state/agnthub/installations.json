@@ -134,6 +134,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.cursor/agents/journaler.md",
+      "digest": "sha256:6f051da0152516d1421f063e8cb7ae9915faf5d90a944cd54177af16058e8b58",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "journaler",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.cursor/agents/literal.md",
       "digest": "sha256:a378de546edf844a868e42125c07f521c84f9cd546e6b742c56b508905e5392a",
       "harness": "cursor",
@@ -142,6 +154,18 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "literal",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/local-notes.md",
+      "digest": "sha256:da341fdda1b258814d81f9827b9b49e7167cc7e012071919dd29f739c7c068d6",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "local-notes",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -182,6 +206,30 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.cursor/agents/recaller.md",
+      "digest": "sha256:a42b30498ec5df54a6cfd0859345728052bb5ae1853c465d27cec4a0c1f17de8",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "recaller",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/rememberer.md",
+      "digest": "sha256:d352ca3d5c323d1e4f271ee0d5c95ec69b187d53b614da72c298d2e435751839",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "rememberer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.cursor/agents/researcher.md",
       "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
       "harness": "cursor",
@@ -202,6 +250,18 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/skilled.md",
+      "digest": "sha256:8c86af8022728cfdb5effbeaa8e56695af4580c7961617e927452f2746f9ea25",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "skilled",
       "origin": "direct",
       "installedAt": "<time>"
     },

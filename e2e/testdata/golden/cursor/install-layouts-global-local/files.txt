@@ -11,11 +11,16 @@
 0644 home/.cursor/agents/gh-native.md
 0644 home/.cursor/agents/gh-plain.md
 0644 home/.cursor/agents/gm-native.md
+0644 home/.cursor/agents/journaler.md
 0644 home/.cursor/agents/literal.md
+0644 home/.cursor/agents/local-notes.md
 0644 home/.cursor/agents/oc-native.md
 0644 home/.cursor/agents/omp-native.md
 0644 home/.cursor/agents/planner.md
+0644 home/.cursor/agents/recaller.md
+0644 home/.cursor/agents/rememberer.md
 0644 home/.cursor/agents/researcher.md
 0644 home/.cursor/agents/root-helper.md
+0644 home/.cursor/agents/skilled.md
 0644 home/.cursor/agents/tagged.md
 0600 home/.local/state/agnthub/installations.json

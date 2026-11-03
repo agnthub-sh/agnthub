@@ -4,7 +4,7 @@
   "source": {
     "kind": "git",
     "locator": "localhost:8443/layouts.git",
-    "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+    "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
   },
   "harnesses": [
     {
@@ -27,7 +27,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
@@ -44,7 +44,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -64,7 +64,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -84,7 +84,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
@@ -101,7 +101,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -121,7 +121,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -142,7 +142,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -162,7 +162,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
@@ -179,7 +179,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -199,7 +199,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -219,7 +219,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -239,7 +239,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -259,7 +259,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
@@ -276,13 +276,34 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the claude variant",
         "needs MCP servers configured for gemini under these names: github; agnthub does not install or configure MCP servers"
+      ]
+    },
+    {
+      "agent": "journaler",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/journaler.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/journaler.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "persistent memory (memory: user) isn't available on gemini: Gemini CLI's file tools refuse paths outside the workspace; the agent starts each session without its notes"
       ]
     },
     {
@@ -297,10 +318,31 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "local-notes",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/local-notes.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/local-notes.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "persistent memory (memory: local) emulated: gemini has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory-local/local-notes/ (Claude Code's folder; agnthub does not add it to .gitignore)"
+      ]
     },
     {
       "agent": "mcp-wide",
@@ -314,7 +356,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -335,7 +377,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -355,7 +397,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -375,7 +417,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -395,10 +437,52 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "recaller",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/recaller.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/recaller.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "persistent memory (memory: user) isn't available on gemini: the agent cannot read and edit files, and agnthub never grants tools for memory; the agent starts each session without its notes"
+      ]
+    },
+    {
+      "agent": "rememberer",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/rememberer.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/rememberer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "persistent memory (memory: project) emulated: gemini has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory/rememberer/ (Claude Code's folder, inside the project and tracked by version control unless ignored)"
+      ]
     },
     {
       "agent": "researcher",
@@ -412,7 +496,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
@@ -429,7 +513,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -451,10 +535,53 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "skilled",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/skilled.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/skilled.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "preloaded skills bug-report, release-checklist: gemini cannot preload skills, so the instructions tell the agent to load them (its skill tool is allowed); they must be installed for gemini: agnthub does not install skills from this list"
+      ]
+    },
+    {
+      "agent": "studio-qa",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/studio-qa.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/studio-qa.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "persistent memory (memory: project) emulated: gemini has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory/studio-qa/ (Claude Code's folder, inside the project and tracked by version control unless ignored)",
+        "preloaded skills bug-report, release-checklist: gemini cannot preload skills, so the instructions tell the agent to load them (its skill tool is allowed); they must be installed for gemini: agnthub does not install skills from this list"
+      ]
     },
     {
       "agent": "tagged",
@@ -468,7 +595,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -488,7 +615,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "193252aac1de00bd020b44e00d2dab54325230d5"
+        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
       },
       "origin": "direct",
       "action": "create",
@@ -498,6 +625,6 @@
     }
   ],
   "summary": {
-    "create": 25
+    "create": 31
   }
 }

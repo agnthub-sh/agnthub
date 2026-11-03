@@ -1,2 +1,2 @@
-$ agnthub add /agnthub-e2e/src/layouts --agent bom-native --agent bounded --agent broken --agent cx-native --agent gm-camel --agent gm-mcp --agent guarded --agent issue-reader --agent mcp-wide --agent modelled --agent no-shell --agent reviewer --agent web-searcher --harness cursor --yes --json
+$ agnthub add /agnthub-e2e/src/layouts --agent bom-native --agent bounded --agent broken --agent cx-native --agent gm-camel --agent gm-mcp --agent guarded --agent issue-reader --agent mcp-wide --agent modelled --agent no-shell --agent reviewer --agent studio-qa --agent web-searcher --harness cursor --yes --json
 exit status: 1

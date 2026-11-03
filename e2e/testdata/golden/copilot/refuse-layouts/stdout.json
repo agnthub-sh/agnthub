@@ -132,6 +132,19 @@
       "reason": "portable definition declares \"model\", which has no verified equivalent; author a native copilot variant"
     },
     {
+      "agent": "studio-qa",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant limits the agent to 20 turns, which copilot cannot express"
+    },
+    {
       "agent": "web-searcher",
       "harness": "copilot",
       "settings": {},
@@ -146,7 +159,7 @@
     }
   ],
   "summary": {
-    "incompatible": 9,
+    "incompatible": 10,
     "invalid": 1
   }
 }

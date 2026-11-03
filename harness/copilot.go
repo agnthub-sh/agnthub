@@ -71,6 +71,7 @@ var copilotFields = map[string]copilotFieldKind{
 	"include-custom-instructions": copilotBool,
 	"mcp-servers":                 copilotObject,
 	"metadata":                    copilotStringMap,
+	"skills":                      copilotStringList,
 }
 
 // copilotIDEOnlyFields are documented for IDE custom agents and only affect IDE UI.
@@ -278,6 +279,8 @@ func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Seman
 			}
 		case "mcp-servers":
 			sem.unsupported(key, "MCP servers scoped to the agent")
+		case "skills":
+			readSkills(sem, key, value)
 		default:
 			sem.note("omitted %s: not used by Copilot CLI", key)
 		}
@@ -385,7 +388,16 @@ func (a copilotAdapter) Convert(sem *Semantics) (Artifact, error) {
 		}
 		fields = append(fields, agent.Field{Key: "tools", Value: tools})
 	}
-	content, err := agent.RenderMarkdown(fields, sem.Instructions)
+	if len(sem.Skills) > 0 {
+		fields = append(fields, agent.Field{Key: "skills", Value: sem.Skills})
+	}
+	instructions := check.carry(additiveSupport{
+		nativeSkills: true,
+		noUserMemory: "Copilot CLI asks before agents write outside the project, and denies " +
+			"it in prompt mode",
+		tools: sem.Tools,
+	})
+	content, err := agent.RenderMarkdown(fields, instructions)
 	if err != nil {
 		return Artifact{}, err
 	}

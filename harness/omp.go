@@ -337,13 +337,12 @@ var ompOtherBuiltins = map[string]bool{
 
 // ompBehaviors are omp agent fields with no cross-harness equivalent.
 var ompBehaviors = map[string]string{
-	"autoload-skills": "skills loaded into the agent's context",
-	"output":          "a structured output schema",
-	"structured":      "structured output",
-	"blocking":        "omp blocking behavior",
-	"read-summarize":  "omp read summarization",
-	"prewalk":         "an omp prewalk pass",
-	"advisor":         "an omp advisor",
+	"output":         "a structured output schema",
+	"structured":     "structured output",
+	"blocking":       "omp blocking behavior",
+	"read-summarize": "omp read summarization",
+	"prewalk":        "an omp prewalk pass",
+	"advisor":        "an omp advisor",
 }
 
 func (a ompAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics, error) {
@@ -371,6 +370,8 @@ func (a ompAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics
 		case "tools":
 			names, _ := nameList(value)
 			ompToolPolicy(sem, names)
+		case "autoload-skills", "autoloadSkills":
+			readSkills(sem, key, value)
 		case "spawns":
 			names, _ := nameList(value)
 			if !slices.Equal(names, []string{"*"}) {
@@ -440,6 +441,11 @@ func (a ompAdapter) Convert(sem *Semantics) (Artifact, error) {
 		{Key: "name", Value: sem.ID},
 		{Key: "description", Value: sem.Description},
 	}
+	instructions := check.carry(additiveSupport{
+		nativeSkills: true,
+		userMemory:   claudeUserMemory,
+		tools:        sem.Tools,
+	})
 	if sem.Tools.Limited() {
 		effective := sem.Tools.Effective()
 		switch {
@@ -459,7 +465,10 @@ func (a ompAdapter) Convert(sem *Semantics) (Artifact, error) {
 		}
 		fields = append(fields, agent.Field{Key: "tools", Value: tools})
 	}
-	content, err := agent.RenderMarkdown(fields, sem.Instructions)
+	if len(sem.Skills) > 0 {
+		fields = append(fields, agent.Field{Key: "autoload-skills", Value: sem.Skills})
+	}
+	content, err := agent.RenderMarkdown(fields, instructions)
 	if err != nil {
 		return Artifact{}, err
 	}

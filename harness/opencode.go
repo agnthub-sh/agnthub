@@ -482,8 +482,9 @@ func opencodeNormal(action string) string {
 // Convert writes an explicit subagent: OpenCode's default mode would otherwise
 // also register a registry role as a primary agent. Tool policies become a V1
 // permission map, which OpenCode V2 still reads: an allowlist denies "*" first
-// (OpenCode applies the last matching rule, so this also hides MCP tools) and
-// then allows each granted action, MCP tools included.
+// (OpenCode applies the last matching rule, so this also hides MCP tools and
+// files outside the project) and then allows each granted action, MCP tools
+// included, plus the folder of emulated user-scope memory.
 func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
 	check, err := begin(agent.OpenCode, sem)
 	if err == nil {
@@ -496,19 +497,25 @@ func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
 		{Key: "description", Value: sem.Description},
 		{Key: "mode", Value: "subagent"},
 	}
-	if sem.Tools.Limited() {
+	tools := check.skillTools()
+	instructions := check.carry(additiveSupport{
+		userMemory: claudeUserMemory,
+		loadSkill:  "Load each one with the `skill` tool.",
+		tools:      tools,
+	})
+	if tools.Limited() {
 		permission := map[string]any{}
-		if sem.Tools.Restricted {
+		if tools.Restricted {
 			permission["*"] = "deny"
 		}
 		for _, entry := range opencodeRenderActions {
 			for _, action := range entry.actions {
 				switch {
-				case sem.Tools.Restricted && sem.Tools.Allowed&entry.cap != 0 && action == "read":
+				case tools.Restricted && tools.Allowed&entry.cap != 0 && action == "read":
 					permission[action] = opencodeEnvRules
-				case sem.Tools.Restricted && sem.Tools.Allowed&entry.cap != 0:
+				case tools.Restricted && tools.Allowed&entry.cap != 0:
 					permission[action] = "allow"
-				case !sem.Tools.Restricted && sem.Tools.Denied&entry.cap != 0:
+				case !tools.Restricted && tools.Denied&entry.cap != 0:
 					permission[action] = "deny"
 				}
 			}
@@ -522,17 +529,20 @@ func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
 		}
 		if len(mcp) > 0 {
 			permission[opencodeCodeMode] = "allow"
-			if !sem.Tools.Allows(CapWebFetch) {
+			if !tools.Allows(CapWebFetch) {
 				check.note("excludes web fetch, but OpenCode reaches MCP tools through its " +
 					"Code Mode execute tool, which can also make HTTP requests")
 			}
+		}
+		if tools.Restricted && strings.HasPrefix(check.memoryDir, "~/") {
+			permission[opencodeExternalDirectory] = map[string]any{check.memoryDir + "*": "allow"}
 		}
 		fields = append(fields, agent.Field{Key: "permission", Value: permission})
 	}
 	if sem.MaxTurns > 0 {
 		fields = append(fields, agent.Field{Key: "steps", Value: sem.MaxTurns})
 	}
-	content, err := agent.RenderMarkdown(fields, sem.Instructions)
+	content, err := agent.RenderMarkdown(fields, instructions)
 	if err != nil {
 		return Artifact{}, err
 	}
@@ -544,6 +554,10 @@ func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
 		Notes:     check.notes,
 	})
 }
+
+// opencodeExternalDirectory is the permission OpenCode checks before a tool
+// touches files outside the project.
+const opencodeExternalDirectory = "external_directory"
 
 // opencodeCodeMode is the action of OpenCode's Code Mode execute tool, through
 // which agents call MCP tools unless a server opts out of Code Mode.

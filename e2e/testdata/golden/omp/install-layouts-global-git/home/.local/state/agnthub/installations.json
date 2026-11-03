@@ -184,6 +184,20 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/journaler.md",
+      "digest": "sha256:048d2cfe593ac360495a5cd6c70e204379d33be5fd70f30bb55da1d9f10628c7",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "journaler",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.omp/agent/agents/literal.md",
       "digest": "sha256:a378de546edf844a868e42125c07f521c84f9cd546e6b742c56b508905e5392a",
       "harness": "omp",
@@ -194,6 +208,20 @@
       "destination": "default profile",
       "source": "git:localhost:8443/layouts.git",
       "agent": "literal",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/local-notes.md",
+      "digest": "sha256:da341fdda1b258814d81f9827b9b49e7167cc7e012071919dd29f739c7c068d6",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "local-notes",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -268,6 +296,34 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/recaller.md",
+      "digest": "sha256:38fa0c21a0f6a4c22686bb55c0f95cf9cdbf2fbf80cbc4f3f75cd7cef5ea3166",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "recaller",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/rememberer.md",
+      "digest": "sha256:df3c074e5dff1a833d479bfeaaa860f9a615c3020d158db13773ab7b6d41a5dc",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "rememberer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.omp/agent/agents/researcher.md",
       "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
       "harness": "omp",
@@ -306,6 +362,20 @@
       "destination": "default profile",
       "source": "git:localhost:8443/layouts.git",
       "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/skilled.md",
+      "digest": "sha256:d0f37060fc3f9d4202baf405d83237201dc93b34cef6ae91a3d050865b5e4964",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "skilled",
       "origin": "direct",
       "installedAt": "<time>"
     },

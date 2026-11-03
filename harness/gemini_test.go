@@ -116,7 +116,7 @@ func TestGeminiConversionIsAValidGeminiAgent(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !artifact.Generated || artifact.Converter != "gemini/v3" || len(artifact.Notes) == 0 {
+	if !artifact.Generated || artifact.Converter != "gemini/v4" || len(artifact.Notes) == 0 {
 		t.Fatalf("generated artifact must record converter and omissions: %+v", artifact)
 	}
 	if _, err := gemini.Native(

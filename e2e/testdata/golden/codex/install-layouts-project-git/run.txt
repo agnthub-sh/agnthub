@@ -1,2 +1,2 @@
-$ agnthub add https://localhost:8443/layouts.git --agent bom --agent colon --agent cx-native --agent dual --agent fixer --agent literal --agent no-shell --agent planner --agent researcher --agent root-helper --agent tagged --harness codex --yes --json
+$ agnthub add https://localhost:8443/layouts.git --agent bom --agent colon --agent cx-native --agent dual --agent fixer --agent journaler --agent literal --agent local-notes --agent no-shell --agent planner --agent rememberer --agent researcher --agent root-helper --agent skilled --agent tagged --harness codex --yes --json
 exit status: 0

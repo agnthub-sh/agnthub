@@ -5,10 +5,14 @@
 0644 project/.codex/agents/cx-native.toml
 0644 project/.codex/agents/dual.toml
 0644 project/.codex/agents/fixer.toml
+0644 project/.codex/agents/journaler.toml
 0644 project/.codex/agents/literal.toml
+0644 project/.codex/agents/local-notes.toml
 0644 project/.codex/agents/no-shell.toml
 0644 project/.codex/agents/planner.toml
+0644 project/.codex/agents/rememberer.toml
 0644 project/.codex/agents/researcher.toml
 0644 project/.codex/agents/root-helper.toml
+0644 project/.codex/agents/skilled.toml
 0644 project/.codex/agents/tagged.toml
 0644 project/agnthub-lock.json

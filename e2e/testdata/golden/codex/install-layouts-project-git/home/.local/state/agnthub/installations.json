@@ -62,6 +62,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.codex/agents/journaler.toml",
+      "digest": "sha256:62f774aceb85826968093270258b37c37eba3b72416e1c0950eabd113b125996",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "journaler",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.codex/agents/literal.toml",
       "digest": "sha256:8e35fdde028d1c7b6f54a078c6349ef3d259c1a098df02d0e7e464230e74abce",
       "harness": "codex",
@@ -70,6 +82,18 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "literal",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/local-notes.toml",
+      "digest": "sha256:bc04eff335e1b23c7ef47d662087e155869bc5d2761a8d0f788e869391f585d5",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "local-notes",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -98,6 +122,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.codex/agents/rememberer.toml",
+      "digest": "sha256:9a17b71c9004d12df7837212c2a485b20e17022dad663e585844e345c2cd5397",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "rememberer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.codex/agents/researcher.toml",
       "digest": "sha256:965f989679b4b96f53cc49da9969320ece8ba8ef2de68cd52afc808a6ccea1e3",
       "harness": "codex",
@@ -118,6 +154,18 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/skilled.toml",
+      "digest": "sha256:9b2e43fe17e55eb77652f5f44c772ea94f363cd8f359ead1882b6502b9b5034f",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "skilled",
       "origin": "direct",
       "installedAt": "<time>"
     },

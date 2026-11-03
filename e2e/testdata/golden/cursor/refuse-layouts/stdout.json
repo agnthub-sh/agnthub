@@ -171,6 +171,19 @@
       "reason": "it uses shell without edits, but Cursor's only restriction (readonly) blocks every shell command"
     },
     {
+      "agent": "studio-qa",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant limits the agent to 20 turns, which cursor cannot express"
+    },
+    {
       "agent": "web-searcher",
       "harness": "cursor",
       "settings": {},
@@ -185,7 +198,7 @@
     }
   ],
   "summary": {
-    "incompatible": 12,
+    "incompatible": 13,
     "invalid": 1
   }
 }

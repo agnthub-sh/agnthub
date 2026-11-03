@@ -19,7 +19,7 @@ The CLI's own model (packages `discovery`, `harness`, `install`, `resolve`, `ski
 | Native layouts | `.claude/agents/**/*.md` (recursive, lenient YAML), `.opencode/agents/*.md` (id = file name), `.codex/agents/*.toml`, `.github/agents/*.agent.md` and `*.md` (id = file name), `.cursor/agents/*.md` (one-line keys), `.gemini/agents/*.md`, `.omp/agents/*.md`. |
 | Manifest | `agnthub.yaml` is the whole inventory: declared ids, `categories`, `portable`, per-Harness `variants` (any path), common and Variant-only `dependencies.agents` (same repository or external Git source with ref) and `dependencies.skills` (source, skill, version bounds). |
 | Variant selection | An authored Variant for the target installs byte for byte after native validation; otherwise the portable core is converted, else another authored Variant (claude, opencode, codex, copilot, cursor, gemini, omp order). An invalid Variant for the target is refused, never replaced by a conversion. |
-| Conversion | Name, description and instructions carry; tool allowlists, denylists, read-only, MCP tool references, `maxTurns` and background map by capability into each Harness's form or are refused when the target cannot enforce them; model strings are dropped with a note; cosmetic fields are noted; permission modes, hooks, agent-scoped MCP servers are refused everywhere. |
+| Conversion | Name, description and instructions carry; tool allowlists, denylists, read-only, MCP tool references, `maxTurns` and background map by capability into each Harness's form or are refused when the target cannot enforce them; model strings are dropped with a note; cosmetic fields are noted; permission modes, hooks, agent-scoped MCP servers are refused everywhere; persistent memory and preloaded skills never refuse: native field, delimited instructions, or a note. |
 | Identity | Ambiguous identities (two portable files, two native files of one Harness) refuse that agent only. |
 | Selection | `--agent`/`'*'`, `--harness`/`all`, `--all`, `--global`, `--yes` (never reduces a plan), `--extra omp.profile=<name>` (omp only; refused for unselected Harnesses; profiles must exist). |
 | Lifecycle | `list`, `check` (updates, drift), `update` (locked ref, refuses local edits), `restore` (lock only, byte-identical, refuses mismatches), `remove` (owned and unchanged files only), `remove --clean-dependencies`. |
@@ -139,6 +139,17 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | background execution (`background: true`) | `backgrounder` | global · git<br>global · local<br>project · git<br>project · local | W N | R | R | R | W N N0 | R | R |
 | Gemini `mcp_servers` + `mcp_<server>_<tool>`: native on Gemini CLI | `gm-mcp` | global · git<br>global · local<br>project · git<br>project · local | R | R | R | R | R | W N | R |
 | Gemini `mcpServers` (camelCase), which Gemini CLI rejects: refused | `gm-camel` | global · git<br>global · local<br>project · git<br>project · local | R | R | R | R | R | R | R |
+
+### Additive capabilities
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| `memory: project` with edits: Claude Code's folder named in the instructions | `rememberer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| `memory: user` with edits: emulated where agents may write under the home directory, noted elsewhere | `journaler` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| `memory: local` with inherited tools | `local-notes` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| `memory: user` without edits: noted, never emulated or granted | `recaller` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
+| `skills` preload: native `skills`/`autoload-skills`, else instructions plus the skill tool | `skilled` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| memory, skills and `maxTurns` together (the qa-lead shape) | `studio-qa` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | R | W N | R |
 
 ### Model fields
 

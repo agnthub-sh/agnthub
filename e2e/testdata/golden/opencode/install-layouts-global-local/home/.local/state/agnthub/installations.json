@@ -156,6 +156,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.config/opencode/agents/journaler.md",
+      "digest": "sha256:ec012dbafd9feb5c4db8162ae00902cefc87a89c089a3565d8a235f44f7d0883",
+      "harness": "opencode",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "journaler",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.config/opencode/agents/literal.md",
       "digest": "sha256:28b8d7a0e5ad94158144be7da53cc4a77221bc62f82c37f84122f41e0d23743d",
       "harness": "opencode",
@@ -163,6 +174,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "literal",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.config/opencode/agents/local-notes.md",
+      "digest": "sha256:2c19906a3c1f3425b798ed60d2e5240a52f625d808e8c818d2e90ec16120f8f6",
+      "harness": "opencode",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "local-notes",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -222,6 +244,28 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.config/opencode/agents/recaller.md",
+      "digest": "sha256:817d7005a0277a74c491f332d94f3108dbf8abc92cfcbfb47579526f5ef94b5f",
+      "harness": "opencode",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "recaller",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.config/opencode/agents/rememberer.md",
+      "digest": "sha256:00c06fce96b85830218a87812da296e10ded743ba43b2a748dcf85769ae00cbf",
+      "harness": "opencode",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "rememberer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.config/opencode/agents/researcher.md",
       "digest": "sha256:dc0efd3e8c1d9d2ba25920384aa0717785dc606950562c972aac8f062b80bf76",
       "harness": "opencode",
@@ -251,6 +295,28 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.config/opencode/agents/skilled.md",
+      "digest": "sha256:46b4d26c2debfe3c40644cd4a526cc1b8643734a0c67ff1856c82a77b369bd5b",
+      "harness": "opencode",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "skilled",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.config/opencode/agents/studio-qa.md",
+      "digest": "sha256:e0a924784095a03c02cb35a6cb2c3437312ecdbec2b86ca4c8e2465e0b1fb892",
+      "harness": "opencode",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "studio-qa",
       "origin": "direct",
       "installedAt": "<time>"
     },

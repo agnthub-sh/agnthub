@@ -28,6 +28,13 @@ type Semantics struct {
 	MaxTurns int
 	// Background runs the Agent without blocking the caller.
 	Background bool
+	// Memory is the Agent's persistent memory scope, or "" for none. Memory
+	// and Skills are additive: renderers carry them natively, emulate them with
+	// instructions, or omit them with a note (see additive.go).
+	Memory MemoryScope
+	// Skills are the skills preloaded into the Agent's context, in authored
+	// order. agnthub never installs skills from this list.
+	Skills []string
 	// Notes are harmless omissions made while parsing (cosmetic metadata,
 	// model tuning, session-only helpers).
 	Notes []string
@@ -151,7 +158,7 @@ func (t MCPTool) String() string {
 }
 
 // converterVersion is the conversion contract of every generated artifact.
-const converterVersion = "v3"
+const converterVersion = "v4"
 
 // converterID names the conversion contract for h.
 func converterID(h agent.HarnessID) string {
@@ -161,14 +168,15 @@ func converterID(h agent.HarnessID) string {
 // ConverterReproduces reports whether the current converter regenerates
 // artifacts recorded under the converter id recorded. Each version renders
 // what its predecessors converted byte for byte (v2 added native Variant
-// sources, v3 MCP tool references), so a lock written by v1 or v2 restores
-// when its recorded digest still matches.
+// sources, v3 MCP tool references, v4 persistent memory and preloaded
+// skills), so a lock written by an earlier version restores when its recorded
+// digest still matches.
 func ConverterReproduces(recorded, current string) bool {
 	if recorded == current {
 		return true
 	}
 	harnessID, version, ok := strings.Cut(recorded, "/")
-	return ok && (version == "v1" || version == "v2") &&
+	return ok && (version == "v1" || version == "v2" || version == "v3") &&
 		current == converterID(agent.HarnessID(harnessID))
 }
 
@@ -211,6 +219,10 @@ type renderCheck struct {
 	target agent.HarnessID
 	sem    *Semantics
 	notes  []string
+	// memoryDir is the folder of emulated memory, set by carry.
+	memoryDir string
+	// skillGranted reports that skillTools added the skill tool.
+	skillGranted bool
 }
 
 // begin validates the parts every target treats alike and starts the notes:

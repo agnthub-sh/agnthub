@@ -277,6 +277,12 @@ func (a cursorAdapter) Convert(sem *Semantics) (Artifact, error) {
 		check.mcpSession()
 	}
 	description := strings.Join(strings.Fields(sem.Description), " ")
+	instructions := check.carry(additiveSupport{
+		userMemory:    cursorUserMemory,
+		loadSkill:     "Each one is listed among your available skills: read its SKILL.md.",
+		sessionSkills: true,
+		tools:         sem.Tools,
+	})
 	if description != strings.TrimSpace(sem.Description) {
 		check.note("description joined onto one line: Cursor reads one line per key")
 	}
@@ -298,7 +304,7 @@ func (a cursorAdapter) Convert(sem *Semantics) (Artifact, error) {
 		if sem.Background {
 			fields = append(fields, agent.Field{Key: "is_background", Value: true})
 		}
-		rendered, err := agent.RenderMarkdown(fields, sem.Instructions)
+		rendered, err := agent.RenderMarkdown(fields, instructions)
 		if err != nil {
 			return Artifact{}, err
 		}
@@ -320,6 +326,11 @@ func (a cursorAdapter) Convert(sem *Semantics) (Artifact, error) {
 		Notes:     check.notes,
 	})
 }
+
+// cursorUserMemory holds user-scope memories on Cursor: its agents may write
+// Markdown under ~/.cursor without approval, but nowhere else outside the
+// workspace.
+const cursorUserMemory = "~/.cursor/agent-memory/"
 
 func (cursorAdapter) Detect(ctx Context) bool {
 	return detect(ctx, "cursor-agent", filepath.Join(ctx.Env.Home(), ".cursor")) ||

@@ -312,6 +312,25 @@ var scenarios = []scenario{
 	conversion("Tool restrictions", "gemini-mcp-camel",
 		"Gemini `mcpServers` (camelCase), which Gemini CLI rejects: refused", "gm-camel"),
 
+	conversion(
+		"Additive capabilities",
+		"memory-project",
+		"`memory: project` with edits: Claude Code's folder named in the instructions",
+		"rememberer",
+	),
+	conversion("Additive capabilities", "memory-user",
+		"`memory: user` with edits: emulated where agents may write under the home directory, "+
+			"noted elsewhere", "journaler"),
+	conversion("Additive capabilities", "memory-local",
+		"`memory: local` with inherited tools", "local-notes"),
+	conversion("Additive capabilities", "memory-read-only",
+		"`memory: user` without edits: noted, never emulated or granted", "recaller"),
+	conversion("Additive capabilities", "skills-preload",
+		"`skills` preload: native `skills`/`autoload-skills`, else instructions plus the "+
+			"skill tool", "skilled"),
+	conversion("Additive capabilities", "memory-skills-turns",
+		"memory, skills and `maxTurns` together (the qa-lead shape)", "studio-qa"),
+
 	conversion("Model fields", "model-native",
 		"native `model: sonnet` kept byte-for-byte, dropped with a note on conversion",
 		"reviewer"),
