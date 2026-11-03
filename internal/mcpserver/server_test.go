@@ -274,7 +274,7 @@ func TestInstallCommandValidatesAgainstTheListing(t *testing.T) {
 		"repository": "octo/agents", "agents": []string{"reviewer"},
 		"harnesses": []string{"omp", "gemini", "claude"}, "scope": "global", "omp_profile": "work",
 	}))
-	want := "npx agnthub add octo/agents --agent reviewer --harness claude --harness gemini " +
+	want := "npx agnthub-cli add octo/agents --agent reviewer --harness claude --harness gemini " +
 		"--harness omp --global --extra omp.profile=work"
 	if out.Command != want {
 		t.Fatalf("command = %q, want %q", out.Command, want)

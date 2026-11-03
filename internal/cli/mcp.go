@@ -33,7 +33,7 @@ get_repository) and build install commands (install_command) through the public
 API. install_agents installs agents locally with the same plan, conflict and
 ownership protections as agnthub add: it only previews unless called with
 confirm, and honors DO_NOT_TRACK / DISABLE_TELEMETRY.`,
-		Example: `  claude mcp add agnthub -- npx -y agnthub mcp
+		Example: `  claude mcp add agnthub -- npx -y agnthub-cli mcp
   agnthub mcp --api-url http://localhost:8080`,
 		Args: cobra.NoArgs,
 		RunE: func(*cobra.Command, []string) error {

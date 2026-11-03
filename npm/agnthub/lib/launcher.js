@@ -337,7 +337,7 @@ async function main(args, env = process.env) {
   if (!binary) {
     if (embedded.version !== pkg.version) {
       throw new LauncherError(
-        `this package (${pkg.version}) carries checksums for ${embedded.version}; reinstall agnthub`,
+        `this package (${pkg.version}) carries checksums for ${embedded.version}; reinstall agnthub-cli`,
       );
     }
     binary = await ensureBinary({

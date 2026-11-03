@@ -20,7 +20,7 @@ func TestBuildCommandMatchesTheSiteBuilder(t *testing.T) {
 		{
 			name: "nothing selected lets the CLI ask",
 			in:   mcpserver.CommandInput{Source: "octo/agents"},
-			want: "npx agnthub add octo/agents",
+			want: "npx agnthub-cli add octo/agents",
 		},
 		{
 			name: "harnesses in display order, global, profile",
@@ -29,7 +29,7 @@ func TestBuildCommandMatchesTheSiteBuilder(t *testing.T) {
 				Harnesses: []agent.HarnessID{agent.OMP, agent.Claude}, Global: true,
 				OMPProfile: "work",
 			},
-			want: "npx agnthub add octo/agents --agent reviewer --agent planner " +
+			want: "npx agnthub-cli add octo/agents --agent reviewer --agent planner " +
 				"--harness claude --harness omp --global --extra omp.profile=work",
 		},
 		{
@@ -38,7 +38,7 @@ func TestBuildCommandMatchesTheSiteBuilder(t *testing.T) {
 				Source: "octo/agents", All: true, Harnesses: []agent.HarnessID{agent.Codex},
 				OMPProfile: "work",
 			},
-			want: "npx agnthub add octo/agents --all --extra omp.profile=work",
+			want: "npx agnthub-cli add octo/agents --all --extra omp.profile=work",
 		},
 		{
 			name: "a profile without omp selected is left out",
@@ -46,7 +46,7 @@ func TestBuildCommandMatchesTheSiteBuilder(t *testing.T) {
 				Source: "octo/agents", Harnesses: []agent.HarnessID{agent.Codex},
 				OMPProfile: "work",
 			},
-			want: "npx agnthub add octo/agents --harness codex",
+			want: "npx agnthub-cli add octo/agents --harness codex",
 		},
 		{
 			name: "every harness becomes --harness all",
@@ -58,7 +58,7 @@ func TestBuildCommandMatchesTheSiteBuilder(t *testing.T) {
 				},
 				OMPProfile: "work",
 			},
-			want: "npx agnthub add octo/agents --agent reviewer --harness all " +
+			want: "npx agnthub-cli add octo/agents --agent reviewer --harness all " +
 				"--extra omp.profile=work",
 		},
 		{
@@ -70,7 +70,7 @@ func TestBuildCommandMatchesTheSiteBuilder(t *testing.T) {
 					agent.Cursor, agent.Gemini,
 				},
 			},
-			want: "npx agnthub add octo/agents --harness claude --harness opencode " +
+			want: "npx agnthub-cli add octo/agents --harness claude --harness opencode " +
 				"--harness codex --harness copilot --harness cursor --harness gemini",
 		},
 	}

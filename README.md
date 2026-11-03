@@ -82,18 +82,16 @@ The binaries are not code-signed. On macOS, a file downloaded with a browser (ra
 
 ### npm launcher
 
-The `agnthub` npm package is a small launcher with no dependencies and no install scripts. On
+The `agnthub-cli` npm package is a small launcher with no dependencies and no install scripts. On
 first run it downloads the archive for your platform from this repository's release of the
 same version, checks it against SHA-256 checksums that ship inside the npm package, refuses
 to run anything that does not match, and caches the verified binary (`~/.cache/agnthub`,
-`~/Library/Caches/agnthub` or `%LOCALAPPDATA%\agnthub\Cache`).
+`~/Library/Caches/agnthub` or `%LOCALAPPDATA%\agnthub\Cache`). The installed command is `agnthub`.
 
 ```sh
-npx agnthub@0.4.1 add owner/repo --list
-npm install -g agnthub@0.4.1
+npx agnthub-cli@0.4.3 add owner/repo --list
+npm install -g agnthub-cli@0.4.3
 ```
-
-The npm package has not been published yet; until it is, use the direct download.
 
 ### From source
 

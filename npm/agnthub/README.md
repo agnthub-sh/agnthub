@@ -1,11 +1,12 @@
-# agnthub
+# agnthub-cli
 
 Launcher for the [agnthub](https://app.agnthub.sh) CLI, which installs coding agents from
 source repositories into Claude Code, Codex, OpenCode, GitHub Copilot CLI, Cursor, Gemini CLI
 and omp.
 
 ```sh
-npx agnthub add owner/repo --list
+npx agnthub-cli add owner/repo --list
+npm install -g agnthub-cli   # installs the `agnthub` command
 ```
 
 This package has no dependencies and no install scripts. On first run it downloads the native

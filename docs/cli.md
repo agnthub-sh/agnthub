@@ -93,7 +93,7 @@ Removing an agent never removes its companion agents or skills. `remove --clean-
 
 ## MCP server
 
-`agnthub mcp` runs a [Model Context Protocol](https://modelcontextprotocol.io) server on stdin/stdout so AI agents can find, inspect and install agents. MCP clients start it themselves; it is the same binary as the CLI (`npx -y agnthub mcp`, or the installed `agnthub mcp`).
+`agnthub mcp` runs a [Model Context Protocol](https://modelcontextprotocol.io) server on stdin/stdout so AI agents can find, inspect and install agents. MCP clients start it themselves; it is the same binary as the CLI (`npx -y agnthub-cli mcp`, or the installed `agnthub mcp`).
 
 Read-only tools query the public registry API (`https://api.agnthub.sh`; override with `--api-url`, `AGNTHUB_API_URL` or `apiURL:` in `~/.config/agnthub/config.yaml`) and see exactly what the site shows: only currently listed repositories, instructions only under the licensed policy. Outputs are bounded (at most 20 search results per page, 50 agents per repository, instructions only on request and capped at 32 KiB each).
 
@@ -102,30 +102,30 @@ Read-only tools query the public registry API (`https://api.agnthub.sh`; overrid
 | `search_agents` | Full-text search with harness filters and `relevance`, `recent`, `installs`, `installs_30d`, `installs_7d`, `harness_installs` or `stars` (GitHub + agnthub.sh) order |
 | `get_agent` | One agent: description, installable harnesses or why not, dependencies, reported installs, stars (GitHub + agnthub.sh), license; instructions with `include_instructions` |
 | `get_repository` | A listed repository with its agents, license, GitHub stats and scan problems |
-| `install_command` | The `npx agnthub add …` command for agents, harnesses, scope and omp profile, built and quoted exactly as the site's install builder does (every supported harness selected becomes `--harness all`), after checking the agents are listed; warns about harnesses an agent cannot be installed into |
+| `install_command` | The `npx agnthub-cli add …` command for agents, harnesses, scope and omp profile, built and quoted exactly as the site's install builder does (every supported harness selected becomes `--harness all`), after checking the agents are listed; warns about harnesses an agent cannot be installed into |
 | `install_agents` | Installs on this machine through the same code as `agnthub add --json`: harness selection, scope, `--extra` settings such as `omp.profile`, dependencies, required skills, the lock and ownership records. Without `confirm` it only returns the plan; with `confirm: true` it applies the plan only when every item is valid, so files agnthub does not own or that were changed locally are never overwritten. Project installs go to `project_dir` (default: the directory the client started the server in). Install reports honor `DO_NOT_TRACK` / `DISABLE_TELEMETRY` |
 
-Client configuration (use `agnthub mcp` instead of `npx -y agnthub mcp` with an installed binary):
+Client configuration (use `agnthub mcp` instead of `npx -y agnthub-cli mcp` with an installed binary):
 
-- Claude Code: `claude mcp add agnthub -- npx -y agnthub mcp`
-- Codex: `codex mcp add agnthub -- npx -y agnthub mcp`, or in `~/.codex/config.toml`:
+- Claude Code: `claude mcp add agnthub -- npx -y agnthub-cli mcp`
+- Codex: `codex mcp add agnthub -- npx -y agnthub-cli mcp`, or in `~/.codex/config.toml`:
 
   ```toml
   [mcp_servers.agnthub]
   command = "npx"
-  args = ["-y", "agnthub", "mcp"]
+  args = ["-y", "agnthub-cli", "mcp"]
   ```
 
 - OpenCode (`opencode.json`):
 
   ```json
-  { "mcp": { "agnthub": { "type": "local", "command": ["npx", "-y", "agnthub", "mcp"] } } }
+  { "mcp": { "agnthub": { "type": "local", "command": ["npx", "-y", "agnthub-cli", "mcp"] } } }
   ```
 
 - Cursor (`.cursor/mcp.json` or `~/.cursor/mcp.json`), Gemini CLI (`.gemini/settings.json` or `~/.gemini/settings.json`) and omp (`.omp/mcp.json` or `~/.omp/agent/mcp.json`):
 
   ```json
-  { "mcpServers": { "agnthub": { "command": "npx", "args": ["-y", "agnthub", "mcp"] } } }
+  { "mcpServers": { "agnthub": { "command": "npx", "args": ["-y", "agnthub-cli", "mcp"] } } }
   ```
 
 - GitHub Copilot CLI (`~/.copilot/mcp-config.json`):

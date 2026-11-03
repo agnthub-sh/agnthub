@@ -23,12 +23,12 @@ type CommandInput struct {
 	OMPProfile string
 }
 
-// BuildCommand renders the `npx agnthub add …` command exactly as the site's install builder
+// BuildCommand renders the `npx agnthub-cli add …` command exactly as the site's install builder
 // (web/src/lib/command.ts) does: harnesses in display order, or `--harness all` when every
 // supported harness is selected, defaults omitted, every token shell-quoted. An omp profile
 // that does not apply (omp not selected) is left out.
 func BuildCommand(in *CommandInput) (string, error) {
-	args := []string{"npx", "agnthub", "add", in.Source}
+	args := []string{"npx", "agnthub-cli", "add", in.Source}
 	if in.All {
 		args = append(args, "--all")
 	} else {

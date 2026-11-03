@@ -47,7 +47,7 @@ Command vocabulary is `agnthub add`, `find`, `list`, `check`, `update`, `remove`
 Illustrative command shape, not an already-published executable:
 
 ```text
-npx agnthub add owner/repo
+npx agnthub-cli add owner/repo
 agnthub add owner/repo --list
 agnthub add owner/repo#v1 --agent reviewer --harness codex
 agnthub add owner/repo --harness omp --global --extra omp.profile=hep
