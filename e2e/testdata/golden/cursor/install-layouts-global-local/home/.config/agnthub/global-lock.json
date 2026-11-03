@@ -6,6 +6,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "annotated",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "cursor",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/annotated.md",
+          "sourceDigest": "sha256:8cf577c3db790479f198a536eb7ad1011f84a0827e2bb2a07bfe5836a4254087",
+          "converter": "cursor/v4",
+          "path": "/agnthub-e2e/home/.cursor/agents/annotated.md",
+          "digest": "sha256:f209fda51ee8bb1c84d700f227c7ec399c217417ea178d7b9b5bd395d002a30e",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "backgrounder",
       "origin": "direct",
       "artifacts": [
@@ -37,6 +57,26 @@
           "converter": "cursor/v4",
           "path": "/agnthub-e2e/home/.cursor/agents/bom.md",
           "digest": "sha256:153b3d74ed17217d3add75e5a05821e72eeda1b02b4edfbe91542b1fa2adcb62",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "bounded",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "cursor",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/bounded.md",
+          "sourceDigest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
+          "converter": "cursor/v4",
+          "path": "/agnthub-e2e/home/.cursor/agents/bounded.md",
+          "digest": "sha256:dbe17a641e6d0f24b1dae7225e703e45430b4cbee953497bb6e6a34cf7f8171b",
           "requires": []
         }
       ]
@@ -436,6 +476,26 @@
           "converter": "cursor/v4",
           "path": "/agnthub-e2e/home/.cursor/agents/skilled.md",
           "digest": "sha256:8c86af8022728cfdb5effbeaa8e56695af4580c7961617e927452f2746f9ea25",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "studio-qa",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "cursor",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/studio-qa.md",
+          "sourceDigest": "sha256:cfe15b9951529179d27ad3396fc10136bcf5a2455518aed3464720354c2fa3e8",
+          "converter": "cursor/v4",
+          "path": "/agnthub-e2e/home/.cursor/agents/studio-qa.md",
+          "digest": "sha256:7307b89a9637f99f85b8317a8707bb9135dce2d2ae064e41955f42b5a66f3943",
           "requires": []
         }
       ]

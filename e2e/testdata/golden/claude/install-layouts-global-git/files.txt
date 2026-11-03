@@ -1,3 +1,5 @@
+0644 home/.claude/agents/allowlisted.md
+0644 home/.claude/agents/annotated.md
 0644 home/.claude/agents/backgrounder.md
 0644 home/.claude/agents/bom-native.md
 0644 home/.claude/agents/bom.md

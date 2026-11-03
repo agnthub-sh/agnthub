@@ -15,6 +15,41 @@
   ],
   "items": [
     {
+      "agent": "allowlisted",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which opencode cannot express"
+    },
+    {
+      "agent": "annotated",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/annotated.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/annotated.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted capabilities: Claude Code ignores it",
+        "omitted category: Claude Code ignores it",
+        "omitted domain: Claude Code ignores it"
+      ]
+    },
+    {
       "agent": "backgrounder",
       "harness": "opencode",
       "settings": {},
@@ -673,8 +708,8 @@
     }
   ],
   "summary": {
-    "create": 31,
-    "incompatible": 5,
+    "create": 32,
+    "incompatible": 6,
     "invalid": 1
   }
 }

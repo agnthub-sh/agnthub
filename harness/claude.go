@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
+	"unicode"
 
 	"github.com/agnthub-sh/agnthub/agent"
 )
@@ -209,6 +210,50 @@ func claudeNormalize(name string) string {
 	}, name)
 }
 
+// claudeFields are the subagent frontmatter fields Claude Code 2.1.309
+// recognizes, as its frontmatter reference lists them
+// (https://code.claude.com/docs/en/sub-agents#frontmatter-reference). Claude
+// Code ignores every other top-level key; its debug log names them as keys it
+// "does not recognize or apply". The e2e suite checks that log against the
+// Claude Code it runs, and TestClaudeFieldsMatchTheDocs checks this list
+// against the current reference every night.
+var claudeFields = []string{
+	"name", "description", "tools", "disallowedTools", "model", "permissionMode",
+	"maxTurns", "autoCompactWindow", "skills", "mcpServers", "hooks", "memory",
+	"background", "omitClaudeMd", "effort", "isolation", "color", "initialPrompt",
+	"experimental",
+}
+
+// ClaudeIgnores reports whether Claude Code ignores a subagent frontmatter key.
+func ClaudeIgnores(key string) bool {
+	return !slices.Contains(claudeFields, key)
+}
+
+// claudeRestrictionLike are keys, compared without case, '-' or '_', that
+// Claude Code ignores but read as a tool or permission restriction: other
+// harnesses' fields or misspelled Claude fields. Conversion refuses them rather
+// than install an agent its author meant to restrict.
+var claudeRestrictionLike = map[string]bool{
+	"tools": true, "allowedtools": true, "disallowedtools": true, "deniedtools": true,
+	"denytools": true, "blockedtools": true, "excludedtools": true, "readonly": true,
+	"permission": true, "permissions": true, "permissionmode": true, "sandbox": true,
+	"sandboxmode": true, "approval": true, "approvals": true, "approvalpolicy": true,
+	"approvalmode": true, "allowedcommands": true, "deniedcommands": true,
+	"allowedpaths": true, "deniedpaths": true, "hooks": true, "isolation": true,
+	"mcpservers": true, "maxturns": true,
+}
+
+// restrictionLike reports whether an ignored key reads as a restriction.
+func restrictionLike(key string) bool {
+	folded := strings.Map(func(r rune) rune {
+		if r == '-' || r == '_' || r == ' ' {
+			return -1
+		}
+		return unicode.ToLower(r)
+	}, key)
+	return claudeRestrictionLike[folded]
+}
+
 // claudeBehaviors are Claude Code subagent fields with no cross-harness equivalent.
 var claudeBehaviors = map[string]string{
 	"permissionMode": "a Claude Code permission mode for tool approvals",
@@ -216,7 +261,6 @@ var claudeBehaviors = map[string]string{
 	"hooks":          "lifecycle hooks that run commands",
 	"isolation":      "runs the agent in an isolated worktree",
 	"initialPrompt":  "a first prompt submitted when the agent starts a session",
-	"prompt":         "a prompt outside the Markdown body",
 }
 
 // claudeNotes are harmless Claude Code fields conversion omits, with why.
@@ -275,19 +319,19 @@ func (a claudeAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 				sem.Skills = sem.Skills[:claudeMaxSkills]
 			}
 		default:
-			if why, ok := claudeNotes[key]; ok {
-				sem.note("omitted %s: %s", key, why)
-				continue
-			}
-			if harmlessPortableKeys[key] {
+			switch {
+			case claudeNotes[key] != "":
+				sem.note("omitted %s: %s", key, claudeNotes[key])
+			case claudeBehaviors[key] != "":
+				sem.unsupported(key, claudeBehaviors[key])
+			case restrictionLike(key):
+				sem.unsupported(key, "a field Claude Code ignores, but it reads as a tool or "+
+					"permission restriction")
+			case harmlessPortableKeys[key]:
 				sem.note("omitted %s: descriptive metadata", key)
-				continue
+			default:
+				sem.note("omitted %s: Claude Code ignores it", key)
 			}
-			meaning, ok := claudeBehaviors[key]
-			if !ok {
-				meaning = "a field Claude Code may apply with no verified equivalent"
-			}
-			sem.unsupported(key, meaning)
 		}
 	}
 	claudeToolPolicy(sem, hasAllowlist, allowed, disallowed)
@@ -447,7 +491,7 @@ func (a claudeAdapter) Convert(sem *Semantics) (Artifact, error) {
 		fields = append(fields, agent.Field{Key: "skills", Value: sem.Skills})
 	}
 	instructions := check.carry(additiveSupport{
-		nativeMemory: true, nativeSkills: true, tools: sem.Tools,
+		nativeMemory: true, nativeSkills: true, nativeTurns: true, tools: sem.Tools,
 	})
 	content, err := agent.RenderMarkdown(fields, instructions)
 	if err != nil {

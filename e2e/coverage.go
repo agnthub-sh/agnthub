@@ -328,6 +328,14 @@ var scenarios = []scenario{
 	conversion("Additive capabilities", "skills-preload",
 		"`skills` preload: native `skills`/`autoload-skills`, else instructions plus the "+
 			"skill tool", "skilled"),
+	conversion(
+		"Variants and conversion",
+		"claude-ignored-keys",
+		"keys Claude Code ignores (`capabilities`, `category`, `domain`): omitted with a note",
+		"annotated",
+	),
+	conversion("Variants and conversion", "claude-ignored-restriction",
+		"ignored key that reads as a restriction (`allowed-tools`): refused", "allowlisted"),
 	conversion("Additive capabilities", "memory-skills-turns",
 		"memory, skills and `maxTurns` together (the qa-lead shape)", "studio-qa"),
 

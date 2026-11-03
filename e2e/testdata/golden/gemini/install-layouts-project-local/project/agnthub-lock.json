@@ -6,6 +6,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "annotated",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/annotated.md",
+          "sourceDigest": "sha256:8cf577c3db790479f198a536eb7ad1011f84a0827e2bb2a07bfe5836a4254087",
+          "converter": "gemini/v4",
+          "path": ".gemini/agents/annotated.md",
+          "digest": "sha256:702061a135b288f798bba4b5f070f00696360c4cf5f1b0d308f6cebb0bb872c4",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "bom",
       "origin": "direct",
       "artifacts": [

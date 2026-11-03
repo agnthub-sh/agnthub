@@ -2,6 +2,17 @@
   "version": 1,
   "records": [
     {
+      "path": "/agnthub-e2e/home/.config/opencode/agents/annotated.md",
+      "digest": "sha256:30d78385cc95eb05a5c3d3a5215800ebd0f1f8406157998e3646373895f3fd83",
+      "harness": "opencode",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "annotated",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.config/opencode/agents/bom-native.md",
       "digest": "sha256:b0f84396deeb5de5e7c3684307c03c9f5d38e7aa6d0f2eb2f2f8e2617424435e",
       "harness": "opencode",

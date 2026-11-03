@@ -6,6 +6,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "annotated",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/annotated.md",
+          "sourceDigest": "sha256:8cf577c3db790479f198a536eb7ad1011f84a0827e2bb2a07bfe5836a4254087",
+          "converter": "codex/v4",
+          "path": "/agnthub-e2e/home/.codex/agents/annotated.toml",
+          "digest": "sha256:3f63ee53b2316c5970d685671bc06a2b225ab5cb0f8ed9c4563fcb1b590e50d7",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "bom",
       "origin": "direct",
       "artifacts": [
@@ -17,6 +37,26 @@
           "converter": "codex/v4",
           "path": "/agnthub-e2e/home/.codex/agents/bom.toml",
           "digest": "sha256:4d60e3ba4834998e527766c7c8173b828b4083a5ffa40f458e32df67688d2770",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "bounded",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/bounded.md",
+          "sourceDigest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
+          "converter": "codex/v4",
+          "path": "/agnthub-e2e/home/.codex/agents/bounded.toml",
+          "digest": "sha256:bc2eba7ceb8e1c1a9c921dc6d3f5c5269f6ec2cc79121c56b652eb120a85d968",
           "requires": []
         }
       ]
@@ -276,6 +316,26 @@
           "converter": "codex/v4",
           "path": "/agnthub-e2e/home/.codex/agents/skilled.toml",
           "digest": "sha256:9b2e43fe17e55eb77652f5f44c772ea94f363cd8f359ead1882b6502b9b5034f",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "studio-qa",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/studio-qa.md",
+          "sourceDigest": "sha256:cfe15b9951529179d27ad3396fc10136bcf5a2455518aed3464720354c2fa3e8",
+          "converter": "codex/v4",
+          "path": "/agnthub-e2e/home/.codex/agents/studio-qa.toml",
+          "digest": "sha256:b660af38edef86b9954bdd019fd894913a16086346541a0b026c8b2b64e9be92",
           "requires": []
         }
       ]

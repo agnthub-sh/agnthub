@@ -353,15 +353,6 @@ func (p ToolPolicy) reach() Capability {
 	return granted
 }
 
-// requireMaxTurns refuses a turn limit the target cannot express.
-func (c *renderCheck) requireMaxTurns() error {
-	if c.sem.MaxTurns > 0 {
-		return c.refuse("its %s limits the agent to %d turns, which %s cannot express",
-			c.sem.sourceLabel(), c.sem.MaxTurns, c.target)
-	}
-	return nil
-}
-
 // requireForeground refuses background execution the target cannot express.
 func (c *renderCheck) requireForeground() error {
 	if c.sem.Background {

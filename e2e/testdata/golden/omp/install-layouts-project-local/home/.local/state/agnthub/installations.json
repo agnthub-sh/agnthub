@@ -2,6 +2,21 @@
   "version": 1,
   "records": [
     {
+      "path": "/agnthub-e2e/project/.omp/agents/annotated.md",
+      "digest": "sha256:c93c4c71c813a9c59503394465e3eb499c3e8370183209c677f2ef4fc3da2b9d",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "annotated",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.omp/agents/bom-native.md",
       "digest": "sha256:10712619e6b57bb8220547f83f831e12d82648a884fce68f53abdd19d8bfb1b2",
       "harness": "omp",
@@ -28,6 +43,21 @@
       "destination": "project, shared by every omp profile; verify with default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "bom",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/bounded.md",
+      "digest": "sha256:dbe17a641e6d0f24b1dae7225e703e45430b4cbee953497bb6e6a34cf7f8171b",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "bounded",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -403,6 +433,21 @@
       "destination": "project, shared by every omp profile; verify with default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "skilled",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/studio-qa.md",
+      "digest": "sha256:ce3cb81991809e9be41b53f30f18d308f57599e8fb04096285930d8449e67a7b",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "studio-qa",
       "origin": "direct",
       "installedAt": "<time>"
     },

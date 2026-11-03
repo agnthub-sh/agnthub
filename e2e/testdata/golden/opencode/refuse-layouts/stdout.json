@@ -15,6 +15,19 @@
   ],
   "items": [
     {
+      "agent": "allowlisted",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which opencode cannot express"
+    },
+    {
       "agent": "backgrounder",
       "harness": "opencode",
       "settings": {},
@@ -94,7 +107,7 @@
     }
   ],
   "summary": {
-    "incompatible": 5,
+    "incompatible": 6,
     "invalid": 1
   }
 }

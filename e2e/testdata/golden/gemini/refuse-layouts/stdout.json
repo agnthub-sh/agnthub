@@ -15,6 +15,19 @@
   ],
   "items": [
     {
+      "agent": "allowlisted",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which gemini cannot express"
+    },
+    {
       "agent": "backgrounder",
       "harness": "gemini",
       "settings": {},
@@ -94,7 +107,7 @@
     }
   ],
   "summary": {
-    "incompatible": 4,
+    "incompatible": 5,
     "invalid": 2
   }
 }

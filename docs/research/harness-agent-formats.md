@@ -139,6 +139,8 @@ agnthub's rule (ADR 0009), per target:
   - An agent without edits keeps its tools and is noted: memory never grants tools.
 - **Skills.** Native on Claude Code (`skills`), Copilot CLI (`skills`) and omp (`autoload-skills`). Elsewhere a delimited section tells the agent to load the named skills before it starts: OpenCode via `skill`, Gemini CLI via `activate_skill`, Codex and Cursor by reading the listed `SKILL.md`. OpenCode and Gemini CLI allowlists also gain their skill tool, a session helper that changes nothing the agent can affect. Every target notes that the skills must be installed for it: the field never installs them; Skill Dependencies stay a manifest feature.
 
+**Keys Claude Code ignores (verified 2026-11-03).** Claude Code 2.1.309 recognizes exactly the 19 fields of its [frontmatter reference](https://code.claude.com/docs/en/sub-agents#frontmatter-reference) (`name`, `description`, `tools`, `disallowedTools`, `model`, `permissionMode`, `maxTurns`, `autoCompactWindow`, `skills`, `mcpServers`, `hooks`, `memory`, `background`, `omitClaudeMd`, `effort`, `isolation`, `color`, `initialPrompt`, `experimental`). `claude --debug` logs every other top-level key, offline, as `Agent file <path> has frontmatter keys Claude Code does not recognize or apply: "capabilities", "category", "allowed-tools" (did you mean "tools"?)` (up to five per file); `prompt` is ignored in files too. Turn limits: only Claude Code, OpenCode (`steps`) and Gemini CLI (`max_turns`) have a per-agent limit.
+
 ## Decisions and remaining unknowns
 
 1. **Exact product support target:** CLI-only, IDE, or cloud per harness? Copilot especially needs separate surface labels. Should initial support include all seven, or only a tested subset? Skill support is not agent support.

@@ -15,6 +15,41 @@
   ],
   "items": [
     {
+      "agent": "allowlisted",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which copilot cannot express"
+    },
+    {
+      "agent": "annotated",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/annotated.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/annotated.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted capabilities: Claude Code ignores it",
+        "omitted category: Claude Code ignores it",
+        "omitted domain: Claude Code ignores it"
+      ]
+    },
+    {
       "agent": "backgrounder",
       "harness": "copilot",
       "settings": {},
@@ -67,13 +102,20 @@
       "harness": "copilot",
       "settings": {},
       "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/bounded.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/bounded.md",
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
       "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant limits the agent to 5 turns, which copilot cannot express"
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "turn limit of 5 isn't enforced on copilot: it has no per-agent turn limit, so the instructions ask the agent to finish within about 5 turns"
+      ]
     },
     {
       "agent": "broken",
@@ -595,13 +637,22 @@
       "harness": "copilot",
       "settings": {},
       "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/studio-qa.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/studio-qa.md",
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
       "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant limits the agent to 20 turns, which copilot cannot express"
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "persistent memory (memory: project) emulated: copilot has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory/studio-qa/ (Claude Code's folder, inside the project and tracked by version control unless ignored)",
+        "preloads skills bug-report, release-checklist; they must be installed for copilot: agnthub does not install skills from this list",
+        "turn limit of 20 isn't enforced on copilot: it has no per-agent turn limit, so the instructions ask the agent to finish within about 20 turns"
+      ]
     },
     {
       "agent": "tagged",
@@ -637,8 +688,8 @@
     }
   ],
   "summary": {
-    "create": 26,
-    "incompatible": 10,
+    "create": 29,
+    "incompatible": 9,
     "invalid": 1
   }
 }

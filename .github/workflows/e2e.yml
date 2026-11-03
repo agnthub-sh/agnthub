@@ -51,6 +51,15 @@ jobs:
       - name: Use the latest ${{ matrix.harness }} release
         if: env.LATEST == 'true'
         run: echo "E2E_BUILD_ARGS=--pull --no-cache --build-arg ${{ matrix.version }}=latest" >> "$GITHUB_ENV"
+      # Conversion omits Claude Code frontmatter keys Claude Code ignores; a field
+      # the current reference documents must not be omitted as ignored.
+      - uses: actions/setup-go@v7
+        if: env.LATEST == 'true' && matrix.harness == 'claude'
+        with:
+          go-version-file: go.mod
+      - name: Compare the pinned Claude Code fields with its current reference
+        if: env.LATEST == 'true' && matrix.harness == 'claude'
+        run: go test ./harness -run '^TestClaudeFieldsMatchTheDocs$' -args -claude-docs
       - name: Run the suite
         env:
           E2E_LOG_DIR: e2e-logs

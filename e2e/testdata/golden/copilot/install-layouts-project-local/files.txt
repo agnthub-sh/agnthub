@@ -1,7 +1,9 @@
 0644 home/.config/agnthub/config.yaml
 0600 home/.local/state/agnthub/installations.json
+0644 project/.github/agents/annotated.agent.md
 0644 project/.github/agents/bom-native.agent.md
 0644 project/.github/agents/bom.agent.md
+0644 project/.github/agents/bounded.agent.md
 0644 project/.github/agents/colon-native.agent.md
 0644 project/.github/agents/colon.agent.md
 0644 project/.github/agents/cx-native.agent.md
@@ -25,5 +27,6 @@
 0644 project/.github/agents/reviewer.agent.md
 0644 project/.github/agents/root-helper.agent.md
 0644 project/.github/agents/skilled.agent.md
+0644 project/.github/agents/studio-qa.agent.md
 0644 project/.github/agents/tagged.agent.md
 0644 project/agnthub-lock.json

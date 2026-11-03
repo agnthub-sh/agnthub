@@ -499,9 +499,10 @@ func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
 	}
 	tools := check.skillTools()
 	instructions := check.carry(additiveSupport{
-		userMemory: claudeUserMemory,
-		loadSkill:  "Load each one with the `skill` tool.",
-		tools:      tools,
+		nativeTurns: true,
+		userMemory:  claudeUserMemory,
+		loadSkill:   "Load each one with the `skill` tool.",
+		tools:       tools,
 	})
 	if tools.Limited() {
 		permission := map[string]any{}

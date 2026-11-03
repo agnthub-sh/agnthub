@@ -426,6 +426,7 @@ func (a geminiAdapter) Convert(sem *Semantics) (Artifact, error) {
 	}
 	policy := check.skillTools()
 	instructions := check.carry(additiveSupport{
+		nativeTurns:  true,
 		noUserMemory: "Gemini CLI's file tools refuse paths outside the workspace",
 		loadSkill:    "Load each one with the `activate_skill` tool.",
 		tools:        policy,

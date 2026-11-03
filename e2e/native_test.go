@@ -17,6 +17,7 @@ import (
 	"github.com/bytedance/sonic"
 
 	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/harness"
 )
 
 // missingAgent is an agent name no fixture defines; Harnesses that list their
@@ -192,14 +193,50 @@ func listedAgents(pattern *regexp.Regexp, text string) map[string]string {
 var claudeAgents = regexp.MustCompile(`Available agents: (.*)`)
 
 // checkClaude: Claude Code lists every agent it discovered when asked for an
-// unknown one, before any model call.
+// unknown one, before any model call. Its debug log must also name, as keys it
+// does not recognize, every key conversion omits as one Claude Code ignores.
 func checkClaude(t *testing.T, n nativeContext) {
-	out := harnessOutput(t, n, nil, "claude", "-p", "--agent", missingAgent, "x")
+	out := harnessOutput(t, n, nil, "claude", "--debug", "-p", "--agent", missingAgent, "x")
 	match := claudeAgents.FindSubmatch(out)
 	if match == nil {
 		t.Fatalf("claude did not list its agents:\n%s", out)
 	}
 	requireLoaded(t, n, strings.Split(strings.TrimSpace(string(match[1])), ", "), out)
+	requireClaudeIgnores(t, n)
+}
+
+// requireClaudeIgnores fails when Claude Code recognizes a frontmatter key of an
+// installed agent that conversion omits as ignored. Claude Code's debug log
+// names up to five unrecognized keys per agent file, so no fixture has more.
+func requireClaudeIgnores(t *testing.T, n nativeContext) {
+	t.Helper()
+	debugLog, err := os.ReadFile(filepath.Join(homeDir, ".claude", "debug", "latest"))
+	if err != nil {
+		t.Fatalf("claude --debug wrote no log: %v", err)
+	}
+	for id, path := range n.agents {
+		raw, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		doc, err := agent.ParseMarkdownLenient(path, raw)
+		if err != nil {
+			t.Fatalf("installed %s: %v", path, err)
+		}
+		var line string
+		for candidate := range strings.SplitSeq(string(debugLog), "\n") {
+			if strings.Contains(candidate, "Agent file "+path+" has ") &&
+				strings.Contains(candidate, "does not recognize or apply") {
+				line = candidate
+			}
+		}
+		for key := range doc.Frontmatter {
+			if harness.ClaudeIgnores(key) && !strings.Contains(line, `"`+key+`"`) {
+				t.Errorf("%s: Claude Code no longer reports %q as a key it ignores, but "+
+					"conversion omits it as one; debug log line: %q", id, key, line)
+			}
+		}
+	}
 }
 
 var codexRole = regexp.MustCompile(`(?:Available roles:|\\n)([A-Za-z0-9_.-]+): \{\\n`)

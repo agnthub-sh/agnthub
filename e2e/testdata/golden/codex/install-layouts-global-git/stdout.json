@@ -5,7 +5,7 @@
     "kind": "git",
     "locator": "localhost:8443/layouts.git",
     "ref": "v1.0.0",
-    "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+    "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
   },
   "harnesses": [
     {
@@ -16,6 +16,32 @@
     }
   ],
   "items": [
+    {
+      "agent": "annotated",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/annotated.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/annotated.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted capabilities: Claude Code ignores it",
+        "omitted category: Claude Code ignores it",
+        "omitted domain: Claude Code ignores it",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ]
+    },
     {
       "agent": "bom",
       "harness": "codex",
@@ -29,10 +55,32 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "bounded",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/bounded.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/bounded.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "turn limit of 5 isn't enforced on codex: it has no per-agent turn limit, so the instructions ask the agent to finish within about 5 turns"
+      ]
     },
     {
       "agent": "colon",
@@ -47,7 +95,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -65,7 +113,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -83,7 +131,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -101,7 +149,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -124,7 +172,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -148,7 +196,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -166,7 +214,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -188,7 +236,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -209,7 +257,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -227,7 +275,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -251,7 +299,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -269,7 +317,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -287,7 +335,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -296,6 +344,32 @@
         "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
         "Codex agents keep the session's MCP servers; an agent file cannot withhold them",
         "preloaded skills bug-report, release-checklist: codex cannot preload skills, so the instructions tell the agent to load them; they must be installed for codex: agnthub does not install skills from this list"
+      ]
+    },
+    {
+      "agent": "studio-qa",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/studio-qa.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/studio-qa.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them",
+        "persistent memory (memory: project) emulated: codex has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory/studio-qa/ (Claude Code's folder, inside the project and tracked by version control unless ignored)",
+        "preloaded skills bug-report, release-checklist: codex cannot preload skills, so the instructions tell the agent to load them; they must be installed for codex: agnthub does not install skills from this list",
+        "turn limit of 20 isn't enforced on codex: it has no per-agent turn limit, so the instructions ask the agent to finish within about 20 turns"
       ]
     },
     {
@@ -311,7 +385,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -321,6 +395,6 @@
     }
   ],
   "summary": {
-    "create": 15
+    "create": 18
   }
 }

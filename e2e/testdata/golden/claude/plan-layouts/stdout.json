@@ -15,6 +15,38 @@
   ],
   "items": [
     {
+      "agent": "allowlisted",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/allowlisted.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/allowlisted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "annotated",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/annotated.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/annotated.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "backgrounder",
       "harness": "claude",
       "settings": {},
@@ -621,7 +653,7 @@
     }
   ],
   "summary": {
-    "create": 33,
+    "create": 35,
     "incompatible": 3,
     "invalid": 1
   }

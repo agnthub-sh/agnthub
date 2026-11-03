@@ -361,9 +361,6 @@ func (a copilotAdapter) Convert(sem *Semantics) (Artifact, error) {
 		err = check.requireGrant(CapWebSearch, "Copilot CLI has no web search tool")
 	}
 	if err == nil {
-		err = check.requireMaxTurns()
-	}
-	if err == nil {
 		err = check.requireForeground()
 	}
 	if err != nil {

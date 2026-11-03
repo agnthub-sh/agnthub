@@ -3,6 +3,20 @@
   "manifest": false,
   "agents": [
     {
+      "id": "allowlisted",
+      "description": "Reads code under an allowed-tools key Claude Code ignores.",
+      "variants": {
+        "claude": ".claude/agents/allowlisted.md"
+      }
+    },
+    {
+      "id": "annotated",
+      "description": "Reviews code; its catalog keys mean nothing to Claude Code.",
+      "variants": {
+        "claude": ".claude/agents/annotated.md"
+      }
+    },
+    {
       "id": "backgrounder",
       "description": "Always runs in the background.",
       "variants": {

@@ -2,6 +2,17 @@
   "version": 1,
   "records": [
     {
+      "path": "/agnthub-e2e/home/.codex/agents/annotated.toml",
+      "digest": "sha256:3f63ee53b2316c5970d685671bc06a2b225ab5cb0f8ed9c4563fcb1b590e50d7",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "annotated",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.codex/agents/bom.toml",
       "digest": "sha256:4d60e3ba4834998e527766c7c8173b828b4083a5ffa40f458e32df67688d2770",
       "harness": "codex",
@@ -9,6 +20,17 @@
       "destination": "user",
       "source": "git:localhost:8443/layouts.git",
       "agent": "bom",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/bounded.toml",
+      "digest": "sha256:bc2eba7ceb8e1c1a9c921dc6d3f5c5269f6ec2cc79121c56b652eb120a85d968",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "bounded",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -152,6 +174,17 @@
       "destination": "user",
       "source": "git:localhost:8443/layouts.git",
       "agent": "skilled",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/studio-qa.toml",
+      "digest": "sha256:b660af38edef86b9954bdd019fd894913a16086346541a0b026c8b2b64e9be92",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "studio-qa",
       "origin": "direct",
       "installedAt": "<time>"
     },

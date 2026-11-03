@@ -2,6 +2,18 @@
   "version": 1,
   "records": [
     {
+      "path": "/agnthub-e2e/project/.cursor/agents/annotated.md",
+      "digest": "sha256:f209fda51ee8bb1c84d700f227c7ec399c217417ea178d7b9b5bd395d002a30e",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "annotated",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.cursor/agents/backgrounder.md",
       "digest": "sha256:94ea9da035fc2e67434b44d4f9e40bd96c6c981cbe39c09256c81efb801211b0",
       "harness": "cursor",
@@ -22,6 +34,18 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "bom",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/bounded.md",
+      "digest": "sha256:dbe17a641e6d0f24b1dae7225e703e45430b4cbee953497bb6e6a34cf7f8171b",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "bounded",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -262,6 +286,18 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "skilled",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/studio-qa.md",
+      "digest": "sha256:7307b89a9637f99f85b8317a8707bb9135dce2d2ae064e41955f42b5a66f3943",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "studio-qa",
       "origin": "direct",
       "installedAt": "<time>"
     },

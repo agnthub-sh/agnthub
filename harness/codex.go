@@ -305,9 +305,6 @@ func (a codexAdapter) Convert(sem *Semantics) (Artifact, error) {
 			"a Codex agent file has no tool allowlist or read-only mode to withhold it")
 	}
 	if err == nil {
-		err = check.requireMaxTurns()
-	}
-	if err == nil {
 		err = check.requireForeground()
 	}
 	if err != nil {

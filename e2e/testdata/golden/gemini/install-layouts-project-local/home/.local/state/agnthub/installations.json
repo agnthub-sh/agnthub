@@ -2,6 +2,18 @@
   "version": 1,
   "records": [
     {
+      "path": "/agnthub-e2e/project/.gemini/agents/annotated.md",
+      "digest": "sha256:702061a135b288f798bba4b5f070f00696360c4cf5f1b0d308f6cebb0bb872c4",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "annotated",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.gemini/agents/bom-native.md",
       "digest": "sha256:ef5c57800f4835bcf4da07eb35cea5fc05af29278aa6711aad89907cf589a617",
       "harness": "gemini",

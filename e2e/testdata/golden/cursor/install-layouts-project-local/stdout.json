@@ -15,6 +15,30 @@
   ],
   "items": [
     {
+      "agent": "annotated",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/annotated.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/annotated.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted capabilities: Claude Code ignores it",
+        "omitted category: Claude Code ignores it",
+        "omitted domain: Claude Code ignores it",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "Cursor agents keep the session's MCP tools unless read-only"
+      ]
+    },
+    {
       "agent": "backgrounder",
       "harness": "cursor",
       "settings": {},
@@ -48,6 +72,26 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "bounded",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/bounded.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/bounded.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "turn limit of 5 isn't enforced on cursor: it has no per-agent turn limit, so the instructions ask the agent to finish within about 5 turns"
+      ]
     },
     {
       "agent": "colon",
@@ -429,6 +473,30 @@
       ]
     },
     {
+      "agent": "studio-qa",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/studio-qa.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/studio-qa.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "Cursor agents keep the session's MCP tools unless read-only",
+        "persistent memory (memory: project) emulated: cursor has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory/studio-qa/ (Claude Code's folder, inside the project and tracked by version control unless ignored)",
+        "preloaded skills bug-report, release-checklist: cursor cannot preload skills, so the instructions tell the agent to load them; they must be installed for cursor: agnthub does not install skills from this list",
+        "turn limit of 20 isn't enforced on cursor: it has no per-agent turn limit, so the instructions ask the agent to finish within about 20 turns"
+      ]
+    },
+    {
       "agent": "tagged",
       "harness": "cursor",
       "settings": {},
@@ -449,6 +517,6 @@
     }
   ],
   "summary": {
-    "create": 23
+    "create": 26
   }
 }

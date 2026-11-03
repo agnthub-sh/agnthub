@@ -5,7 +5,28 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
+      },
+      "agent": "annotated",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/annotated.md",
+          "sourceDigest": "sha256:8cf577c3db790479f198a536eb7ad1011f84a0827e2bb2a07bfe5836a4254087",
+          "converter": "codex/v4",
+          "path": ".codex/agents/annotated.toml",
+          "digest": "sha256:3f63ee53b2316c5970d685671bc06a2b225ab5cb0f8ed9c4563fcb1b590e50d7",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "bom",
       "origin": "direct",
@@ -26,7 +47,28 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
+      },
+      "agent": "bounded",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/bounded.md",
+          "sourceDigest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
+          "converter": "codex/v4",
+          "path": ".codex/agents/bounded.toml",
+          "digest": "sha256:bc2eba7ceb8e1c1a9c921dc6d3f5c5269f6ec2cc79121c56b652eb120a85d968",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "colon",
       "origin": "direct",
@@ -47,7 +89,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "cx-native",
       "origin": "direct",
@@ -67,7 +109,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "dual",
       "origin": "direct",
@@ -88,7 +130,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "fixer",
       "origin": "direct",
@@ -109,7 +151,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "journaler",
       "origin": "direct",
@@ -130,7 +172,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "literal",
       "origin": "direct",
@@ -151,7 +193,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "local-notes",
       "origin": "direct",
@@ -172,7 +214,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "no-shell",
       "origin": "direct",
@@ -193,7 +235,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "planner",
       "origin": "direct",
@@ -214,7 +256,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "rememberer",
       "origin": "direct",
@@ -235,7 +277,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "researcher",
       "origin": "direct",
@@ -256,7 +298,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "root-helper",
       "origin": "direct",
@@ -277,7 +319,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "skilled",
       "origin": "direct",
@@ -298,7 +340,28 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
+      },
+      "agent": "studio-qa",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/studio-qa.md",
+          "sourceDigest": "sha256:cfe15b9951529179d27ad3396fc10136bcf5a2455518aed3464720354c2fa3e8",
+          "converter": "codex/v4",
+          "path": ".codex/agents/studio-qa.toml",
+          "digest": "sha256:b660af38edef86b9954bdd019fd894913a16086346541a0b026c8b2b64e9be92",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "agent": "tagged",
       "origin": "direct",

@@ -15,6 +15,19 @@
   ],
   "items": [
     {
+      "agent": "allowlisted",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which copilot cannot express"
+    },
+    {
       "agent": "backgrounder",
       "harness": "copilot",
       "settings": {},
@@ -26,19 +39,6 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "its claude variant runs the agent in the background, which copilot cannot express"
-    },
-    {
-      "agent": "bounded",
-      "harness": "copilot",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant limits the agent to 5 turns, which copilot cannot express"
     },
     {
       "agent": "broken",
@@ -132,19 +132,6 @@
       "reason": "portable definition declares \"model\", which has no verified equivalent; author a native copilot variant"
     },
     {
-      "agent": "studio-qa",
-      "harness": "copilot",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant limits the agent to 20 turns, which copilot cannot express"
-    },
-    {
       "agent": "web-searcher",
       "harness": "copilot",
       "settings": {},
@@ -159,7 +146,7 @@
     }
   ],
   "summary": {
-    "incompatible": 10,
+    "incompatible": 9,
     "invalid": 1
   }
 }

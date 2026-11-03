@@ -72,11 +72,13 @@ func memoryDir(scope MemoryScope, id, userDir string) string {
 }
 
 // additiveSupport is how a target carries persistent memory and preloaded
-// skills, which add to what an Agent knows but never to what it may do.
+// skills, which add to what an Agent knows but never to what it may do, and a
+// turn limit it cannot enforce.
 type additiveSupport struct {
-	// nativeMemory and nativeSkills report that the target writes
-	// Semantics.Memory or Semantics.Skills into its own fields.
-	nativeMemory, nativeSkills bool
+	// nativeMemory, nativeSkills and nativeTurns report that the target writes
+	// Semantics.Memory, Semantics.Skills or Semantics.MaxTurns into its own
+	// fields.
+	nativeMemory, nativeSkills, nativeTurns bool
 	// userMemory is the folder holding user-scope memories on the target, or
 	// "" when its agents cannot write outside the project without approval;
 	// noUserMemory then says why.
@@ -104,17 +106,18 @@ func (c *renderCheck) skillTools() ToolPolicy {
 }
 
 // carry returns the instructions to render: the Agent's own, unchanged unless
-// the target must emulate memory or preloaded skills, which then follow as
-// clearly delimited sections. Every outcome other than a native field is
-// noted. Memory is only emulated when the Agent can already read and edit the
-// files, so it never widens tool access.
+// the target must emulate memory, preloaded skills or a turn limit, which then
+// follow as clearly delimited sections. Every outcome other than a native field
+// is noted. Memory is only emulated when the Agent can already read and edit
+// the files, so it never widens tool access.
 func (c *renderCheck) carry(support additiveSupport) string {
-	sections := make([]string, 0, 2)
-	if section := c.memorySection(support); section != "" {
-		sections = append(sections, section)
-	}
-	if section := c.skillsSection(support); section != "" {
-		sections = append(sections, section)
+	sections := make([]string, 0, 3)
+	for _, section := range []string{
+		c.memorySection(support), c.skillsSection(support), c.turnsSection(support),
+	} {
+		if section != "" {
+			sections = append(sections, section)
+		}
 	}
 	if len(sections) == 0 {
 		return c.sem.Instructions
@@ -223,4 +226,22 @@ func (c *renderCheck) skillsSection(support additiveSupport) string {
 Before you start a task, load these skills and follow them: %s. %s If one of them isn't available, continue without it.
 <!-- /agnthub -->
 `, c.sem.sourceLabel(), strings.Join(quoted, ", "), support.loadSkill)
+}
+
+// turnsSection asks the Agent to keep to a turn limit the target cannot
+// enforce. The user chose to install such agents with the limit as an
+// instruction rather than refuse them; the note says it is not enforced.
+func (c *renderCheck) turnsSection(support additiveSupport) string {
+	if c.sem.MaxTurns == 0 || support.nativeTurns {
+		return ""
+	}
+	c.note("turn limit of %d isn't enforced on %s: it has no per-agent turn limit, so the "+
+		"instructions ask the agent to finish within about %d turns", c.sem.MaxTurns, c.target,
+		c.sem.MaxTurns)
+	return fmt.Sprintf(`<!-- agnthub: turn limit (%[1]d turns, converted from the %[2]s) -->
+# Turn limit
+
+Finish each task within about %[1]d turns (each reply or tool call is a turn). If you can't, stop and report what you have done and what is left.
+<!-- /agnthub -->
+`, c.sem.MaxTurns, c.sem.sourceLabel())
 }

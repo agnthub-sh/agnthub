@@ -252,9 +252,6 @@ func (a cursorAdapter) Convert(sem *Semantics) (Artifact, error) {
 	if err == nil {
 		err = check.requireWithheld(CapRead|CapSearch, "Cursor cannot withhold it")
 	}
-	if err == nil {
-		err = check.requireMaxTurns()
-	}
 	readonly := !sem.Tools.Allows(CapEdit)
 	switch {
 	case err != nil:

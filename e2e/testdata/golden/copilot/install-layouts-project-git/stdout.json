@@ -4,7 +4,7 @@
   "source": {
     "kind": "git",
     "locator": "localhost:8443/layouts.git",
-    "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+    "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
   },
   "harnesses": [
     {
@@ -15,6 +15,29 @@
     }
   ],
   "items": [
+    {
+      "agent": "annotated",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/annotated.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/annotated.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted capabilities: Claude Code ignores it",
+        "omitted category: Claude Code ignores it",
+        "omitted domain: Claude Code ignores it"
+      ]
+    },
     {
       "agent": "bom",
       "harness": "copilot",
@@ -27,7 +50,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -44,12 +67,33 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "bounded",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/bounded.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/bounded.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "turn limit of 5 isn't enforced on copilot: it has no per-agent turn limit, so the instructions ask the agent to finish within about 5 turns"
       ]
     },
     {
@@ -64,7 +108,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -81,7 +125,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -101,7 +145,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -122,7 +166,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -142,7 +186,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -159,7 +203,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -179,7 +223,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -196,7 +240,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -213,7 +257,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -233,7 +277,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -254,7 +298,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -275,7 +319,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -292,7 +336,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -313,7 +357,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -334,7 +378,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -355,7 +399,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -375,7 +419,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -392,7 +436,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -413,7 +457,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -434,7 +478,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -451,7 +495,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -473,7 +517,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create"
@@ -490,13 +534,36 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the claude variant",
         "preloads skills bug-report, release-checklist; they must be installed for copilot: agnthub does not install skills from this list"
+      ]
+    },
+    {
+      "agent": "studio-qa",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/studio-qa.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/studio-qa.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "persistent memory (memory: project) emulated: copilot has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory/studio-qa/ (Claude Code's folder, inside the project and tracked by version control unless ignored)",
+        "preloads skills bug-report, release-checklist; they must be installed for copilot: agnthub does not install skills from this list",
+        "turn limit of 20 isn't enforced on copilot: it has no per-agent turn limit, so the instructions ask the agent to finish within about 20 turns"
       ]
     },
     {
@@ -511,7 +578,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9072cae0a8d00cfdad4134bef1a773d2fcda1ae3"
+        "revision": "df1f8d0a8900f8d7d67a9a4974d79baf93a56370"
       },
       "origin": "direct",
       "action": "create",
@@ -521,6 +588,6 @@
     }
   ],
   "summary": {
-    "create": 26
+    "create": 29
   }
 }

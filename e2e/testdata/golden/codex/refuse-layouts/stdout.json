@@ -15,6 +15,19 @@
   ],
   "items": [
     {
+      "agent": "allowlisted",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which codex cannot express"
+    },
+    {
       "agent": "backgrounder",
       "harness": "codex",
       "settings": {},
@@ -39,19 +52,6 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "it excludes search, edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
-    },
-    {
-      "agent": "bounded",
-      "harness": "codex",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant limits the agent to 5 turns, which codex cannot express"
     },
     {
       "agent": "broken",
@@ -275,19 +275,6 @@
       "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
-      "agent": "studio-qa",
-      "harness": "codex",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant limits the agent to 20 turns, which codex cannot express"
-    },
-    {
       "agent": "web-searcher",
       "harness": "codex",
       "settings": {},
@@ -302,7 +289,7 @@
     }
   ],
   "summary": {
-    "incompatible": 21,
+    "incompatible": 20,
     "invalid": 1
   }
 }

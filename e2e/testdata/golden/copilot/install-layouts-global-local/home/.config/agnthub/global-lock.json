@@ -6,6 +6,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "annotated",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/annotated.md",
+          "sourceDigest": "sha256:8cf577c3db790479f198a536eb7ad1011f84a0827e2bb2a07bfe5836a4254087",
+          "converter": "copilot/v4",
+          "path": "/agnthub-e2e/home/.copilot/agents/annotated.agent.md",
+          "digest": "sha256:d045e84dcee9e5a2ceb38e937ef6f2f6983ce06d1961b6cc7b3ef7fdeb7dee7f",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "bom",
       "origin": "direct",
       "artifacts": [
@@ -37,6 +57,26 @@
           "converter": "copilot/v4",
           "path": "/agnthub-e2e/home/.copilot/agents/bom-native.agent.md",
           "digest": "sha256:10712619e6b57bb8220547f83f831e12d82648a884fce68f53abdd19d8bfb1b2",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "bounded",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/bounded.md",
+          "sourceDigest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
+          "converter": "copilot/v4",
+          "path": "/agnthub-e2e/home/.copilot/agents/bounded.agent.md",
+          "digest": "sha256:dbe17a641e6d0f24b1dae7225e703e45430b4cbee953497bb6e6a34cf7f8171b",
           "requires": []
         }
       ]
@@ -495,6 +535,26 @@
           "converter": "copilot/v4",
           "path": "/agnthub-e2e/home/.copilot/agents/skilled.agent.md",
           "digest": "sha256:621465f10a15abcf93229e1e92203d4f5bc978129565440b745ebcc9adfaf64c",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "studio-qa",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/studio-qa.md",
+          "sourceDigest": "sha256:cfe15b9951529179d27ad3396fc10136bcf5a2455518aed3464720354c2fa3e8",
+          "converter": "copilot/v4",
+          "path": "/agnthub-e2e/home/.copilot/agents/studio-qa.agent.md",
+          "digest": "sha256:7a6344f7d5f3a9b42d3f09cf6a3bf2db44d4dff6aa55e8b79fc752f4adf64b2e",
           "requires": []
         }
       ]

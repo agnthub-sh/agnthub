@@ -21,6 +21,21 @@
   ],
   "items": [
     {
+      "agent": "allowlisted",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which omp cannot express"
+    },
+    {
       "agent": "backgrounder",
       "harness": "omp",
       "settings": {},
@@ -34,21 +49,6 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "its claude variant runs the agent in the background, which omp cannot express"
-    },
-    {
-      "agent": "bounded",
-      "harness": "omp",
-      "settings": {},
-      "effectiveSettings": {
-        "profile": "default"
-      },
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant limits the agent to 5 turns, which omp cannot express"
     },
     {
       "agent": "broken",
@@ -124,25 +124,10 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "portable definition declares \"model\", which has no verified equivalent; author a native omp variant"
-    },
-    {
-      "agent": "studio-qa",
-      "harness": "omp",
-      "settings": {},
-      "effectiveSettings": {
-        "profile": "default"
-      },
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant limits the agent to 20 turns, which omp cannot express"
     }
   ],
   "summary": {
-    "incompatible": 7,
+    "incompatible": 6,
     "invalid": 1
   }
 }

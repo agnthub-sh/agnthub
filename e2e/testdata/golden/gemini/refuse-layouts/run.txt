@@ -1,2 +1,2 @@
-$ agnthub add /agnthub-e2e/src/layouts --agent backgrounder --agent broken --agent delegator --agent gm-camel --agent guarded --agent modelled --harness gemini --yes --json
+$ agnthub add /agnthub-e2e/src/layouts --agent allowlisted --agent backgrounder --agent broken --agent delegator --agent gm-camel --agent guarded --agent modelled --harness gemini --yes --json
 exit status: 1

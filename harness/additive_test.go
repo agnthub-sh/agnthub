@@ -252,3 +252,44 @@ func TestAutoloadedOmpSkillsPreloadOnClaudeCode(t *testing.T) {
 		t.Fatalf("want skills: [bug-report] and the body unchanged:\n%s", artifact.Content)
 	}
 }
+
+func TestKeysClaudeCodeIgnoresAreOmittedWithANote(t *testing.T) {
+	source := claudeWith("capabilities: [review]\ncategory: quality\nprompt: Review it.\n",
+		"Read", "Grep", "Glob", "Edit", "Write", "Bash")
+	for _, target := range nonClaude {
+		artifact, err := generateFrom(t, agent.Claude, target, ".claude/agents/reviewer.md",
+			source)
+		if err != nil {
+			t.Errorf("%s: a key Claude Code ignores must not refuse conversion: %v", target, err)
+			continue
+		}
+		for _, key := range []string{"capabilities", "category", "prompt"} {
+			if !hasNote(artifact.Notes, "omitted "+key+": Claude Code ignores it") {
+				t.Errorf("%s: %s not noted: %v", target, key, artifact.Notes)
+			}
+		}
+		requireNotWidened(t, target, source, artifact)
+	}
+}
+
+func TestIgnoredKeysThatReadAsRestrictionsStillRefuse(t *testing.T) {
+	for _, field := range []string{
+		"allowed-tools: Read, Grep\n",
+		"allowedTools: [Read]\n",
+		"readonly: true\n",
+		"read_only: true\n",
+		"permissions:\n  edit: deny\n",
+		"disallowed-tools: Bash\n",
+		"Tools: Read\n",
+		"max_turns: 3\n",
+	} {
+		source := claudeWith(field)
+		for _, target := range nonClaude {
+			_, err := generateFrom(t, agent.Claude, target, ".claude/agents/reviewer.md", source)
+			requireIncompatible(t, err)
+		}
+	}
+	if !harness.ClaudeIgnores("allowed-tools") || harness.ClaudeIgnores("tools") {
+		t.Fatal("ClaudeIgnores must follow Claude Code's recognized fields")
+	}
+}

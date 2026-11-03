@@ -254,6 +254,9 @@ func TestBehavioralFieldsRefuseConversion(t *testing.T) {
 	}
 }
 
+// A turn limit maps where the target has one; elsewhere the agent installs,
+// is asked to keep to it in its instructions, and the plan says it isn't
+// enforced.
 func TestTurnLimitsMapWhereTheHarnessHasOne(t *testing.T) {
 	source := strings.Replace(claudeAgent("Read", "Edit", "Write", "Bash"),
 		"color: blue\n", "maxTurns: 7\n", 1)
@@ -265,13 +268,21 @@ func TestTurnLimitsMapWhereTheHarnessHasOne(t *testing.T) {
 			t.Fatal(err)
 		}
 		doc, err := agent.ParseMarkdown(artifact.FileName, artifact.Content)
-		if err != nil || doc.Frontmatter[key] != 7 {
-			t.Fatalf("%s: want %s: 7, got %v\n%s", target, key, err, artifact.Content)
+		if err != nil || doc.Frontmatter[key] != 7 || doc.Body != "You review Laravel code.\n" {
+			t.Fatalf("%s: want %s: 7 and unchanged instructions, got %v\n%s", target, key, err,
+				artifact.Content)
 		}
 	}
 	for _, target := range []agent.HarnessID{agent.Codex, agent.Copilot, agent.Cursor, agent.OMP} {
-		_, err := generateFrom(t, agent.Claude, target, ".claude/agents/reviewer.md", source)
-		requireIncompatible(t, err)
+		artifact, err := generateFrom(t, agent.Claude, target, ".claude/agents/reviewer.md", source)
+		if err != nil {
+			t.Fatalf("%s: %v", target, err)
+		}
+		if !strings.Contains(body(t, target, artifact), "within about 7 turns") ||
+			!hasNote(artifact.Notes, "turn limit of 7 isn't enforced") {
+			t.Errorf("%s: want the limit in the instructions and noted: %v\n%s", target,
+				artifact.Notes, artifact.Content)
+		}
 	}
 }
 

@@ -15,6 +15,28 @@
   ],
   "items": [
     {
+      "agent": "annotated",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/annotated.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/annotated.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted capabilities: Claude Code ignores it",
+        "omitted category: Claude Code ignores it",
+        "omitted domain: Claude Code ignores it"
+      ]
+    },
+    {
       "agent": "bom",
       "harness": "gemini",
       "settings": {},
@@ -593,6 +615,6 @@
     }
   ],
   "summary": {
-    "create": 31
+    "create": 32
   }
 }

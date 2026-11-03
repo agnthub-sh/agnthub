@@ -429,9 +429,6 @@ func (a ompAdapter) Convert(sem *Semantics) (Artifact, error) {
 	}
 	check, err := begin(agent.OMP, sem)
 	if err == nil {
-		err = check.requireMaxTurns()
-	}
-	if err == nil {
 		err = check.requireForeground()
 	}
 	if err != nil {
