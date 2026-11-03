@@ -164,7 +164,7 @@ make release-verify    # dist/SHA256SUMS must equal the published release's
 make npm-pack          # dist/agnthub-cli-X.Y.Z.tgz, the exact package to publish
 git switch main       # carries the npm/agnthub changes over
 git commit -m "release: embed vX.Y.Z checksums in the npm launcher" npm/agnthub && git push
-npm publish dist/agnthub-cli-X.Y.Z.tgz --access public   # needs `npm login` as the package owner
+npm publish ./dist/agnthub-cli-X.Y.Z.tgz --access public   # needs `npm login` as the package owner
 ```
 
 Nothing in CI publishes to npm. `make release-publish` uploads `dist/` by hand if the workflow
