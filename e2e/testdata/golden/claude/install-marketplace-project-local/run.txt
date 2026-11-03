@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/marketplace --agent mk-guarded --agent mk-lister --agent mk-nested --agent mk-scanner --harness claude --yes --json
+exit status: 0

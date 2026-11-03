@@ -20,9 +20,11 @@ const (
 
 // Steps several scenarios refer to.
 const (
-	stepPlan     = "plan-layouts"
-	stepPlanMan  = "plan-manifest"
-	stepRefuseLy = "refuse-layouts"
+	stepPlan      = "plan-layouts"
+	stepPlanMan   = "plan-manifest"
+	stepRefuseLy  = "refuse-layouts"
+	stepPlanMkt   = "plan-marketplace"
+	stepRefuseMkt = "refuse-marketplace"
 )
 
 // harnessIDs lists every supported Harness; adding one to agent.AllHarnesses
@@ -82,6 +84,12 @@ var manifestInstalls = []string{
 	"install-manifest-global-git",
 }
 
+// marketplaceInstalls install every installable agent of the plugin marketplace.
+var marketplaceInstalls = []string{
+	"install-marketplace-project-local",
+	"install-marketplace-global-git",
+}
+
 // stepSpecs lists every step TestHarness runs. A step it runs that is missing
 // here fails the run; a step here without a golden fails TestCoverage.
 var stepSpecs = map[string]stepSpec{
@@ -107,6 +115,12 @@ var stepSpecs = map[string]stepSpec{
 	"install-manifest-project-local": {scope: scopeProj, source: sourceLocal, native: true},
 	"install-manifest-project-git":   {scope: scopeProj, source: sourceGit, native: true},
 	"install-manifest-global-git":    {scope: scopeUser, source: sourceGit, native: true},
+
+	"list-marketplace":                  {scope: scopeNone, source: sourceGit},
+	stepPlanMkt:                         {scope: scopeProj, source: sourceLocal},
+	"install-marketplace-project-local": {scope: scopeProj, source: sourceLocal, native: true},
+	"install-marketplace-global-git":    {scope: scopeUser, source: sourceGit, native: true},
+	stepRefuseMkt:                       {scope: scopeProj, source: sourceLocal},
 
 	"select-harness-all": {scope: scopeProj, source: sourceLocal, native: true},
 	"select-agent-star":  {scope: scopeProj, source: sourceLocal, native: true},
@@ -192,6 +206,18 @@ var layoutEvidence = evidence{plan: stepPlan, install: layoutInstalls, refuse: s
 // agents are refused in the plan, which writes nothing.
 var manifestEvidence = evidence{plan: stepPlanMan, install: manifestInstalls}
 
+// marketplaceEvidence proves a plugin agent of the marketplace fixture.
+var marketplaceEvidence = evidence{
+	plan: stepPlanMkt, install: marketplaceInstalls, refuse: stepRefuseMkt,
+}
+
+func plugin(id, title, agentID string) scenario {
+	return scenario{
+		id: id, group: "Claude Code plugins", title: title, agent: agentID,
+		all: marketplaceEvidence,
+	}
+}
+
 func layout(id, title, agentID string) scenario {
 	return scenario{
 		id:    id,
@@ -275,6 +301,24 @@ var scenarios = []scenario{
 		title: "every declared Variant invalid: refused, never falls back to the portable core",
 		agent: "strict", all: manifestEvidence,
 	},
+
+	{
+		id: "plugin-inventory", group: "Claude Code plugins",
+		title: "marketplace inventory names each agent's plugin; a remote source and one " +
+			"escaping the repository are reported, never read",
+		all: evidence{steps: []string{"list-marketplace"}},
+	},
+	plugin("plugin-agents-array", "agent listed in a plugin's `plugin.json` `agents` array",
+		"mk-lister"),
+	plugin("plugin-default-dir", "agent in a plugin's default `agents/` directory",
+		"mk-scanner"),
+	plugin("plugin-default-dir-nested", "agent in a subfolder of a plugin's `agents/` directory",
+		"mk-nested"),
+	plugin("plugin-ignored-fields",
+		"`permissionMode` and `hooks`, which Claude Code ignores in plugins: omitted with a note",
+		"mk-guarded"),
+	plugin("plugin-root-variable",
+		"instructions that use `${CLAUDE_PLUGIN_ROOT}` need their plugin: refused", "mk-rooted"),
 
 	conversion("Variants and conversion", "variant-precedence",
 		"authored native Variant wins over conversion (portable + Claude + OpenCode)", "dual"),

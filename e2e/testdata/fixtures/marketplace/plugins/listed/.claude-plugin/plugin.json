@@ -1,0 +1,8 @@
+{
+  "name": "mk-listed",
+  "version": "1.0.0",
+  "agents": [
+    "./mk-lister.md",
+    "./more/mk-guarded.md"
+  ]
+}

@@ -1,0 +1,2 @@
+$ agnthub add https://localhost:8443/marketplace.git#v1.0.0 --agent mk-guarded --agent mk-lister --agent mk-nested --agent mk-scanner --harness omp --global --yes --json
+exit status: 0

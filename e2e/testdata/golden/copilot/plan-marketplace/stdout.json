@@ -1,0 +1,114 @@
+{
+  "status": "refused",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/marketplace"
+  },
+  "harnesses": [
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot CLI",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "mk-guarded",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/mk-guarded.agent.md",
+      "variant": "generated",
+      "sourcePath": "plugins/listed/more/mk-guarded.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted permissionMode: Claude Code ignores it in plugin mk-listed's agents; installed on its own it would take effect",
+        "omitted hooks: Claude Code ignores it in plugin mk-listed's agents; installed on its own it would take effect"
+      ]
+    },
+    {
+      "agent": "mk-lister",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/mk-lister.agent.md",
+      "variant": "generated",
+      "sourcePath": "plugins/listed/mk-lister.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model"
+      ]
+    },
+    {
+      "agent": "mk-nested",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/mk-nested.agent.md",
+      "variant": "generated",
+      "sourcePath": "plugins/scanned/agents/deep/mk-nested.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "mk-rooted",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "cannot convert: invalid claude variant plugins/scanned/agents/mk-rooted.md: its instructions reference ${CLAUDE_PLUGIN_ROOT}, which only resolves inside the installed plugin mk-scanned"
+    },
+    {
+      "agent": "mk-scanner",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/mk-scanner.agent.md",
+      "variant": "generated",
+      "sourcePath": "plugins/scanned/agents/mk-scanner.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    }
+  ],
+  "summary": {
+    "create": 4,
+    "incompatible": 1
+  }
+}

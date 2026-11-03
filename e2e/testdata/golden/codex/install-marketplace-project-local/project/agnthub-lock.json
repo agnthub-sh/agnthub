@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "agent": "mk-guarded",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": "plugins/listed/more/mk-guarded.md",
+          "sourceDigest": "sha256:8aa77306d8b0d60797e85a008e128ee544994ce1c6d2607ce4e0256ad3107476",
+          "converter": "codex/v4",
+          "path": ".codex/agents/mk-guarded.toml",
+          "digest": "sha256:093aa569286cac05220361f5062d1175c297227ab0654d6508f31a02000855c6",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "agent": "mk-lister",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": "plugins/listed/mk-lister.md",
+          "sourceDigest": "sha256:42b4caf101f87d5da5feeb015372dbe5a70a7f809c819eef8f9113b10ee6b375",
+          "converter": "codex/v4",
+          "path": ".codex/agents/mk-lister.toml",
+          "digest": "sha256:1a130ed600d5e2007d07ea1ef6b59017a2929bbe27eebbc38c86b0c4c6e4d651",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "agent": "mk-nested",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": "plugins/scanned/agents/deep/mk-nested.md",
+          "sourceDigest": "sha256:33799b1ca12e3ccb8449a66e4c19a09a37d09d14f69cd7dff0c7097f42dfcc0d",
+          "converter": "codex/v4",
+          "path": ".codex/agents/mk-nested.toml",
+          "digest": "sha256:9fd5e265a79fd540c67a50d8f555a9fae0056f0171d7e50ff7878b9206bfccb5",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "agent": "mk-scanner",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": "plugins/scanned/agents/mk-scanner.md",
+          "sourceDigest": "sha256:5e6a2950be2c2e8fcfb2427622cc0ee6e963a4cbc730d26d8c830ffb3e7c6d7f",
+          "converter": "codex/v4",
+          "path": ".codex/agents/mk-scanner.toml",
+          "digest": "sha256:d1225c999d3fbeb577b456f9acdede365dcfe303ec00ccb52778d6cc9b4d2c07",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

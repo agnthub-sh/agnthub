@@ -1,0 +1,29 @@
+{
+  "name": "e2e-marketplace",
+  "owner": {
+    "name": "agnthub e2e"
+  },
+  "plugins": [
+    {
+      "name": "mk-listed",
+      "source": "./plugins/listed",
+      "description": "Agents listed in plugin.json"
+    },
+    {
+      "name": "mk-scanned",
+      "source": "./plugins/scanned",
+      "description": "Agents in the default agents/ directory"
+    },
+    {
+      "name": "mk-remote",
+      "source": {
+        "source": "github",
+        "repo": "agnthub-sh/agnthub-fixture-remote"
+      }
+    },
+    {
+      "name": "mk-escape",
+      "source": "./../layouts"
+    }
+  ]
+}

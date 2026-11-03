@@ -1,0 +1,7 @@
+0644 home/.codex/agents/mk-guarded.toml
+0644 home/.codex/agents/mk-lister.toml
+0644 home/.codex/agents/mk-nested.toml
+0644 home/.codex/agents/mk-scanner.toml
+0644 home/.config/agnthub/config.yaml
+0644 home/.config/agnthub/global-lock.json
+0600 home/.local/state/agnthub/installations.json

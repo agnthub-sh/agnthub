@@ -79,6 +79,9 @@ type VariantFile struct {
 	Path string
 	// Raw holds the exact file bytes.
 	Raw []byte
+	// Plugin names the Claude Code plugin whose agent this file is, when
+	// discovery found it through a plugin manifest; empty otherwise.
+	Plugin string
 	// Dependencies are added to the Agent's common Dependencies for this Harness.
 	Dependencies Dependencies
 }

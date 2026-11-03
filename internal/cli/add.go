@@ -431,6 +431,9 @@ func (a *App) promptAgents(
 	options := make([]Option, 0, len(inventory.Agents))
 	for _, def := range inventory.Agents {
 		label := def.ID
+		if variant := def.Variant(agent.Claude); variant != nil && variant.Plugin != "" {
+			label += " (" + variant.Plugin + ")"
+		}
 		if description := oneLine(def.Description); description != "" {
 			label += " — " + description
 		}

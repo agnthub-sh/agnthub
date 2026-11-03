@@ -111,6 +111,17 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | Skill Dependency installed by skills.sh into the Harness's skill directory | — | global · git<br>project · git<br>project · local | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N N0 | ✓ R N | ✓ N |
 | every declared Variant invalid: refused, never falls back to the portable core | `strict` | global · git<br>project · git<br>project · local | R | R | R | R | R | R | R |
 
+### Claude Code plugins
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| marketplace inventory names each agent's plugin; a remote source and one escaping the repository are reported, never read | — | inventory · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| agent listed in a plugin's `plugin.json` `agents` array | `mk-lister` | global · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| agent in a plugin's default `agents/` directory | `mk-scanner` | global · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| agent in a subfolder of a plugin's `agents/` directory | `mk-nested` | global · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| `permissionMode` and `hooks`, which Claude Code ignores in plugins: omitted with a note | `mk-guarded` | global · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| instructions that use `${CLAUDE_PLUGIN_ROOT}` need their plugin: refused | `mk-rooted` | global · git<br>project · local | R | R | R | R | R | R | R |
+
 ### Variants and conversion
 
 | Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |

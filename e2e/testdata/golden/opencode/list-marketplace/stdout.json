@@ -1,0 +1,57 @@
+{
+  "source": "localhost:8443/marketplace.git",
+  "revision": "ad6dccb82374ff2adc45b54eeb986a9e8698f2d9",
+  "manifest": false,
+  "agents": [
+    {
+      "id": "mk-guarded",
+      "description": "Checks changes; its permissionMode and hooks are ignored in a plugin.",
+      "variants": {
+        "claude": "plugins/listed/more/mk-guarded.md"
+      },
+      "plugin": "mk-listed"
+    },
+    {
+      "id": "mk-lister",
+      "description": "Use this agent to list a plugin's files. Packaged in a plugin.json agents array.",
+      "variants": {
+        "claude": "plugins/listed/mk-lister.md"
+      },
+      "plugin": "mk-listed"
+    },
+    {
+      "id": "mk-nested",
+      "description": "Found in a subfolder of the plugin's agents/ directory.",
+      "variants": {
+        "claude": "plugins/scanned/agents/deep/mk-nested.md"
+      },
+      "plugin": "mk-scanned"
+    },
+    {
+      "id": "mk-rooted",
+      "description": "Runs a script its plugin ships.",
+      "variants": {
+        "claude": "plugins/scanned/agents/mk-rooted.md"
+      },
+      "plugin": "mk-scanned"
+    },
+    {
+      "id": "mk-scanner",
+      "description": "Scans a directory. Found in the plugin's default agents/ directory.",
+      "variants": {
+        "claude": "plugins/scanned/agents/mk-scanner.md"
+      },
+      "plugin": "mk-scanned"
+    }
+  ],
+  "problems": [
+    {
+      "path": ".claude-plugin/marketplace.json",
+      "message": "plugin \"mk-remote\": github source agnthub-sh/agnthub-fixture-remote is outside this repository and is not fetched; add that source to install its agents"
+    },
+    {
+      "path": ".claude-plugin/marketplace.json",
+      "message": "plugin \"mk-escape\": source \"./../layouts\" escapes the repository"
+    }
+  ]
+}

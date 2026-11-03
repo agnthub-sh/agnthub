@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/marketplace --agent '*' --harness cursor --json
+exit status: 1

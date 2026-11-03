@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/marketplace --agent mk-rooted --harness opencode --yes --json
+exit status: 1

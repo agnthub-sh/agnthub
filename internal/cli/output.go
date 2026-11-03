@@ -50,6 +50,9 @@ type inventoryAgent struct {
 	Categories  []string          `json:"categories,omitempty"`
 	Portable    string            `json:"portable,omitempty"`
 	Variants    map[string]string `json:"variants"`
+	// Plugin is the Claude Code plugin that provides the agent's Claude Code
+	// Variant, when the repository packages it as a plugin.
+	Plugin string `json:"plugin,omitempty"`
 }
 
 type inventoryProblem struct {
@@ -77,6 +80,9 @@ func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory)
 		}
 		for harnessID, variant := range def.Variants {
 			item.Variants[string(harnessID)] = variant.Path
+		}
+		if variant := def.Variant(agent.Claude); variant != nil {
+			item.Plugin = variant.Plugin
 		}
 		payload.Agents = append(payload.Agents, item)
 	}
@@ -108,6 +114,9 @@ func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory)
 			if path, ok := item.Variants[string(harnessID)]; ok {
 				forms = append(forms, string(harnessID)+" "+path)
 			}
+		}
+		if item.Plugin != "" {
+			forms = append(forms, "plugin "+item.Plugin)
 		}
 		fmt.Fprintf(p.w, "      %s\n", s.dim.Render(strings.Join(forms, "; ")))
 	}

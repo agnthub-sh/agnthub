@@ -24,6 +24,10 @@ _Avoid_: Agent Variant, unique user
 A harness-specific representation of an agent that may differ in instructions or configuration while retaining the same agent identity.
 _Avoid_: Version when referring to a harness-specific representation
 
+**Plugin**:
+A Claude Code plugin packaged in a Source Repository (listed by its `.claude-plugin/marketplace.json`, or the repository itself with a root `.claude-plugin/plugin.json`); its agents are discovered as Claude Code Variants and the plugin is only their provenance, not part of the agent identity.
+_Avoid_: Extension, package, marketplace when referring to one plugin
+
 **Release**:
 An identified revision of published agent content over time, distinct from its harness-specific variants.
 _Avoid_: Variant when referring to revision history

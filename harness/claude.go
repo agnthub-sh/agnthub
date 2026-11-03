@@ -83,12 +83,63 @@ func (a claudeAdapter) Native(id string, variant *agent.VariantFile) (Artifact, 
 			Reason: fmt.Sprintf("name %q does not match agent %q", identity.ID, id),
 		}
 	}
-	doc, _ := agent.ParseMarkdownLenient(variant.Path, variant.Raw)
+	content, notes, err := claudePluginAgent(variant)
+	if err != nil {
+		return Artifact{}, &InvalidVariantError{
+			Harness: agent.Claude, Path: variant.Path, Reason: err.Error(),
+		}
+	}
+	doc, _ := agent.ParseMarkdownLenient(variant.Path, content)
 	return Artifact{
 		FileName: id + ".md",
-		Content:  variant.Raw,
-		Notes:    executableFieldNotes(doc, "hooks", "mcpServers"),
+		Content:  content,
+		Notes:    append(notes, executableFieldNotes(doc, "hooks", "mcpServers")...),
 	}, nil
+}
+
+// claudePluginIgnored are the frontmatter fields Claude Code ignores in a
+// plugin's agents (https://code.claude.com/docs/en/plugins/components#agents).
+// Installed into an agents directory they would take effect, so a plugin
+// agent is installed as the plugin delivers it: without them.
+var claudePluginIgnored = []string{"permissionMode", "hooks", "mcpServers", "initialPrompt"}
+
+// claudePluginVariables only resolve in the body of an agent loaded from its
+// plugin (https://code.claude.com/docs/en/plugins-reference#environment-variables);
+// they name files and settings that only exist where the plugin is installed.
+var claudePluginVariables = []string{
+	"${CLAUDE_PLUGIN_ROOT}", "${CLAUDE_PLUGIN_DATA}", "${user_config.",
+}
+
+// claudePluginAgent returns the content a Claude Code variant installs and
+// the notes on it: the file itself, or for a plugin's agent the file without
+// the fields Claude Code ignores in plugins. A plugin agent whose instructions
+// depend on its plugin's files or settings cannot stand alone and is refused.
+func claudePluginAgent(variant *agent.VariantFile) ([]byte, []string, error) {
+	if variant.Plugin == "" {
+		return variant.Raw, nil, nil
+	}
+	doc, err := agent.ParseMarkdownLenient(variant.Path, variant.Raw)
+	if err != nil {
+		return nil, nil, err
+	}
+	for _, variable := range claudePluginVariables {
+		if strings.Contains(doc.Body, variable) {
+			return nil, nil, fmt.Errorf(
+				"its instructions reference %s, which only resolves inside the installed "+
+					"plugin %s", strings.Replace(variable, ".", ".<key>}", 1), variant.Plugin)
+		}
+	}
+	content, omitted, err := agent.OmitKeys(variant.Path, variant.Raw, claudePluginIgnored...)
+	if err != nil {
+		return nil, nil, err
+	}
+	notes := make([]string, 0, len(omitted))
+	for _, key := range omitted {
+		notes = append(notes, fmt.Sprintf(
+			"omitted %s: Claude Code ignores it in plugin %s's agents; installed on its own "+
+				"it would take effect", key, variant.Plugin))
+	}
+	return content, notes, nil
 }
 
 // executableFieldNotes flags native fields that make the Harness run commands or
@@ -276,12 +327,14 @@ func (a claudeAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 	if _, err := a.Native(id, variant); err != nil {
 		return nil, err
 	}
-	doc, _ := agent.ParseMarkdownLenient(variant.Path, variant.Raw)
+	content, notes, _ := claudePluginAgent(variant)
+	doc, _ := agent.ParseMarkdownLenient(variant.Path, content)
 	sem := &Semantics{
 		ID:           id,
 		Description:  doc.String("description"),
 		Instructions: doc.Body,
 		Source:       agent.Claude,
+		Notes:        notes,
 	}
 	var allowed, disallowed []string
 	var hasAllowlist bool

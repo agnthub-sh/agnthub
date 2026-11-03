@@ -98,6 +98,7 @@ func TestHarness(t *testing.T) {
 	s.ambiguity(t)
 	s.layouts(t)
 	s.manifest(t)
+	s.marketplace(t)
 	s.selection(t)
 	s.lifecycle(t)
 
@@ -118,6 +119,10 @@ func (s *suite) inventories(t *testing.T) {
 	s.run(t, step{
 		name: "list-ambiguous", planOnly: true,
 		args: argv("add", source("ambiguous"), "--list", "--json"),
+	})
+	s.run(t, step{
+		name: "list-marketplace", planOnly: true,
+		args: argv("add", gitBase+"marketplace.git", "--list", "--json"),
 	})
 	s.run(t, step{
 		name: "list-manifest", planOnly: true,
@@ -215,6 +220,33 @@ func (s *suite) manifest(t *testing.T) {
 	s.run(t, step{
 		name: "install-manifest-global-git", native: scopeGlobal,
 		args: argv("add", git, agentFlags(direct), h, "--global", "--yes", "--json"),
+	})
+}
+
+// marketplace: a Claude Code plugin marketplace whose plugins live in the
+// repository (an agents array and the default agents/ directory) beside a
+// remote and an escaping source, which are reported and never read.
+func (s *suite) marketplace(t *testing.T) {
+	local, git, h := source("marketplace"), gitBase+"marketplace.git", s.harnessFlag()
+	plan := s.run(t, step{
+		name: stepPlanMkt, planOnly: true,
+		args: argv("add", local, "--agent", "*", h, "--json"),
+	})
+	installable, refused := plan.plan.split()
+	if len(installable) == 0 || len(refused) == 0 {
+		t.Fatalf("plan-marketplace: installable %v, refused %v; want both", installable, refused)
+	}
+	s.run(t, step{
+		name: "install-marketplace-project-local", native: scopeProject,
+		args: argv("add", local, agentFlags(installable), h, "--yes", "--json"),
+	})
+	s.run(t, step{
+		name: "install-marketplace-global-git", native: scopeGlobal,
+		args: argv("add", git+"#v1.0.0", agentFlags(installable), h, "--global", "--yes", "--json"),
+	})
+	s.run(t, step{
+		name: stepRefuseMkt, refused: true,
+		args: argv("add", local, agentFlags(refused), h, "--yes", "--json"),
 	})
 }
 

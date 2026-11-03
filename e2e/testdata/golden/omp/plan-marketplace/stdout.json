@@ -1,0 +1,132 @@
+{
+  "status": "refused",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/marketplace"
+  },
+  "harnesses": [
+    {
+      "id": "omp",
+      "name": "omp",
+      "detected": true,
+      "settings": [
+        {
+          "key": "profile",
+          "value": "default",
+          "source": "native default"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "agent": "mk-guarded",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/mk-guarded.md",
+      "variant": "generated",
+      "sourcePath": "plugins/listed/more/mk-guarded.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted permissionMode: Claude Code ignores it in plugin mk-listed's agents; installed on its own it would take effect",
+        "omitted hooks: Claude Code ignores it in plugin mk-listed's agents; installed on its own it would take effect"
+      ]
+    },
+    {
+      "agent": "mk-lister",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/mk-lister.md",
+      "variant": "generated",
+      "sourcePath": "plugins/listed/mk-lister.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
+    },
+    {
+      "agent": "mk-nested",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/mk-nested.md",
+      "variant": "generated",
+      "sourcePath": "plugins/scanned/agents/deep/mk-nested.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "mk-rooted",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "cannot convert: invalid claude variant plugins/scanned/agents/mk-rooted.md: its instructions reference ${CLAUDE_PLUGIN_ROOT}, which only resolves inside the installed plugin mk-scanned"
+    },
+    {
+      "agent": "mk-scanner",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/mk-scanner.md",
+      "variant": "generated",
+      "sourcePath": "plugins/scanned/agents/mk-scanner.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/marketplace"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    }
+  ],
+  "summary": {
+    "create": 4,
+    "incompatible": 1
+  }
+}

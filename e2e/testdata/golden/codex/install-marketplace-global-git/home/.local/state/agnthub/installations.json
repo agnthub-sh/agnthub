@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/mk-guarded.toml",
+      "digest": "sha256:093aa569286cac05220361f5062d1175c297227ab0654d6508f31a02000855c6",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/marketplace.git",
+      "agent": "mk-guarded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/mk-lister.toml",
+      "digest": "sha256:1a130ed600d5e2007d07ea1ef6b59017a2929bbe27eebbc38c86b0c4c6e4d651",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/marketplace.git",
+      "agent": "mk-lister",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/mk-nested.toml",
+      "digest": "sha256:9fd5e265a79fd540c67a50d8f555a9fae0056f0171d7e50ff7878b9206bfccb5",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/marketplace.git",
+      "agent": "mk-nested",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/mk-scanner.toml",
+      "digest": "sha256:d1225c999d3fbeb577b456f9acdede365dcfe303ec00ccb52778d6cc9b4d2c07",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/marketplace.git",
+      "agent": "mk-scanner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "status": "applied",
+  "scope": "global",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/marketplace.git",
+    "ref": "v1.0.0",
+    "revision": "ad6dccb82374ff2adc45b54eeb986a9e8698f2d9"
+  },
+  "harnesses": [
+    {
+      "id": "gemini",
+      "name": "Gemini CLI",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "mk-guarded",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/mk-guarded.md",
+      "variant": "generated",
+      "sourcePath": "plugins/listed/more/mk-guarded.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/marketplace.git",
+        "ref": "v1.0.0",
+        "revision": "ad6dccb82374ff2adc45b54eeb986a9e8698f2d9"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted permissionMode: Claude Code ignores it in plugin mk-listed's agents; installed on its own it would take effect",
+        "omitted hooks: Claude Code ignores it in plugin mk-listed's agents; installed on its own it would take effect"
+      ]
+    },
+    {
+      "agent": "mk-lister",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/mk-lister.md",
+      "variant": "generated",
+      "sourcePath": "plugins/listed/mk-lister.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/marketplace.git",
+        "ref": "v1.0.0",
+        "revision": "ad6dccb82374ff2adc45b54eeb986a9e8698f2d9"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model"
+      ]
+    },
+    {
+      "agent": "mk-nested",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/mk-nested.md",
+      "variant": "generated",
+      "sourcePath": "plugins/scanned/agents/deep/mk-nested.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/marketplace.git",
+        "ref": "v1.0.0",
+        "revision": "ad6dccb82374ff2adc45b54eeb986a9e8698f2d9"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "mk-scanner",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/mk-scanner.md",
+      "variant": "generated",
+      "sourcePath": "plugins/scanned/agents/mk-scanner.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/marketplace.git",
+        "ref": "v1.0.0",
+        "revision": "ad6dccb82374ff2adc45b54eeb986a9e8698f2d9"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    }
+  ],
+  "summary": {
+    "create": 4
+  }
+}

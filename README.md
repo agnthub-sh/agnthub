@@ -19,7 +19,10 @@ agnthub mcp                                   # MCP server (stdio) for AI agents
 
 Every install is previewed before anything is written, the project lock
 (`agnthub-lock.json`) pins each agent to a commit, and agnthub never overwrites files it did
-not install or that you changed. The full documentation is at
+not install or that you changed. Repositories need no particular setup: agnthub reads portable
+`AGENT.md`/`agents/` definitions, each harness's native agent directory, the Claude Code plugins
+and marketplaces a repository packages (`.claude-plugin/`), and an optional `agnthub.yaml`.
+The full documentation is at
 [app.agnthub.sh/docs](https://app.agnthub.sh/docs).
 
 This repository holds the CLI source and its releases. The hosted registry service is developed
@@ -121,6 +124,7 @@ In this repository:
 - [CLI contract](docs/cli-contract.md), [glossary](GLOSSARY.md) and
   [architecture decisions](docs/adr/)
 - [Native Harness agent formats and conversion limits](docs/research/harness-agent-formats.md)
+- [Claude Code plugins and marketplaces as agent sources](docs/research/claude-code-plugins.md)
 
 ## Usage reports
 

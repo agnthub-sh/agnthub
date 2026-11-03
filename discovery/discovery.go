@@ -1,8 +1,10 @@
 // Package discovery finds logical Agents in a source snapshot by inert, bounded
-// parsing of portable layouts, native Harness directories and agnthub.yaml.
+// parsing of portable layouts, native Harness directories, the Claude Code
+// plugins the repository packages, and agnthub.yaml.
 package discovery
 
 import (
+	"bytes"
 	"errors"
 	"fmt"
 	"io/fs"
@@ -111,6 +113,10 @@ type scanner struct {
 	bytes      int64
 	candidates int
 	problems   []Problem
+	// claimed are the files plugins provide as Claude Code agents.
+	claimed map[string]bool
+	// listing, when set, collects plugin agent paths instead of reading them.
+	listing *PluginPaths
 }
 
 // Discover scans tree and returns its Agent inventory.
@@ -248,21 +254,36 @@ type candidate struct {
 	doc     *agent.Document
 	raw     []byte
 	desc    string
+	// plugin names the Claude Code plugin that provides a native file.
+	plugin string
 }
 
 func (s *scanner) fromLayouts() (*Inventory, error) {
-	var candidates []candidate
-	portable, err := s.portableCandidates()
+	s.claimed = map[string]bool{}
+	plugins, err := s.pluginCandidates()
 	if err != nil {
 		return nil, err
 	}
-	candidates = append(candidates, portable...)
+	candidates, err := s.portableCandidates()
+	if err != nil {
+		return nil, err
+	}
+	natives := map[string]bool{}
 	for _, adapter := range s.registry.All() {
-		natives, err := s.nativeCandidates(adapter)
+		found, err := s.nativeCandidates(adapter)
 		if err != nil {
 			return nil, err
 		}
-		candidates = append(candidates, natives...)
+		for _, c := range found {
+			natives[c.path] = true
+		}
+		candidates = append(candidates, found...)
+	}
+	for _, c := range plugins {
+		// A plugin whose agents are a native directory adds nothing to it.
+		if !natives[c.path] {
+			candidates = append(candidates, c)
+		}
 	}
 	return s.group(candidates), nil
 }
@@ -310,6 +331,9 @@ func (s *scanner) appendPortable(found []candidate, name, id string) ([]candidat
 
 // portableFile parses a portable definition; impliedID is empty for root AGENT.md.
 func (s *scanner) portableFile(name, impliedID string) (*candidate, error) {
+	if s.claimed[name] {
+		return nil, nil // a plugin's Claude Code agent, not a portable definition
+	}
 	entry, err := s.tree.Stat(name)
 	if err != nil {
 		if errors.Is(err, fs.ErrNotExist) {
@@ -412,11 +436,16 @@ func (s *scanner) nativeFile(adapter harness.Adapter, name string) (*candidate, 
 	if err != nil {
 		return nil, err
 	}
+	return s.identify(adapter, name, raw), nil
+}
+
+// identify names a native file's agent, or records why it names none.
+func (s *scanner) identify(adapter harness.Adapter, name string, raw []byte) *candidate {
 	identity, err := adapter.Identify(name, raw)
 	if err != nil {
 		s.problems = append(s.problems, Problem{Path: name, Message: err.Error()})
 		if identity.ID == "" {
-			return nil, nil
+			return nil
 		}
 		// The file names its agent: it stays that agent's Variant so the plan
 		// refuses it for its Harness rather than installing a conversion instead.
@@ -427,7 +456,7 @@ func (s *scanner) nativeFile(adapter harness.Adapter, name string) (*candidate, 
 		harness: adapter.ID(),
 		raw:     raw,
 		desc:    identity.Description,
-	}, nil
+	}
 }
 
 // group merges candidates by identity, rejecting ambiguous identities.
@@ -473,12 +502,20 @@ func (s *scanner) merge(id string, group []candidate) *agent.Definition {
 			continue
 		}
 		if previous, dup := seen[c.harness]; dup {
+			// Plugins often ship the same file twice (in several plugins, or
+			// also in .claude/agents); identical copies are one agent.
+			kept := def.Variants[c.harness]
+			if (c.plugin != "" || kept.Plugin != "") && bytes.Equal(kept.Raw, c.raw) {
+				continue
+			}
 			s.ambiguous(id, previous, c.path)
 			ambiguous = true
 			continue
 		}
 		seen[c.harness] = c.path
-		def.Variants[c.harness] = &agent.VariantFile{Harness: c.harness, Path: c.path, Raw: c.raw}
+		def.Variants[c.harness] = &agent.VariantFile{
+			Harness: c.harness, Path: c.path, Raw: c.raw, Plugin: c.plugin,
+		}
 		if def.Description == "" {
 			def.Description = c.desc
 		}

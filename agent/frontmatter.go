@@ -4,6 +4,9 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"maps"
+	"reflect"
+	"slices"
 	"strings"
 
 	"go.yaml.in/yaml/v3"
@@ -179,4 +182,93 @@ func MappingKeys(raw []byte, field string) []string {
 		return keys
 	}
 	return nil
+}
+
+// OmitKeys returns raw without the listed top-level frontmatter keys, removing
+// only the lines that declare them so every other byte (BOM, line endings,
+// comments, quoting, body) is kept. omitted lists the keys that were present,
+// in the order given. It fails when the header cannot be edited line by line
+// without changing anything else, such as a flow-style mapping.
+func OmitKeys(path string, raw []byte, keys ...string) (out []byte, omitted []string, err error) {
+	doc, err := ParseMarkdownLenient(path, raw)
+	if err != nil {
+		return nil, nil, err
+	}
+	for _, key := range keys {
+		if _, ok := doc.Frontmatter[key]; ok {
+			omitted = append(omitted, key)
+		}
+	}
+	if len(omitted) == 0 {
+		return raw, nil, nil
+	}
+	header, _, _ := splitFrontmatter(path, raw)
+	drop := headerKeyLines(header, omitted)
+	// Raw line 0 is the opening "---"; header line n (1-based) is raw line n.
+	var buf bytes.Buffer
+	buf.Grow(len(raw))
+	line := 0
+	for rest := raw; len(rest) > 0; line++ {
+		end := bytes.IndexByte(rest, '\n') + 1
+		if end == 0 {
+			end = len(rest)
+		}
+		if !drop[line] {
+			buf.Write(rest[:end])
+		}
+		rest = rest[end:]
+	}
+	out = buf.Bytes()
+	edited, err := ParseMarkdownLenient(path, out)
+	if err != nil {
+		return nil, nil, fmt.Errorf(
+			"%s: cannot omit %s: %w",
+			path,
+			strings.Join(omitted, ", "),
+			err,
+		)
+	}
+	want := maps.Clone(doc.Frontmatter)
+	for _, key := range omitted {
+		delete(want, key)
+	}
+	if edited.Body != doc.Body || !reflect.DeepEqual(edited.Frontmatter, want) {
+		return nil, nil, fmt.Errorf(
+			"%s: cannot omit %s without changing other frontmatter",
+			path, strings.Join(omitted, ", "),
+		)
+	}
+	return out, omitted, nil
+}
+
+// headerKeyLines returns the 1-based header lines that declare keys: from a
+// key's line up to the next top-level key, or the single line of a flat header.
+func headerKeyLines(header string, keys []string) map[int]bool {
+	lines := strings.Split(header, "\n")
+	drop := map[int]bool{}
+	var node yaml.Node
+	if yaml.Unmarshal([]byte(header), &node) != nil || len(node.Content) != 1 ||
+		node.Content[0].Kind != yaml.MappingNode {
+		for i, line := range lines {
+			key, _, found := strings.Cut(line, ":")
+			if found && slices.Contains(keys, key) {
+				drop[i+1] = true
+			}
+		}
+		return drop
+	}
+	content := node.Content[0].Content
+	for i := 0; i+1 < len(content); i += 2 {
+		if !slices.Contains(keys, content[i].Value) {
+			continue
+		}
+		end := len(lines) + 1
+		if i+2 < len(content) {
+			end = content[i+2].Line
+		}
+		for n := content[i].Line; n < end; n++ {
+			drop[n] = true
+		}
+	}
+	return drop
 }

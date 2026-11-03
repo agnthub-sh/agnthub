@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/mk-guarded.md",
+      "digest": "sha256:6b3cd96d0e896475b5e71c31684230b8fd99973b18cdafda6baf71c51bb44095",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/marketplace",
+      "agent": "mk-guarded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/mk-lister.md",
+      "digest": "sha256:3d4bd81bbe3d54f0f1db5a0f5fdf8eed3a8da8eba7b5bd6b7d54bf86433b5271",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/marketplace",
+      "agent": "mk-lister",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/mk-nested.md",
+      "digest": "sha256:33799b1ca12e3ccb8449a66e4c19a09a37d09d14f69cd7dff0c7097f42dfcc0d",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/marketplace",
+      "agent": "mk-nested",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/mk-scanner.md",
+      "digest": "sha256:5e6a2950be2c2e8fcfb2427622cc0ee6e963a4cbc730d26d8c830ffb3e7c6d7f",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/marketplace",
+      "agent": "mk-scanner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}
