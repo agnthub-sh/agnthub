@@ -1,0 +1,39 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/large.git",
+    "revision": "bb2d9cfc4bb38fd8309d62bcd0b7cc64e863b350"
+  },
+  "harnesses": [
+    {
+      "id": "codex",
+      "name": "Codex",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "large-probe",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/large-probe.toml",
+      "variant": "generated",
+      "sourcePath": "agents/large-probe.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/large.git",
+        "revision": "bb2d9cfc4bb38fd8309d62bcd0b7cc64e863b350"
+      },
+      "origin": "direct",
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 1
+  }
+}

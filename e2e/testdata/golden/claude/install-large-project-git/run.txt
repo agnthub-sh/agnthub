@@ -1,4 +1,2 @@
 $ agnthub add https://localhost:8443/large.git --agent large-probe --harness claude --yes --json
-exit status: 1
---- stderr
-error: list tree 073bbe7b1502f784428437dd826ef169dee96924: git: warning: lazy fetching disabled; some objects may not be available; fatal: could not fetch 960c824149f3577079290e44e96b89ab76032f0a from promisor remote
+exit status: 0

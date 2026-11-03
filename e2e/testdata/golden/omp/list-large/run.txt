@@ -1,0 +1,2 @@
+$ agnthub add https://localhost:8443/large.git --list --json
+exit status: 0

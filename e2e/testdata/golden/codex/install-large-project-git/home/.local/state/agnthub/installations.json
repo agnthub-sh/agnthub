@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.codex/agents/large-probe.toml",
+      "digest": "sha256:6ee7b053bbce6b0fcf9cfae6aee946de5a2376cc7d163b8d7349bc0a31bf4c9b",
+      "harness": "codex",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/large.git",
+      "agent": "large-probe",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

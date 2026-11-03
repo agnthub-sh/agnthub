@@ -122,6 +122,12 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | `permissionMode` and `hooks`, which Claude Code ignores in plugins: omitted with a note | `mk-guarded` | global · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | instructions that use `${CLAUDE_PLUGIN_ROOT}` need their plugin: refused | `mk-rooted` | global · git<br>project · local | R | R | R | R | R | R | R |
 
+### Sources
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| repository too large to fetch whole (20 MiB of other files, a 4 MiB binary): listed and installed from its trees and candidate files, under 1 MiB fetched | `large-probe` | inventory · git<br>project · git | W ✓ N | W ✓ N | W ✓ N | W ✓ N | W ✓ N | W ✓ N | W ✓ N |
+
 ### Variants and conversion
 
 | Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |

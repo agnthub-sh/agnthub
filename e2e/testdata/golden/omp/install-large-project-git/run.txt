@@ -1,0 +1,2 @@
+$ agnthub add https://localhost:8443/large.git --agent large-probe --harness omp --yes --json
+exit status: 0

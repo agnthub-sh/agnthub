@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/large.git",
+        "revision": "bb2d9cfc4bb38fd8309d62bcd0b7cc64e863b350"
+      },
+      "agent": "large-probe",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "agents/large-probe.md",
+          "sourceDigest": "sha256:96ba3da630d537cfbc09c4a35980eb414a83113049cb2f7f5d333e47eea5d4cc",
+          "converter": "opencode/v4",
+          "path": ".opencode/agents/large-probe.md",
+          "digest": "sha256:f6f588e3f7d1b1b293f3525a19f350dac280b2cc06aac2977e1a7e189cfb9a49",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

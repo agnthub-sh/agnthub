@@ -32,6 +32,10 @@ type gitTree struct {
 	// dirs caches directory listings by tree id, blobs loaded content by blob id.
 	dirs  *xsync.Map[string, []gitEntry]
 	blobs *xsync.Map[string, gitBlob]
+	// local holds the sizes of the blobs the object store holds. It is kept
+	// here, never asked of git by id: some git versions answer a question
+	// about a blob a partial clone lacks by fetching it, or by failing.
+	local *xsync.Map[string, int64]
 	// files and bytes count what a sparse tree fetched against its budgets.
 	files atomic.Int64
 	bytes atomic.Int64
@@ -57,8 +61,8 @@ func newGitTree(
 	revision, root string,
 	sparse bool,
 	limits gitLimits,
-) *gitTree {
-	return &gitTree{
+) (*gitTree, error) {
+	t := &gitTree{
 		ctx:      ctx,
 		repo:     repo,
 		revision: revision,
@@ -67,20 +71,44 @@ func newGitTree(
 		limits:   limits,
 		dirs:     xsync.NewMap[string, []gitEntry](),
 		blobs:    xsync.NewMap[string, gitBlob](),
+		local:    xsync.NewMap[string, int64](),
 	}
+	if sparse {
+		return t, nil // a sparse fetch holds no blobs yet
+	}
+	out, err := repo.run(ctx, "cat-file", "--batch-all-objects", "--unordered",
+		"--batch-check=%(objecttype) %(objectname) %(objectsize)")
+	if err != nil {
+		return nil, fmt.Errorf("read objects: %w", err)
+	}
+	for line := range strings.SplitSeq(string(out), "\n") {
+		fields := strings.Fields(line)
+		if len(fields) != 3 || fields[0] != "blob" {
+			continue
+		}
+		size, err := strconv.ParseInt(fields[2], 10, 64)
+		if err != nil || size < 0 {
+			return nil, errors.New("read objects: malformed object size")
+		}
+		t.local.Store(fields[1], size)
+	}
+	return t, nil
 }
 
 // list reads the entries of one tree object, sorted by name. Entries whose
-// names cannot be addressed safely are omitted.
+// names cannot be addressed safely are omitted. Sizes come from the local
+// object store (cat-file reports missing blobs instead of fetching them;
+// "ls-tree -l" may fail on a blob a partial clone does not hold).
 func (t *gitTree) list(oid string) ([]gitEntry, error) {
 	if cached, ok := t.dirs.Load(oid); ok {
 		return cached, nil
 	}
-	out, err := t.repo.run(t.ctx, "ls-tree", "-z", "-l", oid)
+	out, err := t.repo.run(t.ctx, "ls-tree", "-z", oid)
 	if err != nil {
 		return nil, fmt.Errorf("list tree %s: %w", oid, err)
 	}
 	var entries []gitEntry
+	var blobs []string
 	for record := range bytes.SplitSeq(out, []byte{0}) {
 		if len(record) == 0 {
 			continue
@@ -91,6 +119,20 @@ func (t *gitTree) list(oid string) ([]gitEntry, error) {
 		}
 		if ok {
 			entries = append(entries, entry)
+			if entry.kind == EntryFile {
+				blobs = append(blobs, entry.oid)
+			}
+		}
+	}
+	if len(blobs) > 0 {
+		sizes, err := t.sizes(blobs)
+		if err != nil {
+			return nil, fmt.Errorf("list tree %s: %w", oid, err)
+		}
+		for i := range entries {
+			if size, ok := sizes[entries[i].oid]; ok && entries[i].kind == EntryFile {
+				entries[i].size = size
+			}
 		}
 	}
 	slices.SortFunc(entries, func(a, b gitEntry) int { return strings.Compare(a.name, b.name) })
@@ -98,14 +140,15 @@ func (t *gitTree) list(oid string) ([]gitEntry, error) {
 	return entries, nil
 }
 
-// parseTreeRecord reads one "ls-tree -l" record: "<mode> <type> <oid> <size>\t<name>".
+// parseTreeRecord reads one "ls-tree" record: "<mode> <type> <oid>\t<name>".
+// A file's size is unknown until the object store reports it.
 func parseTreeRecord(record []byte) (gitEntry, bool, error) {
 	meta, name, ok := bytes.Cut(record, []byte{'\t'})
 	if !ok {
 		return gitEntry{}, false, errors.New("malformed tree listing")
 	}
 	fields := strings.Fields(string(meta))
-	if len(fields) != 4 || !commitPattern.MatchString(fields[2]) {
+	if len(fields) != 3 || !commitPattern.MatchString(fields[2]) {
 		return gitEntry{}, false, errors.New("malformed tree listing")
 	}
 	base := string(name)
@@ -116,10 +159,6 @@ func parseTreeRecord(record []byte) (gitEntry, bool, error) {
 	entry := gitEntry{name: base, kind: gitKind(fields[0]), oid: fields[2]}
 	if entry.kind == EntryFile {
 		entry.size = UnknownSize
-		// A blob that is not local (filtered or not fetched yet) has no size.
-		if size, err := strconv.ParseInt(fields[3], 10, 64); err == nil && size >= 0 {
-			entry.size = size
-		}
 	}
 	return entry, true, nil
 }
@@ -275,15 +314,11 @@ func (t *gitTree) Fetch(names []string) error {
 }
 
 // fetchMissing fetches the blobs among oids that are not local yet, by id,
-// within the tree's file and byte budgets.
+// within the tree's file and byte budgets, and records their sizes.
 func (t *gitTree) fetchMissing(oids []string) error {
-	sizes, err := t.sizes(oids)
-	if err != nil {
-		return err
-	}
 	var missing []string
 	for _, oid := range oids {
-		if _, ok := sizes[oid]; !ok {
+		if _, ok := t.local.Load(oid); !ok {
 			missing = append(missing, oid)
 		}
 	}
@@ -309,24 +344,29 @@ func (t *gitTree) fetchMissing(oids []string) error {
 		return fmt.Errorf("%s: %w: files exceed %d bytes", display, ErrFetchBudget,
 			t.limits.maxFetchBytes)
 	}
-	return nil
-}
-
-// sizes reports the type-blob sizes of the local objects among oids.
-func (t *gitTree) sizes(oids []string) (map[string]int64, error) {
-	sizes := make(map[string]int64, len(oids))
-	err := t.catFile("--batch-check=%(objectname) %(objecttype) %(objectsize)", oids,
+	// The fetch delivered them: asking git about them now fetches nothing.
+	return t.catFile("--batch-check=%(objectname) %(objecttype) %(objectsize)", missing,
 		func(header []string, _ *bufio.Reader) error {
 			if len(header) == 3 && header[1] == "blob" {
 				size, err := strconv.ParseInt(header[2], 10, 64)
 				if err != nil || size < 0 {
 					return errors.New("malformed object size")
 				}
-				sizes[header[0]] = size
+				t.local.Store(header[0], size)
 			}
 			return nil
 		})
-	return sizes, err
+}
+
+// sizes reports the sizes of the local blobs among oids.
+func (t *gitTree) sizes(oids []string) (map[string]int64, error) {
+	sizes := make(map[string]int64, len(oids))
+	for _, oid := range oids {
+		if size, ok := t.local.Load(oid); ok {
+			sizes[oid] = size
+		}
+	}
+	return sizes, nil
 }
 
 // load reads the local blobs among oids: content up to the per-file limit,

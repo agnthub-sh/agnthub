@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/large-probe.md",
+      "digest": "sha256:f6f588e3f7d1b1b293f3525a19f350dac280b2cc06aac2977e1a7e189cfb9a49",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/large.git",
+      "agent": "large-probe",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "source": "localhost:8443/large.git",
+  "revision": "bb2d9cfc4bb38fd8309d62bcd0b7cc64e863b350",
+  "manifest": false,
+  "agents": [
+    {
+      "id": "large-probe",
+      "description": "Answers from a repository too large to fetch whole",
+      "portable": "agents/large-probe.md",
+      "variants": {}
+    }
+  ],
+  "problems": []
+}

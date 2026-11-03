@@ -1,0 +1,47 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/large.git",
+    "revision": "bb2d9cfc4bb38fd8309d62bcd0b7cc64e863b350"
+  },
+  "harnesses": [
+    {
+      "id": "omp",
+      "name": "omp",
+      "detected": true,
+      "settings": [
+        {
+          "key": "profile",
+          "value": "default",
+          "source": "native default"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "agent": "large-probe",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/large-probe.md",
+      "variant": "generated",
+      "sourcePath": "agents/large-probe.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/large.git",
+        "revision": "bb2d9cfc4bb38fd8309d62bcd0b7cc64e863b350"
+      },
+      "origin": "direct",
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 1
+  }
+}

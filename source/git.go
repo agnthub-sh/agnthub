@@ -458,7 +458,7 @@ func (r *gitRepo) tree(
 	if !commitPattern.MatchString(root) {
 		return nil, fmt.Errorf("%s: unexpected tree %q", display, root)
 	}
-	return newGitTree(ctx, r, revision, root, sparse, limits), nil
+	return newGitTree(ctx, r, revision, root, sparse, limits)
 }
 
 // fetchRef fetches ref with filter, reporting false when the fetch was
