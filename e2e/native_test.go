@@ -270,7 +270,7 @@ func checkOpenCode(t *testing.T, n nativeContext) {
 	var out []byte
 	var loaded []string
 	for range 30 {
-		out = harnessOutput(t, n, nil, "opencode", "debug", "agents")
+		out = opencodeAgents(t, n)
 		var agents []struct {
 			ID string `json:"id"`
 		}
@@ -286,6 +286,35 @@ func checkOpenCode(t *testing.T, n nativeContext) {
 		<-time.After(time.Second)
 	}
 	requireLoaded(t, n, loaded, out)
+}
+
+// opencodeAgents runs `opencode debug agents` with stdout in a file: OpenCode
+// exits before a pipe drains, which cuts its JSON once it outgrows the pipe
+// buffer (about 64 KiB, some 30 agents).
+func opencodeAgents(t *testing.T, n nativeContext) []byte {
+	t.Helper()
+	path := filepath.Join(t.TempDir(), "agents.json")
+	file, err := os.Create(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	cmd := exec.Command("opencode", "debug", "agents")
+	cmd.Dir = n.dir
+	cmd.Env = harnessEnv()
+	cmd.Stdout, cmd.Stderr = file, file
+	runErr := runTimeout(cmd, 3*time.Minute)
+	if err := file.Close(); err != nil {
+		t.Fatal(err)
+	}
+	var exitErr *exec.ExitError
+	if runErr != nil && !errors.As(runErr, &exitErr) {
+		t.Fatalf("opencode debug agents: %v", runErr)
+	}
+	out, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return out
 }
 
 func allLoaded(n nativeContext, loaded []string) bool {
