@@ -154,6 +154,7 @@ func TestSearchForwardsFiltersWithBoundedPageSize(t *testing.T) {
 "name":"agents","full_name":"octo/agents"},"harnesses":[{"harness":"claude","status":"native"}],
 "portable":true,"license":{"policy":"licensed","reason":"MIT"},"indexed_commit":"abc",
 "indexed_at":"2026-10-01T00:00:00Z","refreshed_at":"2026-10-01T00:00:00Z","agnthub_stars":4,
+"stars":104,"github_stars":100,
 "adoption":{"total":1,"direct":1,"dependency":0,"last_7_days":0,"last_30_days":0,"harnesses":[]}}],
 "page":1,"per_page":10,"total":1,"has_next":false,"sort":"stars"}`},
 	}}
@@ -161,8 +162,10 @@ func TestSearchForwardsFiltersWithBoundedPageSize(t *testing.T) {
 	page := decode[mcpserver.SearchPage](t, call(t, cs, "search_agents", map[string]any{
 		"query": "review", "harnesses": []string{"claude", "omp"}, "sort": "stars",
 	}))
-	if len(page.Items) != 1 || page.Items[0].AgnthubStars != 4 ||
-		page.Items[0].Repository.FullName != "octo/agents" {
+	// Stars shown are GitHub's plus agnthub's, with both parts.
+	if got := page.Items[0]; len(page.Items) != 1 || got.AgnthubStars != 4 || got.Stars == nil ||
+		*got.Stars != 104 || got.GitHubStars == nil || *got.GitHubStars != 100 ||
+		got.Repository.FullName != "octo/agents" {
 		t.Fatalf("unexpected page: %+v", page)
 	}
 	for _, want := range []string{
@@ -220,6 +223,15 @@ func TestGetAgentOmitsInstructionsUnlessRequestedAndBoundsThem(t *testing.T) {
 	}
 	if len(detail.Agent.Dependencies.Agents) != 1 || detail.Agent.Targets[0].Status != "native" {
 		t.Fatalf("dependencies and targets must be kept: %+v", detail.Agent)
+	}
+	// A registry that predates combined stars sends none: the output omits them rather than
+	// showing agnthub stars alone as the total.
+	if detail.Agent.Stars != nil || detail.Agent.AgnthubStars != 2 {
+		t.Fatalf(
+			"stars from an older registry: %v %d",
+			detail.Agent.Stars,
+			detail.Agent.AgnthubStars,
+		)
 	}
 	args["include_instructions"] = true
 	detail = decode[mcpserver.AgentDetail](t, call(t, cs, "get_agent", args))

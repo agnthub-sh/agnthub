@@ -99,8 +99,8 @@ Read-only tools query the public registry API (`https://api.agnthub.sh`; overrid
 
 | Tool | What it does |
 | --- | --- |
-| `search_agents` | Full-text search with harness filters and `relevance`, `recent`, `installs`, `installs_30d`, `installs_7d`, `harness_installs` or `stars` order |
-| `get_agent` | One agent: description, installable harnesses or why not, dependencies, reported installs, agnthub stars, license; instructions with `include_instructions` |
+| `search_agents` | Full-text search with harness filters and `relevance`, `recent`, `installs`, `installs_30d`, `installs_7d`, `harness_installs` or `stars` (GitHub + agnthub.sh) order |
+| `get_agent` | One agent: description, installable harnesses or why not, dependencies, reported installs, stars (GitHub + agnthub.sh), license; instructions with `include_instructions` |
 | `get_repository` | A listed repository with its agents, license, GitHub stats and scan problems |
 | `install_command` | The `npx agnthub add …` command for agents, harnesses, scope and omp profile, built and quoted exactly as the site's install builder does (every supported harness selected becomes `--harness all`), after checking the agents are listed; warns about harnesses an agent cannot be installed into |
 | `install_agents` | Installs on this machine through the same code as `agnthub add --json`: harness selection, scope, `--extra` settings such as `omp.profile`, dependencies, required skills, the lock and ownership records. Without `confirm` it only returns the plan; with `confirm: true` it applies the plan only when every item is valid, so files agnthub does not own or that were changed locally are never overwritten. Project installs go to `project_dir` (default: the directory the client started the server in). Install reports honor `DO_NOT_TRACK` / `DISABLE_TELEMETRY` |

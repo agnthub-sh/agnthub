@@ -79,7 +79,7 @@ func New(client *Client, opts Options) *mcp.Server {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "search_agents",
 		Title:       "Search agnthub agents",
-		Description: "Full-text search over agents currently listed on agnthub. Every result is an installable agent of a public GitHub repository, with the harnesses it installs into, its license policy, reported installs and agnthub stars.",
+		Description: "Full-text search over agents currently listed on agnthub. Every result is an installable agent of a public GitHub repository, with the harnesses it installs into, its license policy, reported installs and stars (its repository's GitHub stars plus the agent's agnthub stars).",
 		InputSchema: Schema[searchInput](func(p map[string]*jsonschema.Schema) {
 			p["query"].MaxLength = jsonschema.Ptr(200)
 			harnessList(p["harnesses"])
@@ -94,7 +94,7 @@ func New(client *Client, opts Options) *mcp.Server {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_agent",
 		Title:       "Get an agnthub agent",
-		Description: "Details of one listed agent: description, the harnesses it installs into (or why it cannot), its agent and skill dependencies, reported installs and agnthub stars, plus its repository's license and indexed commit. Instructions are included only on request and only when the license allows publishing them.",
+		Description: "Details of one listed agent: description, the harnesses it installs into (or why it cannot), its agent and skill dependencies, reported installs and stars (its repository's GitHub stars plus the agent's agnthub stars), plus its repository's license and indexed commit. Instructions are included only on request and only when the license allows publishing them.",
 		InputSchema: Schema[agentInput](func(p map[string]*jsonschema.Schema) {
 			p["repository"].Pattern = RepositoryPattern
 			p["agent"].Pattern = AgentPattern
@@ -152,7 +152,7 @@ type tools struct {
 type searchInput struct {
 	Query     string   `json:"query,omitempty"     jsonschema:"words to match in agent names, descriptions, repositories and instructions; empty lists recent agents"`
 	Harnesses []string `json:"harnesses,omitempty" jsonschema:"only agents installable into every listed harness"`
-	Sort      string   `json:"sort,omitempty"      jsonschema:"relevance (default with a query), recent (default without), installs, installs_30d, installs_7d, harness_installs (needs exactly one harness) or stars (agnthub stars)"`
+	Sort      string   `json:"sort,omitempty"      jsonschema:"relevance (default with a query), recent (default without), installs, installs_30d, installs_7d, harness_installs (needs exactly one harness) or stars (the repository's GitHub stars plus the agent's agnthub stars)"`
 	Page      int      `json:"page,omitempty"`
 	PerPage   int      `json:"per_page,omitempty"`
 }

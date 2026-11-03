@@ -77,7 +77,9 @@ type SearchResult struct {
 	IndexedAt             time.Time       `json:"indexed_at"`
 	Snippet               *Snippet        `json:"snippet,omitempty"`
 	Adoption              Adoption        `json:"adoption"`
-	AgnthubStars          int             `json:"agnthub_stars"`
+	Stars                 *int            `json:"stars,omitempty"                  jsonschema:"stars shown on agnthub.sh: the repository's GitHub stars plus the agent's agnthub stars; absent from registries that predate it"`
+	GitHubStars           *int            `json:"github_stars,omitempty"           jsonschema:"the repository's GitHub stars as GitHub last reported them; agents have none of their own"`
+	AgnthubStars          int             `json:"agnthub_stars"                    jsonschema:"signed-in people who starred the agent on agnthub.sh"`
 }
 
 // SearchPage is one page of search results.
@@ -118,7 +120,9 @@ type Repository struct {
 	Problems       []ScanProblem `json:"problems,omitempty"`
 	RefreshProblem *string       `json:"refresh_problem,omitempty"`
 	Adoption       Adoption      `json:"adoption"`
-	AgnthubStars   int           `json:"agnthub_stars"`
+	Stars          *int          `json:"stars,omitempty"           jsonschema:"stars shown on agnthub.sh: GitHub stars plus agnthub stars; absent from registries that predate it"`
+	GitHubStars    *int          `json:"github_stars,omitempty"    jsonschema:"GitHub stars as GitHub last reported them"`
+	AgnthubStars   int           `json:"agnthub_stars"             jsonschema:"people who starred the repository or any of its agents on agnthub.sh, each once"`
 	// AgentsOmitted counts Agents left out to bound the output.
 	AgentsOmitted int `json:"agents_omitted,omitempty"`
 }
@@ -187,7 +191,9 @@ type Agent struct {
 	Problems     []ScanProblem   `json:"problems,omitempty"`
 	Targets      []HarnessTarget `json:"targets,omitempty"`
 	Adoption     Adoption        `json:"adoption"`
-	AgnthubStars int             `json:"agnthub_stars"`
+	Stars        *int            `json:"stars,omitempty"        jsonschema:"stars shown on agnthub.sh: the repository's GitHub stars plus the agent's agnthub stars; absent from registries that predate it"`
+	GitHubStars  *int            `json:"github_stars,omitempty" jsonschema:"the repository's GitHub stars as GitHub last reported them; agents have none of their own"`
+	AgnthubStars int             `json:"agnthub_stars"          jsonschema:"signed-in people who starred the agent on agnthub.sh"`
 }
 
 // AgentDetail is one Agent with its repository.
