@@ -25,6 +25,12 @@ func TestOmitKeysRemovesOnlyTheDeclaringLines(t *testing.T) {
 			raw:  "---\nname: rev\ndescription: Use when: reviewing\ninitialPrompt: go: now\n---\nB\n",
 			want: "---\nname: rev\ndescription: Use when: reviewing\n---\nB\n",
 		},
+		{
+			name: "structured header with unquoted colons",
+			raw: "---\nname: rev\ndescription: Use when: reviewing\npermissionMode: ask\n" +
+				"hooks:\n  Stop:\n    - command: echo\ndisallowedTools:\n  - Write\n---\nB\n",
+			want: "---\nname: rev\ndescription: Use when: reviewing\ndisallowedTools:\n  - Write\n---\nB\n",
+		},
 	} {
 		out, omitted, err := agent.OmitKeys("a.md", []byte(tc.raw),
 			"hooks", "mcpServers", "permissionMode", "initialPrompt")

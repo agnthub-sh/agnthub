@@ -32,9 +32,11 @@ func ParseMarkdown(path string, raw []byte) (*Document, error) {
 }
 
 // ParseMarkdownLenient parses like ParseMarkdown but, when the header is not valid
-// YAML, accepts a flat "key: value" header the way Claude Code does: one top-level
-// key per line, the value being the rest of the line verbatim (so unquoted colons
-// in descriptions survive). Every value from the fallback is a string.
+// YAML, reads it the way Claude Code does. A top-level value with an unquoted
+// colon ("description: Use when: reviewing") is the rest of its line verbatim,
+// a string; every other line is YAML as written, so lists and maps around it
+// keep their structure. A header that is still not YAML is accepted only as a
+// flat "key: value" header: one top-level key per line, every value a string.
 func ParseMarkdownLenient(path string, raw []byte) (*Document, error) {
 	header, body, err := splitFrontmatter(path, raw)
 	if err != nil {
@@ -42,12 +44,42 @@ func ParseMarkdownLenient(path string, raw []byte) (*Document, error) {
 	}
 	fields, yamlErr := decodeYAMLHeader(path, header)
 	if yamlErr != nil {
-		var ok bool
-		if fields, ok = flatHeader(header); !ok {
-			return nil, yamlErr
+		fields = nil
+		if quoted, changed := quoteColonValues(header); changed {
+			fields, _ = decodeYAMLHeader(path, quoted)
+		}
+		if fields == nil {
+			var ok bool
+			if fields, ok = flatHeader(header); !ok {
+				return nil, yamlErr
+			}
 		}
 	}
 	return &Document{Path: path, Raw: raw, Frontmatter: fields, Body: body}, nil
+}
+
+// quoteColonValues double-quotes every top-level plain value that contains a
+// colon YAML would read as a nested mapping, keeping each line on its line.
+// changed reports whether any line was quoted.
+func quoteColonValues(header string) (quoted string, changed bool) {
+	lines := strings.Split(header, "\n")
+	for i, line := range lines {
+		key, value, found := strings.Cut(line, ":")
+		if !found || !flatKey(key) || (!strings.HasPrefix(value, " ") &&
+			!strings.HasPrefix(value, "\t")) {
+			continue
+		}
+		value = strings.TrimSpace(value)
+		if value == "" || strings.ContainsRune(`"'[{|>&*!`, rune(value[0])) ||
+			!strings.Contains(value, ": ") && !strings.Contains(value, ":\t") &&
+				!strings.HasSuffix(value, ":") {
+			continue
+		}
+		value = strings.ReplaceAll(value, `\`, `\\`)
+		lines[i] = key + `: "` + strings.ReplaceAll(value, `"`, `\"`) + `"`
+		changed = true
+	}
+	return strings.Join(lines, "\n"), changed
 }
 
 func splitFrontmatter(path string, raw []byte) (header, body string, err error) {
@@ -247,8 +279,14 @@ func headerKeyLines(header string, keys []string) map[int]bool {
 	lines := strings.Split(header, "\n")
 	drop := map[int]bool{}
 	var node yaml.Node
-	if yaml.Unmarshal([]byte(header), &node) != nil || len(node.Content) != 1 ||
-		node.Content[0].Kind != yaml.MappingNode {
+	err := yaml.Unmarshal([]byte(header), &node)
+	if err != nil {
+		// Quoting keeps every line on its line, so its line numbers are the header's.
+		quoted, _ := quoteColonValues(header)
+		node = yaml.Node{}
+		err = yaml.Unmarshal([]byte(quoted), &node)
+	}
+	if err != nil || len(node.Content) != 1 || node.Content[0].Kind != yaml.MappingNode {
 		for i, line := range lines {
 			key, _, found := strings.Cut(line, ":")
 			if found && slices.Contains(keys, key) {
