@@ -1,11 +1,11 @@
 {
-  "version": "0.4.9",
+  "version": "0.4.10",
   "sha256": {
-    "agnthub_0.4.9_linux_amd64.tar.gz": "744481cfbf15c95d2482c4c9ffb4dd0232d756a879804079a174041f8e380a46",
-    "agnthub_0.4.9_linux_arm64.tar.gz": "3dd56e62c3a56e35fe6d5483d38d0620fa9e7684aae0e36eff017beb5d61e537",
-    "agnthub_0.4.9_darwin_amd64.tar.gz": "af42e3dff1ae6cd2bba85b151c8a1dc58479061b2af8d95f2099b394a22e1572",
-    "agnthub_0.4.9_darwin_arm64.tar.gz": "68eeedc362ea1864e94c7d551133f5e115fc4d5f7b376d5f122d7dac9afc19ad",
-    "agnthub_0.4.9_windows_amd64.zip": "5ab739392d154cd927e5ad88b88ff19cb64415a59af1b82cec601bcb8d637e4a",
-    "agnthub_0.4.9_windows_arm64.zip": "d041bfbd88e07d3e572c785cb8f0bb68c0b875ed2d1464a131221842ffb5eedd"
+    "agnthub_0.4.10_linux_amd64.tar.gz": "7c8313750a9f1dc1b8b9cf8fad8cb8607a2c537d62f32a5735314746d3631804",
+    "agnthub_0.4.10_linux_arm64.tar.gz": "7659c4c4edbfe0248cc33d1cc26a01dadfa557a49de9c7088f10f59bbc1e14b7",
+    "agnthub_0.4.10_darwin_amd64.tar.gz": "7b49b368a34472fafed5701e80e7747b9490c30778cc66bb4dd2d192a2d3ba16",
+    "agnthub_0.4.10_darwin_arm64.tar.gz": "7534408d698c4ffba42dee0185067938dea935455b535f111c767d8a0b8903a5",
+    "agnthub_0.4.10_windows_amd64.zip": "aeeb421d7dd329b991f4b20e77c05eafa671ada9f40b479d92fbd19244a7955e",
+    "agnthub_0.4.10_windows_arm64.zip": "696ae870378f55d2d92c27c121bff1e7fa83718470fccdd44ed95deedb24aa85"
   }
 }
