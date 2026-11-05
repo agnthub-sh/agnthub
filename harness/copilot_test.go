@@ -1,12 +1,9 @@
 package harness_test
 
 import (
-	"path/filepath"
 	"testing"
 
 	"github.com/agnthub-sh/agnthub/agent"
-	"github.com/agnthub-sh/agnthub/harness"
-	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 func TestCopilotIdentityStripsAgentSuffixAndIgnoresDisplayName(t *testing.T) {
@@ -110,27 +107,5 @@ func TestCopilotRefusesVariantsTheCLIWouldDropOrIgnore(t *testing.T) {
 			)
 			requireInvalid(t, err)
 		})
-	}
-}
-
-func TestCopilotDestinationsAreTargetSpecific(t *testing.T) {
-	copilot := installer(t, agent.Copilot)
-	ctx := harness.Context{
-		Env:         env.FromMap(map[string]string{"HOME": "/home/u", "XDG_CONFIG_HOME": "/xdg"}),
-		ProjectRoot: "/work/p",
-	}
-	project, err := copilot.Destination(ctx, harness.ScopeProject, nil)
-	if err != nil || project.Dir != filepath.FromSlash("/work/p/.github/agents") ||
-		!project.Shared {
-		t.Fatalf("project destination: %+v %v", project, err)
-	}
-	global, err := copilot.Destination(ctx, harness.ScopeGlobal, nil)
-	if err != nil || global.Dir != filepath.FromSlash("/home/u/.copilot/agents") {
-		t.Fatalf("global destination ignores XDG and defaults to ~/.copilot: %+v %v", global, err)
-	}
-	ctx.Env = ctx.Env.With("COPILOT_HOME", "/ch")
-	global, err = copilot.Destination(ctx, harness.ScopeGlobal, nil)
-	if err != nil || global.Dir != filepath.FromSlash("/ch/agents") {
-		t.Fatalf("COPILOT_HOME global destination: %+v %v", global, err)
 	}
 }

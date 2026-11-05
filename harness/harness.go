@@ -5,6 +5,7 @@ package harness
 import (
 	"errors"
 	"fmt"
+	"path/filepath"
 	"sort"
 
 	"github.com/agnthub-sh/agnthub/agent"
@@ -63,6 +64,18 @@ type Destination struct {
 	Label string
 	// Shared reports a project directory shared by every Harness Profile.
 	Shared bool
+}
+
+// requireAbsoluteDir refuses user-scope installs while key holds a relative path:
+// the Harness resolves it against the directory it runs in, so it has no single
+// user directory (agnthub would otherwise install where the Harness never looks).
+func requireAbsoluteDir(ctx Context, key, harness string) error {
+	if dir := ctx.Env.Get(key); dir != "" && !filepath.IsAbs(dir) {
+		return fmt.Errorf("%s=%q is a relative path, which %s resolves against the "+
+			"directory it runs in, so it has no single user directory; set an absolute "+
+			"path to install into user scope", key, dir, harness)
+	}
+	return nil
 }
 
 // Artifact is the file content to install for one Agent and Harness.

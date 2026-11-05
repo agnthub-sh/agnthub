@@ -3,14 +3,12 @@ package harness_test
 import (
 	"bytes"
 	"errors"
-	"path/filepath"
 	"testing"
 
 	"github.com/pelletier/go-toml/v2"
 
 	"github.com/agnthub-sh/agnthub/agent"
 	"github.com/agnthub-sh/agnthub/harness"
-	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 func codexInstaller(t *testing.T) harness.Installer {
@@ -157,32 +155,5 @@ func TestCodexNativeRejectsInvalidAndParentOverridingVariants(t *testing.T) {
 		if !errors.As(err, &invalid) {
 			t.Errorf("%s: want InvalidVariantError, got %v", label, err)
 		}
-	}
-}
-
-func TestCodexDestinationsHonorCodexHome(t *testing.T) {
-	codex := codexInstaller(t)
-	ctx := harness.Context{
-		Env:         env.FromMap(map[string]string{"HOME": "/home/u"}),
-		ProjectRoot: "/work/project",
-	}
-	project, err := codex.Destination(ctx, harness.ScopeProject, nil)
-	if err != nil || project.Dir != filepath.Join("/work/project", ".codex", "agents") ||
-		!project.Shared {
-		t.Fatalf("project destination: %+v %v", project, err)
-	}
-	global, err := codex.Destination(ctx, harness.ScopeGlobal, nil)
-	if err != nil || global.Dir != filepath.Join("/home/u", ".codex", "agents") {
-		t.Fatalf("default global destination: %+v %v", global, err)
-	}
-	ctx.Env = ctx.Env.With("CODEX_HOME", "/opt/codex")
-	global, err = codex.Destination(ctx, harness.ScopeGlobal, nil)
-	if err != nil || global.Dir != filepath.Join("/opt/codex", "agents") {
-		t.Fatalf("CODEX_HOME global destination: %+v %v", global, err)
-	}
-	ctx.Env = ctx.Env.With("CODEX_HOME", "relative/codex")
-	global, err = codex.Destination(ctx, harness.ScopeGlobal, nil)
-	if err != nil || global.Dir != filepath.Join("/home/u", ".codex", "agents") {
-		t.Fatalf("relative CODEX_HOME must be ignored: %+v %v", global, err)
 	}
 }

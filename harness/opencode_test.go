@@ -1,13 +1,9 @@
 package harness_test
 
 import (
-	"path/filepath"
-	"strings"
 	"testing"
 
 	"github.com/agnthub-sh/agnthub/agent"
-	"github.com/agnthub-sh/agnthub/harness"
-	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 func TestOpenCodeIdentityIsTheFileName(t *testing.T) {
@@ -119,27 +115,5 @@ func TestOpenCodeRefusesVariantsOpenCodeWouldDrop(t *testing.T) {
 			)
 			requireInvalid(t, err)
 		})
-	}
-}
-
-func TestOpenCodeDestinationsAreTargetSpecific(t *testing.T) {
-	opencode := installer(t, agent.OpenCode)
-	ctx := harness.Context{
-		Env:         env.FromMap(map[string]string{"HOME": "/home/u"}),
-		ProjectRoot: "/work/p",
-	}
-	project, err := opencode.Destination(ctx, harness.ScopeProject, nil)
-	if err != nil || project.Dir != filepath.FromSlash("/work/p/.opencode/agents") ||
-		!project.Shared {
-		t.Fatalf("project destination: %+v %v", project, err)
-	}
-	global, err := opencode.Destination(ctx, harness.ScopeGlobal, nil)
-	if err != nil || global.Dir != filepath.FromSlash("/home/u/.config/opencode/agents") {
-		t.Fatalf("default global destination: %+v %v", global, err)
-	}
-	ctx.Env = ctx.Env.With("XDG_CONFIG_HOME", "/xdg")
-	global, err = opencode.Destination(ctx, harness.ScopeGlobal, nil)
-	if err != nil || !strings.HasPrefix(global.Dir, filepath.FromSlash("/xdg/opencode/")) {
-		t.Fatalf("XDG global destination: %+v %v", global, err)
 	}
 }

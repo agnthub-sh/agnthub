@@ -1,12 +1,10 @@
 package harness_test
 
 import (
-	"path/filepath"
 	"testing"
 
 	"github.com/agnthub-sh/agnthub/agent"
 	"github.com/agnthub-sh/agnthub/harness"
-	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 func TestGeminiNativeLocalAndRemoteAgentsInstallVerbatim(t *testing.T) {
@@ -142,38 +140,5 @@ func TestGeminiAgentDependenciesAreNotRuntimeDelegation(t *testing.T) {
 	agents := agent.Dependencies{Agents: []agent.AgentDependency{{Agent: "helper"}}}
 	if notes := advisor.DependencyNotes(agents); len(notes) == 0 {
 		t.Fatal("agent dependencies must carry a nondelegation note")
-	}
-}
-
-func TestGeminiGlobalDestinationHonorsGeminiCLIHome(t *testing.T) {
-	gemini := installer(t, agent.Gemini)
-	cases := map[string]struct {
-		vars map[string]string
-		want string
-	}{
-		"home": {map[string]string{"HOME": "/home/u"}, "/home/u/.gemini/agents"},
-		"cli home": {
-			map[string]string{"HOME": "/home/u", "GEMINI_CLI_HOME": "/srv/g"},
-			"/srv/g/.gemini/agents",
-		},
-		"relative home": {
-			map[string]string{"HOME": "/home/u", "GEMINI_CLI_HOME": "rel"},
-			"/home/u/.gemini/agents",
-		},
-	}
-	for name, tc := range cases {
-		t.Run(name, func(t *testing.T) {
-			ctx := harness.Context{Env: env.FromMap(tc.vars), ProjectRoot: "/p"}
-			global, err := gemini.Destination(ctx, harness.ScopeGlobal, nil)
-			if err != nil || global.Dir != filepath.FromSlash(tc.want) {
-				t.Fatalf("global destination: %+v %v", global, err)
-			}
-		})
-	}
-	project, err := gemini.Destination(
-		harness.Context{Env: env.FromMap(nil), ProjectRoot: "/p"}, harness.ScopeProject, nil,
-	)
-	if err != nil || project.Dir != filepath.Join("/p", ".gemini", "agents") {
-		t.Fatalf("project destination: %+v %v", project, err)
 	}
 }

@@ -63,6 +63,9 @@ func (geminiAdapter) Destination(ctx Context, scope Scope, _ Settings) (Destinat
 			Shared: true,
 		}, nil
 	case ScopeGlobal:
+		if err := requireAbsoluteDir(ctx, "GEMINI_CLI_HOME", "Gemini CLI"); err != nil {
+			return Destination{}, err
+		}
 		return Destination{Dir: filepath.Join(geminiConfigDir(ctx), "agents"), Label: "user"}, nil
 	default:
 		return Destination{}, fmt.Errorf("unsupported scope %q", scope)

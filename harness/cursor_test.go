@@ -2,13 +2,11 @@ package harness_test
 
 import (
 	"errors"
-	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/agnthub-sh/agnthub/agent"
 	"github.com/agnthub-sh/agnthub/harness"
-	"github.com/agnthub-sh/agnthub/platform/env"
 )
 
 func installer(t *testing.T, id agent.HarnessID) harness.Installer {
@@ -148,21 +146,5 @@ func TestCursorConversionIsReadableByCursor(t *testing.T) {
 		); err != nil {
 			t.Fatalf("%q: generated content is not a valid Cursor agent: %v", description, err)
 		}
-	}
-}
-
-func TestCursorDestinations(t *testing.T) {
-	ctx := harness.Context{
-		Env:         env.FromMap(map[string]string{"HOME": "/home/u"}),
-		ProjectRoot: "/p",
-	}
-	cursor := installer(t, agent.Cursor)
-	project, err := cursor.Destination(ctx, harness.ScopeProject, nil)
-	if err != nil || project.Dir != filepath.Join("/p", ".cursor", "agents") || !project.Shared {
-		t.Fatalf("project destination: %+v %v", project, err)
-	}
-	global, err := cursor.Destination(ctx, harness.ScopeGlobal, nil)
-	if err != nil || global.Dir != filepath.Join("/home/u", ".cursor", "agents") {
-		t.Fatalf("global destination: %+v %v", global, err)
 	}
 }

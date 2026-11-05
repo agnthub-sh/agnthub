@@ -72,12 +72,16 @@ func (codexAdapter) Destination(ctx Context, scope Scope, _ Settings) (Destinati
 			Shared: true,
 		}, nil
 	case ScopeGlobal:
+		if err := requireAbsoluteDir(ctx, "CODEX_HOME", "Codex"); err != nil {
+			return Destination{}, err
+		}
 		return Destination{Dir: filepath.Join(codexHome(ctx), "agents"), Label: "user"}, nil
 	default:
 		return Destination{}, fmt.Errorf("unsupported scope %q", scope)
 	}
 }
 
+// codexHome is Codex's user directory: CODEX_HOME or ~/.codex.
 func codexHome(ctx Context) string {
 	if dir := ctx.Env.Get("CODEX_HOME"); filepath.IsAbs(dir) {
 		return dir

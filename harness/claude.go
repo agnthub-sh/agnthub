@@ -55,12 +55,16 @@ func (claudeAdapter) Destination(ctx Context, scope Scope, _ Settings) (Destinat
 			Shared: true,
 		}, nil
 	case ScopeGlobal:
+		if err := requireAbsoluteDir(ctx, "CLAUDE_CONFIG_DIR", "Claude Code"); err != nil {
+			return Destination{}, err
+		}
 		return Destination{Dir: filepath.Join(claudeConfigDir(ctx), "agents"), Label: "user"}, nil
 	default:
 		return Destination{}, fmt.Errorf("unsupported scope %q", scope)
 	}
 }
 
+// claudeConfigDir is Claude Code's user directory: CLAUDE_CONFIG_DIR or ~/.claude.
 func claudeConfigDir(ctx Context) string {
 	if dir := ctx.Env.Get("CLAUDE_CONFIG_DIR"); filepath.IsAbs(dir) {
 		return dir

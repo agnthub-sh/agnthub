@@ -174,6 +174,9 @@ func (copilotAdapter) Destination(ctx Context, scope Scope, _ Settings) (Destina
 			Shared: true,
 		}, nil
 	case ScopeGlobal:
+		if err := requireAbsoluteDir(ctx, "COPILOT_HOME", "Copilot CLI"); err != nil {
+			return Destination{}, err
+		}
 		return Destination{Dir: filepath.Join(copilotHome(ctx), "agents"), Label: "user"}, nil
 	default:
 		return Destination{}, fmt.Errorf("unsupported scope %q", scope)

@@ -246,10 +246,7 @@ func (opencodeAdapter) SkillVisibility(
 	_ Settings,
 ) (SkillVisibility, error) {
 	home := ctx.Env.Home()
-	configDir := ctx.Env.Get("OPENCODE_CONFIG_DIR")
-	if !filepath.IsAbs(configDir) {
-		configDir = opencodeConfigDir(ctx)
-	}
+	configDir := opencodeConfigDir(ctx)
 	visibility := SkillVisibility{EveryCopyLoads: true}
 	var ancestors []string
 	if scope == ScopeProject {

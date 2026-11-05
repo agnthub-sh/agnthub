@@ -155,8 +155,27 @@ func (opencodeAdapter) Destination(ctx Context, scope Scope, _ Settings) (Destin
 	}
 }
 
+// opencodeConfigDir is OpenCode's global configuration directory. OPENCODE_CONFIG_DIR
+// replaces $XDG_CONFIG_HOME/opencode (the user directory stops loading); OpenCode's
+// background service runs in the home directory, so it resolves relative values of
+// either variable there (observed in 2.1.3 and 2.2.5).
 func opencodeConfigDir(ctx Context) string {
-	return filepath.Join(ctx.Env.ConfigHome(), "opencode")
+	home := ctx.Env.Home()
+	if dir := ctx.Env.Get("OPENCODE_CONFIG_DIR"); dir != "" {
+		return underHome(home, dir)
+	}
+	if dir := ctx.Env.Get("XDG_CONFIG_HOME"); dir != "" {
+		return filepath.Join(underHome(home, dir), "opencode")
+	}
+	return filepath.Join(home, ".config", "opencode")
+}
+
+// underHome resolves dir against home unless it is absolute.
+func underHome(home, dir string) string {
+	if filepath.IsAbs(dir) {
+		return filepath.Clean(dir)
+	}
+	return filepath.Join(home, dir)
 }
 
 func (opencodeAdapter) Native(id string, variant *agent.VariantFile) (Artifact, error) {
