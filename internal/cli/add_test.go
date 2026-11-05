@@ -117,6 +117,37 @@ func TestAddInstallsPortableAgentAndRecordsReceipts(t *testing.T) {
 	}
 }
 
+func TestAddWithNothingToDoNeedsNoConfirmation(t *testing.T) {
+	h := newHarness(t)
+	h.write("agents/reviewer.md", reviewer)
+	if code, out := h.run("add", h.source, "--harness", "claude", "--yes"); code != 0 {
+		t.Fatalf("exit %d: %s", code, out)
+	}
+	ownershipPath := state.OwnershipPath(filepath.Join(h.home, ".local", "state"))
+	before, err := os.ReadFile(ownershipPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Without --yes and without a terminal, an up-to-date plan exits 0: there is
+	// nothing to confirm and nothing is written.
+	code, out := h.run("add", h.source, "--harness", "claude")
+	if code != 0 || !strings.Contains(out, "Up to date") {
+		t.Fatalf("want an up-to-date exit 0, got %d: %s", code, out)
+	}
+	if after, err := os.ReadFile(ownershipPath); err != nil || string(after) != string(before) {
+		t.Fatalf("an up-to-date add must not rewrite ownership records (%v)", err)
+	}
+	// Identical files whose receipts this machine lacks (a fresh clone) still
+	// need an apply to record them, so they ask for confirmation.
+	if err := os.Remove(ownershipPath); err != nil {
+		t.Fatal(err)
+	}
+	if code, out := h.run("add", h.source, "--harness", "claude"); code == 0 ||
+		!strings.Contains(out, "--yes") {
+		t.Fatalf("missing receipts must still need confirmation, exit %d: %s", code, out)
+	}
+}
+
 func TestAddRefusesUnmanagedAndLocallyModifiedFiles(t *testing.T) {
 	h := newHarness(t)
 	h.write("agents/reviewer.md", reviewer)

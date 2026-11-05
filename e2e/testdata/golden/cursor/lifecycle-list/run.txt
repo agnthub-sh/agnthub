@@ -2,9 +2,11 @@ $ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness c
 exit status: 0
 --- stdout
 Installed · localhost:8443/evolving.git#v1@5286a739a333 · project scope
-  harnesses: cursor
-  AGENT    HARNESS  ACTION    PATH
-  drifter  cursor   + create  .cursor/agents/drifter.md
+harnesses: cursor
+
+AGENT    HARNESS  ACTION    PATH
+drifter  cursor   + create  .cursor/agents/drifter.md
+
 1 created · 0 updated · 0 deleted
 $ agnthub list --json
 exit status: 0

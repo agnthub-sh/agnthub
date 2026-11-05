@@ -584,6 +584,7 @@ func (r *removal) decide(ctx context.Context, plan *uninstall.Plan) error {
 		question = fmt.Sprintf("%d item(s) are refused and stay. Apply the other %d?",
 			refused, changes)
 	}
+	out.gapBeforePrompt()
 	confirmed, err := r.app.Prompter.Confirm(ctx, question, "")
 	if err != nil {
 		return err
@@ -786,11 +787,14 @@ func (r *removal) print(out *printer, plan *uninstall.Plan, status string) {
 	case statusRefused, statusFailed:
 		icon = out.emoji("❌")
 	}
-	fmt.Fprintf(out.w, "%s%s · %s scope · lock %s\n", icon,
-		s.title.Render(removeTitle(title, status)), payload.Scope, out.path(r.lockPath))
+	fmt.Fprintln(out.w, icon+s.title.Render(removeTitle(title, status))+out.dot()+
+		out.scopeTag(payload.Scope)+out.dot()+out.lockLabel(r.lockPath))
 	shown := !r.previewed || (status != statusApplied && status != statusFailed)
+	if shown {
+		out.section()
+	}
 	if shown && len(payload.Items) == 0 {
-		fmt.Fprintln(out.w, "  nothing to clean up")
+		out.paragraph(0, "nothing to clean up")
 	}
 	var rows []notedRow
 	var refused, failed []refusal
@@ -813,8 +817,9 @@ func (r *removal) print(out *printer, plan *uninstall.Plan, status string) {
 		}
 		row := notedRow{
 			cells: []cell{
-				plainCell(name), plainCell(harnessCell), removeCell(s, item),
-				plainCell(out.path(item.Path)),
+				{text: name, style: s.title},
+				plainCell(harnessCell), removeCell(s, item),
+				pathCell(out.path(item.Path)),
 			},
 			name: name, harness: harnessCell,
 			idle: item.Action == string(uninstall.ActionPreserve),
@@ -829,8 +834,8 @@ func (r *removal) print(out *printer, plan *uninstall.Plan, status string) {
 		rows = append(rows, row)
 	}
 	if shown {
-		out.notedTable([]string{"AGENT", "HARNESS", "ACTION", "PATH"}, rows, nil, idleAgent,
-			idleAgents)
+		out.notedTable([]string{"AGENT", "HARNESS", "ACTION", "PATH"}, rows, nil, idleAgents,
+			len(refused) == 0)
 		out.refusals("Refused", "AGENT", refused)
 	}
 	// Failures happen while applying, so they are news even after a preview.
@@ -840,9 +845,10 @@ func (r *removal) print(out *printer, plan *uninstall.Plan, status string) {
 		for _, dep := range payload.DependenciesKept {
 			names = append(names, dep.Name+" ("+dep.Kind+")")
 		}
-		fmt.Fprintf(out.w, "Dependencies stay installed: %s\n", strings.Join(names, ", "))
-		fmt.Fprintln(out.w, s.dim.Render(
-			"  clean up the ones no longer required with: agnthub remove --clean-dependencies"))
+		out.section()
+		out.paragraph(2, "Dependencies stay installed: "+strings.Join(names, ", "))
+		out.paragraph(2, s.dim.Render(
+			"clean up the ones no longer required with: agnthub remove --clean-dependencies"))
 	}
 	parts := make([]string, 0, len(removeTotals))
 	for _, total := range removeTotals {
@@ -860,7 +866,10 @@ func (r *removal) print(out *printer, plan *uninstall.Plan, status string) {
 		parts = append(parts, style.Render(fmt.Sprintf("%d %s", n, total.word)))
 	}
 	if len(parts) > 0 {
-		fmt.Fprintln(out.w, strings.Join(parts, " · "))
+		if shown || len(failed) > 0 {
+			out.section()
+		}
+		out.paragraph(2, strings.Join(parts, out.dot()))
 	}
 }
 

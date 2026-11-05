@@ -156,7 +156,7 @@ func (a *App) listTable(out *printer, listed []listedAgent) {
 			t.rows = append(t.rows, []cell{
 				{text: name, style: s.title},
 				plainCell(harnessCell), status,
-				plainCell(out.path(artifact.Path)),
+				pathCell(out.path(artifact.Path)),
 				{text: sourceLabel(entry.Source), style: s.dim},
 			})
 		}

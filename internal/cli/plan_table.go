@@ -14,14 +14,15 @@ import (
 	"github.com/agnthub-sh/agnthub/state"
 )
 
-// Plans print as a header (status, source, scope, Harnesses), a table of
-// Agent | Harness | Action | Path rows sorted by Agent then Harness, the notes
-// under it, refusals in a section of their own and a totals line. Only rows that
-// change something are listed; a sentence counts the Agent × Harness pairs that
-// were already correct. A note that singles out one Agent among several gets a
-// [n] marker on that Agent's rows; any other note prints once with the rows it
-// applies to. After a plan the user approved, the result is only the status line
-// and the totals: the table was just shown.
+// Plans print as a status line, the header details (sources, Harnesses), a table
+// of Agent | Harness | Action | Path rows sorted by Agent then Harness, the notes
+// under it, refusals in a section of their own and a totals line, with one blank
+// line between these blocks. Only rows that change something are listed; a
+// sentence counts the Agent × Harness pairs that were already correct. A note
+// that singles out one Agent among several gets a [n] marker on that Agent's
+// rows; any other note prints once with the rows it applies to. After a plan the
+// user approved, the result is only the status line and the totals: the table
+// was just shown. A plan with nothing to do is "Up to date" and needs no prompt.
 
 // Row actions. Internal install actions map to these words.
 const (
@@ -47,13 +48,33 @@ type refusal struct {
 	name, harness, reason string
 }
 
-// Sentences for the Agent × Harness or Skill × Harness pairs a table leaves out.
-const (
-	idleAgents = "agents were already correct in their harnesses, so no action was needed."
-	idleAgent  = "agent was already correct in its harness, so no action was needed."
-	idleSkills = "skills were already in place in their harnesses, so no action was needed."
-	idleSkill  = "skill was already in place in its harness, so no action was needed."
+// idleWords count the pairs a table leaves out because they need no action.
+type idleWords struct {
+	one, many string
+}
+
+var (
+	idleAgents = idleWords{
+		one:  "agent was already correct in its harness, so no action was needed.",
+		many: "agents were already correct in their harnesses, so no action was needed.",
+	}
+	idleSkills = idleWords{
+		one:  "skill was already in place in its harness, so no action was needed.",
+		many: "skills were already in place in their harnesses, so no action was needed.",
+	}
 )
+
+// sentence counts n idle pairs; "" for none.
+func (w idleWords) sentence(n int) string {
+	switch {
+	case n == 1:
+		return "1 " + w.one
+	case n > 1:
+		return strconv.Itoa(n) + " " + w.many
+	default:
+		return ""
+	}
+}
 
 // actionCell is an action's symbol and style in the Action column.
 func (p *printer) actionCell(action string) cell {
@@ -86,26 +107,34 @@ func installRow(action install.Action) string {
 
 func (p *printer) humanPlan(payload *planJSON) {
 	s := p.styles
-	if payload.previewed && (payload.Status == statusApplied || payload.Status == statusFailed) {
+	switch {
+	case payload.previewed && (payload.Status == statusApplied || payload.Status == statusFailed):
 		p.statusLine(payload)
-		p.humanSkillRuns(payload)
+		if p.humanSkillRuns(payload) {
+			p.section()
+		}
 		p.totals(payload, 0)
+		return
+	case payload.Status == statusUpToDate:
+		p.upToDate(payload)
 		return
 	}
 	p.planHeader(payload)
 	p.skillTables(payload)
 	p.humanSkillRuns(payload)
 	rows, refused, kept := p.itemRows(payload)
+	p.section()
 	visible := slices.ContainsFunc(rows, func(row notedRow) bool { return !row.idle })
 	if payload.Status == statusFailed {
-		fmt.Fprintln(p.w, s.heading.Render("Agents (not written)"))
+		p.paragraph(0, s.heading.Render("Agents (not written)"))
 	} else if len(payload.Skills) > 0 && visible {
-		fmt.Fprintln(p.w, s.heading.Render("Agents"))
+		p.paragraph(0, s.heading.Render("Agents"))
 	}
 	if len(rows) == 0 && len(refused) == 0 {
-		fmt.Fprintln(p.w, "  nothing to install")
+		p.paragraph(0, "nothing to install")
 	}
-	p.notedTable([]string{"AGENT", "HARNESS", "ACTION", "PATH"}, rows, kept, idleAgent, idleAgents)
+	p.notedTable([]string{"AGENT", "HARNESS", "ACTION", "PATH"}, rows, kept, idleAgents,
+		len(refused) == 0 && len(payload.Skipped) == 0)
 	p.refusals("Refused", "AGENT", refused)
 	skipped := make([]refusal, 0, len(payload.Skipped))
 	for _, item := range payload.Skipped {
@@ -115,28 +144,101 @@ func (p *printer) humanPlan(payload *planJSON) {
 	if payload.Changes != nil {
 		p.skillChanges(payload.Changes.Skills)
 	}
+	p.section()
 	p.totals(payload, len(refused))
+}
+
+// upToDate reports a plan with nothing to do: the status line, the Harnesses
+// and the sentences counting what is already in place, in green.
+func (p *printer) upToDate(payload *planJSON) {
+	s := p.styles
+	p.statusLine(payload)
+	if payload.Changes != nil {
+		p.sources(payload.Changes)
+	}
+	p.harnessLine(payload)
+	p.section()
+	idle := 0
+	for _, item := range payload.Items {
+		if installRow(install.Action(item.Action)) == rowUnchanged {
+			idle++
+		}
+	}
+	if line := idleAgents.sentence(idle); line != "" {
+		p.paragraph(0, s.create.Render(line))
+	}
+	if line := idleSkills.sentence(len(payload.Skills)); line != "" {
+		p.paragraph(0, s.create.Render(line))
+	}
+	if idle == 0 && len(payload.Skills) == 0 {
+		p.paragraph(0, s.create.Render("Nothing to install."))
+	}
+	if payload.Changes != nil {
+		for _, entry := range payload.Changes.Agents {
+			for _, art := range entry.Artifacts {
+				if art.Change == changeRemoved {
+					p.paragraph(
+						2,
+						s.dim.Render("· "+keptLine(entry, art.Harness, p.path(art.Path))),
+					)
+				}
+			}
+		}
+	}
+}
+
+// statusIcon is the emoji that leads a status line.
+func (p *printer) statusIcon(status string) string {
+	switch status {
+	case statusApplied, statusUpToDate:
+		return p.emoji("✅")
+	case statusRefused, statusFailed:
+		return p.emoji("❌")
+	default:
+		return p.emoji("📋")
+	}
+}
+
+// dot is the dimmed separator between status line parts.
+func (p *printer) dot() string {
+	return p.styles.dim.Render(" · ")
+}
+
+// scopeTag is the colored scope of a status line.
+func (p *printer) scopeTag(scope string) string {
+	return p.styles.scope.Render(scope + " scope")
+}
+
+// lockLabel is the lock file of a status line.
+func (p *printer) lockLabel(path string) string {
+	return p.styles.dim.Render("lock ") + p.path(path)
+}
+
+// sourceTag is a source in bold with its revision dimmed.
+func (p *printer) sourceTag(src sourceJSON) string {
+	label := src.Locator
+	if src.Ref != "" {
+		label += "#" + src.Ref
+	}
+	out := p.styles.title.Render(label)
+	if src.Revision != "" {
+		out += p.styles.dim.Render("@" + shortRevision(src.Revision))
+	}
+	return out
 }
 
 // statusLine is the first header line: status, source or lock, and scope.
 func (p *printer) statusLine(payload *planJSON) {
 	s := p.styles
-	icon := p.emoji("📋")
-	switch payload.Status {
-	case statusApplied, statusUpToDate:
-		icon = p.emoji("✅")
-	case statusRefused, statusFailed:
-		icon = p.emoji("❌")
-	}
+	icon := p.statusIcon(payload.Status)
 	if payload.Changes != nil {
-		fmt.Fprintf(p.w, "%s%s · %s scope · lock %s\n", icon,
-			s.title.Render(lifecycleTitle(payload.Changes.Command, payload.Status)),
-			payload.Scope, p.path(payload.Changes.Lock))
+		fmt.Fprintln(p.w, icon+s.title.Render(lifecycleTitle(payload.Changes.Command,
+			payload.Status))+p.dot()+p.scopeTag(payload.Scope)+p.dot()+
+			p.lockLabel(payload.Changes.Lock))
 		return
 	}
-	fmt.Fprintf(p.w, "%s%s · %s · %s scope\n", icon,
-		s.title.Render(titleStatus(payload.Status)), sourceLabel(payload.Source),
-		payload.Scope)
+	fmt.Fprintln(p.w, icon+s.title.Render(titleStatus(payload.Status))+p.dot()+
+		p.sourceTag(payload.Source)+p.dot()+p.scopeTag(payload.Scope))
 }
 
 // planHeader prints the status line, the sources and the selected Harnesses with
@@ -147,21 +249,7 @@ func (p *printer) planHeader(payload *planJSON) {
 	if payload.Changes != nil {
 		p.sources(payload.Changes)
 	}
-	if len(payload.Harnesses) > 0 {
-		parts := make([]string, 0, len(payload.Harnesses))
-		for _, h := range payload.Harnesses {
-			part := h.ID
-			for _, setting := range h.Settings {
-				part += " " + setting.Key + "=" + setting.Value +
-					s.dim.Render(" ("+setting.Source+")")
-			}
-			if !h.Detected {
-				part += s.dim.Render(" (not detected)")
-			}
-			parts = append(parts, part)
-		}
-		p.paragraph(2, 2, s.dim.Render("harnesses:")+" "+strings.Join(parts, ", "))
-	}
+	p.harnessLine(payload)
 	// Destination labels describe a whole Harness (e.g. omp's shared project
 	// directory); the plain scope word repeats the header and is dropped.
 	var seen []string
@@ -171,8 +259,31 @@ func (p *printer) planHeader(payload *planJSON) {
 			continue
 		}
 		seen = append(seen, item.Harness)
-		p.paragraph(2, 2, s.dim.Render(item.Harness+": "+label))
+		p.paragraph(2, s.dim.Render(item.Harness+": "+label))
 	}
+}
+
+// harnessLine lists the selected Harnesses: names in the default color, their
+// settings and detection dimmed.
+func (p *printer) harnessLine(payload *planJSON) {
+	if len(payload.Harnesses) == 0 {
+		return
+	}
+	s := p.styles
+	parts := make([]string, 0, len(payload.Harnesses))
+	for _, h := range payload.Harnesses {
+		part := h.ID
+		for _, setting := range h.Settings {
+			part += s.dim.Render(
+				" " + setting.Key + "=" + setting.Value + " (" + setting.Source + ")",
+			)
+		}
+		if !h.Detected {
+			part += s.dim.Render(" (not detected)")
+		}
+		parts = append(parts, part)
+	}
+	p.paragraph(2, s.dim.Render("harnesses:")+" "+strings.Join(parts, s.dim.Render(", ")))
 }
 
 // destinationNote is a destination label without the scope it repeats.
@@ -191,16 +302,17 @@ func destinationNote(label, scope string) string {
 func (p *printer) sources(report *lifecycleReport) {
 	var labels []string
 	for _, entry := range report.Agents {
-		label := sourceLabel(entry.Source)
+		label := p.sourceTag(entry.Source)
 		if entry.Revision != "" && entry.Revision != entry.Source.Revision {
-			label += " → " + shortRevision(entry.Revision)
+			label += p.styles.dim.Render(" → ") + shortRevision(entry.Revision)
 		}
 		if !slices.Contains(labels, label) {
 			labels = append(labels, label)
 		}
 	}
 	if len(labels) > 0 {
-		p.paragraph(2, 2, p.styles.dim.Render("sources:")+" "+strings.Join(labels, ", "))
+		p.paragraph(2, p.styles.dim.Render("sources:")+" "+
+			strings.Join(labels, p.styles.dim.Render(", ")))
 	}
 }
 
@@ -264,7 +376,9 @@ func keptLine(entry agentReport, harnessID, path string) string {
 func (p *printer) row(action, name, harness, path string) notedRow {
 	return notedRow{
 		cells: []cell{
-			plainCell(name), plainCell(harness), p.actionCell(action), plainCell(p.path(path)),
+			{text: name, style: p.styles.title},
+			plainCell(harness), p.actionCell(action),
+			pathCell(p.path(path)),
 		},
 		name: name, harness: harness,
 	}
@@ -296,10 +410,17 @@ func byNameAndHarness(a, b notedRow) int {
 }
 
 // notedTable prints the rows that change something, sorted by name then Harness
-// (the name is the first column, the path the fourth), with their notes collapsed
-// under the table and the extra note lines, then a sentence counting the idle
-// rows it left out: one, or many. Notes of idle rows are dropped.
-func (p *printer) notedTable(headers []string, rows []notedRow, extra []string, one, many string) {
+// (the name is the first column, the path the fourth); then, after a blank line,
+// their notes collapsed, the extra note lines and a sentence counting the idle
+// rows it left out. The sentence is green when it is all there is to say (alone
+// and no rows listed), dimmed otherwise. Notes of idle rows are dropped.
+func (p *printer) notedTable(
+	headers []string,
+	rows []notedRow,
+	extra []string,
+	words idleWords,
+	alone bool,
+) {
 	idle := 0
 	shown := make([]notedRow, 0, len(rows))
 	for _, row := range rows {
@@ -310,22 +431,33 @@ func (p *printer) notedTable(headers []string, rows []notedRow, extra []string, 
 		shown = append(shown, row)
 	}
 	slices.SortStableFunc(shown, byNameAndHarness)
+	var general, footnotes []string
 	if len(shown) > 0 {
-		p.renderNoted(headers, shown)
+		general, footnotes = p.renderNoted(headers, shown)
+		p.section()
+	}
+	// Continuation lines start under the note text: after "· " or "[n] ".
+	for _, line := range general {
+		p.paragraph(2, p.styles.dim.Render("· "+line))
+	}
+	for _, line := range footnotes {
+		p.paragraph(4, p.styles.dim.Render(line))
 	}
 	for _, line := range extra {
-		p.paragraph(2, 2, p.styles.dim.Render("· "+line))
+		p.paragraph(2, p.styles.dim.Render("· "+line))
 	}
-	switch {
-	case idle == 1:
-		p.paragraph(2, 2, p.styles.dim.Render("1 "+one))
-	case idle > 1:
-		p.paragraph(2, 2, p.styles.dim.Render(strconv.Itoa(idle)+" "+many))
+	if line := words.sentence(idle); line != "" {
+		style := p.styles.dim
+		if alone && len(shown) == 0 && len(extra) == 0 {
+			style = p.styles.create
+		}
+		p.paragraph(0, style.Render(line))
 	}
 }
 
-// renderNoted prints rows with markers and the collapsed notes.
-func (p *printer) renderNoted(headers []string, rows []notedRow) {
+// renderNoted prints rows with markers and returns the collapsed notes: those
+// printed once with the rows they cover, and the [n] footnotes.
+func (p *printer) renderNoted(headers []string, rows []notedRow) ([]string, []string) {
 	type noteUse struct {
 		text  string
 		rows  []int
@@ -378,21 +510,17 @@ func (p *printer) renderNoted(headers []string, rows []notedRow) {
 		}
 		general = append(general, line)
 	}
-	t := &table{headers: headers, shrink: 3, wrap: -1}
+	t := &table{headers: headers, shrink: 3, wrap: -1, indent: p.indent()}
 	for i := range rows {
 		cells := slices.Clone(rows[i].cells)
 		if len(marks[i]) > 0 {
-			cells[0].text += " [" + strings.Join(marks[i], ",") + "]"
+			cells[0].tail = " [" + strings.Join(marks[i], ",") + "]"
+			cells[0].tailStyle = p.styles.dim
 		}
 		t.rows = append(t.rows, cells)
 	}
 	p.render(t)
-	for _, line := range general {
-		p.paragraph(2, 2, p.styles.dim.Render("· "+line))
-	}
-	for _, line := range footnotes {
-		p.paragraph(2, 4, p.styles.dim.Render(line))
-	}
+	return general, footnotes
 }
 
 // appliesTo names the Agents and Harnesses a note covers, leaving out a side it
@@ -418,7 +546,8 @@ func limited(names []string) string {
 }
 
 // refusals prints items that cannot be applied, and why, in a section of their
-// own, sorted by name then Harness.
+// own, sorted by name then Harness. Its heading leads like a status line; the
+// table lines up with the heading's text.
 func (p *printer) refusals(title, nameHeader string, items []refusal) {
 	if len(items) == 0 {
 		return
@@ -428,9 +557,12 @@ func (p *printer) refusals(title, nameHeader string, items []refusal) {
 	slices.SortStableFunc(items, func(a, b refusal) int {
 		return cmp.Or(strings.Compare(a.name, b.name), strings.Compare(a.harness, b.harness))
 	})
-	fmt.Fprintf(p.w, "%s%s\n", p.emoji("❌"), s.blocked.Render(fmt.Sprintf("%s (%d)", title,
-		len(items))))
-	t := &table{headers: []string{nameHeader, "HARNESS", "REASON"}, shrink: -1, wrap: 2}
+	p.section()
+	fmt.Fprintln(p.w, p.emoji("❌")+s.blocked.Render(fmt.Sprintf("%s (%d)", title, len(items))))
+	t := &table{
+		headers: []string{nameHeader, "HARNESS", "REASON"}, shrink: -1, wrap: 2,
+		indent: p.indent(),
+	}
 	for _, item := range items {
 		t.rows = append(t.rows, []cell{
 			{text: item.name, style: s.title},
@@ -441,8 +573,9 @@ func (p *printer) refusals(title, nameHeader string, items []refusal) {
 	p.render(t)
 }
 
-// totals prints the counts of the plan's Agent and Skill changes; unchanged
-// items are counted by the sentence under the table instead.
+// totals prints the counts of the plan's Agent and Skill changes: non-zero
+// counts colored, zeros dimmed. Unchanged items are counted by the sentence
+// under the table instead.
 func (p *printer) totals(payload *planJSON, refused int) {
 	s := p.styles
 	count := map[string]int{}
@@ -461,11 +594,11 @@ func (p *printer) totals(payload *planJSON, refused int) {
 	if n := len(payload.Skipped); n > 0 {
 		parts = append(parts, s.blocked.Render(fmt.Sprintf("%d skipped", n)))
 	}
-	line := strings.Join(parts, " · ")
+	line := strings.Join(parts, p.dot())
 	if skillsLine := skillSummaryLine(payload.SkillSummary); skillsLine != "" {
-		line += " · skills: " + skillsLine
+		line += p.dot() + s.dim.Render("skills: ") + skillsLine
 	}
-	fmt.Fprintln(p.w, line)
+	p.paragraph(2, line)
 }
 
 // total is one count of the totals line: dim when zero.
@@ -499,10 +632,10 @@ func (p *printer) skillTables(payload *planJSON) {
 		}
 		row := notedRow{
 			cells: []cell{
-				plainCell(item.Skill),
+				{text: item.Skill, style: s.title},
 				plainCell(item.Harness),
 				{text: "+ install", style: s.create},
-				plainCell(p.path(item.Path)),
+				pathCell(p.path(item.Path)),
 			},
 			name: item.Skill, harness: item.Harness,
 			idle: decision != skills.DecisionInstall,
@@ -523,8 +656,9 @@ func (p *printer) skillTables(payload *planJSON) {
 		}
 		rows = append(rows, row)
 	}
-	fmt.Fprintln(p.w, s.heading.Render("Skills"))
-	p.notedTable([]string{"SKILL", "HARNESS", "ACTION", "PATH"}, rows, nil, idleSkill, idleSkills)
+	p.section()
+	p.paragraph(0, s.heading.Render("Skills"))
+	p.notedTable([]string{"SKILL", "HARNESS", "ACTION", "PATH"}, rows, nil, idleSkills, false)
 	p.refusals("Refused skills", "SKILL", refused)
 	skipped := make([]refusal, 0, len(payload.SkippedSkills))
 	for _, item := range payload.SkippedSkills {
@@ -538,14 +672,15 @@ func (p *printer) skillChanges(changes []skillChange) {
 	if len(changes) == 0 {
 		return
 	}
-	fmt.Fprintln(p.w, p.styles.heading.Render("Skill dependencies"))
+	p.section()
+	p.paragraph(0, p.styles.heading.Render("Skill dependencies"))
 	for _, change := range changes {
 		marker, style := "+", p.styles.create
 		if change.Change == changeRemoved {
 			marker, style = "-", p.styles.dim
 		}
-		fmt.Fprintf(p.w, "  %s %s for %s %s\n", style.Render(marker), change.Skill,
-			change.Harness, p.styles.dim.Render("("+change.Change+")"))
+		p.paragraph(2, style.Render(marker)+" "+change.Skill+" for "+change.Harness+" "+
+			p.styles.dim.Render("("+change.Change+")"))
 	}
 }
 

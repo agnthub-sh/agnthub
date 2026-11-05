@@ -12,6 +12,9 @@ import (
 	"time"
 
 	"charm.land/fang/v2"
+	"charm.land/lipgloss/v2"
+	"github.com/charmbracelet/colorprofile"
+	"github.com/charmbracelet/x/ansi"
 	"github.com/charmbracelet/x/term"
 	"github.com/spf13/cobra"
 
@@ -78,11 +81,16 @@ func NewApp(app App) *App {
 		app.Opener.Git = &source.GitFetcher{Env: app.Env}
 	}
 	if app.Prompter == nil {
-		app.Prompter = &formPrompter{
+		prompter := &formPrompter{
 			in:         app.Stdin,
 			out:        app.Stdout,
 			accessible: app.Env.Get("ACCESSIBLE") != "" || app.Env.Get("TERM") == "dumb",
 		}
+		// Styled output indents everything under its status line; prompts follow.
+		if colorprofile.Detect(app.Stdout, app.Env.Pairs()) > colorprofile.ASCII {
+			prompter.indent = ansi.StringWidth("📋 ")
+		}
+		app.Prompter = prompter
 	}
 	if app.Adoption == nil {
 		// An unreadable configuration leaves the destination unknown: report nothing
@@ -133,8 +141,20 @@ func (a *App) Run(ctx context.Context, args []string) int {
 
 // reportError prints a failure on stderr: fang's styled block in a terminal,
 // a single stable `error: ...` line otherwise. An ExitError was already reported.
+// A cancelled prompt is no failure to explain: it prints one dimmed line, at the
+// indent of the output above it, and keeps exit status 1.
 func (a *App) reportError(w io.Writer, styles fang.Styles, err error) {
 	if _, reported := errors.AsType[*ExitError](err); reported {
+		return
+	}
+	if errors.Is(err, errCancelled) {
+		const cancelled = "Cancelled; nothing was written."
+		if !a.styledStderr || colorprofile.Detect(a.Stderr, a.Env.Pairs()) <= colorprofile.ASCII {
+			fmt.Fprintln(a.Stderr, cancelled)
+			return
+		}
+		indent := strings.Repeat(" ", ansi.StringWidth("📋 "))
+		fmt.Fprintln(a.Stderr, indent+lipgloss.NewStyle().Faint(true).Render(cancelled))
 		return
 	}
 	if !a.styledStderr {

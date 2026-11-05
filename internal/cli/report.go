@@ -336,8 +336,14 @@ func (r *lifecycleReport) pending(plan *install.Plan) bool {
 // artifacts are counted, not listed.
 func (p *printer) humanCheck(scope string, report *lifecycleReport) {
 	s := p.styles
-	fmt.Fprintf(p.w, "%s · %s scope · lock %s\n", s.title.Render("Check"), scope,
-		p.path(report.Lock))
+	pending := report.Summary[agentUpdateAvailable]+report.Summary[agentNewDependency]+
+		report.Summary[agentNotRequired]+report.Summary[agentUnavailable]+report.Summary["drift"] > 0
+	icon, title := p.emoji("✅"), "Up to date"
+	if pending {
+		icon, title = p.emoji("📋"), "Check"
+	}
+	fmt.Fprintln(p.w, icon+s.title.Render(title)+p.dot()+p.scopeTag(scope)+p.dot()+
+		p.lockLabel(report.Lock))
 	p.sources(report)
 	var rows []notedRow
 	var refused []refusal
@@ -382,10 +388,12 @@ func (p *printer) humanCheck(scope string, report *lifecycleReport) {
 			rows = append(rows, row)
 		}
 	}
+	p.section()
 	if len(rows) == 0 && len(refused) == 0 && len(kept) == 0 {
-		fmt.Fprintln(p.w, "  no locked agents")
+		p.paragraph(0, "no locked agents")
 	}
-	p.notedTable([]string{"AGENT", "HARNESS", "STATUS", "PATH"}, rows, kept, idleAgent, idleAgents)
+	p.notedTable([]string{"AGENT", "HARNESS", "STATUS", "PATH"}, rows, kept, idleAgents,
+		len(refused) == 0)
 	p.refusals("Cannot update", "AGENT", refused)
 	p.skillChanges(report.Skills)
 	order := []string{
@@ -408,7 +416,8 @@ func (p *printer) humanCheck(scope string, report *lifecycleReport) {
 			strings.ReplaceAll(key, "-", " "))))
 	}
 	if len(parts) > 0 {
-		fmt.Fprintln(p.w, strings.Join(parts, " · "))
+		p.section()
+		p.paragraph(2, strings.Join(parts, p.dot()))
 	}
 }
 
@@ -425,10 +434,7 @@ func lifecycleTitle(command, status string) string {
 	case statusFailed:
 		return "Failed: skills not verified, no agent written"
 	case statusUpToDate:
-		if command == "restore" {
-			return "Already restored: every locked file matches"
-		}
-		return "Up to date: nothing to update"
+		return "Up to date"
 	default:
 		if command == "restore" {
 			return "Restore plan"

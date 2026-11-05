@@ -1,11 +1,15 @@
-📋 [1mRemove plan[m · project scope · lock agnthub-lock.json
-  [1;36mAGENT[m     [1;36mHARNESS[m             [1;36mACTION[m    [1;36mPATH[m
-  reviewer  claude              [31m- delete[m  .claude/agents/reviewer.md
-  reviewer  codex               [31m- delete[m  .codex/agents/reviewer.toml
-  reviewer  omp [profile=work]  [2m- unbind[m  .omp/agents/reviewer.md
-  [2m· the default omp profile still uses it (1 of 3 rows: omp [profile=work])[m
-  [2m1 agent was already correct in its harness, so no action was needed.[m
+📋 [1mRemove plan[m[2m · [m[36mproject scope[m[2m · [m[2mlock [magnthub-lock.json
+
+   [1;2mAGENT[m     [1;2mHARNESS[m             [1;2mACTION[m    [1;2mPATH[m
+   [1mreviewer[m  claude              [31m- delete[m  [2m.claude/agents/[mreviewer.md
+   [1mreviewer[m  codex               [31m- delete[m  [2m.codex/agents/[mreviewer.toml
+   [1mreviewer[m  omp [profile=work]  [2m- unbind[m  [2m.omp/agents/[mreviewer.md
+
+   [2m· the default omp profile still uses it (1 of 3 rows: omp [profile=work])[m
+   [2m1 agent was already correct in its harness, so no action was needed.[m
+
 ❌ [1;31mRefused (1)[m
-  [1;36mAGENT[m    [1;36mHARNESS[m  [1;36mREASON[m
-  [1mplanner[m  claude   [31m.claude/agents/planner.md was modified locally[m
-[31m2 to delete[m · [2m1 to unbind[m · [1;31m1 refused[m
+   [1;2mAGENT[m    [1;2mHARNESS[m  [1;2mREASON[m
+   [1mplanner[m  claude   [31m.claude/agents/planner.md was modified locally[m
+
+   [31m2 to delete[m[2m · [m[2m1 to unbind[m[2m · [m[1;31m1 refused[m

@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"charm.land/huh/v2"
+	"github.com/charmbracelet/x/term"
 )
 
 // Option is one choice in a multi-select prompt.
@@ -34,6 +35,8 @@ type formPrompter struct {
 	in         io.Reader
 	out        io.Writer
 	accessible bool
+	// indent lines prompts up with the human output above them.
+	indent int
 }
 
 func (p *formPrompter) MultiSelect(
@@ -91,13 +94,24 @@ func (p *formPrompter) Confirm(ctx context.Context, title, description string) (
 }
 
 func (p *formPrompter) run(ctx context.Context, field huh.Field) error {
-	err := huh.NewForm(huh.NewGroup(field)).
+	theme := huh.ThemeFunc(func(isDark bool) *huh.Styles {
+		styles := huh.ThemeBase16(isDark)
+		styles.Form.Base = styles.Form.Base.MarginLeft(p.indent)
+		return styles
+	})
+	form := huh.NewForm(huh.NewGroup(field)).
 		WithInput(p.in).
 		WithOutput(p.out).
 		WithAccessible(p.accessible).
-		WithTheme(huh.ThemeFunc(huh.ThemeBase16)).
-		WithShowHelp(true).
-		RunWithContext(ctx)
+		WithTheme(theme).
+		WithShowHelp(true)
+	// The indent comes off the terminal width, so long descriptions still wrap.
+	if f, ok := p.out.(interface{ Fd() uintptr }); ok && p.indent > 0 {
+		if width, _, err := term.GetSize(f.Fd()); err == nil && width > p.indent {
+			form = form.WithWidth(width - p.indent)
+		}
+	}
+	err := form.RunWithContext(ctx)
 	if errors.Is(err, huh.ErrUserAborted) {
 		return errCancelled
 	}

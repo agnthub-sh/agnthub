@@ -1,17 +1,20 @@
 Plan · wshobson/agents@7e2fb559cf4b · project scope
-  harnesses: claude, codex
-  AGENT     HARNESS  ACTION    PATH
-  hooked    claude   + create  .claude/…/hooked.md
-  reviewer  claude   + create  .claude/…eviewer.md
-  reviewer  codex    + create  .codex/…viewer.toml
+harnesses: claude, codex
+
+AGENT     HARNESS  ACTION    PATH
+hooked    claude   + create  .claude/…ts/hooked.md
+reviewer  claude   + create  .claude/…/reviewer.md
+reviewer  codex    + create  .codex/a…eviewer.toml
+
 Refused (2)
-  AGENT    HARNESS  REASON
-  hooked   codex    incompatible with codex: hooks
-                    run shell commands on tool
-                    events, which codex agents
-                    cannot declare
-  planner  claude   .claude/agents/planner.md
-                    exists and is not managed by
-                    agnthub; move it away or
-                    remove it first
-3 to create · 0 to update · 0 to delete · 2 refused
+AGENT    HARNESS  REASON
+hooked   codex    incompatible with codex: hooks
+                  run shell commands on tool
+                  events, which codex agents
+                  cannot declare
+planner  claude   .claude/agents/planner.md exists
+                  and is not managed by agnthub;
+                  move it away or remove it first
+
+3 to create · 0 to update · 0 to delete · 2
+  refused

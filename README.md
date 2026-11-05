@@ -30,22 +30,38 @@ under it. Once you approve, agnthub prints only the outcome:
 ```text
 $ agnthub add addyosmani/agent-skills --agent '*' --harness all --global
 📋 Plan · addyosmani/agent-skills@301b02b12bff · global scope
-  harnesses: claude, opencode, codex, copilot, cursor, gemini, omp profile=default (native default)
-  omp: default profile
-  AGENT                    HARNESS   ACTION    PATH
-  code-reviewer            copilot   + create  ~/.copilot/agents/code-reviewer.agent.md
-  code-reviewer            omp       + create  ~/.omp/agent/agents/code-reviewer.md
-  code-reviewer            opencode  + create  ~/.config/opencode/agents/code-reviewer.md
-  security-auditor         copilot   + create  ~/.copilot/agents/security-auditor.agent.md
-  …
-  web-performance-auditor  opencode  + create  ~/.config/opencode/agents/web-performance-auditor.md
-  · converted from the claude variant
-  16 agents were already correct in their harnesses, so no action was needed.
-12 to create · 0 to update · 0 to delete
-┃ Apply this plan?
-┃   Apply     Cancel
+   harnesses: claude, opencode, codex, copilot, cursor, gemini, omp profile=default (native default)
+   omp: default profile
+
+   AGENT                    HARNESS   ACTION    PATH
+   code-reviewer            copilot   + create  ~/.copilot/agents/code-reviewer.agent.md
+   code-reviewer            omp       + create  ~/.omp/agent/agents/code-reviewer.md
+   code-reviewer            opencode  + create  ~/.config/opencode/agents/code-reviewer.md
+   security-auditor         copilot   + create  ~/.copilot/agents/security-auditor.agent.md
+   …
+   web-performance-auditor  opencode  + create  ~/.config/opencode/agents/web-performance-auditor.md
+
+   · converted from the claude variant
+   16 agents were already correct in their harnesses, so no action was needed.
+
+   12 to create · 0 to update · 0 to delete
+
+   ┃ Apply this plan?
+   ┃
+   ┃   Apply     Cancel
+
 ✅ Installed · addyosmani/agent-skills@301b02b12bff · global scope
-12 created · 0 updated · 0 deleted
+   12 created · 0 updated · 0 deleted
+```
+
+When everything is already in place there is nothing to approve:
+
+```text
+$ agnthub add addyosmani/agent-skills --agent '*' --harness all --global
+✅ Up to date · addyosmani/agent-skills@301b02b12bff · global scope
+   harnesses: claude, opencode, codex, copilot, cursor, gemini, omp profile=default (native default)
+
+   28 agents were already correct in their harnesses, so no action was needed.
 ```
 
 Agents install into the project in the current directory, or into your user configuration with

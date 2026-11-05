@@ -52,14 +52,17 @@ type harnessView struct {
 // planStyles are terminal styles; colorprofile strips them when the output is
 // not a terminal, so redirected human output stays plain text.
 type planStyles struct {
-	title, heading, dim, create, update, remove, unchanged, blocked, reason lipgloss.Style
+	title, heading, header, dim, scope, create, update, remove, unchanged, blocked,
+	reason lipgloss.Style
 }
 
 func newPlanStyles() planStyles {
 	return planStyles{
 		title:     lipgloss.NewStyle().Bold(true),
 		heading:   lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("6")),
+		header:    lipgloss.NewStyle().Bold(true).Faint(true),
 		dim:       lipgloss.NewStyle().Faint(true),
+		scope:     lipgloss.NewStyle().Foreground(lipgloss.Color("6")),
 		create:    lipgloss.NewStyle().Foreground(lipgloss.Color("2")),
 		update:    lipgloss.NewStyle().Foreground(lipgloss.Color("3")),
 		remove:    lipgloss.NewStyle().Foreground(lipgloss.Color("1")),
@@ -80,7 +83,9 @@ func (a *App) printer(asJSON bool) *printer {
 	if plain {
 		profile = colorprofile.NoTTY
 	}
-	p := newPrinter(&colorprofile.Writer{Forward: a.Stdout, Profile: profile}, false)
+	space := &spacer{w: &colorprofile.Writer{Forward: a.Stdout, Profile: profile}}
+	p := newPrinter(space, false)
+	p.space = space
 	p.plain, p.width = plain, terminalWidth(a.Stdout, a.Env)
 	p.root, p.home = a.WorkDir, a.Env.Home()
 	return p
@@ -305,42 +310,52 @@ func newItemJSON(item install.Item, effective map[agent.HarnessID]map[string]str
 	return entry
 }
 
-// humanSkillRuns reports backend runs, failures and observed effects.
-func (p *printer) humanSkillRuns(payload *planJSON) {
+// humanSkillRuns reports backend runs, failures and observed effects, each block
+// after a blank line, and reports whether it printed anything.
+func (p *printer) humanSkillRuns(payload *planJSON) bool {
 	s := p.styles
+	printed := false
 	if len(payload.SkillRuns) > 0 {
-		fmt.Fprintln(p.w, s.heading.Render("Skill installer runs"))
+		printed = true
+		p.section()
+		p.paragraph(0, s.heading.Render("Skill installer runs"))
 		for _, run := range payload.SkillRuns {
 			status := s.create.Render("ok")
 			if run.Error != "" {
 				status = s.blocked.Render("failed: " + run.Error)
 			}
-			fmt.Fprintf(p.w, "  %s for %s: %s\n    %s\n", run.Skill,
-				strings.Join(run.Harnesses, ", "), status,
-				s.dim.Render(skills.Display(run.Command[0], run.Command[1:])))
+			p.paragraph(2, run.Skill+" for "+strings.Join(run.Harnesses, ", ")+": "+status)
+			p.paragraph(2, "  "+s.dim.Render(skills.Display(run.Command[0], run.Command[1:])))
 			if run.Error != "" && strings.TrimSpace(run.Output) != "" {
 				for line := range strings.SplitSeq(strings.TrimRight(run.Output, "\n"), "\n") {
-					fmt.Fprintln(p.w, "    | "+line)
+					p.paragraph(0, "  | "+line)
 				}
 			}
 		}
 	}
-	for _, failure := range payload.SkillFailures {
-		fmt.Fprintln(p.w, "  "+p.emoji("❌")+s.blocked.Render("verification failed: "+failure))
+	if len(payload.SkillFailures) > 0 {
+		printed = true
+		p.section()
+		for _, failure := range payload.SkillFailures {
+			fmt.Fprintln(p.w, p.emoji("❌")+s.blocked.Render("verification failed: "+failure))
+		}
 	}
 	if payload.Status == statusFailed || len(payload.SkillEffects) > 0 {
-		fmt.Fprintln(p.w, s.heading.Render("Changes observed in skill locations"))
+		printed = true
+		p.section()
+		p.paragraph(0, s.heading.Render("Changes observed in skill locations"))
 		if len(payload.SkillEffects) == 0 {
-			fmt.Fprintln(p.w, "  none")
+			p.paragraph(0, "none")
 		}
 		for _, effect := range payload.SkillEffects {
-			fmt.Fprintf(p.w, "  %-8s %s\n", effect.Change, p.path(effect.Path))
+			p.paragraph(0, fmt.Sprintf("%-8s %s", effect.Change, p.path(effect.Path)))
 		}
 		if payload.Status == statusFailed {
-			fmt.Fprintln(p.w, "  "+s.dim.Render(
+			p.paragraph(0, s.dim.Render(
 				"agnthub does not roll back the skill installer; review or remove these yourself"))
 		}
 	}
+	return printed
 }
 
 // skillSummaryLine counts the Skill decisions that act or refuse; reused and
@@ -378,6 +393,8 @@ func titleStatus(status string) string {
 		return "Installed"
 	case statusFailed:
 		return "Failed: skills not verified, no agent written"
+	case statusUpToDate:
+		return "Up to date"
 	default:
 		return "Plan"
 	}

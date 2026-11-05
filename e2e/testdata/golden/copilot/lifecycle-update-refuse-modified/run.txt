@@ -2,9 +2,11 @@ $ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness c
 exit status: 0
 --- stdout
 Installed · localhost:8443/evolving.git#v1@5286a739a333 · project scope
-  harnesses: copilot
-  AGENT    HARNESS  ACTION    PATH
-  drifter  copilot  + create  .github/agents/drifter.agent.md
+harnesses: copilot
+
+AGENT    HARNESS  ACTION    PATH
+drifter  copilot  + create  .github/agents/drifter.agent.md
+
 1 created · 0 updated · 0 deleted
 # append a line to the installed drifter
 # move tag v1 of evolving.git to its next revision

@@ -1,11 +1,14 @@
-📋 [1mPlan[m · wshobson/agents@7e2fb559cf4b · project scope
-  [2mharnesses:[m claude, codex
-  [1;36mAGENT[m     [1;36mHARNESS[m  [1;36mACTION[m    [1;36mPATH[m
-  hooked    claude   [32m+ create[m  .claude/agents/hooked.md
-  reviewer  claude   [32m+ create[m  .claude/agents/reviewer.md
-  reviewer  codex    [32m+ create[m  .codex/agents/reviewer.toml
+📋 [1mPlan[m[2m · [m[1mwshobson/agents[m[2m@7e2fb559cf4b[m[2m · [m[36mproject scope[m
+   [2mharnesses:[m claude[2m, [mcodex
+
+   [1;2mAGENT[m     [1;2mHARNESS[m  [1;2mACTION[m    [1;2mPATH[m
+   [1mhooked[m    claude   [32m+ create[m  [2m.claude/agents/[mhooked.md
+   [1mreviewer[m  claude   [32m+ create[m  [2m.claude/agents/[mreviewer.md
+   [1mreviewer[m  codex    [32m+ create[m  [2m.codex/agents/[mreviewer.toml
+
 ❌ [1;31mRefused (2)[m
-  [1;36mAGENT[m    [1;36mHARNESS[m  [1;36mREASON[m
-  [1mhooked[m   codex    [31mincompatible with codex: hooks run shell commands on tool events, which codex agents cannot declare[m
-  [1mplanner[m  claude   [31m.claude/agents/planner.md exists and is not managed by agnthub; move it away or remove it first[m
-[32m3 to create[m · [2m0 to update[m · [2m0 to delete[m · [1;31m2 refused[m
+   [1;2mAGENT[m    [1;2mHARNESS[m  [1;2mREASON[m
+   [1mhooked[m   codex    [31mincompatible with codex: hooks run shell commands on tool events, which codex agents cannot declare[m
+   [1mplanner[m  claude   [31m.claude/agents/planner.md exists and is not managed by agnthub; move it away or remove it first[m
+
+   [32m3 to create[m[2m · [m[2m0 to update[m[2m · [m[2m0 to delete[m[2m · [m[1;31m2 refused[m

@@ -1,36 +1,39 @@
-📋 [1mPlan[m · wshobson/agents@7e2fb559cf4b · project scope
-  [2mharnesses:[m claude, opencode, codex, copilot, cursor[2m (not detected)[m, gemini, omp profile=default[2m (native default)[m
-  [2momp: shared by every omp profile; verify with default profile[m
-  [1;36mAGENT[m                                   [1;36mHARNESS[m   [1;36mACTION[m    [1;36mPATH[m
-  accessibility-expert                    claude    [32m+ create[m  .claude/agents/accessibility-expert.md
-  accessibility-expert [1]                codex     [32m+ create[m  .codex/agents/accessibility-expert.toml
-  accessibility-expert [1]                copilot   [32m+ create[m  .github/agents/accessibility-expert.agent.md
-  accessibility-expert [1]                cursor    [32m+ create[m  .cursor/agents/accessibility-expert.md
-  accessibility-expert [1]                gemini    [32m+ create[m  .gemini/agents/accessibility-expert.md
-  accessibility-expert [1]                omp       [32m+ create[m  .omp/agents/accessibility-expert.md
-  accessibility-expert [1]                opencode  [32m+ create[m  .opencode/agents/accessibility-expert.md
-  ai-engineer                             claude    [32m+ create[m  .claude/agents/ai-engineer.md
-  ai-engineer                             codex     [32m+ create[m  .codex/agents/ai-engineer.toml
-  ai-engineer                             copilot   [32m+ create[m  .github/agents/ai-engineer.agent.md
-  ai-engineer                             cursor    [32m+ create[m  .cursor/agents/ai-engineer.md
-  ai-engineer                             gemini    [32m+ create[m  .gemini/agents/ai-engineer.md
-  ai-engineer                             omp       [32m+ create[m  .omp/agents/ai-engineer.md
-  ai-engineer                             opencode  [32m+ create[m  .opencode/agents/ai-engineer.md
-  architect                               claude    [32m+ create[m  .claude/agents/architect.md
-  architect                               codex     [32m+ create[m  .codex/agents/architect.toml
-  architect                               copilot   [32m+ create[m  .github/agents/architect.agent.md
-  architect                               cursor    [32m+ create[m  .cursor/agents/architect.md
-  architect                               gemini    [32m+ create[m  .gemini/agents/architect.md
-  architect                               omp       [32m+ create[m  .omp/agents/architect.md
-  architect                               opencode  [32m+ create[m  .opencode/agents/architect.md
-  comprehensive-review-code-reviewer      claude    [32m+ create[m  .claude/agents/comprehensive-review-code-reviewer.md
-  comprehensive-review-code-reviewer [2]  codex     [32m+ create[m  .codex/agents/comprehensive-review-code-reviewer.toml
-  comprehensive-review-code-reviewer [2]  copilot   [32m+ create[m  .github/agents/comprehensive-review-code-reviewer.agent.md
-  comprehensive-review-code-reviewer [2]  cursor    [32m+ create[m  .cursor/agents/comprehensive-review-code-reviewer.md
-  comprehensive-review-code-reviewer [2]  gemini    [32m+ create[m  .gemini/agents/comprehensive-review-code-reviewer.md
-  comprehensive-review-code-reviewer [2]  omp       [32m+ create[m  .omp/agents/comprehensive-review-code-reviewer.md
-  comprehensive-review-code-reviewer [2]  opencode  [32m+ create[m  .opencode/agents/comprehensive-review-code-reviewer.md
-  [2m· converted from the claude variant (24 of 28 rows: codex, copilot, cursor, gemini, omp, opencode)[m
-  [2m[1] accessibility-expert: omitted color: cosmetic[m
-  [2m[2] comprehensive-review-code-reviewer: model "opus" is specific to claude; the agent uses the harness default model[m
-[32m28 to create[m · [2m0 to update[m · [2m0 to delete[m
+📋 [1mPlan[m[2m · [m[1mwshobson/agents[m[2m@7e2fb559cf4b[m[2m · [m[36mproject scope[m
+   [2mharnesses:[m claude[2m, [mopencode[2m, [mcodex[2m, [mcopilot[2m, [mcursor[2m (not detected)[m[2m, [mgemini[2m, [momp[2m profile=default (native default)[m
+   [2momp: shared by every omp profile; verify with default profile[m
+
+   [1;2mAGENT[m                                   [1;2mHARNESS[m   [1;2mACTION[m    [1;2mPATH[m
+   [1maccessibility-expert[m                    claude    [32m+ create[m  [2m.claude/agents/[maccessibility-expert.md
+   [1maccessibility-expert[m[2m [1][m                codex     [32m+ create[m  [2m.codex/agents/[maccessibility-expert.toml
+   [1maccessibility-expert[m[2m [1][m                copilot   [32m+ create[m  [2m.github/agents/[maccessibility-expert.agent.md
+   [1maccessibility-expert[m[2m [1][m                cursor    [32m+ create[m  [2m.cursor/agents/[maccessibility-expert.md
+   [1maccessibility-expert[m[2m [1][m                gemini    [32m+ create[m  [2m.gemini/agents/[maccessibility-expert.md
+   [1maccessibility-expert[m[2m [1][m                omp       [32m+ create[m  [2m.omp/agents/[maccessibility-expert.md
+   [1maccessibility-expert[m[2m [1][m                opencode  [32m+ create[m  [2m.opencode/agents/[maccessibility-expert.md
+   [1mai-engineer[m                             claude    [32m+ create[m  [2m.claude/agents/[mai-engineer.md
+   [1mai-engineer[m                             codex     [32m+ create[m  [2m.codex/agents/[mai-engineer.toml
+   [1mai-engineer[m                             copilot   [32m+ create[m  [2m.github/agents/[mai-engineer.agent.md
+   [1mai-engineer[m                             cursor    [32m+ create[m  [2m.cursor/agents/[mai-engineer.md
+   [1mai-engineer[m                             gemini    [32m+ create[m  [2m.gemini/agents/[mai-engineer.md
+   [1mai-engineer[m                             omp       [32m+ create[m  [2m.omp/agents/[mai-engineer.md
+   [1mai-engineer[m                             opencode  [32m+ create[m  [2m.opencode/agents/[mai-engineer.md
+   [1marchitect[m                               claude    [32m+ create[m  [2m.claude/agents/[marchitect.md
+   [1marchitect[m                               codex     [32m+ create[m  [2m.codex/agents/[marchitect.toml
+   [1marchitect[m                               copilot   [32m+ create[m  [2m.github/agents/[marchitect.agent.md
+   [1marchitect[m                               cursor    [32m+ create[m  [2m.cursor/agents/[marchitect.md
+   [1marchitect[m                               gemini    [32m+ create[m  [2m.gemini/agents/[marchitect.md
+   [1marchitect[m                               omp       [32m+ create[m  [2m.omp/agents/[marchitect.md
+   [1marchitect[m                               opencode  [32m+ create[m  [2m.opencode/agents/[marchitect.md
+   [1mcomprehensive-review-code-reviewer[m      claude    [32m+ create[m  [2m.claude/agents/[mcomprehensive-review-code-reviewer.md
+   [1mcomprehensive-review-code-reviewer[m[2m [2][m  codex     [32m+ create[m  [2m.codex/agents/[mcomprehensive-review-code-reviewer.toml
+   [1mcomprehensive-review-code-reviewer[m[2m [2][m  copilot   [32m+ create[m  [2m.github/agents/[mcomprehensive-review-code-reviewer.agent.md
+   [1mcomprehensive-review-code-reviewer[m[2m [2][m  cursor    [32m+ create[m  [2m.cursor/agents/[mcomprehensive-review-code-reviewer.md
+   [1mcomprehensive-review-code-reviewer[m[2m [2][m  gemini    [32m+ create[m  [2m.gemini/agents/[mcomprehensive-review-code-reviewer.md
+   [1mcomprehensive-review-code-reviewer[m[2m [2][m  omp       [32m+ create[m  [2m.omp/agents/[mcomprehensive-review-code-reviewer.md
+   [1mcomprehensive-review-code-reviewer[m[2m [2][m  opencode  [32m+ create[m  [2m.opencode/agents/[mcomprehensive-review-code-reviewer.md
+
+   [2m· converted from the claude variant (24 of 28 rows: codex, copilot, cursor, gemini, omp, opencode)[m
+   [2m[1] accessibility-expert: omitted color: cosmetic[m
+   [2m[2] comprehensive-review-code-reviewer: model "opus" is specific to claude; the agent uses the harness default model[m
+
+   [32m28 to create[m[2m · [m[2m0 to update[m[2m · [m[2m0 to delete[m

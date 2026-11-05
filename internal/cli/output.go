@@ -26,6 +26,8 @@ type printer struct {
 	width int
 	// root and home shorten displayed paths.
 	root, home string
+	// space separates blocks of human output; nil for JSON.
+	space *spacer
 }
 
 func newPrinter(w io.Writer, asJSON bool) *printer {

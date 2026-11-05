@@ -227,6 +227,12 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	}
 	plan.NoteBlockedSkills()
 	view := &planView{Plan: plan, Harnesses: a.harnessViews(harnesses, settings)}
+	// Nothing to write and nothing to record: no prompt, nothing to apply.
+	// --json keeps reporting the plan (and an apply with --yes) as before.
+	if !opts.json && !plan.Blocked() && !planner.Pending(plan, a.WorkDir) {
+		out.plan(view, statusUpToDate)
+		return nil
+	}
 	if !interactive {
 		return a.applyUnattended(ctx, planner, view, out, opts.yes || opts.all, opts.json)
 	}
@@ -329,6 +335,7 @@ func (a *App) applyInteractive(
 		}
 	}
 	view.Previewed = true
+	out.gapBeforePrompt()
 	confirmed, err := a.Prompter.Confirm(ctx, question, detail)
 	if err != nil {
 		return err

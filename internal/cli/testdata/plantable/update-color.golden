@@ -1,17 +1,21 @@
-📋 [1mUpdate plan[m · project scope · lock agnthub-lock.json
-  [2msources:[m wshobson/agents#v1@7e2fb559cf4b → 9a8b7c6d5e4f
-  [2mharnesses:[m claude, codex
-  [1;36mAGENT[m             [1;36mHARNESS[m  [1;36mACTION[m    [1;36mPATH[m
-  linter [1]        claude   [32m+ create[m  .claude/agents/linter.md
-  reviewer [2]      claude   [33m~ update[m  .claude/agents/reviewer.md
-  reviewer [3,4,5]  codex    [33m~ update[m  .codex/agents/reviewer.toml
-  [2m[1] linter: dependency of reviewer, from wshobson/agents#v1@9a8b7c6d5e4f[m
-  [2m[2] reviewer: content changed[m
-  [2m[3] reviewer: converted from the claude variant[m
-  [2m[4] reviewer: converter codex/1 → codex/2[m
-  [2m[5] reviewer: local: modified[m
-  [2m· planner for codex: the source no longer provides it; .codex/agents/planner.toml stays installed[m
-  [2m1 agent was already correct in its harness, so no action was needed.[m
-[1;36mSkill dependencies[m
-  [32m+[m code-review for claude [2m(added)[m
-[32m1 to create[m · [33m2 to update[m · [2m0 to delete[m
+📋 [1mUpdate plan[m[2m · [m[36mproject scope[m[2m · [m[2mlock [magnthub-lock.json
+   [2msources:[m [1mwshobson/agents#v1[m[2m@7e2fb559cf4b[m[2m → [m9a8b7c6d5e4f
+   [2mharnesses:[m claude[2m, [mcodex
+
+   [1;2mAGENT[m             [1;2mHARNESS[m  [1;2mACTION[m    [1;2mPATH[m
+   [1mlinter[m[2m [1][m        claude   [32m+ create[m  [2m.claude/agents/[mlinter.md
+   [1mreviewer[m[2m [2][m      claude   [33m~ update[m  [2m.claude/agents/[mreviewer.md
+   [1mreviewer[m[2m [3,4,5][m  codex    [33m~ update[m  [2m.codex/agents/[mreviewer.toml
+
+   [2m[1] linter: dependency of reviewer, from wshobson/agents#v1@9a8b7c6d5e4f[m
+   [2m[2] reviewer: content changed[m
+   [2m[3] reviewer: converted from the claude variant[m
+   [2m[4] reviewer: converter codex/1 → codex/2[m
+   [2m[5] reviewer: local: modified[m
+   [2m· planner for codex: the source no longer provides it; .codex/agents/planner.toml stays installed[m
+   [2m1 agent was already correct in its harness, so no action was needed.[m
+
+   [1;36mSkill dependencies[m
+   [32m+[m code-review for claude [2m(added)[m
+
+   [32m1 to create[m[2m · [m[33m2 to update[m[2m · [m[2m0 to delete[m

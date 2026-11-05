@@ -1,5 +1,7 @@
 Remove: partly failed · project scope · lock agnthub-lock.json
+
 Failed (1)
-  AGENT     HARNESS  REASON
-  reviewer  claude   permission denied
+AGENT     HARNESS  REASON
+reviewer  claude   permission denied
+
 1 removed · 1 failed

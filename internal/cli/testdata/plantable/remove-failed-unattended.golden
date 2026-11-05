@@ -1,7 +1,10 @@
 Remove: partly failed · project scope · lock agnthub-lock.json
-  AGENT     HARNESS  ACTION     PATH
-  reviewer  codex    - removed  .codex/agents/reviewer.toml
+
+AGENT     HARNESS  ACTION     PATH
+reviewer  codex    - removed  .codex/agents/reviewer.toml
+
 Failed (1)
-  AGENT     HARNESS  REASON
-  reviewer  claude   permission denied
+AGENT     HARNESS  REASON
+reviewer  claude   permission denied
+
 1 removed · 1 failed

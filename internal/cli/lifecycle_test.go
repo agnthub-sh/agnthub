@@ -276,7 +276,7 @@ func TestRestoreRecreatesExactLockedContent(t *testing.T) {
 	if h.lock().Agents[0].Source.Revision != "r1" {
 		t.Fatal("restore must not move the lock")
 	}
-	if out := h.mustRun(run, "restore", "--yes"); !strings.Contains(out, "Already restored") {
+	if out := h.mustRun(run, "restore", "--yes"); !strings.Contains(out, "Up to date") {
 		t.Fatalf("a second restore has nothing to do: %s", out)
 	}
 }

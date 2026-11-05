@@ -221,6 +221,7 @@ func (a *App) runRestore(ctx context.Context, opts *lifecycleOptions) error {
 	}
 	out.plan(view, statusPlanned)
 	view.Previewed = true
+	out.gapBeforePrompt()
 	confirmed, err := a.Prompter.Confirm(ctx, "Restore these files?", "")
 	if err != nil {
 		return err

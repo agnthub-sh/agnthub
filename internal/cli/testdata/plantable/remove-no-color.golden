@@ -1,11 +1,15 @@
 Remove plan · project scope · lock agnthub-lock.json
-  AGENT     HARNESS             ACTION    PATH
-  reviewer  claude              - delete  .claude/agents/reviewer.md
-  reviewer  codex               - delete  .codex/agents/reviewer.toml
-  reviewer  omp [profile=work]  - unbind  .omp/agents/reviewer.md
-  · the default omp profile still uses it (1 of 3 rows: omp [profile=work])
-  1 agent was already correct in its harness, so no action was needed.
+
+AGENT     HARNESS             ACTION    PATH
+reviewer  claude              - delete  .claude/agents/reviewer.md
+reviewer  codex               - delete  .codex/agents/reviewer.toml
+reviewer  omp [profile=work]  - unbind  .omp/agents/reviewer.md
+
+· the default omp profile still uses it (1 of 3 rows: omp [profile=work])
+1 agent was already correct in its harness, so no action was needed.
+
 Refused (1)
-  AGENT    HARNESS  REASON
-  planner  claude   .claude/agents/planner.md was modified locally
+AGENT    HARNESS  REASON
+planner  claude   .claude/agents/planner.md was modified locally
+
 2 to delete · 1 to unbind · 1 refused

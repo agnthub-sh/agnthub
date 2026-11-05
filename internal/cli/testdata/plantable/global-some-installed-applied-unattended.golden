@@ -1,19 +1,22 @@
 Installed · addyosmani/agent-skills@301b02b12bff · global scope
-  harnesses: claude, opencode, codex, copilot, cursor, gemini, omp profile=default (native default)
-  omp: default profile
-  AGENT                    HARNESS   ACTION    PATH
-  code-reviewer            copilot   + create  ~/.copilot/agents/code-reviewer.agent.md
-  code-reviewer            omp       + create  ~/.omp/agent/agents/code-reviewer.md
-  code-reviewer            opencode  + create  ~/.config/opencode/agents/code-reviewer.md
-  security-auditor         copilot   + create  ~/.copilot/agents/security-auditor.agent.md
-  security-auditor         omp       + create  ~/.omp/agent/agents/security-auditor.md
-  security-auditor         opencode  + create  ~/.config/opencode/agents/security-auditor.md
-  test-engineer            copilot   + create  ~/.copilot/agents/test-engineer.agent.md
-  test-engineer            omp       + create  ~/.omp/agent/agents/test-engineer.md
-  test-engineer            opencode  + create  ~/.config/opencode/agents/test-engineer.md
-  web-performance-auditor  copilot   + create  ~/.copilot/agents/web-performance-auditor.agent.md
-  web-performance-auditor  omp       + create  ~/.omp/agent/agents/web-performance-auditor.md
-  web-performance-auditor  opencode  + create  ~/.config/opencode/agents/web-performance-auditor.md
-  · converted from the claude variant
-  16 agents were already correct in their harnesses, so no action was needed.
+harnesses: claude, opencode, codex, copilot, cursor, gemini, omp profile=default (native default)
+omp: default profile
+
+AGENT                    HARNESS   ACTION    PATH
+code-reviewer            copilot   + create  ~/.copilot/agents/code-reviewer.agent.md
+code-reviewer            omp       + create  ~/.omp/agent/agents/code-reviewer.md
+code-reviewer            opencode  + create  ~/.config/opencode/agents/code-reviewer.md
+security-auditor         copilot   + create  ~/.copilot/agents/security-auditor.agent.md
+security-auditor         omp       + create  ~/.omp/agent/agents/security-auditor.md
+security-auditor         opencode  + create  ~/.config/opencode/agents/security-auditor.md
+test-engineer            copilot   + create  ~/.copilot/agents/test-engineer.agent.md
+test-engineer            omp       + create  ~/.omp/agent/agents/test-engineer.md
+test-engineer            opencode  + create  ~/.config/opencode/agents/test-engineer.md
+web-performance-auditor  copilot   + create  ~/.copilot/agents/web-performance-auditor.agent.md
+web-performance-auditor  omp       + create  ~/.omp/agent/agents/web-performance-auditor.md
+web-performance-auditor  opencode  + create  ~/.config/opencode/agents/web-performance-auditor.md
+
+· converted from the claude variant
+16 agents were already correct in their harnesses, so no action was needed.
+
 12 created · 0 updated · 0 deleted

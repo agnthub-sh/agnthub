@@ -1,10 +1,14 @@
 package install
 
 import (
+	"bytes"
 	"fmt"
 	"path/filepath"
+	"slices"
 	"strings"
 	"time"
+
+	"github.com/bytedance/sonic"
 
 	"github.com/agnthub-sh/agnthub/harness"
 	"github.com/agnthub-sh/agnthub/skills"
@@ -53,6 +57,56 @@ func (p *Planner) Apply(plan *Plan, projectRoot string, now time.Time) (*Result,
 		return result, fmt.Errorf("save ownership records: %w", err)
 	}
 	return result, writeErr
+}
+
+// Pending reports whether applying plan would change anything: a file to write,
+// a Skill to install, or a lock or ownership receipt that differs from the
+// recorded one (a new binding, ref, revision or origin). It changes nothing.
+func (p *Planner) Pending(plan *Plan, projectRoot string) bool {
+	for _, item := range plan.Items {
+		if item.Action == ActionCreate || item.Action == ActionReplace {
+			return true
+		}
+	}
+	for _, skill := range plan.Skills {
+		if skill.Decision == skills.DecisionInstall {
+			return true
+		}
+	}
+	lock, ownership := p.Lock, p.Ownership
+	defer func() { p.Lock, p.Ownership = lock, ownership }()
+	beforeLock, err := sonic.Marshal(lock)
+	if err != nil {
+		return true
+	}
+	beforeOwnership, err := sonic.Marshal(ownership.Records)
+	if err != nil {
+		return true
+	}
+	lockCopy := &state.Lock{}
+	if err := sonic.Unmarshal(beforeLock, lockCopy); err != nil {
+		return true
+	}
+	ownershipCopy := *ownership
+	ownershipCopy.Records = slices.Clone(ownership.Records)
+	p.Lock, p.Ownership = lockCopy, &ownershipCopy
+	// A receipt that only gains a timestamp is a new receipt, so any time will do.
+	var now time.Time
+	for _, skill := range plan.Skills {
+		p.recordSkill(plan, skill, projectRoot, now)
+	}
+	for _, item := range plan.Items {
+		p.record(plan, item, projectRoot, now)
+	}
+	afterLock, err := sonic.Marshal(p.Lock)
+	if err != nil {
+		return true
+	}
+	afterOwnership, err := sonic.Marshal(p.Ownership.Records)
+	if err != nil {
+		return true
+	}
+	return !bytes.Equal(beforeLock, afterLock) || !bytes.Equal(beforeOwnership, afterOwnership)
 }
 
 func (p *Planner) record(plan *Plan, item Item, projectRoot string, now time.Time) {
