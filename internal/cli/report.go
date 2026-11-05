@@ -331,83 +331,82 @@ func (r *lifecycleReport) pending(plan *install.Plan) bool {
 	})
 }
 
-// humanReport prints locked Agents with their status, changes, local drift and
-// recorded bindings.
-func (p *printer) humanReport(report *lifecycleReport) {
+// humanCheck prints the locked artifacts as a table of what an update would do,
+// with local drift, recorded bindings and unavailable sources.
+func (p *printer) humanCheck(scope string, report *lifecycleReport) {
 	s := p.styles
-	fmt.Fprintln(p.w, s.heading.Render("  Locked agents"))
-	if len(report.Agents) == 0 {
-		fmt.Fprintln(p.w, "    none")
-	}
+	fmt.Fprintf(p.w, "%s · %s scope · lock %s\n", s.title.Render("Check"), scope,
+		p.path(report.Lock))
+	p.sources(report)
+	var rows []notedRow
+	var refused []refusal
 	for _, entry := range report.Agents {
-		origin := entry.Origin
-		if len(entry.RequiredBy) > 0 {
-			origin = "dependency of " + strings.Join(entry.RequiredBy, ", ")
-		}
-		from := sourceLabel(entry.Source)
-		if entry.Revision != "" && entry.Revision != entry.Source.Revision {
-			from += " → " + shortRevision(entry.Revision)
-		}
-		status := strings.ReplaceAll(entry.Status, "-", " ")
-		switch entry.Status {
-		case agentUnavailable:
-			status = s.blocked.Render(status)
-		case agentUpToDate:
-			status = s.unchanged.Render(status)
-		default:
-			status = s.create.Render(status)
-		}
-		fmt.Fprintf(p.w, "    %s  %s  %s\n", s.title.Render(entry.Agent), status,
-			s.dim.Render("from "+from+" · "+origin))
 		if entry.Error != "" {
-			fmt.Fprintln(p.w, "      "+s.blocked.Render(entry.Error))
+			harnesses := make([]string, 0, len(entry.Artifacts))
+			for _, art := range entry.Artifacts {
+				harnesses = append(harnesses, art.Harness)
+			}
+			refused = append(refused, refusal{
+				entry.Agent, strings.Join(harnesses, ", "), entry.Error,
+			})
+			continue
 		}
-		for _, row := range entry.Artifacts {
-			change := row.Change
-			if row.NewVariant != "" && row.Change == changeVariant {
-				change = "variant → " + row.NewVariant
+		for i := range entry.Artifacts {
+			art := &entry.Artifacts[i]
+			if art.Change == changeBlocked {
+				refused = append(refused, refusal{entry.Agent, art.Harness, art.Reason})
+				continue
 			}
-			variant := row.Variant
-			if variant == "" {
-				variant = row.NewVariant
+			row := p.row(rowUnchanged, entry.Agent, art.Harness, art.Path)
+			switch art.Change {
+			case changeNone:
+				row.cells[0] = cell{text: "= up to date", style: s.dim}
+			case changeAdded:
+				row.cells[0] = p.actionCell(rowCreate)
+			case changeRemoved:
+				row.notes = append(row.notes, "the source no longer provides it")
+			default:
+				row.cells[0] = p.actionCell(rowUpdate)
 			}
-			line := fmt.Sprintf("      %-9s %-10s %-18s %s", row.Harness, variant, change,
-				row.Path)
-			if row.Local != "" && row.Local != localOK {
-				line += "  " + s.blocked.Render("local: "+row.Local)
+			if len(entry.RequiredBy) > 0 {
+				row.notes = append(row.notes,
+					"dependency of "+strings.Join(entry.RequiredBy, ", "))
 			}
-			for _, binding := range row.Bindings {
-				line += " [" + formatSettings(binding) + "]"
+			if entry.Status == agentNotRequired {
+				row.notes = append(row.notes, "no installed agent requires it any more")
 			}
-			fmt.Fprintln(p.w, strings.TrimRight(line, " "))
-			if row.Reason != "" {
-				fmt.Fprintln(p.w, "          "+s.dim.Render(row.Reason))
-			}
+			row.notes = append(row.notes, artifactNotes(art)...)
+			rows = append(rows, row)
 		}
 	}
-	if len(report.Skills) > 0 {
-		fmt.Fprintln(p.w, s.heading.Render("  Skill dependencies"))
-		for _, change := range report.Skills {
-			marker := "+"
-			if change.Change == changeRemoved {
-				marker = "-"
-			}
-			fmt.Fprintf(p.w, "    %s %s for %s (%s)\n", marker, change.Skill, change.Harness,
-				change.Change)
-		}
+	if len(rows) == 0 && len(refused) == 0 {
+		fmt.Fprintln(p.w, "  no locked agents")
 	}
+	p.notedTable([]string{"STATUS", "AGENT", "HARNESS", "PATH"}, 1, 3, rows)
+	p.refusals("Cannot update", "AGENT", refused)
+	p.skillChanges(report.Skills)
 	order := []string{
 		agentUpToDate, agentUpdateAvailable, agentNewDependency, agentNotRequired,
 		agentUnavailable, "drift",
 	}
 	parts := make([]string, 0, len(order))
 	for _, key := range order {
-		if n := report.Summary[key]; n > 0 {
-			parts = append(parts, fmt.Sprintf("%d %s", n, strings.ReplaceAll(key, "-", " ")))
+		n := report.Summary[key]
+		if n == 0 {
+			continue
 		}
+		style := s.dim
+		switch key {
+		case agentUpdateAvailable, agentNewDependency:
+			style = s.update
+		case agentUnavailable, "drift":
+			style = s.blocked
+		}
+		parts = append(parts, style.Render(fmt.Sprintf("%d %s", n,
+			strings.ReplaceAll(key, "-", " "))))
 	}
 	if len(parts) > 0 {
-		fmt.Fprintln(p.w, "  "+strings.Join(parts, " · "))
+		fmt.Fprintln(p.w, strings.Join(parts, " · "))
 	}
 }
 

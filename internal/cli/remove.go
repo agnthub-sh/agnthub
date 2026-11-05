@@ -776,43 +776,56 @@ func (r *removal) print(out *printer, plan *uninstall.Plan, status string) {
 	if r.opts.clean {
 		title = "Clean up dependencies"
 	}
-	fmt.Fprintf(out.w, "%s · %s scope · %s\n", s.title.Render(removeTitle(title, status)),
-		payload.Scope, r.display(r.lockPath))
+	icon := out.emoji("📋")
+	switch status {
+	case statusApplied:
+		icon = out.emoji("✅")
+	case statusRefused, statusFailed:
+		icon = out.emoji("❌")
+	}
+	fmt.Fprintf(out.w, "%s%s · %s scope · lock %s\n", icon,
+		s.title.Render(removeTitle(title, status)), payload.Scope, out.path(r.lockPath))
 	if len(payload.Items) == 0 {
 		fmt.Fprintln(out.w, "  nothing to clean up")
 	}
+	var rows []notedRow
+	var refused, failed []refusal
 	for _, item := range payload.Items {
-		word := item.Action
-		if item.Result != "" {
-			word = item.Result
-		}
-		style := s.create
-		switch {
-		case item.Error != "" || item.Action == string(uninstall.ActionRefuse):
-			style = s.blocked
-		case !uninstall.Action(item.Action).Changes() || item.Action == "unbind":
-			style = s.dim
-		}
 		name := item.Name
 		if item.Kind == string(uninstall.KindSkill) {
 			name += " (skill)"
 		}
-		line := fmt.Sprintf("  %s %-26s %-8s %s", style.Render(fmt.Sprintf("%-9s", word)),
-			name, item.Harness, r.display(item.Path))
+		harnessCell := item.Harness
 		if len(item.Settings) > 0 {
-			line += " [" + formatSettings(item.Settings) + "]"
+			harnessCell += " [" + formatSettings(item.Settings) + "]"
 		}
-		fmt.Fprintln(out.w, line)
-		for _, note := range []string{item.Reason, item.Error} {
-			if note != "" {
-				fmt.Fprintf(out.w, "  %9s %s\n", "", s.dim.Render(note))
-			}
+		switch {
+		case item.Error != "":
+			failed = append(failed, refusal{name, harnessCell, item.Error})
+			continue
+		case item.Action == string(uninstall.ActionRefuse):
+			refused = append(refused, refusal{name, harnessCell, item.Reason})
+			continue
+		}
+		row := notedRow{
+			cells: []cell{
+				removeCell(s, item), plainCell(name), plainCell(harnessCell),
+				plainCell(out.path(item.Path)),
+			},
+			name: name, harness: harnessCell,
+		}
+		if item.Reason != "" {
+			row.notes = append(row.notes, item.Reason)
 		}
 		if item.Kept != "" {
-			fmt.Fprintf(out.w, "  %9s %s\n", "",
-				s.dim.Render("removed the link only; "+r.display(item.Kept)+" stays"))
+			row.notes = append(row.notes,
+				"removed the link only; "+out.path(item.Kept)+" stays")
 		}
+		rows = append(rows, row)
 	}
+	out.notedTable([]string{"ACTION", "AGENT", "HARNESS", "PATH"}, 1, 3, rows)
+	out.refusals("Refused", "AGENT", refused)
+	out.refusals("Failed", "AGENT", failed)
 	if len(payload.DependenciesKept) > 0 {
 		names := make([]string, 0, len(payload.DependenciesKept))
 		for _, dep := range payload.DependenciesKept {
@@ -822,13 +835,58 @@ func (r *removal) print(out *printer, plan *uninstall.Plan, status string) {
 		fmt.Fprintln(out.w, s.dim.Render(
 			"  clean up the ones no longer required with: agnthub remove --clean-dependencies"))
 	}
-	keys := slices.Sorted(maps.Keys(payload.Summary))
-	parts := make([]string, 0, len(keys))
-	for _, key := range keys {
-		parts = append(parts, fmt.Sprintf("%d %s", payload.Summary[key], key))
+	parts := make([]string, 0, len(removeTotals))
+	for _, total := range removeTotals {
+		n := payload.Summary[total.key]
+		if n == 0 {
+			continue
+		}
+		style := s.dim
+		switch total.key {
+		case string(uninstall.ActionDelete), "removed":
+			style = s.remove
+		case string(uninstall.ActionRefuse), "refused", "failed":
+			style = s.blocked
+		}
+		parts = append(parts, style.Render(fmt.Sprintf("%d %s", n, total.word)))
 	}
 	if len(parts) > 0 {
-		fmt.Fprintf(out.w, "Summary: %s\n", strings.Join(parts, ", "))
+		fmt.Fprintln(out.w, strings.Join(parts, " · "))
+	}
+}
+
+// removeTotals orders the remove totals (planned actions, then applied results)
+// and words them.
+var removeTotals = []struct{ key, word string }{
+	{string(uninstall.ActionDelete), "to delete"},
+	{string(uninstall.ActionUnbind), "to unbind"},
+	{string(uninstall.ActionForget), "to forget"},
+	{string(uninstall.ActionRelease), "to release"},
+	{string(uninstall.ActionPreserve), "kept"},
+	{string(uninstall.ActionRefuse), "refused"},
+	{"removed", "removed"},
+	{"unbound", "unbound"},
+	{"forgotten", "forgotten"},
+	{"released", "released"},
+	{"preserved", "kept"},
+	{"refused", "refused"},
+	{"failed", "failed"},
+}
+
+// removeCell is a removal's Action cell: a file deletion in red, a state-only
+// change or a kept Dependency dimmed.
+func removeCell(s planStyles, item removeItemJSON) cell {
+	word := item.Action
+	if item.Result != "" {
+		word = item.Result
+	}
+	switch uninstall.Action(item.Action) {
+	case uninstall.ActionDelete:
+		return cell{text: "- " + word, style: s.remove}
+	case uninstall.ActionPreserve:
+		return cell{text: "= keep", style: s.dim}
+	default:
+		return cell{text: "- " + word, style: s.dim}
 	}
 }
 
@@ -843,9 +901,4 @@ func removeTitle(title, status string) string {
 	default:
 		return title + " plan"
 	}
-}
-
-// display shortens paths inside the project to project-relative ones.
-func (r *removal) display(path string) string {
-	return displayPath(r.app.WorkDir, path)
 }

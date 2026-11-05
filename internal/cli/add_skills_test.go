@@ -520,7 +520,7 @@ func TestSkillPlanIsPreviewedPerHarness(t *testing.T) {
 	}
 	for _, want := range []string{
 		"code-review", ">=1.0.0 <=1.9.9", "install", "claude-code", "universal",
-		filepath.Join(h.project, ".agents", "skills", "code-review"),
+		filepath.Join(".agents", "skills", "code-review"),
 	} {
 		if !strings.Contains(out, want) {
 			t.Fatalf("preview must mention %q:\n%s", want, out)

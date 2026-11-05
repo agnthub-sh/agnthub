@@ -20,6 +20,12 @@ type printer struct {
 	w      io.Writer
 	json   bool
 	styles planStyles
+	// plain output carries no escape sequences and no emoji.
+	plain bool
+	// width is the terminal width tables fit; 0 for unlimited.
+	width int
+	// root and home shorten displayed paths.
+	root, home string
 }
 
 func newPrinter(w io.Writer, asJSON bool) *printer {
@@ -95,7 +101,7 @@ func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory)
 	s := p.styles
 	header := payload.Source
 	if payload.Revision != "" {
-		header += " @ " + shortRevision(payload.Revision)
+		header += "@" + shortRevision(payload.Revision)
 	}
 	if inv.Manifest {
 		header += " (agnthub.yaml)"

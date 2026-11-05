@@ -2,14 +2,11 @@
 $ cd /agnthub-e2e/home && HOME=/agnthub-e2e/scratch/other-home XDG_CONFIG_HOME=/agnthub-e2e/home/.config XDG_STATE_HOME=/agnthub-e2e/home/.local/state agnthub add /agnthub-e2e/src/companion --agent companion --harness opencode --yes
 exit status: 0
 --- stdout
-Installed · project scope · from /agnthub-e2e/src/companion
-  Harnesses
-    opencode  OpenCode            detected
-  Agents
-    companion
-      + create       opencode  generated  /agnthub-e2e/home/.opencode/agents/companion.md
-          project
-  1 create
+Installed · /agnthub-e2e/src/companion · project scope
+  harnesses: opencode
+  ACTION    AGENT      HARNESS   PATH
+  + create  companion  opencode  .opencode/agents/companion.md
+1 created · 0 updated · 0 deleted
 $ cd /agnthub-e2e/home && agnthub list --json
 exit status: 0
 --- stdout

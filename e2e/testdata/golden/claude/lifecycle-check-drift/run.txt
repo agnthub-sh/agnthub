@@ -1,14 +1,11 @@
 $ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness claude --yes
 exit status: 0
 --- stdout
-Installed · project scope · from localhost:8443/evolving.git#v1 @ 5286a739a333
-  Harnesses
-    claude    Claude Code         detected
-  Agents
-    drifter
-      + create       claude    generated  /agnthub-e2e/project/.claude/agents/drifter.md
-          project
-  1 create
+Installed · localhost:8443/evolving.git#v1@5286a739a333 · project scope
+  harnesses: claude
+  ACTION    AGENT    HARNESS  PATH
+  + create  drifter  claude   .claude/agents/drifter.md
+1 created · 0 updated · 0 deleted
 # append a line to the installed drifter
 $ agnthub check --json
 exit status: 0

@@ -4,10 +4,7 @@ import (
 	"fmt"
 	"path/filepath"
 	"slices"
-	"strings"
 
-	"charm.land/lipgloss/v2"
-	"charm.land/lipgloss/v2/table"
 	"github.com/spf13/cobra"
 
 	"github.com/agnthub-sh/agnthub/agent"
@@ -136,8 +133,10 @@ func (a *App) runList(opts *listOptions) error {
 // styled in a terminal, plain text otherwise.
 func (a *App) listTable(out *printer, listed []listedAgent) {
 	s := out.styles
-	const statusColumn = 3
-	var rows [][]string
+	t := &table{
+		headers: []string{"AGENT", "HARNESS", "STATUS", "PATH", "SOURCE"},
+		shrink:  3, wrap: -1,
+	}
 	for _, entry := range listed {
 		name := entry.Agent
 		if entry.Origin == string(state.OriginDependency) {
@@ -150,46 +149,19 @@ func (a *App) listTable(out *printer, listed []listedAgent) {
 					harnessCell += " [" + formatSettings(binding) + "]"
 				}
 			}
-			rows = append(rows, []string{
-				name, harnessCell, artifact.Variant, artifact.Status,
-				displayPath(a.WorkDir, artifact.Path), sourceLabel(entry.Source),
+			status := cell{text: artifact.Status, style: s.blocked}
+			if artifact.Status == localOK {
+				status.style = s.create
+			}
+			t.rows = append(t.rows, []cell{
+				{text: name, style: s.title},
+				plainCell(harnessCell), status,
+				plainCell(out.path(artifact.Path)),
+				{text: sourceLabel(entry.Source), style: s.dim},
 			})
 		}
 	}
-	cell := lipgloss.NewStyle().PaddingRight(2)
-	rendered := table.New().
-		Border(lipgloss.HiddenBorder()).
-		BorderTop(false).BorderBottom(false).BorderLeft(false).BorderRight(false).
-		BorderHeader(false).BorderColumn(false).
-		Headers("AGENT", "HARNESS", "VARIANT", "STATUS", "PATH", "SOURCE").
-		Rows(rows...).
-		StyleFunc(func(row, col int) lipgloss.Style {
-			switch {
-			case row == table.HeaderRow:
-				return cell.Inherit(s.heading)
-			case col == 0:
-				return cell.Inherit(s.title)
-			case col == statusColumn && rows[row][col] == "ok":
-				return cell.Inherit(s.create)
-			case col == statusColumn:
-				return cell.Inherit(s.blocked)
-			default:
-				return cell
-			}
-		}).
-		Render()
-	for line := range strings.SplitSeq(rendered, "\n") {
-		fmt.Fprintln(out.w, strings.TrimRight(line, " "))
-	}
-}
-
-// displayPath shortens a path inside the project to a project-relative one.
-func displayPath(workDir, path string) string {
-	if rel, err := filepath.Rel(workDir, path); err == nil && rel != ".." &&
-		!strings.HasPrefix(rel, ".."+string(filepath.Separator)) {
-		return rel
-	}
-	return path
+	out.render(t)
 }
 
 func artifactStatus(path, digest string) string {

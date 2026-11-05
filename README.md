@@ -23,6 +23,27 @@ not install or that you changed. Repositories need no particular setup: agnthub 
 `AGENT.md`/`agents/` definitions, each harness's native agent directory, the Claude Code plugins
 and marketplaces a repository packages (`.claude-plugin/`), and an optional `agnthub.yaml`.
 
+A preview is a table of what each harness gets, with notes and refusals collected under it:
+
+```text
+$ agnthub add wshobson/agents --agent architect --agent code-review-preshipment -H claude -H codex -H cursor
+📋 Plan · wshobson/agents@7e2fb559cf4b · project scope
+  harnesses: claude, codex, cursor
+  ACTION    AGENT                    HARNESS  PATH
+  + create  architect                claude   .claude/agents/architect.md
+  + create  architect [1]            codex    .codex/agents/architect.toml
+  + create  architect [1]            cursor   .cursor/agents/architect.md
+  + create  code-review-preshipment  claude   .claude/agents/code-review-preshipment.md
+  [1] architect: converted from the claude variant
+❌ Refused (2)
+  AGENT                    HARNESS  REASON
+  code-review-preshipment  codex    it excludes edit, but a Codex agent file has no tool allowlist
+                                    or read-only mode to withhold it
+  code-review-preshipment  cursor   it uses shell without edits, but Cursor's only restriction
+                                    (readonly) blocks every shell command
+4 to create · 0 to update · 0 to delete · 2 refused
+```
+
 Agents install into the project in the current directory, or into your user configuration with
 `--global`. Your home directory is no project: run there, `add` installs into user scope (as
 `--global` does) and says so, and `--global=false` refuses. Installs that agnthub 0.4.7 and

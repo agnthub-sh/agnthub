@@ -1,14 +1,11 @@
 $ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness codex --global --yes
 exit status: 0
 --- stdout
-Installed · global scope · from localhost:8443/evolving.git#v1 @ 5286a739a333
-  Harnesses
-    codex     Codex               detected
-  Agents
-    drifter
-      + create       codex     generated  /agnthub-e2e/home/.codex/agents/drifter.toml
-          user
-  1 create
+Installed · localhost:8443/evolving.git#v1@5286a739a333 · global scope
+  harnesses: codex
+  ACTION    AGENT    HARNESS  PATH
+  + create  drifter  codex    ~/.codex/agents/drifter.toml
+1 created · 0 updated · 0 deleted
 $ agnthub list --global --json
 exit status: 0
 --- stdout

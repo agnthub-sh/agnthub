@@ -1,0 +1,18 @@
+📋 [1mUpdate plan[m · project scope · lock agnthub-lock.json
+  [2msources:[m wshobson/agents#v1@7e2fb559cf4b → 9a8b7c6d5e4f
+  [2mharnesses:[m claude, codex
+  [1;36mACTION[m       [1;36mAGENT[m             [1;36mHARNESS[m  [1;36mPATH[m
+  [33m~ update[m     reviewer [1]      claude   .claude/agents/reviewer.md
+  [33m~ update[m     reviewer [2,3,4]  codex    .codex/agents/reviewer.toml
+  [2m= unchanged[m  planner           claude   .claude/agents/planner.md
+  [2m= unchanged[m  planner [5]       codex    .codex/agents/planner.toml
+  [32m+ create[m     linter [6]        claude   .claude/agents/linter.md
+  [2m[1] reviewer: content changed[m
+  [2m[2] reviewer: converted from the claude variant[m
+  [2m[3] reviewer: converter codex/1 → codex/2[m
+  [2m[4] reviewer: local: modified[m
+  [2m[5] planner: the source no longer provides it; the installed file stays[m
+  [2m[6] linter: dependency of reviewer, from wshobson/agents#v1@9a8b7c6d5e4f[m
+[1;36mSkill dependencies[m
+  [32m+[m code-review for claude [2m(added)[m
+[32m1 to create[m · [33m2 to update[m · [2m0 to delete[m · [2m2 unchanged[m

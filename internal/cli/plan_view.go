@@ -49,7 +49,7 @@ type harnessView struct {
 // planStyles are terminal styles; colorprofile strips them when the output is
 // not a terminal, so redirected human output stays plain text.
 type planStyles struct {
-	title, heading, dim, create, unchanged, blocked lipgloss.Style
+	title, heading, dim, create, update, remove, unchanged, blocked, reason lipgloss.Style
 }
 
 func newPlanStyles() planStyles {
@@ -58,16 +58,29 @@ func newPlanStyles() planStyles {
 		heading:   lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("6")),
 		dim:       lipgloss.NewStyle().Faint(true),
 		create:    lipgloss.NewStyle().Foreground(lipgloss.Color("2")),
+		update:    lipgloss.NewStyle().Foreground(lipgloss.Color("3")),
+		remove:    lipgloss.NewStyle().Foreground(lipgloss.Color("1")),
 		unchanged: lipgloss.NewStyle().Faint(true),
 		blocked:   lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("1")),
+		reason:    lipgloss.NewStyle().Foreground(lipgloss.Color("1")),
 	}
 }
 
+// printer is styled only when stdout is a color terminal; NO_COLOR, TERM=dumb and
+// redirected output get plain text without escape sequences or emoji.
 func (a *App) printer(asJSON bool) *printer {
 	if asJSON {
 		return newPrinter(a.Stdout, true)
 	}
-	return newPrinter(colorprofile.NewWriter(a.Stdout, a.Env.Pairs()), false)
+	profile := colorprofile.Detect(a.Stdout, a.Env.Pairs())
+	plain := profile <= colorprofile.ASCII
+	if plain {
+		profile = colorprofile.NoTTY
+	}
+	p := newPrinter(&colorprofile.Writer{Forward: a.Stdout, Profile: profile}, false)
+	p.plain, p.width = plain, terminalWidth(a.Stdout, a.Env)
+	p.root, p.home = a.WorkDir, a.Env.Home()
+	return p
 }
 
 type planJSON struct {
@@ -286,141 +299,39 @@ func newItemJSON(item install.Item, effective map[agent.HarnessID]map[string]str
 	return entry
 }
 
-func (p *printer) humanPlan(payload *planJSON) {
-	s := p.styles
-	if payload.Changes != nil {
-		fmt.Fprintf(p.w, "%s · %s scope · lock %s\n",
-			s.title.Render(lifecycleTitle(payload.Changes.Command, payload.Status)),
-			payload.Scope, payload.Changes.Lock)
-		p.humanReport(payload.Changes)
-	} else {
-		fmt.Fprintf(p.w, "%s · %s scope · from %s\n",
-			s.title.Render(titleStatus(payload.Status)), payload.Scope,
-			sourceLabel(payload.Source))
-	}
-	if len(payload.Harnesses) > 0 {
-		fmt.Fprintln(p.w, s.heading.Render("  Harnesses"))
-		for _, h := range payload.Harnesses {
-			line := fmt.Sprintf("    %-9s %-19s", h.ID, h.Name)
-			if h.Detected {
-				line += " " + s.dim.Render("detected")
-			}
-			for _, setting := range h.Settings {
-				line += fmt.Sprintf("  %s=%s %s",
-					setting.Key, setting.Value, s.dim.Render("("+setting.Source+")"))
-			}
-			fmt.Fprintln(p.w, strings.TrimRight(line, " "))
-		}
-	}
-	p.humanSkills("Skills", payload.Skills)
-	if len(payload.SkippedSkills) > 0 {
-		p.humanSkills("Skipped skills", payload.SkippedSkills)
-	}
-	p.humanSkillRuns(payload)
-	itemsHeading := "Agents"
-	if payload.Status == statusFailed {
-		itemsHeading = "Agents (not written)"
-	}
-	p.humanItems(itemsHeading, payload.Items)
-	if len(payload.Skipped) > 0 {
-		p.humanItems("Skipped (not written)", payload.Skipped)
-	}
-	line := summaryLine(payload.Summary)
-	if len(payload.SkillSummary) > 0 {
-		line += "  ·  skills: " + skillSummaryLine(payload.SkillSummary)
-	}
-	fmt.Fprintln(p.w, "  "+line)
-}
-
-// humanSkills lists Skill requirements grouped by Skill, one line per Harness.
-func (p *printer) humanSkills(heading string, items []skillJSON) {
-	if len(items) == 0 {
-		return
-	}
-	s := p.styles
-	fmt.Fprintln(p.w, s.heading.Render("  "+heading))
-	var group string
-	for i := range items {
-		item := &items[i]
-		if key := item.Skill + "\x00" + item.Requirement; key != group {
-			group = key
-			fmt.Fprintln(p.w, "    "+s.title.Render(item.Skill)+s.dim.Render(fmt.Sprintf(
-				"  %s from %s, required by %s",
-				item.Requirement, item.Source, strings.Join(item.RequiredBy, ", "),
-			)))
-		}
-		decision := skills.Decision(item.Decision)
-		marker := "+"
-		switch {
-		case decision.Blocking():
-			marker = "✗"
-		case decision == skills.DecisionReuse || decision == skills.DecisionUnchanged:
-			marker = "="
-		}
-		action := fmt.Sprintf("%s %-12s", marker, item.Decision)
-		switch {
-		case decision.Blocking():
-			action = s.blocked.Render(action)
-		case marker == "=":
-			action = s.unchanged.Render(action)
-		default:
-			action = s.create.Render(action)
-		}
-		line := fmt.Sprintf("      %s %-9s %-10s", action, item.Harness, item.Version)
-		if item.Path != "" {
-			line += " " + item.Path
-		}
-		fmt.Fprintln(p.w, strings.TrimRight(line, " "))
-		if item.Location != "" {
-			fmt.Fprintln(p.w, "          "+s.dim.Render(item.Location))
-		}
-		if len(item.Command) > 0 {
-			fmt.Fprintln(p.w, "          "+s.dim.Render(
-				"runs "+skills.Display(item.Command[0], item.Command[1:])))
-		}
-		if item.Reason != "" {
-			style := s.dim
-			if decision.Blocking() {
-				style = s.blocked
-			}
-			fmt.Fprintln(p.w, "          "+style.Render(item.Reason))
-		}
-	}
-}
-
 // humanSkillRuns reports backend runs, failures and observed effects.
 func (p *printer) humanSkillRuns(payload *planJSON) {
 	s := p.styles
 	if len(payload.SkillRuns) > 0 {
-		fmt.Fprintln(p.w, s.heading.Render("  Skill installer runs"))
+		fmt.Fprintln(p.w, s.heading.Render("Skill installer runs"))
 		for _, run := range payload.SkillRuns {
 			status := s.create.Render("ok")
 			if run.Error != "" {
 				status = s.blocked.Render("failed: " + run.Error)
 			}
-			fmt.Fprintf(p.w, "    %s for %s: %s\n      %s\n", run.Skill,
+			fmt.Fprintf(p.w, "  %s for %s: %s\n    %s\n", run.Skill,
 				strings.Join(run.Harnesses, ", "), status,
 				s.dim.Render(skills.Display(run.Command[0], run.Command[1:])))
 			if run.Error != "" && strings.TrimSpace(run.Output) != "" {
 				for line := range strings.SplitSeq(strings.TrimRight(run.Output, "\n"), "\n") {
-					fmt.Fprintln(p.w, "      | "+line)
+					fmt.Fprintln(p.w, "    | "+line)
 				}
 			}
 		}
 	}
 	for _, failure := range payload.SkillFailures {
-		fmt.Fprintln(p.w, "    "+s.blocked.Render("verification failed: "+failure))
+		fmt.Fprintln(p.w, "  "+p.emoji("❌")+s.blocked.Render("verification failed: "+failure))
 	}
 	if payload.Status == statusFailed || len(payload.SkillEffects) > 0 {
-		fmt.Fprintln(p.w, s.heading.Render("  Changes observed in skill locations"))
+		fmt.Fprintln(p.w, s.heading.Render("Changes observed in skill locations"))
 		if len(payload.SkillEffects) == 0 {
-			fmt.Fprintln(p.w, "    none")
+			fmt.Fprintln(p.w, "  none")
 		}
 		for _, effect := range payload.SkillEffects {
-			fmt.Fprintf(p.w, "    %-8s %s\n", effect.Change, effect.Path)
+			fmt.Fprintf(p.w, "  %-8s %s\n", effect.Change, p.path(effect.Path))
 		}
 		if payload.Status == statusFailed {
-			fmt.Fprintln(p.w, "    "+s.dim.Render(
+			fmt.Fprintln(p.w, "  "+s.dim.Render(
 				"agnthub does not roll back the skill installer; review or remove these yourself"))
 		}
 	}
@@ -441,74 +352,15 @@ func skillSummaryLine(summary map[string]int) string {
 	return strings.Join(parts, " · ")
 }
 
-func (p *printer) humanItems(heading string, items []itemJSON) {
-	s := p.styles
-	fmt.Fprintln(p.w, s.heading.Render("  "+heading))
-	var group string
-	for i := range items {
-		item := &items[i]
-		if key := itemGroup(item); key != group {
-			group = key
-			fmt.Fprintln(p.w, "    "+s.title.Render(item.Agent)+groupDetail(item, s))
-		}
-		action := fmt.Sprintf("%s %-12s", actionMarker(install.Action(item.Action)), item.Action)
-		switch {
-		case install.Action(item.Action).Blocking():
-			action = s.blocked.Render(action)
-		case item.Action == string(install.ActionUnchanged):
-			action = s.unchanged.Render(action)
-		default:
-			action = s.create.Render(action)
-		}
-		line := fmt.Sprintf("      %s %-9s %-10s", action, item.Harness, item.Variant)
-		if item.Path != "" {
-			line += " " + item.Path
-		}
-		fmt.Fprintln(p.w, strings.TrimRight(line, " "))
-		if item.Destination != "" {
-			fmt.Fprintln(p.w, "          "+s.dim.Render(item.Destination))
-		}
-		if item.Reason != "" {
-			fmt.Fprintln(p.w, "          "+s.blocked.Render(item.Reason))
-		}
-		for _, note := range item.Notes {
-			fmt.Fprintln(p.w, "          note: "+note)
-		}
+func sourceLabel(src sourceJSON) string {
+	label := src.Locator
+	if src.Ref != "" {
+		label += "#" + src.Ref
 	}
-}
-
-// itemGroup groups consecutive items of the same Agent and dependency context.
-func itemGroup(item *itemJSON) string {
-	return item.Agent + "\x00" + item.Origin + "\x00" + strings.Join(item.RequiredBy, ",") +
-		"\x00" + item.Source.Locator
-}
-
-func groupDetail(item *itemJSON, s planStyles) string {
-	if item.Origin != string(state.OriginDependency) {
-		return ""
+	if src.Revision != "" {
+		label += "@" + shortRevision(src.Revision)
 	}
-	return s.dim.Render(fmt.Sprintf(
-		"  dependency of %s, from %s",
-		strings.Join(item.RequiredBy, ", "),
-		sourceLabel(item.Source),
-	))
-}
-
-func summaryLine(summary map[string]int) string {
-	order := []install.Action{
-		install.ActionCreate, install.ActionReplace, install.ActionUnchanged,
-		install.ActionConflict, install.ActionIncompatible, install.ActionInvalid,
-	}
-	parts := make([]string, 0, len(order))
-	for _, action := range order {
-		if n := summary[string(action)]; n > 0 {
-			parts = append(parts, fmt.Sprintf("%d %s", n, action))
-		}
-	}
-	if len(parts) == 0 {
-		return "nothing to install"
-	}
-	return strings.Join(parts, " · ")
+	return label
 }
 
 func titleStatus(status string) string {
@@ -521,27 +373,5 @@ func titleStatus(status string) string {
 		return "Failed: skills not verified, no agent written"
 	default:
 		return "Plan"
-	}
-}
-
-func sourceLabel(src sourceJSON) string {
-	label := src.Locator
-	if src.Ref != "" {
-		label += "#" + src.Ref
-	}
-	if src.Revision != "" {
-		label += " @ " + shortRevision(src.Revision)
-	}
-	return label
-}
-
-func actionMarker(action install.Action) string {
-	switch {
-	case action.Blocking():
-		return "✗"
-	case action == install.ActionUnchanged:
-		return "="
-	default:
-		return "+"
 	}
 }

@@ -1,0 +1,36 @@
+Plan · wshobson/agents@7e2fb559cf4b · project scope
+  harnesses: claude, opencode, codex, copilot, cursor (not detected), gemini, omp profile=default (native default)
+  omp: shared by every omp profile; verify with default profile
+  ACTION    AGENT                                   HARNESS   PATH
+  + create  comprehensive-review-code-reviewer      claude    .claude/agents/comprehensive-review-code-reviewer.md
+  + create  comprehensive-review-code-reviewer [1]  opencode  .opencode/agents/comprehensive-review-code-reviewer.md
+  + create  comprehensive-review-code-reviewer [1]  codex     .codex/agents/comprehensive-review-code-reviewer.toml
+  + create  comprehensive-review-code-reviewer [1]  copilot   .github/agents/comprehensive-review-code-reviewer.agent.md
+  + create  comprehensive-review-code-reviewer [1]  cursor    .cursor/agents/comprehensive-review-code-reviewer.md
+  + create  comprehensive-review-code-reviewer [1]  gemini    .gemini/agents/comprehensive-review-code-reviewer.md
+  + create  comprehensive-review-code-reviewer [1]  omp       .omp/agents/comprehensive-review-code-reviewer.md
+  + create  architect                               claude    .claude/agents/architect.md
+  + create  architect                               opencode  .opencode/agents/architect.md
+  + create  architect                               codex     .codex/agents/architect.toml
+  + create  architect                               copilot   .github/agents/architect.agent.md
+  + create  architect                               cursor    .cursor/agents/architect.md
+  + create  architect                               gemini    .gemini/agents/architect.md
+  + create  architect                               omp       .omp/agents/architect.md
+  + create  ai-engineer                             claude    .claude/agents/ai-engineer.md
+  + create  ai-engineer                             opencode  .opencode/agents/ai-engineer.md
+  + create  ai-engineer                             codex     .codex/agents/ai-engineer.toml
+  + create  ai-engineer                             copilot   .github/agents/ai-engineer.agent.md
+  + create  ai-engineer                             cursor    .cursor/agents/ai-engineer.md
+  + create  ai-engineer                             gemini    .gemini/agents/ai-engineer.md
+  + create  ai-engineer                             omp       .omp/agents/ai-engineer.md
+  + create  accessibility-expert                    claude    .claude/agents/accessibility-expert.md
+  + create  accessibility-expert [2]                opencode  .opencode/agents/accessibility-expert.md
+  + create  accessibility-expert [2]                codex     .codex/agents/accessibility-expert.toml
+  + create  accessibility-expert [2]                copilot   .github/agents/accessibility-expert.agent.md
+  + create  accessibility-expert [2]                cursor    .cursor/agents/accessibility-expert.md
+  + create  accessibility-expert [2]                gemini    .gemini/agents/accessibility-expert.md
+  + create  accessibility-expert [2]                omp       .omp/agents/accessibility-expert.md
+  · converted from the claude variant (24 of 28 rows: opencode, codex, copilot, cursor, gemini, omp)
+  [1] comprehensive-review-code-reviewer: model "opus" is specific to claude; the agent uses the harness default model
+  [2] accessibility-expert: omitted color: cosmetic
+28 to create · 0 to update · 0 to delete

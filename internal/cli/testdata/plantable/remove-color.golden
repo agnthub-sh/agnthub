@@ -1,0 +1,10 @@
+📋 [1mRemove plan[m · project scope · lock agnthub-lock.json
+  [1;36mACTION[m    [1;36mAGENT[m     [1;36mHARNESS[m             [1;36mPATH[m
+  [31m- delete[m  reviewer  claude              .claude/agents/reviewer.md
+  [31m- delete[m  reviewer  codex               .codex/agents/reviewer.toml
+  [2m- unbind[m  reviewer  omp [profile=work]  .omp/agents/reviewer.md
+  [2m· the default omp profile still uses it (1 of 3 rows: omp [profile=work])[m
+❌ [1;31mRefused (1)[m
+  [1;36mAGENT[m    [1;36mHARNESS[m  [1;36mREASON[m
+  [1mplanner[m  claude   [31m.claude/agents/planner.md was modified locally[m
+[31m2 to delete[m · [2m1 to unbind[m · [1;31m1 refused[m

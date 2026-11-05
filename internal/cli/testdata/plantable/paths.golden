@@ -1,0 +1,7 @@
+Plan · wshobson/agents@7e2fb559cf4b · global scope
+  harnesses: claude, codex, gemini
+  ACTION    AGENT     HARNESS  PATH
+  + create  reviewer  claude   ~/.claude/agents/reviewer.md
+  + create  reviewer  codex    /srv/codex/agents/reviewer.toml
+  + create  reviewer  gemini   .gemini/agents/reviewer.md
+3 to create · 0 to update · 0 to delete

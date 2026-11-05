@@ -135,9 +135,7 @@ func (a *App) runCheck(ctx context.Context, ids []string, opts *lifecycleOptions
 	if opts.json {
 		return out.emitJSON(report)
 	}
-	fmt.Fprintf(out.w, "%s · %s scope · lock %s\n", out.styles.title.Render("Check"), l.scope,
-		report.Lock)
-	out.humanReport(report)
+	out.humanCheck(string(l.scope), report)
 	return nil
 }
 

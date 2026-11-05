@@ -1,14 +1,11 @@
 $ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness copilot --global --yes
 exit status: 0
 --- stdout
-Installed · global scope · from localhost:8443/evolving.git#v1 @ 5286a739a333
-  Harnesses
-    copilot   GitHub Copilot CLI  detected
-  Agents
-    drifter
-      + create       copilot   generated  /agnthub-e2e/home/.copilot/agents/drifter.agent.md
-          user
-  1 create
+Installed · localhost:8443/evolving.git#v1@5286a739a333 · global scope
+  harnesses: copilot
+  ACTION    AGENT    HARNESS  PATH
+  + create  drifter  copilot  ~/.copilot/agents/drifter.agent.md
+1 created · 0 updated · 0 deleted
 $ agnthub list --global --json
 exit status: 0
 --- stdout

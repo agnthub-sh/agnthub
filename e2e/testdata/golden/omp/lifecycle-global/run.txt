@@ -1,14 +1,12 @@
 $ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness omp --global --yes
 exit status: 0
 --- stdout
-Installed · global scope · from localhost:8443/evolving.git#v1 @ 5286a739a333
-  Harnesses
-    omp       omp                 detected  profile=default (native default)
-  Agents
-    drifter
-      + create       omp       generated  /agnthub-e2e/home/.omp/agent/agents/drifter.md
-          default profile
-  1 create
+Installed · localhost:8443/evolving.git#v1@5286a739a333 · global scope
+  harnesses: omp profile=default (native default)
+  omp: default profile
+  ACTION    AGENT    HARNESS  PATH
+  + create  drifter  omp      ~/.omp/agent/agents/drifter.md
+1 created · 0 updated · 0 deleted
 $ agnthub list --global --json
 exit status: 0
 --- stdout

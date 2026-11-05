@@ -1,18 +1,15 @@
 $ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness gemini --yes
 exit status: 0
 --- stdout
-Installed · project scope · from localhost:8443/evolving.git#v1 @ 5286a739a333
-  Harnesses
-    gemini    Gemini CLI          detected
-  Agents
-    drifter
-      + create       gemini    generated  /agnthub-e2e/project/.gemini/agents/drifter.md
-          project
-  1 create
+Installed · localhost:8443/evolving.git#v1@5286a739a333 · project scope
+  harnesses: gemini
+  ACTION    AGENT    HARNESS  PATH
+  + create  drifter  gemini   .gemini/agents/drifter.md
+1 created · 0 updated · 0 deleted
 # append a line to the installed drifter
 $ agnthub restore --yes --json
 exit status: 1
 --- stderr
 error: restore refused before writing; the locked installation cannot be reproduced exactly:
   - drifter for gemini: managed file was modified locally
-  - drifter for gemini (/agnthub-e2e/project/.gemini/agents/drifter.md) could not be regenerated from localhost:8443/evolving.git#v1 @ 5286a739a333
+  - drifter for gemini (/agnthub-e2e/project/.gemini/agents/drifter.md) could not be regenerated from localhost:8443/evolving.git#v1@5286a739a333
