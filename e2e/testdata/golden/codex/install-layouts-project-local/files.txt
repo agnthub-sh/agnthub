@@ -5,6 +5,7 @@
 0644 project/.codex/agents/bounded.toml
 0644 project/.codex/agents/colon.toml
 0644 project/.codex/agents/cx-native.toml
+0644 project/.codex/agents/defaulted.toml
 0644 project/.codex/agents/dual.toml
 0644 project/.codex/agents/fixer.toml
 0644 project/.codex/agents/journaler.toml

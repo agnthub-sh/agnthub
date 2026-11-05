@@ -166,6 +166,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "defaulted",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/defaulted.md",
+          "sourceDigest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
+          "converter": "gemini/v4",
+          "path": ".gemini/agents/defaulted.md",
+          "digest": "sha256:5a614e95b5c778a19739e14fef46f03e0238bce044d02d801c48528a52ad7e80",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "dual",
       "origin": "direct",
       "artifacts": [

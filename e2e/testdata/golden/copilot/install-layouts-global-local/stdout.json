@@ -147,6 +147,28 @@
       ]
     },
     {
+      "agent": "defaulted",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.copilot/agents/defaulted.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/defaulted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted hooks: empty, so Claude Code ignores it",
+        "omitted mcpServers: empty, so Claude Code ignores it",
+        "omitted permissionMode: default is Claude Code's default permission mode"
+      ]
+    },
+    {
       "agent": "delegator",
       "harness": "copilot",
       "settings": {},
@@ -558,6 +580,6 @@
     }
   ],
   "summary": {
-    "create": 29
+    "create": 30
   }
 }

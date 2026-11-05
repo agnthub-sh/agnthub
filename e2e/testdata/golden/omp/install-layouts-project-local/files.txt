@@ -8,6 +8,7 @@
 0644 project/.omp/agents/colon.md
 0644 project/.omp/agents/cu-native.md
 0644 project/.omp/agents/cx-native.md
+0644 project/.omp/agents/defaulted.md
 0644 project/.omp/agents/delegator.md
 0644 project/.omp/agents/dual.md
 0644 project/.omp/agents/fixer.md

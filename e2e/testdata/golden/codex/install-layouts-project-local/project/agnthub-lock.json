@@ -105,6 +105,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "defaulted",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/defaulted.md",
+          "sourceDigest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
+          "converter": "codex/v4",
+          "path": ".codex/agents/defaulted.toml",
+          "digest": "sha256:9898669b6699304e241dfb194618353faa73e790dbc3a4235672cf02ed87196d",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "dual",
       "origin": "direct",
       "artifacts": [

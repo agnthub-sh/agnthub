@@ -8,6 +8,7 @@
 0644 project/.opencode/agents/colon.md
 0644 project/.opencode/agents/cu-native.md
 0644 project/.opencode/agents/cx-native.md
+0644 project/.opencode/agents/defaulted.md
 0644 project/.opencode/agents/delegator.md
 0644 project/.opencode/agents/dual.md
 0644 project/.opencode/agents/fixer.md

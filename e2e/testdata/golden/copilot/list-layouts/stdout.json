@@ -85,6 +85,13 @@
       }
     },
     {
+      "id": "defaulted",
+      "description": "Sets Claude Code fields to their defaults or leaves them empty.",
+      "variants": {
+        "claude": ".claude/agents/defaulted.md"
+      }
+    },
+    {
       "id": "delegator",
       "description": "Reads code and delegates subtasks to other agents.",
       "variants": {

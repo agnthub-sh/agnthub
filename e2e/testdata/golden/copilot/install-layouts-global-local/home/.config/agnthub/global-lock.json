@@ -146,6 +146,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "defaulted",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/defaulted.md",
+          "sourceDigest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
+          "converter": "copilot/v4",
+          "path": "/agnthub-e2e/home/.copilot/agents/defaulted.agent.md",
+          "digest": "sha256:f36caedc4f62847b1719dadc10ee6365ea465f14f36ef991dddd258a9f7b76e2",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "delegator",
       "origin": "direct",
       "artifacts": [

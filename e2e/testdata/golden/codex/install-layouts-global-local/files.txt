@@ -3,6 +3,7 @@
 0644 home/.codex/agents/bounded.toml
 0644 home/.codex/agents/colon.toml
 0644 home/.codex/agents/cx-native.toml
+0644 home/.codex/agents/defaulted.toml
 0644 home/.codex/agents/dual.toml
 0644 home/.codex/agents/fixer.toml
 0644 home/.codex/agents/journaler.toml

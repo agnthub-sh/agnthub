@@ -112,6 +112,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.claude/agents/defaulted.md",
+      "digest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "defaulted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.claude/agents/delegator.md",
       "digest": "sha256:d55cbc4849ca6e3c63b9d2d51bd5489a1979c2f519369759a3dd2bd55b7d3bce",
       "harness": "claude",

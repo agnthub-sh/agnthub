@@ -122,6 +122,21 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.omp/agents/defaulted.md",
+      "digest": "sha256:cc226a39efb81c3b34fdde43a6cb21980674266aaa667b3a853c2270b8a426e4",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "defaulted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.omp/agents/delegator.md",
       "digest": "sha256:a34e86c6ae114dfc732c82dee32ced9e286e3fdfa889d4aa632a4f3d1bb45cf6",
       "harness": "omp",

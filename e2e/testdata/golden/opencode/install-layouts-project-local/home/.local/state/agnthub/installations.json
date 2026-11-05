@@ -98,6 +98,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.opencode/agents/defaulted.md",
+      "digest": "sha256:2f2f27bb3ac6ef884e115e18686ff99a24a0993a13af373c071e7c127e0f26e5",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "defaulted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.opencode/agents/delegator.md",
       "digest": "sha256:0386679b684d067907687784d9cb94b35f4f9d6de966a64385edfa089a240511",
       "harness": "opencode",

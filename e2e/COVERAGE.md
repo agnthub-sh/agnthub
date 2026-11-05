@@ -136,6 +136,7 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | invalid native Variant for the target: refused, never converted instead | `broken` | global · git<br>global · local<br>project · git<br>project · local | R | R | R | R | R | R | R |
 | portable core with descriptive metadata (noted, omitted) | `tagged` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | Claude-only `permissionMode`: native on Claude Code, refused elsewhere | `guarded` | global · git<br>global · local<br>project · git<br>project · local | W N | R | R | R | R | R | R |
+| Claude Code fields at their default or empty (`permissionMode: default`, `disallowedTools: []`, `hooks: {}`, `mcpServers: []`): native on Claude Code, omitted with a note elsewhere | `defaulted` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 
 ### Tool restrictions
 

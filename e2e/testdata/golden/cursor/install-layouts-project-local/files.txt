@@ -7,6 +7,7 @@
 0644 project/.cursor/agents/colon-native.md
 0644 project/.cursor/agents/colon.md
 0644 project/.cursor/agents/cu-native.md
+0644 project/.cursor/agents/defaulted.md
 0644 project/.cursor/agents/delegator.md
 0644 project/.cursor/agents/dual.md
 0644 project/.cursor/agents/fixer.md

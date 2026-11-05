@@ -166,6 +166,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "defaulted",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/defaulted.md",
+          "sourceDigest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
+          "converter": "omp/v4",
+          "path": "/agnthub-e2e/home/.omp/agent/agents/defaulted.md",
+          "digest": "sha256:cc226a39efb81c3b34fdde43a6cb21980674266aaa667b3a853c2270b8a426e4",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "delegator",
       "origin": "direct",
       "artifacts": [

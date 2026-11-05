@@ -7,6 +7,7 @@
 0644 project/.github/agents/colon-native.agent.md
 0644 project/.github/agents/colon.agent.md
 0644 project/.github/agents/cx-native.agent.md
+0644 project/.github/agents/defaulted.agent.md
 0644 project/.github/agents/delegator.agent.md
 0644 project/.github/agents/dual.agent.md
 0644 project/.github/agents/fixer.agent.md

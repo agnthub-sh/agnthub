@@ -86,6 +86,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.cursor/agents/defaulted.md",
+      "digest": "sha256:99516281cbbe6f572b5e87199961280c4571d9e3428de359b0f50e073f111163",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "defaulted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.cursor/agents/delegator.md",
       "digest": "sha256:26a27721a627c7e71562ff5eab80d876f56bafb78fa6ba52e37aef63f88ae8e6",
       "harness": "cursor",

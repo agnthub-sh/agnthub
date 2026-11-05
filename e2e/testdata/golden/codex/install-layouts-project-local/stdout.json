@@ -107,6 +107,30 @@
       "action": "create"
     },
     {
+      "agent": "defaulted",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/defaulted.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/defaulted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted hooks: empty, so Claude Code ignores it",
+        "omitted mcpServers: empty, so Claude Code ignores it",
+        "omitted permissionMode: default is Claude Code's default permission mode",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ]
+    },
+    {
       "agent": "dual",
       "harness": "codex",
       "settings": {},
@@ -357,6 +381,6 @@
     }
   ],
   "summary": {
-    "create": 18
+    "create": 19
   }
 }

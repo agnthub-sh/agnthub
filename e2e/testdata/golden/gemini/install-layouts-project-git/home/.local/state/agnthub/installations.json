@@ -98,6 +98,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.gemini/agents/defaulted.md",
+      "digest": "sha256:5a614e95b5c778a19739e14fef46f03e0238bce044d02d801c48528a52ad7e80",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "defaulted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.gemini/agents/dual.md",
       "digest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
       "harness": "gemini",

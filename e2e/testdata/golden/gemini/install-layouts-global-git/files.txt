@@ -8,6 +8,7 @@
 0644 home/.gemini/agents/colon.md
 0644 home/.gemini/agents/cu-native.md
 0644 home/.gemini/agents/cx-native.md
+0644 home/.gemini/agents/defaulted.md
 0644 home/.gemini/agents/dual.md
 0644 home/.gemini/agents/fixer.md
 0644 home/.gemini/agents/gh-native.md

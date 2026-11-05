@@ -195,6 +195,32 @@
       ]
     },
     {
+      "agent": "defaulted",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "path": "/agnthub-e2e/home/.omp/agent/agents/defaulted.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/defaulted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted hooks: empty, so Claude Code ignores it",
+        "omitted mcpServers: empty, so Claude Code ignores it",
+        "omitted permissionMode: default is Claude Code's default permission mode",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
+    },
+    {
       "agent": "delegator",
       "harness": "omp",
       "settings": {},
@@ -724,6 +750,6 @@
     }
   ],
   "summary": {
-    "create": 32
+    "create": 33
   }
 }

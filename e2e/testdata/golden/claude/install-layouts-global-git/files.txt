@@ -8,6 +8,7 @@
 0644 home/.claude/agents/colon.md
 0644 home/.claude/agents/cu-native.md
 0644 home/.claude/agents/cx-native.md
+0644 home/.claude/agents/defaulted.md
 0644 home/.claude/agents/delegator.md
 0644 home/.claude/agents/dual.md
 0644 home/.claude/agents/fixer.md

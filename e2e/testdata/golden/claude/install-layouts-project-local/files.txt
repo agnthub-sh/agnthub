@@ -10,6 +10,7 @@
 0644 project/.claude/agents/colon.md
 0644 project/.claude/agents/cu-native.md
 0644 project/.claude/agents/cx-native.md
+0644 project/.claude/agents/defaulted.md
 0644 project/.claude/agents/delegator.md
 0644 project/.claude/agents/dual.md
 0644 project/.claude/agents/fixer.md

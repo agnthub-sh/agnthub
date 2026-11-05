@@ -182,6 +182,22 @@
       ]
     },
     {
+      "agent": "defaulted",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/defaulted.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/defaulted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "delegator",
       "harness": "claude",
       "settings": {},
@@ -601,6 +617,6 @@
     }
   ],
   "summary": {
-    "create": 35
+    "create": 36
   }
 }

@@ -166,6 +166,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "defaulted",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/defaulted.md",
+          "sourceDigest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
+          "converter": "opencode/v4",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/defaulted.md",
+          "digest": "sha256:2f2f27bb3ac6ef884e115e18686ff99a24a0993a13af373c071e7c127e0f26e5",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "delegator",
       "origin": "direct",
       "artifacts": [

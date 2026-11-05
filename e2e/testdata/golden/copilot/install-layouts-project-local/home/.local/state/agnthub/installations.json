@@ -86,6 +86,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.github/agents/defaulted.agent.md",
+      "digest": "sha256:f36caedc4f62847b1719dadc10ee6365ea465f14f36ef991dddd258a9f7b76e2",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "defaulted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.github/agents/delegator.agent.md",
       "digest": "sha256:6a6960b843ed2efe9bc102edcc1a808da5edade76be4798f4dc78e67d82940d3",
       "harness": "copilot",

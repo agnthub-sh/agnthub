@@ -345,6 +345,10 @@ var scenarios = []scenario{
 		"portable core with descriptive metadata (noted, omitted)", "tagged"),
 	conversion("Variants and conversion", "unsupported-permission-mode",
 		"Claude-only `permissionMode`: native on Claude Code, refused elsewhere", "guarded"),
+	conversion("Variants and conversion", "claude-default-fields",
+		"Claude Code fields at their default or empty (`permissionMode: default`, "+
+			"`disallowedTools: []`, `hooks: {}`, `mcpServers: []`): native on Claude Code, "+
+			"omitted with a note elsewhere", "defaulted"),
 
 	conversion("Tool restrictions", "tools-read-search-shell",
 		"allowlist Read/Grep/Glob/Bash", "reviewer"),

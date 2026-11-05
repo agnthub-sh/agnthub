@@ -147,11 +147,12 @@ func claudePluginAgent(variant *agent.VariantFile) ([]byte, []string, error) {
 }
 
 // executableFieldNotes flags native fields that make the Harness run commands or
-// servers when the Agent is used, so previews never hide them.
+// servers when the Agent is used, so previews never hide them. An empty field
+// declares nothing to run.
 func executableFieldNotes(doc *agent.Document, keys ...string) []string {
 	var notes []string
 	for _, key := range keys {
-		if _, ok := doc.Frontmatter[key]; ok {
+		if value, ok := doc.Frontmatter[key]; ok && !emptyValue(value) {
 			notes = append(
 				notes,
 				fmt.Sprintf("declares %s, which runs when the agent is used", key),
@@ -159,6 +160,24 @@ func executableFieldNotes(doc *agent.Document, keys ...string) []string {
 		}
 	}
 	return notes
+}
+
+// emptyValue reports whether a decoded YAML value declares nothing: null,
+// false, a blank string, or an empty list or map.
+func emptyValue(value any) bool {
+	switch value := value.(type) {
+	case nil:
+		return true
+	case bool:
+		return !value
+	case string:
+		return strings.TrimSpace(value) == ""
+	case []any:
+		return len(value) == 0
+	case map[string]any:
+		return len(value) == 0
+	}
+	return false
 }
 
 // claudeTools is Claude Code's tool vocabulary (2.1.309). Core names are what
@@ -287,7 +306,9 @@ func ClaudeIgnores(key string) bool {
 // claudeRestrictionLike are keys, compared without case, '-' or '_', that
 // Claude Code ignores but read as a tool or permission restriction: other
 // harnesses' fields or misspelled Claude fields. Conversion refuses them rather
-// than install an agent its author meant to restrict.
+// than install an agent its author meant to restrict, unless the value is
+// empty and so restricts nothing. An empty allowlist (claudeAllowlistLike)
+// still reads as "allow nothing" and is refused.
 var claudeRestrictionLike = map[string]bool{
 	"tools": true, "allowedtools": true, "disallowedtools": true, "deniedtools": true,
 	"denytools": true, "blockedtools": true, "excludedtools": true, "readonly": true,
@@ -298,15 +319,45 @@ var claudeRestrictionLike = map[string]bool{
 	"mcpservers": true, "maxturns": true,
 }
 
-// restrictionLike reports whether an ignored key reads as a restriction.
-func restrictionLike(key string) bool {
+// claudeAllowlistLike are the restriction-like keys that list what is allowed.
+var claudeAllowlistLike = map[string]bool{
+	"tools": true, "allowedtools": true, "allowedcommands": true, "allowedpaths": true,
+}
+
+// restrictionLike reports whether an ignored key with this value reads as a
+// restriction.
+func restrictionLike(key string, value any) bool {
 	folded := strings.Map(func(r rune) rune {
 		if r == '-' || r == '_' || r == ' ' {
 			return -1
 		}
 		return unicode.ToLower(r)
 	}, key)
-	return claudeRestrictionLike[folded]
+	return claudeRestrictionLike[folded] && (claudeAllowlistLike[folded] || !emptyValue(value))
+}
+
+// claudeNoop reports why a value of a Claude Code behavior field does what
+// omitting the field does, as Claude Code 2.1.309's agent loader reads it, or
+// false when the value has an effect. Conversion then omits the field with a
+// note instead of refusing.
+//   - permissionMode: default, or manual, its documented alias, is Manual mode,
+//     the mode the subagent has unless the session runs in another one. Modes
+//     are case-sensitive: Claude Code ignores Default with a warning, and
+//     conversion refuses it like any mode it does not know.
+//   - Any field empty (null, false, a blank string, [] or {}): Claude Code
+//     reads no hooks, servers, isolation, mode or initial prompt, except that
+//     hooks: [] is not a hook map and keeps Claude Code from loading the agent.
+func claudeNoop(key string, value any) (string, bool) {
+	if key == "permissionMode" && (value == "default" || value == "manual") {
+		return fmt.Sprintf("%s is Claude Code's default permission mode", value), true
+	}
+	if _, list := value.([]any); list && key == "hooks" {
+		return "", false
+	}
+	if emptyValue(value) {
+		return "empty, so Claude Code ignores it", true
+	}
+	return "", false
 }
 
 // claudeBehaviors are Claude Code subagent fields with no cross-harness equivalent.
@@ -353,9 +404,12 @@ func (a claudeAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 		case "disallowedTools":
 			disallowed = claudeToolEntries(sem, key, value)
 		case "maxTurns":
-			if turns, ok := positiveInt(value); ok {
+			switch turns, ok := positiveInt(value); {
+			case ok:
 				sem.MaxTurns = turns
-			} else {
+			case emptyValue(value):
+				sem.note("omitted maxTurns: empty, so Claude Code ignores it")
+			default:
 				sem.unsupported(key, "a turn limit agnthub cannot read")
 			}
 		case "background":
@@ -380,8 +434,12 @@ func (a claudeAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 			case claudeNotes[key] != "":
 				sem.note("omitted %s: %s", key, claudeNotes[key])
 			case claudeBehaviors[key] != "":
+				if why, noop := claudeNoop(key, value); noop {
+					sem.note("omitted %s: %s", key, why)
+					continue
+				}
 				sem.unsupported(key, claudeBehaviors[key])
-			case restrictionLike(key):
+			case restrictionLike(key, value):
 				sem.unsupported(key, "a field Claude Code ignores, but it reads as a tool or "+
 					"permission restriction")
 			case harmlessPortableKeys[key]:

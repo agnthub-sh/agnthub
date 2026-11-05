@@ -9,6 +9,7 @@
 0644 home/.omp/agent/agents/colon.md
 0644 home/.omp/agent/agents/cu-native.md
 0644 home/.omp/agent/agents/cx-native.md
+0644 home/.omp/agent/agents/defaulted.md
 0644 home/.omp/agent/agents/delegator.md
 0644 home/.omp/agent/agents/dual.md
 0644 home/.omp/agent/agents/fixer.md

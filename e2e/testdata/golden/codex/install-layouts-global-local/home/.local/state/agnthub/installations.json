@@ -57,6 +57,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.codex/agents/defaulted.toml",
+      "digest": "sha256:9898669b6699304e241dfb194618353faa73e790dbc3a4235672cf02ed87196d",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "defaulted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.codex/agents/dual.toml",
       "digest": "sha256:71caaca253f108db60d5b6fb7777baedfb1a2fbdc62cb2b834a20fa8ffc2002a",
       "harness": "codex",

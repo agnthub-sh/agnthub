@@ -204,6 +204,28 @@
       ]
     },
     {
+      "agent": "defaulted",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/defaulted.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/defaulted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted hooks: empty, so Claude Code ignores it",
+        "omitted mcpServers: empty, so Claude Code ignores it",
+        "omitted permissionMode: default is Claude Code's default permission mode"
+      ]
+    },
+    {
       "agent": "delegator",
       "harness": "gemini",
       "settings": {},
@@ -706,7 +728,7 @@
     }
   ],
   "summary": {
-    "create": 32,
+    "create": 33,
     "incompatible": 5,
     "invalid": 2
   }
