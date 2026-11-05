@@ -112,7 +112,7 @@ func TestAddInstallsPortableAgentAndRecordsReceipts(t *testing.T) {
 		t.Fatalf("want one ownership record, got %+v", ownership.Records)
 	}
 	code, out = h.run("add", h.source, "--harness", "claude", "--yes")
-	if code != 0 || !strings.Contains(out, "unchanged") {
+	if code != 0 || !strings.Contains(out, "already correct") {
 		t.Fatalf("reinstall should be a no-op, exit %d: %s", code, out)
 	}
 }

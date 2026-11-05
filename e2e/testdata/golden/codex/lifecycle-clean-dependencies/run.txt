@@ -4,8 +4,8 @@ exit status: 0
 Installed · localhost:8443/manifest.git@23ce82da4602 · project scope
   harnesses: codex
 Skills
-  ACTION     SKILL      HARNESS  PATH
-  + install  e2e-skill  codex    .agents/skills/e2e-skill
+  SKILL      HARNESS  ACTION     PATH
+  e2e-skill  codex    + install  .agents/skills/e2e-skill
   · >=1.0.0 <=2.0.0 from localhost:8443/skills.git#v1.0.0, required by lead
   · version 1.4.0
   · project .agents/skills
@@ -17,20 +17,20 @@ Changes observed in skill locations
   created  .agents/skills/e2e-skill
   created  skills-lock.json
 Agents
-  ACTION    AGENT          HARNESS  PATH
-  + create  lead           codex    .codex/agents/lead.toml
-  + create  helper         codex    .codex/agents/helper.toml
-  + create  companion [1]  codex    .codex/agents/companion.toml
-  + create  codex-helper   codex    .codex/agents/codex-helper.toml
-  · dependency of lead, from localhost:8443/manifest.git@23ce82da4602 (2 of 4 rows: helper, codex-helper)
+  AGENT          HARNESS  ACTION    PATH
+  codex-helper   codex    + create  .codex/agents/codex-helper.toml
+  companion [1]  codex    + create  .codex/agents/companion.toml
+  helper         codex    + create  .codex/agents/helper.toml
+  lead           codex    + create  .codex/agents/lead.toml
+  · dependency of lead, from localhost:8443/manifest.git@23ce82da4602 (2 of 4 rows: codex-helper, helper)
   [1] companion: dependency of lead, from localhost:8443/companion.git#v1@7baafb2b236d
 4 created · 0 updated · 0 deleted · skills: 1 install
 $ agnthub remove lead --yes
 exit status: 0
 --- stdout
 Remove: done · project scope · lock agnthub-lock.json
-  ACTION     AGENT  HARNESS  PATH
-  - removed  lead   codex    .codex/agents/lead.toml
+  AGENT  HARNESS  ACTION     PATH
+  lead   codex    - removed  .codex/agents/lead.toml
 Dependencies stay installed: companion (agent), codex-helper (agent), helper (agent), e2e-skill (skill)
   clean up the ones no longer required with: agnthub remove --clean-dependencies
 1 removed

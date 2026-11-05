@@ -23,25 +23,29 @@ not install or that you changed. Repositories need no particular setup: agnthub 
 `AGENT.md`/`agents/` definitions, each harness's native agent directory, the Claude Code plugins
 and marketplaces a repository packages (`.claude-plugin/`), and an optional `agnthub.yaml`.
 
-A preview is a table of what each harness gets, with notes and refusals collected under it:
+A preview is a table of what each harness gets, sorted by agent and harness. Only rows that
+change something are listed; notes, refusals and the agents already in place are summed up
+under it. Once you approve, agnthub prints only the outcome:
 
 ```text
-$ agnthub add wshobson/agents --agent architect --agent code-review-preshipment -H claude -H codex -H cursor
-📋 Plan · wshobson/agents@7e2fb559cf4b · project scope
-  harnesses: claude, codex, cursor
-  ACTION    AGENT                    HARNESS  PATH
-  + create  architect                claude   .claude/agents/architect.md
-  + create  architect [1]            codex    .codex/agents/architect.toml
-  + create  architect [1]            cursor   .cursor/agents/architect.md
-  + create  code-review-preshipment  claude   .claude/agents/code-review-preshipment.md
-  [1] architect: converted from the claude variant
-❌ Refused (2)
-  AGENT                    HARNESS  REASON
-  code-review-preshipment  codex    it excludes edit, but a Codex agent file has no tool allowlist
-                                    or read-only mode to withhold it
-  code-review-preshipment  cursor   it uses shell without edits, but Cursor's only restriction
-                                    (readonly) blocks every shell command
-4 to create · 0 to update · 0 to delete · 2 refused
+$ agnthub add addyosmani/agent-skills --agent '*' --harness all --global
+📋 Plan · addyosmani/agent-skills@301b02b12bff · global scope
+  harnesses: claude, opencode, codex, copilot, cursor, gemini, omp profile=default (native default)
+  omp: default profile
+  AGENT                    HARNESS   ACTION    PATH
+  code-reviewer            copilot   + create  ~/.copilot/agents/code-reviewer.agent.md
+  code-reviewer            omp       + create  ~/.omp/agent/agents/code-reviewer.md
+  code-reviewer            opencode  + create  ~/.config/opencode/agents/code-reviewer.md
+  security-auditor         copilot   + create  ~/.copilot/agents/security-auditor.agent.md
+  …
+  web-performance-auditor  opencode  + create  ~/.config/opencode/agents/web-performance-auditor.md
+  · converted from the claude variant
+  16 agents were already correct in their harnesses, so no action was needed.
+12 to create · 0 to update · 0 to delete
+┃ Apply this plan?
+┃   Apply     Cancel
+✅ Installed · addyosmani/agent-skills@301b02b12bff · global scope
+12 created · 0 updated · 0 deleted
 ```
 
 Agents install into the project in the current directory, or into your user configuration with

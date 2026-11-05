@@ -36,6 +36,9 @@ type planView struct {
 	Outcome *skills.Outcome
 	// Report describes what an update or restore changes relative to the lock.
 	Report *lifecycleReport
+	// Previewed reports that the user saw this plan before approving it, so the
+	// result need not repeat its table.
+	Previewed bool
 }
 
 // harnessView is one selected Harness with detection and effective Settings.
@@ -100,6 +103,8 @@ type planJSON struct {
 	SkillSummary  map[string]int `json:"skillSummary,omitempty"`
 	// Changes compares an update or restore with the lock.
 	Changes *lifecycleReport `json:"changes,omitempty"`
+	// previewed is planView.Previewed; human output only.
+	previewed bool
 }
 
 type skillJSON struct {
@@ -265,6 +270,7 @@ func (p *printer) plan(view *planView, status string) {
 		payload.Skipped = append(payload.Skipped, newItemJSON(item, effective))
 	}
 	addSkills(&payload, view)
+	payload.previewed = view.Previewed
 	if p.json {
 		_ = p.emitJSON(payload)
 		return
@@ -337,11 +343,12 @@ func (p *printer) humanSkillRuns(payload *planJSON) {
 	}
 }
 
+// skillSummaryLine counts the Skill decisions that act or refuse; reused and
+// unchanged Skills are counted by the sentence under the Skills table.
 func skillSummaryLine(summary map[string]int) string {
 	order := []skills.Decision{
-		skills.DecisionInstall, skills.DecisionReuse, skills.DecisionUnchanged,
-		skills.DecisionShadowed, skills.DecisionConflict, skills.DecisionUnsatisfied,
-		skills.DecisionDisabled, skills.DecisionUnsupported,
+		skills.DecisionInstall, skills.DecisionShadowed, skills.DecisionConflict,
+		skills.DecisionUnsatisfied, skills.DecisionDisabled, skills.DecisionUnsupported,
 	}
 	parts := make([]string, 0, len(order))
 	for _, decision := range order {

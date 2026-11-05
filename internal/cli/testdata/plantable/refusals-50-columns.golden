@@ -1,9 +1,9 @@
 Plan · wshobson/agents@7e2fb559cf4b · project scope
   harnesses: claude, codex
-  ACTION    AGENT     HARNESS  PATH
-  + create  reviewer  claude   .claude/…eviewer.md
-  + create  reviewer  codex    .codex/…viewer.toml
-  + create  hooked    claude   .claude/…/hooked.md
+  AGENT     HARNESS  ACTION    PATH
+  hooked    claude   + create  .claude/…/hooked.md
+  reviewer  claude   + create  .claude/…eviewer.md
+  reviewer  codex    + create  .codex/…viewer.toml
 Refused (2)
   AGENT    HARNESS  REASON
   hooked   codex    incompatible with codex: hooks

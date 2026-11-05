@@ -1,0 +1,19 @@
+📋 [1mPlan[m · addyosmani/agent-skills@301b02b12bff · global scope
+  [2mharnesses:[m claude, opencode, codex, copilot, cursor, gemini, omp profile=default[2m (native default)[m
+  [2momp: default profile[m
+  [1;36mAGENT[m                    [1;36mHARNESS[m   [1;36mACTION[m    [1;36mPATH[m
+  code-reviewer            copilot   [32m+ create[m  ~/.copilot/agents/code-reviewer.agent.md
+  code-reviewer            omp       [32m+ create[m  ~/.omp/agent/agents/code-reviewer.md
+  code-reviewer            opencode  [32m+ create[m  ~/.config/opencode/agents/code-reviewer.md
+  security-auditor         copilot   [32m+ create[m  ~/.copilot/agents/security-auditor.agent.md
+  security-auditor         omp       [32m+ create[m  ~/.omp/agent/agents/security-auditor.md
+  security-auditor         opencode  [32m+ create[m  ~/.config/opencode/agents/security-auditor.md
+  test-engineer            copilot   [32m+ create[m  ~/.copilot/agents/test-engineer.agent.md
+  test-engineer            omp       [32m+ create[m  ~/.omp/agent/agents/test-engineer.md
+  test-engineer            opencode  [32m+ create[m  ~/.config/opencode/agents/test-engineer.md
+  web-performance-auditor  copilot   [32m+ create[m  ~/.copilot/agents/web-performance-auditor.agent.md
+  web-performance-auditor  omp       [32m+ create[m  ~/.omp/agent/agents/web-performance-auditor.md
+  web-performance-auditor  opencode  [32m+ create[m  ~/.config/opencode/agents/web-performance-auditor.md
+  [2m· converted from the claude variant[m
+  [2m16 agents were already correct in their harnesses, so no action was needed.[m
+[32m12 to create[m · [2m0 to update[m · [2m0 to delete[m

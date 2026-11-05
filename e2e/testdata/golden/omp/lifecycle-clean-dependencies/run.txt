@@ -5,8 +5,8 @@ Installed · localhost:8443/manifest.git@23ce82da4602 · project scope
   harnesses: omp profile=default (native default)
   omp: shared by every omp profile; verify with default profile
 Skills
-  ACTION     SKILL      HARNESS  PATH
-  + install  e2e-skill  omp      .agents/skills/e2e-skill
+  SKILL      HARNESS  ACTION     PATH
+  e2e-skill  omp      + install  .agents/skills/e2e-skill
   · >=1.0.0 <=2.0.0 from localhost:8443/skills.git#v1.0.0, required by lead
   · version 1.4.0
   · project .agents/skills
@@ -18,19 +18,19 @@ Changes observed in skill locations
   created  .agents/skills/e2e-skill
   created  skills-lock.json
 Agents
-  ACTION    AGENT          HARNESS  PATH
-  + create  lead           omp      .omp/agents/lead.md
-  + create  helper [1]     omp      .omp/agents/helper.md
-  + create  companion [2]  omp      .omp/agents/companion.md
-  [1] helper: dependency of lead, from localhost:8443/manifest.git@23ce82da4602
-  [2] companion: dependency of lead, from localhost:8443/companion.git#v1@7baafb2b236d
+  AGENT          HARNESS  ACTION    PATH
+  companion [1]  omp      + create  .omp/agents/companion.md
+  helper [2]     omp      + create  .omp/agents/helper.md
+  lead           omp      + create  .omp/agents/lead.md
+  [1] companion: dependency of lead, from localhost:8443/companion.git#v1@7baafb2b236d
+  [2] helper: dependency of lead, from localhost:8443/manifest.git@23ce82da4602
 3 created · 0 updated · 0 deleted · skills: 1 install
 $ agnthub remove lead --yes
 exit status: 0
 --- stdout
 Remove: done · project scope · lock agnthub-lock.json
-  ACTION     AGENT  HARNESS                PATH
-  - removed  lead   omp [profile=default]  .omp/agents/lead.md
+  AGENT  HARNESS                ACTION     PATH
+  lead   omp [profile=default]  - removed  .omp/agents/lead.md
 Dependencies stay installed: companion (agent), helper (agent), e2e-skill (skill)
   clean up the ones no longer required with: agnthub remove --clean-dependencies
 1 removed

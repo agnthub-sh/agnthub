@@ -3,66 +3,66 @@ Plan · wshobson/agents@7e2fb559cf4b · project scope
     detected), gemini, omp profile=default (native default)
   omp: shared by every omp profile; verify with default
     profile
-  + create  comprehensive-review-code-reviewer
-      claude    .claude/agents/co…ve-review-code-reviewer.md
-  + create  comprehensive-review-code-reviewer [1]
-      opencode  .opencode/agents/…ve-review-code-reviewer.md
-  + create  comprehensive-review-code-reviewer [1]
-      codex     .codex/agents/com…-review-code-reviewer.toml
-  + create  comprehensive-review-code-reviewer [1]
-      copilot   .github/agents/co…iew-code-reviewer.agent.md
-  + create  comprehensive-review-code-reviewer [1]
-      cursor    .cursor/agents/co…ve-review-code-reviewer.md
-  + create  comprehensive-review-code-reviewer [1]
-      gemini    .gemini/agents/co…ve-review-code-reviewer.md
-  + create  comprehensive-review-code-reviewer [1]
-      omp       .omp/agents/compr…ve-review-code-reviewer.md
-  + create  architect
-      claude    .claude/agents/architect.md
-  + create  architect
-      opencode  .opencode/agents/architect.md
-  + create  architect
-      codex     .codex/agents/architect.toml
-  + create  architect
-      copilot   .github/agents/architect.agent.md
-  + create  architect
-      cursor    .cursor/agents/architect.md
-  + create  architect
-      gemini    .gemini/agents/architect.md
-  + create  architect
-      omp       .omp/agents/architect.md
-  + create  ai-engineer
-      claude    .claude/agents/ai-engineer.md
-  + create  ai-engineer
-      opencode  .opencode/agents/ai-engineer.md
-  + create  ai-engineer
-      codex     .codex/agents/ai-engineer.toml
-  + create  ai-engineer
-      copilot   .github/agents/ai-engineer.agent.md
-  + create  ai-engineer
-      cursor    .cursor/agents/ai-engineer.md
-  + create  ai-engineer
-      gemini    .gemini/agents/ai-engineer.md
-  + create  ai-engineer
-      omp       .omp/agents/ai-engineer.md
-  + create  accessibility-expert
-      claude    .claude/agents/accessibility-expert.md
-  + create  accessibility-expert [2]
-      opencode  .opencode/agents/accessibility-expert.md
-  + create  accessibility-expert [2]
-      codex     .codex/agents/accessibility-expert.toml
-  + create  accessibility-expert [2]
-      copilot   .github/agents/accessibility-expert.agent.md
-  + create  accessibility-expert [2]
-      cursor    .cursor/agents/accessibility-expert.md
-  + create  accessibility-expert [2]
-      gemini    .gemini/agents/accessibility-expert.md
-  + create  accessibility-expert [2]
-      omp       .omp/agents/accessibility-expert.md
+  accessibility-expert  claude
+      + create  .claude/agents/accessibility-expert.md
+  accessibility-expert [1]  codex
+      + create  .codex/agents/accessibility-expert.toml
+  accessibility-expert [1]  copilot
+      + create  .github/agents/accessibility-expert.agent.md
+  accessibility-expert [1]  cursor
+      + create  .cursor/agents/accessibility-expert.md
+  accessibility-expert [1]  gemini
+      + create  .gemini/agents/accessibility-expert.md
+  accessibility-expert [1]  omp
+      + create  .omp/agents/accessibility-expert.md
+  accessibility-expert [1]  opencode
+      + create  .opencode/agents/accessibility-expert.md
+  ai-engineer  claude
+      + create  .claude/agents/ai-engineer.md
+  ai-engineer  codex
+      + create  .codex/agents/ai-engineer.toml
+  ai-engineer  copilot
+      + create  .github/agents/ai-engineer.agent.md
+  ai-engineer  cursor
+      + create  .cursor/agents/ai-engineer.md
+  ai-engineer  gemini
+      + create  .gemini/agents/ai-engineer.md
+  ai-engineer  omp
+      + create  .omp/agents/ai-engineer.md
+  ai-engineer  opencode
+      + create  .opencode/agents/ai-engineer.md
+  architect  claude
+      + create  .claude/agents/architect.md
+  architect  codex
+      + create  .codex/agents/architect.toml
+  architect  copilot
+      + create  .github/agents/architect.agent.md
+  architect  cursor
+      + create  .cursor/agents/architect.md
+  architect  gemini
+      + create  .gemini/agents/architect.md
+  architect  omp
+      + create  .omp/agents/architect.md
+  architect  opencode
+      + create  .opencode/agents/architect.md
+  comprehensive-review-code-reviewer  claude
+      + create  .claude/agents/co…ve-review-code-reviewer.md
+  comprehensive-review-code-reviewer [2]  codex
+      + create  .codex/agents/com…-review-code-reviewer.toml
+  comprehensive-review-code-reviewer [2]  copilot
+      + create  .github/agents/co…iew-code-reviewer.agent.md
+  comprehensive-review-code-reviewer [2]  cursor
+      + create  .cursor/agents/co…ve-review-code-reviewer.md
+  comprehensive-review-code-reviewer [2]  gemini
+      + create  .gemini/agents/co…ve-review-code-reviewer.md
+  comprehensive-review-code-reviewer [2]  omp
+      + create  .omp/agents/compr…ve-review-code-reviewer.md
+  comprehensive-review-code-reviewer [2]  opencode
+      + create  .opencode/agents/…ve-review-code-reviewer.md
   · converted from the claude variant (24 of 28 rows:
-    opencode, codex, copilot, cursor, gemini, omp)
-  [1] comprehensive-review-code-reviewer: model "opus"
+    codex, copilot, cursor, gemini, omp, opencode)
+  [1] accessibility-expert: omitted color: cosmetic
+  [2] comprehensive-review-code-reviewer: model "opus"
       is specific to claude; the agent uses the harness
       default model
-  [2] accessibility-expert: omitted color: cosmetic
 28 to create · 0 to update · 0 to delete

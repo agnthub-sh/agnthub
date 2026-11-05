@@ -1,9 +1,9 @@
 📋 [1mPlan[m · wshobson/agents@7e2fb559cf4b · project scope
   [2mharnesses:[m claude, codex
-  [1;36mACTION[m    [1;36mAGENT[m     [1;36mHARNESS[m  [1;36mPATH[m
-  [32m+ create[m  reviewer  claude   .claude/agents/reviewer.md
-  [32m+ create[m  reviewer  codex    .codex/agents/reviewer.toml
-  [32m+ create[m  hooked    claude   .claude/agents/hooked.md
+  [1;36mAGENT[m     [1;36mHARNESS[m  [1;36mACTION[m    [1;36mPATH[m
+  hooked    claude   [32m+ create[m  .claude/agents/hooked.md
+  reviewer  claude   [32m+ create[m  .claude/agents/reviewer.md
+  reviewer  codex    [32m+ create[m  .codex/agents/reviewer.toml
 ❌ [1;31mRefused (2)[m
   [1;36mAGENT[m    [1;36mHARNESS[m  [1;36mREASON[m
   [1mhooked[m   codex    [31mincompatible with codex: hooks run shell commands on tool events, which codex agents cannot declare[m

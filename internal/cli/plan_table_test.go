@@ -6,6 +6,7 @@ import (
 	"flag"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 
@@ -127,6 +128,67 @@ func screenshotPlan(status string) *planJSON {
 	return payload
 }
 
+// globalPlan is the user's case: addyosmani/agent-skills agents into every
+// Harness in user scope, where the Harnesses in unchanged already have them.
+func globalPlan(status string, agents []string, unchanged ...agent.HarnessID) *planJSON {
+	source := sourceJSON{
+		Kind: "github", Locator: "addyosmani/agent-skills", Revision: "301b02b12bff8a7c6d5e",
+	}
+	payload := &planJSON{Status: status, Scope: "global", Source: source}
+	for _, id := range agent.AllHarnesses {
+		h := harnessJSON{ID: string(id), Name: string(id), Detected: true}
+		if id == agent.OMP {
+			h.Settings = []settingJSON{{Key: "profile", Value: "default", Source: "native default"}}
+		}
+		payload.Harnesses = append(payload.Harnesses, h)
+	}
+	dirs := map[agent.HarnessID]string{
+		agent.Claude: ".claude/agents/%s.md", agent.OpenCode: ".config/opencode/agents/%s.md",
+		agent.Codex: ".codex/agents/%s.toml", agent.Copilot: ".copilot/agents/%s.agent.md",
+		agent.Cursor: ".cursor/agents/%s.md", agent.Gemini: ".gemini/agents/%s.md",
+		agent.OMP: ".omp/agent/agents/%s.md",
+	}
+	for _, name := range agents {
+		for _, id := range agent.AllHarnesses {
+			item := itemJSON{
+				Agent: name, Harness: string(id), Action: "create", Source: source,
+				Origin:      "direct",
+				Path:        filepath.Join(goldenHome, strings.ReplaceAll(dirs[id], "%s", name)),
+				Destination: "user",
+			}
+			if slices.Contains(unchanged, id) {
+				item.Action = "unchanged"
+			}
+			if id == agent.OMP {
+				item.Destination = "default profile"
+			}
+			if id != agent.Claude {
+				item.Notes = []string{"converted from the claude variant"}
+			}
+			if id == agent.Cursor {
+				// Only on rows the table leaves out: it must not show.
+				item.Notes = append(item.Notes, "a multi-line description is joined onto one line")
+			}
+			payload.Items = append(payload.Items, item)
+		}
+	}
+	return payload
+}
+
+var userAgents = []string{
+	"web-performance-auditor",
+	"code-reviewer",
+	"test-engineer",
+	"security-auditor",
+}
+
+// userCase is the user's run: 12 to create, 16 already installed.
+func userCase(status string, previewed bool) *planJSON {
+	payload := globalPlan(status, userAgents, agent.Claude, agent.Codex, agent.Cursor, agent.Gemini)
+	payload.previewed = previewed
+	return payload
+}
+
 func TestPlanTableGoldens(t *testing.T) {
 	for _, tc := range []struct {
 		name    string
@@ -134,11 +196,16 @@ func TestPlanTableGoldens(t *testing.T) {
 		payload *planJSON
 	}{
 		{"create-4x7-color", colorTerminal, screenshotPlan(statusPlanned)},
-		{"create-4x7-applied-color", colorTerminal, screenshotPlan(statusApplied)},
+		{"create-4x7-applied-unattended-color", colorTerminal, screenshotPlan(statusApplied)},
 		{"create-4x7-no-color", noColorTerminal, screenshotPlan(statusPlanned)},
 		{"create-4x7-redirected", redirected, screenshotPlan(statusPlanned)},
 		{"create-4x7-80-columns", withColumns(noColorTerminal, "80"), screenshotPlan(statusPlanned)},
 		{"create-4x7-60-columns", withColumns(noColorTerminal, "60"), screenshotPlan(statusPlanned)},
+		{"global-some-installed-color", colorTerminal, userCase(statusPlanned, false)},
+		{"global-some-installed-applied-after-preview-color", colorTerminal, userCase(statusApplied, true)},
+		{"global-some-installed-applied-unattended", redirected, userCase(statusApplied, false)},
+		{"global-one-installed", redirected, globalPlan(statusPlanned, []string{"code-reviewer"}, agent.Claude)},
+		{"global-all-installed", redirected, globalPlan(statusPlanned, userAgents, agent.AllHarnesses...)},
 		{"refusals-color", colorTerminal, refusalPlan()},
 		{"refusals-50-columns", withColumns(noColorTerminal, "50"), refusalPlan()},
 		{"update-color", colorTerminal, updatePlan()},
@@ -319,36 +386,49 @@ func TestRemovePlanTableGolden(t *testing.T) {
 			Action: uninstall.ActionRefuse,
 			Reason: ".claude/agents/planner.md was modified locally",
 		},
+		{
+			Unit:   unit("linter", "claude", ".claude/agents/linter.md", nil),
+			Action: uninstall.ActionPreserve,
+			Reason: "tester still requires it",
+		},
 	}}
-	for _, tc := range []struct {
-		name   string
-		vars   map[string]string
-		status string
-	}{
-		{"remove-color", colorTerminal, statusPlanned},
-		{"remove-no-color", noColorTerminal, statusPlanned},
-	} {
-		t.Run(tc.name, func(t *testing.T) {
-			var out bytes.Buffer
-			r := &removal{
-				app: &App{WorkDir: goldenProject}, opts: &removeOptions{},
-				lockPath: filepath.Join(goldenProject, state.LockFileName),
-				inv:      &uninstall.Inventory{},
-			}
-			r.print(goldenPrinter(tc.vars, &out), plan, tc.status)
-			checkGolden(t, tc.name, out.String())
-		})
+	newRemoval := func(previewed bool) *removal {
+		return &removal{
+			app: &App{WorkDir: goldenProject}, opts: &removeOptions{},
+			lockPath: filepath.Join(goldenProject, state.LockFileName),
+			inv:      &uninstall.Inventory{}, previewed: previewed,
+		}
 	}
 	failed := *plan.Entries[0]
 	failed.Err = errors.New("permission denied")
 	applied := &uninstall.Plan{Entries: []*uninstall.Entry{&failed, plan.Entries[1]}}
-	var out bytes.Buffer
-	r := &removal{
-		app: &App{WorkDir: goldenProject}, opts: &removeOptions{},
-		lockPath: filepath.Join(goldenProject, state.LockFileName), inv: &uninstall.Inventory{},
+	for _, tc := range []struct {
+		name      string
+		vars      map[string]string
+		plan      *uninstall.Plan
+		status    string
+		previewed bool
+	}{
+		{"remove-color", colorTerminal, plan, statusPlanned, false},
+		{"remove-no-color", noColorTerminal, plan, statusPlanned, false},
+		{"remove-failed-unattended", noColorTerminal, applied, statusFailed, false},
+		{"remove-failed-after-preview", noColorTerminal, applied, statusFailed, true},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			var out bytes.Buffer
+			r := newRemoval(tc.previewed)
+			r.print(goldenPrinter(tc.vars, &out), tc.plan, tc.status)
+			checkGolden(t, tc.name, out.String())
+		})
 	}
-	r.print(goldenPrinter(noColorTerminal, &out), applied, statusFailed)
-	checkGolden(t, "remove-failed", out.String())
+}
+
+func TestCheckTableGolden(t *testing.T) {
+	report := updatePlan().Changes
+	report.Summary = map[string]int{agentUpdateAvailable: 2, agentUpToDate: 0, "drift": 1}
+	var out bytes.Buffer
+	goldenPrinter(noColorTerminal, &out).humanCheck("project", report)
+	checkGolden(t, "check", out.String())
 }
 
 func TestTruncateMiddleKeepsTheEndsWithinWidth(t *testing.T) {

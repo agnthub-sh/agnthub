@@ -331,8 +331,9 @@ func (r *lifecycleReport) pending(plan *install.Plan) bool {
 	})
 }
 
-// humanCheck prints the locked artifacts as a table of what an update would do,
-// with local drift, recorded bindings and unavailable sources.
+// humanCheck prints what an update would do as a table (Agent | Harness | Status |
+// Path), with local drift, recorded bindings and unavailable sources; current
+// artifacts are counted, not listed.
 func (p *printer) humanCheck(scope string, report *lifecycleReport) {
 	s := p.styles
 	fmt.Fprintf(p.w, "%s · %s scope · lock %s\n", s.title.Render("Check"), scope,
@@ -340,6 +341,7 @@ func (p *printer) humanCheck(scope string, report *lifecycleReport) {
 	p.sources(report)
 	var rows []notedRow
 	var refused []refusal
+	var kept []string
 	for _, entry := range report.Agents {
 		if entry.Error != "" {
 			harnesses := make([]string, 0, len(entry.Artifacts))
@@ -353,41 +355,41 @@ func (p *printer) humanCheck(scope string, report *lifecycleReport) {
 		}
 		for i := range entry.Artifacts {
 			art := &entry.Artifacts[i]
-			if art.Change == changeBlocked {
+			switch art.Change {
+			case changeBlocked:
 				refused = append(refused, refusal{entry.Agent, art.Harness, art.Reason})
 				continue
-			}
-			row := p.row(rowUnchanged, entry.Agent, art.Harness, art.Path)
-			switch art.Change {
-			case changeNone:
-				row.cells[0] = cell{text: "= up to date", style: s.dim}
-			case changeAdded:
-				row.cells[0] = p.actionCell(rowCreate)
 			case changeRemoved:
-				row.notes = append(row.notes, "the source no longer provides it")
+				kept = append(kept, keptLine(entry, art.Harness, p.path(art.Path)))
+				continue
+			}
+			row := p.row(rowUpdate, entry.Agent, art.Harness, art.Path)
+			switch {
+			case art.Change == changeAdded:
+				row.cells[2] = p.actionCell(rowCreate)
+			case art.Change != changeNone:
+			case art.Local != "" && art.Local != localOK:
+				// Current content, but the file on disk differs from it.
+				row.cells[2] = cell{text: "! " + art.Local, style: s.blocked}
 			default:
-				row.cells[0] = p.actionCell(rowUpdate)
+				row.idle = true
 			}
 			if len(entry.RequiredBy) > 0 {
 				row.notes = append(row.notes,
 					"dependency of "+strings.Join(entry.RequiredBy, ", "))
 			}
-			if entry.Status == agentNotRequired {
-				row.notes = append(row.notes, "no installed agent requires it any more")
-			}
 			row.notes = append(row.notes, artifactNotes(art)...)
 			rows = append(rows, row)
 		}
 	}
-	if len(rows) == 0 && len(refused) == 0 {
+	if len(rows) == 0 && len(refused) == 0 && len(kept) == 0 {
 		fmt.Fprintln(p.w, "  no locked agents")
 	}
-	p.notedTable([]string{"STATUS", "AGENT", "HARNESS", "PATH"}, 1, 3, rows)
+	p.notedTable([]string{"AGENT", "HARNESS", "STATUS", "PATH"}, rows, kept, idleAgent, idleAgents)
 	p.refusals("Cannot update", "AGENT", refused)
 	p.skillChanges(report.Skills)
 	order := []string{
-		agentUpToDate, agentUpdateAvailable, agentNewDependency, agentNotRequired,
-		agentUnavailable, "drift",
+		agentUpdateAvailable, agentNewDependency, agentNotRequired, agentUnavailable, "drift",
 	}
 	parts := make([]string, 0, len(order))
 	for _, key := range order {

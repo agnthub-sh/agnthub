@@ -1,0 +1,14 @@
+Plan · addyosmani/agent-skills@301b02b12bff · global scope
+  harnesses: claude, opencode, codex, copilot, cursor, gemini, omp profile=default (native default)
+  omp: default profile
+  AGENT          HARNESS   ACTION    PATH
+  code-reviewer  codex     + create  ~/.codex/agents/code-reviewer.toml
+  code-reviewer  copilot   + create  ~/.copilot/agents/code-reviewer.agent.md
+  code-reviewer  cursor    + create  ~/.cursor/agents/code-reviewer.md
+  code-reviewer  gemini    + create  ~/.gemini/agents/code-reviewer.md
+  code-reviewer  omp       + create  ~/.omp/agent/agents/code-reviewer.md
+  code-reviewer  opencode  + create  ~/.config/opencode/agents/code-reviewer.md
+  · converted from the claude variant
+  · a multi-line description is joined onto one line (1 of 6 rows: cursor)
+  1 agent was already correct in its harness, so no action was needed.
+6 to create · 0 to update · 0 to delete

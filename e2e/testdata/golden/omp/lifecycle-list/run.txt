@@ -4,8 +4,8 @@ exit status: 0
 Installed · localhost:8443/evolving.git#v1@5286a739a333 · project scope
   harnesses: omp profile=default (native default)
   omp: shared by every omp profile; verify with default profile
-  ACTION    AGENT    HARNESS  PATH
-  + create  drifter  omp      .omp/agents/drifter.md
+  AGENT    HARNESS  ACTION    PATH
+  drifter  omp      + create  .omp/agents/drifter.md
 1 created · 0 updated · 0 deleted
 $ agnthub list --json
 exit status: 0

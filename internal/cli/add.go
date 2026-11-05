@@ -328,6 +328,7 @@ func (a *App) applyInteractive(
 			Report: view.Report,
 		}
 	}
+	view.Previewed = true
 	confirmed, err := a.Prompter.Confirm(ctx, question, detail)
 	if err != nil {
 		return err
@@ -371,6 +372,7 @@ func (a *App) apply(
 		out.plan(&planView{
 			Plan: &applied, Harnesses: view.Harnesses, Skipped: view.Skipped,
 			SkippedSkills: view.SkippedSkills, Outcome: view.Outcome, Report: view.Report,
+			Previewed: view.Previewed,
 		}, statusApplied)
 	}
 	if err == nil && !replays(view) {

@@ -1,0 +1,13 @@
+Check · project scope · lock agnthub-lock.json
+  sources: wshobson/agents#v1@7e2fb559cf4b → 9a8b7c6d5e4f
+  AGENT     HARNESS  STATUS    PATH
+  reviewer  claude   ~ update  .claude/agents/reviewer.md
+  reviewer  codex    ~ update  .codex/agents/reviewer.toml
+  · content changed (1 of 2 rows: claude)
+  · converter codex/1 → codex/2 (1 of 2 rows: codex)
+  · local: modified (1 of 2 rows: codex)
+  · planner for codex: the source no longer provides it; .codex/agents/planner.toml stays installed
+  1 agent was already correct in its harness, so no action was needed.
+Skill dependencies
+  + code-review for claude (added)
+2 update available · 1 drift

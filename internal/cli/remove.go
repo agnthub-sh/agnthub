@@ -90,6 +90,8 @@ type removal struct {
 	interactive bool
 	external    map[string][]string
 	unreadable  []string
+	// previewed reports that the plan was shown before the user approved it.
+	previewed bool
 }
 
 func (a *App) runRemove(ctx context.Context, names []string, opts *removeOptions) error {
@@ -576,6 +578,7 @@ func (r *removal) decide(ctx context.Context, plan *uninstall.Plan) error {
 		return r.apply(out, plan)
 	}
 	r.print(out, plan, statusPlanned)
+	r.previewed = true
 	question := "Apply this removal?"
 	if refused > 0 {
 		question = fmt.Sprintf("%d item(s) are refused and stay. Apply the other %d?",
@@ -785,7 +788,8 @@ func (r *removal) print(out *printer, plan *uninstall.Plan, status string) {
 	}
 	fmt.Fprintf(out.w, "%s%s · %s scope · lock %s\n", icon,
 		s.title.Render(removeTitle(title, status)), payload.Scope, out.path(r.lockPath))
-	if len(payload.Items) == 0 {
+	shown := !r.previewed || (status != statusApplied && status != statusFailed)
+	if shown && len(payload.Items) == 0 {
 		fmt.Fprintln(out.w, "  nothing to clean up")
 	}
 	var rows []notedRow
@@ -809,10 +813,11 @@ func (r *removal) print(out *printer, plan *uninstall.Plan, status string) {
 		}
 		row := notedRow{
 			cells: []cell{
-				removeCell(s, item), plainCell(name), plainCell(harnessCell),
+				plainCell(name), plainCell(harnessCell), removeCell(s, item),
 				plainCell(out.path(item.Path)),
 			},
 			name: name, harness: harnessCell,
+			idle: item.Action == string(uninstall.ActionPreserve),
 		}
 		if item.Reason != "" {
 			row.notes = append(row.notes, item.Reason)
@@ -823,10 +828,14 @@ func (r *removal) print(out *printer, plan *uninstall.Plan, status string) {
 		}
 		rows = append(rows, row)
 	}
-	out.notedTable([]string{"ACTION", "AGENT", "HARNESS", "PATH"}, 1, 3, rows)
-	out.refusals("Refused", "AGENT", refused)
+	if shown {
+		out.notedTable([]string{"AGENT", "HARNESS", "ACTION", "PATH"}, rows, nil, idleAgent,
+			idleAgents)
+		out.refusals("Refused", "AGENT", refused)
+	}
+	// Failures happen while applying, so they are news even after a preview.
 	out.refusals("Failed", "AGENT", failed)
-	if len(payload.DependenciesKept) > 0 {
+	if shown && len(payload.DependenciesKept) > 0 {
 		names := make([]string, 0, len(payload.DependenciesKept))
 		for _, dep := range payload.DependenciesKept {
 			names = append(names, dep.Name+" ("+dep.Kind+")")
@@ -856,19 +865,17 @@ func (r *removal) print(out *printer, plan *uninstall.Plan, status string) {
 }
 
 // removeTotals orders the remove totals (planned actions, then applied results)
-// and words them.
+// and words them. Kept Dependencies are counted by the sentence under the table.
 var removeTotals = []struct{ key, word string }{
 	{string(uninstall.ActionDelete), "to delete"},
 	{string(uninstall.ActionUnbind), "to unbind"},
 	{string(uninstall.ActionForget), "to forget"},
 	{string(uninstall.ActionRelease), "to release"},
-	{string(uninstall.ActionPreserve), "kept"},
 	{string(uninstall.ActionRefuse), "refused"},
 	{"removed", "removed"},
 	{"unbound", "unbound"},
 	{"forgotten", "forgotten"},
 	{"released", "released"},
-	{"preserved", "kept"},
 	{"refused", "refused"},
 	{"failed", "failed"},
 }

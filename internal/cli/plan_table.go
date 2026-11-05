@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"cmp"
 	"fmt"
 	"slices"
 	"strconv"
@@ -14,10 +15,13 @@ import (
 )
 
 // Plans print as a header (status, source, scope, Harnesses), a table of
-// Action | Agent | Harness | Path rows, the notes under it, refusals in a section
-// of their own and a totals line. A note that singles out one Agent among several
-// gets a [n] marker on that Agent's rows; any other note prints once with the rows
-// it applies to.
+// Agent | Harness | Action | Path rows sorted by Agent then Harness, the notes
+// under it, refusals in a section of their own and a totals line. Only rows that
+// change something are listed; a sentence counts the Agent × Harness pairs that
+// were already correct. A note that singles out one Agent among several gets a
+// [n] marker on that Agent's rows; any other note prints once with the rows it
+// applies to. After a plan the user approved, the result is only the status line
+// and the totals: the table was just shown.
 
 // Row actions. Internal install actions map to these words.
 const (
@@ -30,10 +34,12 @@ const (
 // notedRow is a table row whose notes are collected under the table.
 type notedRow struct {
 	cells []cell
-	// name is the Agent or Skill the row installs; markers attach to cells[nameCol].
+	// name is the Agent or Skill the row installs; markers attach to cells[0].
 	name    string
 	harness string
 	notes   []string
+	// idle rows need no action: they are counted, not listed.
+	idle bool
 }
 
 // refusal is one item that cannot be applied, with why.
@@ -41,7 +47,15 @@ type refusal struct {
 	name, harness, reason string
 }
 
-// rowStyle is an action's symbol and style in the Action column.
+// Sentences for the Agent × Harness or Skill × Harness pairs a table leaves out.
+const (
+	idleAgents = "agents were already correct in their harnesses, so no action was needed."
+	idleAgent  = "agent was already correct in its harness, so no action was needed."
+	idleSkills = "skills were already in place in their harnesses, so no action was needed."
+	idleSkill  = "skill was already in place in its harness, so no action was needed."
+)
+
+// actionCell is an action's symbol and style in the Action column.
 func (p *printer) actionCell(action string) cell {
 	s := p.styles
 	switch action {
@@ -72,19 +86,26 @@ func installRow(action install.Action) string {
 
 func (p *printer) humanPlan(payload *planJSON) {
 	s := p.styles
+	if payload.previewed && (payload.Status == statusApplied || payload.Status == statusFailed) {
+		p.statusLine(payload)
+		p.humanSkillRuns(payload)
+		p.totals(payload, 0)
+		return
+	}
 	p.planHeader(payload)
 	p.skillTables(payload)
 	p.humanSkillRuns(payload)
-	rows, refused, removed := p.itemRows(payload)
+	rows, refused, kept := p.itemRows(payload)
+	visible := slices.ContainsFunc(rows, func(row notedRow) bool { return !row.idle })
 	if payload.Status == statusFailed {
 		fmt.Fprintln(p.w, s.heading.Render("Agents (not written)"))
-	} else if len(payload.Skills) > 0 && len(rows) > 0 {
+	} else if len(payload.Skills) > 0 && visible {
 		fmt.Fprintln(p.w, s.heading.Render("Agents"))
 	}
 	if len(rows) == 0 && len(refused) == 0 {
 		fmt.Fprintln(p.w, "  nothing to install")
 	}
-	p.notedTable([]string{"ACTION", "AGENT", "HARNESS", "PATH"}, 1, 3, rows)
+	p.notedTable([]string{"AGENT", "HARNESS", "ACTION", "PATH"}, rows, kept, idleAgent, idleAgents)
 	p.refusals("Refused", "AGENT", refused)
 	skipped := make([]refusal, 0, len(payload.Skipped))
 	for _, item := range payload.Skipped {
@@ -94,12 +115,11 @@ func (p *printer) humanPlan(payload *planJSON) {
 	if payload.Changes != nil {
 		p.skillChanges(payload.Changes.Skills)
 	}
-	p.totals(payload, len(refused), removed)
+	p.totals(payload, len(refused))
 }
 
-// planHeader prints the status line, the sources and the selected Harnesses with
-// their detection, Settings and destination notes.
-func (p *printer) planHeader(payload *planJSON) {
+// statusLine is the first header line: status, source or lock, and scope.
+func (p *printer) statusLine(payload *planJSON) {
 	s := p.styles
 	icon := p.emoji("📋")
 	switch payload.Status {
@@ -112,11 +132,20 @@ func (p *printer) planHeader(payload *planJSON) {
 		fmt.Fprintf(p.w, "%s%s · %s scope · lock %s\n", icon,
 			s.title.Render(lifecycleTitle(payload.Changes.Command, payload.Status)),
 			payload.Scope, p.path(payload.Changes.Lock))
+		return
+	}
+	fmt.Fprintf(p.w, "%s%s · %s · %s scope\n", icon,
+		s.title.Render(titleStatus(payload.Status)), sourceLabel(payload.Source),
+		payload.Scope)
+}
+
+// planHeader prints the status line, the sources and the selected Harnesses with
+// their detection, Settings and destination notes.
+func (p *printer) planHeader(payload *planJSON) {
+	s := p.styles
+	p.statusLine(payload)
+	if payload.Changes != nil {
 		p.sources(payload.Changes)
-	} else {
-		fmt.Fprintf(p.w, "%s%s · %s · %s scope\n", icon,
-			s.title.Render(titleStatus(payload.Status)), sourceLabel(payload.Source),
-			payload.Scope)
 	}
 	if len(payload.Harnesses) > 0 {
 		parts := make([]string, 0, len(payload.Harnesses))
@@ -176,9 +205,9 @@ func (p *printer) sources(report *lifecycleReport) {
 }
 
 // itemRows turns planned items into rows and refusals. For an update or restore
-// it adds what the lock comparison knows: local drift, why content changes and
-// locked files the plan no longer produces (which stay on disk).
-func (p *printer) itemRows(payload *planJSON) ([]notedRow, []refusal, int) {
+// it adds what the lock comparison knows: local drift, why content changes, and
+// lines for locked files the plan no longer produces (which stay on disk).
+func (p *printer) itemRows(payload *planJSON) ([]notedRow, []refusal, []string) {
 	artifacts := map[string]*artifactReport{}
 	if payload.Changes != nil {
 		for i := range payload.Changes.Agents {
@@ -198,6 +227,7 @@ func (p *printer) itemRows(payload *planJSON) ([]notedRow, []refusal, int) {
 			continue
 		}
 		row := p.row(action, item.Agent, item.Harness, item.Path)
+		row.idle = action == rowUnchanged
 		if item.Origin == string(state.OriginDependency) {
 			row.notes = append(row.notes, fmt.Sprintf("dependency of %s, from %s",
 				strings.Join(item.RequiredBy, ", "), sourceLabel(item.Source)))
@@ -208,33 +238,33 @@ func (p *printer) itemRows(payload *planJSON) ([]notedRow, []refusal, int) {
 		}
 		rows = append(rows, row)
 	}
-	removed := 0
+	var kept []string
 	if payload.Changes != nil {
 		for _, entry := range payload.Changes.Agents {
 			for _, art := range entry.Artifacts {
-				if art.Change != changeRemoved {
-					continue
+				if art.Change == changeRemoved {
+					kept = append(kept, keptLine(entry, art.Harness, p.path(art.Path)))
 				}
-				removed++
-				row := p.row(rowUnchanged, entry.Agent, art.Harness, art.Path)
-				note := "the source no longer provides it; the installed file stays"
-				if entry.Status == agentNotRequired {
-					note = "no installed agent requires it any more; the installed file stays"
-				}
-				row.notes = append(row.notes, note)
-				row.notes = append(row.notes, artifactNotes(&art)...)
-				rows = append(rows, row)
 			}
 		}
 	}
-	return rows, refused, removed
+	return rows, refused, kept
+}
+
+// keptLine says why a locked file the plan no longer produces stays installed.
+func keptLine(entry agentReport, harnessID, path string) string {
+	why := "the source no longer provides it"
+	if entry.Status == agentNotRequired {
+		why = "no installed agent requires it any more"
+	}
+	return fmt.Sprintf("%s for %s: %s; %s stays installed", entry.Agent, harnessID, why, path)
 }
 
 // row is a plan row for one Agent artifact.
 func (p *printer) row(action, name, harness, path string) notedRow {
 	return notedRow{
 		cells: []cell{
-			p.actionCell(action), plainCell(name), plainCell(harness), plainCell(p.path(path)),
+			plainCell(name), plainCell(harness), p.actionCell(action), plainCell(p.path(path)),
 		},
 		name: name, harness: harness,
 	}
@@ -260,21 +290,42 @@ func artifactNotes(art *artifactReport) []string {
 	return notes
 }
 
-// notedTable prints rows grouped by Agent (in order of first appearance) with
-// their notes collapsed under the table.
-func (p *printer) notedTable(headers []string, nameCol, shrink int, rows []notedRow) {
-	if len(rows) == 0 {
-		return
-	}
-	first := map[string]int{}
-	for i := range rows {
-		if _, seen := first[rows[i].name]; !seen {
-			first[rows[i].name] = i
+// byNameAndHarness orders rows by Agent (or Skill), then Harness.
+func byNameAndHarness(a, b notedRow) int {
+	return cmp.Or(strings.Compare(a.name, b.name), strings.Compare(a.harness, b.harness))
+}
+
+// notedTable prints the rows that change something, sorted by name then Harness
+// (the name is the first column, the path the fourth), with their notes collapsed
+// under the table and the extra note lines, then a sentence counting the idle
+// rows it left out: one, or many. Notes of idle rows are dropped.
+func (p *printer) notedTable(headers []string, rows []notedRow, extra []string, one, many string) {
+	idle := 0
+	shown := make([]notedRow, 0, len(rows))
+	for _, row := range rows {
+		if row.idle {
+			idle++
+			continue
 		}
+		shown = append(shown, row)
 	}
-	slices.SortStableFunc(rows, func(a, b notedRow) int {
-		return first[a.name] - first[b.name]
-	})
+	slices.SortStableFunc(shown, byNameAndHarness)
+	if len(shown) > 0 {
+		p.renderNoted(headers, shown)
+	}
+	for _, line := range extra {
+		p.paragraph(2, 2, p.styles.dim.Render("· "+line))
+	}
+	switch {
+	case idle == 1:
+		p.paragraph(2, 2, p.styles.dim.Render("1 "+one))
+	case idle > 1:
+		p.paragraph(2, 2, p.styles.dim.Render(strconv.Itoa(idle)+" "+many))
+	}
+}
+
+// renderNoted prints rows with markers and the collapsed notes.
+func (p *printer) renderNoted(headers []string, rows []notedRow) {
 	type noteUse struct {
 		text  string
 		rows  []int
@@ -327,11 +378,11 @@ func (p *printer) notedTable(headers []string, nameCol, shrink int, rows []noted
 		}
 		general = append(general, line)
 	}
-	t := &table{headers: headers, shrink: shrink, wrap: -1}
+	t := &table{headers: headers, shrink: 3, wrap: -1}
 	for i := range rows {
 		cells := slices.Clone(rows[i].cells)
 		if len(marks[i]) > 0 {
-			cells[nameCol].text += " [" + strings.Join(marks[i], ",") + "]"
+			cells[0].text += " [" + strings.Join(marks[i], ",") + "]"
 		}
 		t.rows = append(t.rows, cells)
 	}
@@ -366,12 +417,17 @@ func limited(names []string) string {
 	return strings.Join(names[:most], ", ") + fmt.Sprintf(" and %d more", len(names)-most)
 }
 
-// refusals prints items that cannot be applied, and why, in a section of their own.
+// refusals prints items that cannot be applied, and why, in a section of their
+// own, sorted by name then Harness.
 func (p *printer) refusals(title, nameHeader string, items []refusal) {
 	if len(items) == 0 {
 		return
 	}
 	s := p.styles
+	items = slices.Clone(items)
+	slices.SortStableFunc(items, func(a, b refusal) int {
+		return cmp.Or(strings.Compare(a.name, b.name), strings.Compare(a.harness, b.harness))
+	})
 	fmt.Fprintf(p.w, "%s%s\n", p.emoji("❌"), s.blocked.Render(fmt.Sprintf("%s (%d)", title,
 		len(items))))
 	t := &table{headers: []string{nameHeader, "HARNESS", "REASON"}, shrink: -1, wrap: 2}
@@ -385,8 +441,9 @@ func (p *printer) refusals(title, nameHeader string, items []refusal) {
 	p.render(t)
 }
 
-// totals prints the counts of the plan's Agent and Skill changes.
-func (p *printer) totals(payload *planJSON, refused, kept int) {
+// totals prints the counts of the plan's Agent and Skill changes; unchanged
+// items are counted by the sentence under the table instead.
+func (p *printer) totals(payload *planJSON, refused int) {
 	s := p.styles
 	count := map[string]int{}
 	for _, item := range payload.Items {
@@ -398,9 +455,6 @@ func (p *printer) totals(payload *planJSON, refused, kept int) {
 		p.total(count[rowUpdate], "to update", "updated", applied, s.update),
 		p.total(0, "to delete", "deleted", applied, s.remove),
 	}
-	if n := count[rowUnchanged] + kept; n > 0 {
-		parts = append(parts, s.dim.Render(fmt.Sprintf("%d unchanged", n)))
-	}
 	if refused > 0 {
 		parts = append(parts, s.blocked.Render(fmt.Sprintf("%d refused", refused)))
 	}
@@ -408,8 +462,8 @@ func (p *printer) totals(payload *planJSON, refused, kept int) {
 		parts = append(parts, s.blocked.Render(fmt.Sprintf("%d skipped", n)))
 	}
 	line := strings.Join(parts, " · ")
-	if len(payload.SkillSummary) > 0 {
-		line += " · skills: " + skillSummaryLine(payload.SkillSummary)
+	if skillsLine := skillSummaryLine(payload.SkillSummary); skillsLine != "" {
+		line += " · skills: " + skillsLine
 	}
 	fmt.Fprintln(p.w, line)
 }
@@ -426,8 +480,9 @@ func (p *printer) total(n int, planned, done string, applied bool, style lipglos
 	return style.Render(fmt.Sprintf("%d %s", n, word))
 }
 
-// skillTables prints planned Skills as a table, refused ones as refusals, and
-// the Skills an interactive user left out.
+// skillTables prints the Skills to install as a table, refused ones as
+// refusals, and the Skills an interactive user left out. Reused and unchanged
+// Skills are counted, not listed.
 func (p *printer) skillTables(payload *planJSON) {
 	if len(payload.Skills) == 0 && len(payload.SkippedSkills) == 0 {
 		return
@@ -442,18 +497,15 @@ func (p *printer) skillTables(payload *planJSON) {
 			refused = append(refused, refusal{item.Skill, item.Harness, item.Reason})
 			continue
 		}
-		action := cell{text: "= " + item.Decision, style: s.dim}
-		if decision == skills.DecisionInstall {
-			action = cell{text: "+ install", style: s.create}
-		}
 		row := notedRow{
 			cells: []cell{
-				action,
 				plainCell(item.Skill),
 				plainCell(item.Harness),
+				{text: "+ install", style: s.create},
 				plainCell(p.path(item.Path)),
 			},
 			name: item.Skill, harness: item.Harness,
+			idle: decision != skills.DecisionInstall,
 		}
 		row.notes = append(row.notes, fmt.Sprintf("%s from %s, required by %s",
 			item.Requirement, item.Source, strings.Join(item.RequiredBy, ", ")))
@@ -472,7 +524,7 @@ func (p *printer) skillTables(payload *planJSON) {
 		rows = append(rows, row)
 	}
 	fmt.Fprintln(p.w, s.heading.Render("Skills"))
-	p.notedTable([]string{"ACTION", "SKILL", "HARNESS", "PATH"}, 1, 3, rows)
+	p.notedTable([]string{"SKILL", "HARNESS", "ACTION", "PATH"}, rows, nil, idleSkill, idleSkills)
 	p.refusals("Refused skills", "SKILL", refused)
 	skipped := make([]refusal, 0, len(payload.SkippedSkills))
 	for _, item := range payload.SkippedSkills {
