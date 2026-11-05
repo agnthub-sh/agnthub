@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": "/agnthub-e2e/home/.gemini/agents/companion.md",
           "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
           "requires": []
@@ -27,7 +27,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "1fc96c7c4fac361e5cb258ea67b735f0a5a23da1"
+        "revision": "eafafe63d17670563e2773525238100a8184657e"
       },
       "agent": "helper",
       "origin": "dependency",
@@ -37,7 +37,7 @@
           "variant": "generated",
           "sourcePath": "agents/helper.md",
           "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": "/agnthub-e2e/home/.gemini/agents/helper.md",
           "digest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
           "requires": []
@@ -48,7 +48,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "1fc96c7c4fac361e5cb258ea67b735f0a5a23da1"
+        "revision": "eafafe63d17670563e2773525238100a8184657e"
       },
       "agent": "lead",
       "origin": "direct",
@@ -58,7 +58,7 @@
           "variant": "generated",
           "sourcePath": "agents/lead/AGENT.md",
           "sourceDigest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": "/agnthub-e2e/home/.gemini/agents/lead.md",
           "digest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
           "requires": [
@@ -73,7 +73,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "1fc96c7c4fac361e5cb258ea67b735f0a5a23da1"
+        "revision": "eafafe63d17670563e2773525238100a8184657e"
       },
       "agent": "native-only",
       "origin": "direct",
@@ -83,7 +83,7 @@
           "variant": "generated",
           "sourcePath": "native/claude/native-only.md",
           "sourceDigest": "sha256:0ed4be951d129f063ef866308d751ceb8a44f77dce1f570061a1baca2581cd99",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": "/agnthub-e2e/home/.gemini/agents/native-only.md",
           "digest": "sha256:702bef6e9ed1d331a9b2b86e013655fc5cc8816efa6efdede7ac56e8da72d2b9",
           "requires": []

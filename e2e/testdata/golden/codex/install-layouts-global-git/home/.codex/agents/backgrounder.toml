@@ -1,0 +1,5 @@
+name = 'backgrounder'
+description = 'Always runs in the background.'
+developer_instructions = """
+Run the long task in the background.
+"""

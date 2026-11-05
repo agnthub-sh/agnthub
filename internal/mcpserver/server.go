@@ -257,13 +257,15 @@ func (t *tools) command(
 	for i, h := range in.Harnesses {
 		harnesses[i] = agent.HarnessID(h)
 	}
+	optIns := optInTargets(listed, in.Agents, in.Harnesses, in.All)
 	command, err := BuildCommand(&CommandInput{
-		Source:     listed.FullName,
-		Agents:     in.Agents,
-		Harnesses:  harnesses,
-		All:        in.All,
-		Global:     in.Scope == "global",
-		OMPProfile: in.OMPProfile,
+		Source:            listed.FullName,
+		Agents:            in.Agents,
+		Harnesses:         harnesses,
+		All:               in.All,
+		Global:            in.Scope == "global",
+		OMPProfile:        in.OMPProfile,
+		AllowWithoutShell: len(optIns) > 0,
 	})
 	if err != nil {
 		return nil, nil, err
@@ -272,7 +274,36 @@ func (t *tools) command(
 	if err != nil {
 		return nil, nil, err
 	}
+	warnings = append(warnings, optIns...)
 	return nil, &CommandOutput{Command: command, Warnings: warnings}, nil
+}
+
+// optInTargets describes the selected agent/harness pairs that install only
+// without the shell access the agent uses; the command then adds
+// --allow-without-shell, as the site's install builder does. Only explicitly
+// selected harnesses (or all) count: when the CLI asks for harnesses, the user
+// decides there. No agents select every agent.
+func optInTargets(listed *Repository, ids, harnesses []string, all bool) []string {
+	if !all && len(harnesses) == 0 {
+		return nil
+	}
+	var out []string
+	for i := range listed.Agents {
+		a := &listed.Agents[i]
+		if !all && len(ids) > 0 && !slices.Contains(ids, a.ID) {
+			continue
+		}
+		for _, target := range a.Targets {
+			if target.OptIn == nil || !all && !slices.Contains(harnesses, target.Harness) {
+				continue
+			}
+			out = append(out, fmt.Sprintf(
+				"%s installs into %s only without the shell access it uses (it goes without %s); "+
+					"the command adds --%s", a.ID, target.Harness,
+				strings.Join(target.Reduced, ", "), *target.OptIn))
+		}
+	}
+	return out
 }
 
 // commandWarnings rejects agents the repository does not list and warns about selected

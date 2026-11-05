@@ -58,6 +58,12 @@
       }
     },
     {
+      "id": "claude-shaped",
+      "description": "Portable agent written for Claude Code, with its model, tools and color.",
+      "portable": "agents/claude-shaped.md",
+      "variants": {}
+    },
+    {
       "id": "colon",
       "description": "Reviews code: finds bugs, then explains them",
       "portable": "agents/colon.md",
@@ -106,6 +112,27 @@
       }
     },
     {
+      "id": "cx-sandboxed",
+      "description": "Codex agent that asks for a read-only sandbox.",
+      "variants": {
+        "codex": ".codex/agents/cx-sandboxed.toml"
+      }
+    },
+    {
+      "id": "cx-solo",
+      "description": "Codex agent that turns off delegation.",
+      "variants": {
+        "codex": ".codex/agents/cx-solo.toml"
+      }
+    },
+    {
+      "id": "cx-workspace",
+      "description": "Codex agent that asks for a workspace-write sandbox.",
+      "variants": {
+        "codex": ".codex/agents/cx-workspace.toml"
+      }
+    },
+    {
       "id": "defaulted",
       "description": "Sets Claude Code fields to their defaults or leaves them empty.",
       "variants": {
@@ -117,6 +144,13 @@
       "description": "Reads code and delegates subtasks to other agents.",
       "variants": {
         "claude": ".claude/agents/delegator.md"
+      }
+    },
+    {
+      "id": "differ",
+      "description": "Fixes review findings and may only run git diff.",
+      "variants": {
+        "claude": ".claude/agents/differ.md"
       }
     },
     {
@@ -209,6 +243,13 @@
       "description": "Keeps machine-local notes for this project with every tool.",
       "variants": {
         "claude": ".claude/agents/local-notes.md"
+      }
+    },
+    {
+      "id": "mcp-owner",
+      "description": "Reads issues through its own GitHub MCP server.",
+      "variants": {
+        "claude": ".claude/agents/mcp-owner.md"
       }
     },
     {
@@ -344,6 +385,10 @@
     {
       "path": ".claude/agents/broken.md",
       "message": ".claude/agents/broken.md: frontmatter requires a description"
+    },
+    {
+      "path": ".cursor/agents/broken.md",
+      "message": ".cursor/agents/broken.md: frontmatter requires a description"
     },
     {
       "path": ".github/agents/broken.agent.md",

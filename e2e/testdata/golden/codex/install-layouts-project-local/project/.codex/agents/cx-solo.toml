@@ -1,0 +1,8 @@
+name = "cx-solo"
+description = "Codex agent that turns off delegation."
+developer_instructions = """
+Do the work yourself without spawning other agents.
+"""
+
+[features]
+multi_agent = false

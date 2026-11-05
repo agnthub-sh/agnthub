@@ -26,7 +26,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "1fc96c7c4fac361e5cb258ea67b735f0a5a23da1"
+        "revision": "eafafe63d17670563e2773525238100a8184657e"
       },
       "origin": "dependency",
       "harness": "opencode",

@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/cx-sandboxed.md",
+      "digest": "sha256:8d96dbf9442bee2ee37a7fec23d46ccf5c4b93348673490cc5b50c19d2e01137",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-sandboxed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/guarded.md",
+      "digest": "sha256:df19e8dcdd75bc1146eecdc7c3c8a334d0aac9152917101ebb90a68a3647e881",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "guarded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/reviewer.md",
+      "digest": "sha256:82542448146ab61cfdfc5f2fa7ed1729366b0bb763e90a71369dad14199126f6",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "reviewer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

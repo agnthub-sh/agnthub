@@ -39,6 +39,9 @@ type notedRow struct {
 	name    string
 	harness string
 	notes   []string
+	// reduced are capabilities the installed agent goes without; they print
+	// as a colored "! reduced:" line of their own, ahead of the notes.
+	reduced []string
 	// idle rows need no action: they are counted, not listed.
 	idle bool
 }
@@ -345,6 +348,7 @@ func (p *printer) itemRows(payload *planJSON) ([]notedRow, []refusal, []string) 
 				strings.Join(item.RequiredBy, ", "), sourceLabel(item.Source)))
 		}
 		row.notes = append(row.notes, item.Notes...)
+		row.reduced = item.Reduced
 		if art := artifacts[item.Agent+"\x00"+item.Path]; art != nil {
 			row.notes = append(row.notes, artifactNotes(art)...)
 		}
@@ -435,6 +439,12 @@ func (p *printer) notedTable(
 	if len(shown) > 0 {
 		general, footnotes = p.renderNoted(headers, shown)
 		p.section()
+	}
+	for _, row := range shown {
+		if len(row.reduced) > 0 {
+			p.paragraph(2, p.styles.reduced.Render(fmt.Sprintf("! reduced: %s on %s goes "+
+				"without %s", row.name, row.harness, strings.Join(row.reduced, ", "))))
+		}
 	}
 	// Continuation lines start under the note text: after "· " or "[n] ".
 	for _, line := range general {

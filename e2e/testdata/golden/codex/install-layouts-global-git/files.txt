@@ -1,9 +1,12 @@
 0644 home/.codex/agents/annotated.toml
+0644 home/.codex/agents/backgrounder.toml
 0644 home/.codex/agents/bom.toml
 0644 home/.codex/agents/bounded.toml
 0644 home/.codex/agents/colon.toml
 0644 home/.codex/agents/cx-native.toml
 0644 home/.codex/agents/cx-nicknamed.toml
+0644 home/.codex/agents/cx-solo.toml
+0644 home/.codex/agents/cx-workspace.toml
 0644 home/.codex/agents/defaulted.toml
 0644 home/.codex/agents/dual.toml
 0644 home/.codex/agents/fixer.toml
@@ -11,6 +14,7 @@
 0644 home/.codex/agents/literal.toml
 0644 home/.codex/agents/local-notes.toml
 0644 home/.codex/agents/misnamed.toml
+0644 home/.codex/agents/modelled.toml
 0644 home/.codex/agents/no-shell.toml
 0644 home/.codex/agents/planner.toml
 0644 home/.codex/agents/quoted.toml

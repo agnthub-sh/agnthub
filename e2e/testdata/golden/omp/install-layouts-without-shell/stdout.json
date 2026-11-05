@@ -1,0 +1,86 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/layouts"
+  },
+  "harnesses": [
+    {
+      "id": "omp",
+      "name": "omp",
+      "detected": true,
+      "settings": [
+        {
+          "key": "profile",
+          "value": "default",
+          "source": "native default"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "agent": "differ",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/differ.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/differ.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "tools grants only part of edit (no Write); converted agents get edit as a whole",
+        "goes without shell: it may run only some shell commands (* (deny), git diff * (allow)), and omp cannot limit the shell to commands",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ],
+      "reduced": [
+        "shell"
+      ],
+      "optIn": "allow-without-shell"
+    },
+    {
+      "agent": "guarded",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/guarded.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/guarded.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode plan converted as a read-only tool policy: no edits, shell, delegation or MCP tools",
+        "goes without shell: permissionMode plan allows read-only shell commands, and omp cannot limit the shell to them",
+        "goes without delegation: permissionMode plan is read-only, and a delegated agent could edit",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ],
+      "reduced": [
+        "shell",
+        "delegation"
+      ],
+      "optIn": "allow-without-shell"
+    }
+  ],
+  "summary": {
+    "create": 2
+  }
+}

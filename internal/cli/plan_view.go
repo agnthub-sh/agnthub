@@ -53,7 +53,7 @@ type harnessView struct {
 // not a terminal, so redirected human output stays plain text.
 type planStyles struct {
 	title, heading, header, dim, scope, create, update, remove, unchanged, blocked,
-	reason lipgloss.Style
+	reason, reduced lipgloss.Style
 }
 
 func newPlanStyles() planStyles {
@@ -69,6 +69,7 @@ func newPlanStyles() planStyles {
 		unchanged: lipgloss.NewStyle().Faint(true),
 		blocked:   lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("1")),
 		reason:    lipgloss.NewStyle().Foreground(lipgloss.Color("1")),
+		reduced:   lipgloss.NewStyle().Bold(true).Foreground(lipgloss.Color("3")),
 	}
 }
 
@@ -241,6 +242,12 @@ type itemJSON struct {
 	Action            string            `json:"action"`
 	Reason            string            `json:"reason,omitempty"`
 	Notes             []string          `json:"notes,omitempty"`
+	// Reduced lists capabilities the agent uses that the harness cannot grant,
+	// so the installed agent goes without them.
+	Reduced []string `json:"reduced,omitempty"`
+	// OptIn names the flag (without dashes) installing it needs:
+	// allow-without-shell when it loses the shell access it uses.
+	OptIn string `json:"optIn,omitempty"`
 }
 
 func (p *printer) plan(view *planView, status string) {
@@ -298,6 +305,10 @@ func newItemJSON(item install.Item, effective map[agent.HarnessID]map[string]str
 		Action:            string(item.Action),
 		Reason:            item.Reason,
 		Notes:             item.Artifact.Notes,
+		Reduced:           item.Artifact.ReducedNames(),
+	}
+	if item.Artifact.WithoutShell() {
+		entry.OptIn = install.OptInWithoutShell
 	}
 	maps.Copy(entry.Settings, item.Settings)
 	maps.Copy(entry.EffectiveSettings, effective[item.Harness])

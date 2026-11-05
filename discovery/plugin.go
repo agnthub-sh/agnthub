@@ -27,6 +27,7 @@ const (
 )
 
 type marketplaceManifest struct {
+	Name     string `json:"name"`
 	Metadata struct {
 		PluginRoot string `json:"pluginRoot"`
 	} `json:"metadata"`
@@ -88,6 +89,11 @@ func (s *scanner) pluginCandidates() ([]candidate, error) {
 		plugin, err := s.pluginAgents(claude, ref)
 		if err != nil {
 			return nil, err
+		}
+		if ref.origin == MarketplaceFile {
+			for i := range plugin {
+				plugin[i].marketplace = s.marketplace
+			}
 		}
 		found = append(found, plugin...)
 	}
@@ -152,6 +158,7 @@ func (s *scanner) marketplacePlugins() ([]pluginRef, error) {
 	if err != nil || !ok {
 		return nil, err
 	}
+	s.marketplace = market.Name
 	pluginRoot := ""
 	if root := market.Metadata.PluginRoot; root != "" {
 		if root != "." && !strings.HasPrefix(root, "./") {

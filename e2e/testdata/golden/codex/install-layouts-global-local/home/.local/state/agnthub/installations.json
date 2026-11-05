@@ -13,6 +13,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.codex/agents/backgrounder.toml",
+      "digest": "sha256:9d0cb7f82af43d03bae73634766843051f50c9d23d4eb72436930762f5a4693c",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "backgrounder",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.codex/agents/bom.toml",
       "digest": "sha256:4d60e3ba4834998e527766c7c8173b828b4083a5ffa40f458e32df67688d2770",
       "harness": "codex",
@@ -64,6 +75,28 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "cx-nicknamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/cx-solo.toml",
+      "digest": "sha256:e782111961e86540d80e45850dbb038dfb01c39f7fc510ddf1f325a6071983f3",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-solo",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/cx-workspace.toml",
+      "digest": "sha256:24a94e115878b83ba14cac3d632c14bd1a98380f1ea48bdabebd076fb5293d87",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-workspace",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -141,6 +174,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "misnamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/modelled.toml",
+      "digest": "sha256:c138b09c0c6c17203e157bc8154968d396cf5984529c5720de72f7af8ff74420",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "modelled",
       "origin": "direct",
       "installedAt": "<time>"
     },

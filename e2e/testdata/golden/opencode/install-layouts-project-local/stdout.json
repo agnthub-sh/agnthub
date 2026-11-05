@@ -15,6 +15,26 @@
   ],
   "items": [
     {
+      "agent": "allowlisted",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/allowlisted.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/allowlisted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "read allowed-tools as the tool allowlist: Claude Code ignores it in agents (it is a skill field), other harnesses enforce it"
+      ]
+    },
+    {
       "agent": "annotated",
       "harness": "opencode",
       "settings": {},
@@ -34,6 +54,26 @@
         "omitted capabilities: Claude Code ignores it",
         "omitted category: Claude Code ignores it",
         "omitted domain: Claude Code ignores it"
+      ]
+    },
+    {
+      "agent": "backgrounder",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/backgrounder.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/backgrounder.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "runs in the foreground: opencode cannot run an agent in the background"
       ]
     },
     {
@@ -88,6 +128,26 @@
       "action": "create",
       "notes": [
         "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "claude-shaped",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/claude-shaped.md",
+      "variant": "generated",
+      "sourcePath": "agents/claude-shaped.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted color: cosmetic",
+        "model \"opus\" is specific to claude; the agent uses the harness default model"
       ]
     },
     {
@@ -227,6 +287,66 @@
       ]
     },
     {
+      "agent": "cx-sandboxed",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/cx-sandboxed.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-sandboxed.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "sandbox_mode = \"read-only\": converted without edit tools; shell commands are not sandboxed outside Codex"
+      ]
+    },
+    {
+      "agent": "cx-solo",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/cx-solo.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-solo.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "features.multi_agent = false: converted without delegation"
+      ]
+    },
+    {
+      "agent": "cx-workspace",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/cx-workspace.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-workspace.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "omitted sandbox_mode = \"workspace-write\": Codex ignores it in agent files; the session's sandbox and approvals apply"
+      ]
+    },
+    {
       "agent": "defaulted",
       "harness": "opencode",
       "settings": {},
@@ -265,6 +385,27 @@
       "action": "create",
       "notes": [
         "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "differ",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/differ.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/differ.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "tools grants only part of edit (no Write); converted agents get edit as a whole",
+        "its shell is limited to these commands: * (deny), git diff * (allow)"
       ]
     },
     {
@@ -496,6 +637,25 @@
       "notes": [
         "converted from the claude variant",
         "omitted tools entries read, ListMcpResourcesTool, playwright: no opencode equivalent, so the agent goes without them"
+      ]
+    },
+    {
+      "agent": "modelled",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/modelled.md",
+      "variant": "generated",
+      "sourcePath": "agents/modelled.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model"
       ]
     },
     {
@@ -777,7 +937,9 @@
       "origin": "direct",
       "action": "create",
       "notes": [
-        "omitted descriptive metadata: author, tags, version"
+        "omitted author: descriptive metadata",
+        "omitted tags: descriptive metadata",
+        "omitted version: descriptive metadata"
       ]
     },
     {
@@ -801,6 +963,6 @@
     }
   ],
   "summary": {
-    "create": 41
+    "create": 49
   }
 }

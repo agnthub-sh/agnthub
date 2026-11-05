@@ -93,34 +93,62 @@ func (codexAdapter) Detect(ctx Context) bool {
 	return detect(ctx, "codex", codexHome(ctx))
 }
 
+// Native installs an authored agent as written. One declaring sandbox_mode =
+// "read-only" is refused: Codex runs custom agents in the parent session's
+// sandbox, so the read-only mode it declares would not be enforced.
 func (codexAdapter) Native(id string, variant *agent.VariantFile) (Artifact, error) {
+	fields, notes, err := codexVariant(id, variant)
+	if err != nil {
+		return Artifact{}, err
+	}
+	if fields["sandbox_mode"] == codexReadOnly {
+		return Artifact{}, &IncompatibleError{
+			Harness: agent.Codex,
+			Reason: `its codex variant declares sandbox_mode = "read-only", which Codex does ` +
+				"not enforce: custom agents run in the parent session's sandbox, so the agent " +
+				"could edit files",
+		}
+	}
+	return Artifact{FileName: id + ".toml", Content: variant.Raw, Notes: notes}, nil
+}
+
+// codexVariant validates an authored agent for id and returns its fields and
+// the notes on settings Codex parses but does not apply.
+func codexVariant(id string, variant *agent.VariantFile) (map[string]any, []string, error) {
 	invalid := func(reason string) error {
 		return &InvalidVariantError{Harness: agent.Codex, Path: variant.Path, Reason: reason}
 	}
 	fields, err := decodeCodexAgent(variant.Path, variant.Raw)
 	if err != nil {
-		return Artifact{}, invalid(err.Error())
+		return nil, nil, invalid(err.Error())
 	}
 	identity, err := codexIdentity(variant.Path, fields)
 	if err != nil {
-		return Artifact{}, invalid(err.Error())
+		return nil, nil, invalid(err.Error())
 	}
 	if identity.ID != id {
-		return Artifact{}, invalid(
-			fmt.Sprintf("name %q does not match agent %q", identity.ID, id),
-		)
+		return nil, nil, invalid(fmt.Sprintf("name %q does not match agent %q", identity.ID, id))
 	}
-	if reason := codexUnsupported(fields); reason != "" {
-		return Artifact{}, invalid(reason)
+	notes, reason := codexUnsupported(fields)
+	if reason != "" {
+		return nil, nil, invalid(reason)
 	}
-	return Artifact{FileName: id + ".toml", Content: variant.Raw}, nil
+	return fields, notes, nil
+}
+
+// codexReadOnly is the sandbox_mode that withholds edits.
+const codexReadOnly = "read-only"
+
+// codexSandboxModes are the sandbox_mode values Codex parses in an agent file
+// and ignores: the parent session's sandbox always applies.
+var codexSandboxModes = map[string]bool{
+	codexReadOnly: true, "workspace-write": true, "danger-full-access": true,
 }
 
 // codexParentKeys are session settings Codex always takes from the parent
 // configuration; an agent file declaring them would claim a constraint Codex
-// does not apply.
+// does not apply. sandbox_mode is read separately (codexSandboxModes).
 var codexParentKeys = map[string]bool{
-	"sandbox_mode":             true,
 	"sandbox_workspace_write":  true,
 	"approval_policy":          true,
 	"approvals_reviewer":       true,
@@ -154,43 +182,56 @@ var codexFeatureKeys = map[string]bool{
 }
 
 // codexUnsupported returns why fields fall outside the documented agent schema,
-// or "" when every key is supported.
-func codexUnsupported(fields map[string]any) string {
+// or "" when every key is supported, plus notes on keys Codex parses but does
+// not apply.
+func codexUnsupported(fields map[string]any) ([]string, string) {
 	keys := make([]string, 0, len(fields))
 	for key := range fields {
 		keys = append(keys, key)
 	}
 	sort.Strings(keys)
+	var notes []string
 	for _, key := range keys {
 		value := fields[key]
 		switch {
 		case key == "name" || key == "description" || key == "developer_instructions":
 		case codexStringKeys[key]:
 			if _, ok := value.(string); !ok {
-				return fmt.Sprintf("%s must be a string", key)
+				return nil, fmt.Sprintf("%s must be a string", key)
 			}
 		case key == "features":
-			if reason := codexFeatures(value); reason != "" {
-				return reason
+			note, reason := codexFeatures(value)
+			if reason != "" {
+				return nil, reason
 			}
+			notes = append(notes, note...)
 		case key == "skills":
 			if reason := codexSkills(value); reason != "" {
-				return reason
+				return nil, reason
 			}
 		case key == "nickname_candidates":
 			if reason := codexNicknames(value); reason != "" {
-				return reason
+				return nil, reason
+			}
+		case key == "sandbox_mode":
+			mode, _ := value.(string)
+			if !codexSandboxModes[mode] {
+				return nil, "sandbox_mode must be read-only, workspace-write or danger-full-access"
+			}
+			if mode != codexReadOnly {
+				notes = append(notes, fmt.Sprintf("sandbox_mode = %q is not applied: Codex "+
+					"runs custom agents in the parent session's sandbox", mode))
 			}
 		case codexParentKeys[key]:
-			return fmt.Sprintf(
+			return nil, fmt.Sprintf(
 				"%q is parent session configuration that a Codex agent file cannot override",
 				key,
 			)
 		default:
-			return fmt.Sprintf("%q is not a supported Codex agent field", key)
+			return nil, fmt.Sprintf("%q is not a supported Codex agent field", key)
 		}
 	}
-	return ""
+	return notes, ""
 }
 
 // codexNicknames checks nickname_candidates, the display names Codex picks
@@ -221,21 +262,38 @@ func codexNicknames(value any) string {
 	return ""
 }
 
-func codexFeatures(value any) string {
+// codexFeatures checks the features table: disable-only capability keys, and
+// multi_agent, which Codex parses but does not apply from an agent file (the
+// agent keeps the session's subagents), so it installs with a warning.
+func codexFeatures(value any) ([]string, string) {
 	table, ok := value.(map[string]any)
 	if !ok {
-		return "features must be a table"
+		return nil, "features must be a table"
 	}
-	for key, enabled := range table {
-		if !codexFeatureKeys[key] {
-			return fmt.Sprintf("features.%s cannot be set by a Codex agent file", key)
-		}
-		if enabled != false {
-			return fmt.Sprintf("features.%s may only be set to false", key)
+	var notes []string
+	for _, key := range sortedKeys(table) {
+		enabled := table[key]
+		switch {
+		case key == codexMultiAgent:
+			if _, isBool := enabled.(bool); !isBool {
+				return nil, "features.multi_agent must be true or false"
+			}
+			if enabled == false {
+				notes = append(notes, "Codex does not enforce features.multi_agent = false in "+
+					"an agent file: on Codex the agent may still delegate; other harnesses "+
+					"enforce it")
+			}
+		case !codexFeatureKeys[key]:
+			return nil, fmt.Sprintf("features.%s cannot be set by a Codex agent file", key)
+		case enabled != false:
+			return nil, fmt.Sprintf("features.%s may only be set to false", key)
 		}
 	}
-	return ""
+	return notes, ""
 }
+
+// codexMultiAgent is the feature that lets a Codex agent spawn subagents.
+const codexMultiAgent = "multi_agent"
 
 func codexSkills(value any) string {
 	table, ok := value.(map[string]any)
@@ -296,10 +354,10 @@ type codexFeatureTable struct {
 }
 
 func (a codexAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics, error) {
-	if _, err := a.Native(id, variant); err != nil {
+	fields, _, err := codexVariant(id, variant)
+	if err != nil {
 		return nil, err
 	}
-	fields, _ := decodeCodexAgent(variant.Path, variant.Raw)
 	sem := &Semantics{Source: agent.Codex}
 	sem.ID, _ = fields["name"].(string)
 	sem.Description, _ = fields["description"].(string)
@@ -312,15 +370,30 @@ func (a codexAdapter) Semantics(id string, variant *agent.VariantFile) (*Semanti
 		case "features":
 			table, _ := fields[key].(map[string]any)
 			for _, feature := range sortedKeys(table) {
-				if feature == "shell_tool" {
+				switch {
+				case feature == "shell_tool":
 					sem.Tools.Denied |= CapShell
-					continue
+				case feature == codexMultiAgent && table[feature] == false:
+					sem.Tools.Denied |= CapDelegate
+					sem.relaxed = true
+					sem.note("features.multi_agent = false: converted without delegation")
+				case feature == codexMultiAgent:
+					sem.relaxed = true
+				default:
+					sem.note("omitted features.%s = false: a Codex capability other harnesses "+
+						"do not have", feature)
 				}
-				sem.note(
-					"omitted features.%s = false: a Codex capability other harnesses do not have",
-					feature,
-				)
 			}
+		case "sandbox_mode":
+			sem.relaxed = true
+			if fields[key] == codexReadOnly {
+				sem.Tools.Denied |= CapEdit
+				sem.note(`sandbox_mode = "read-only": converted without edit tools; ` +
+					"shell commands are not sandboxed outside Codex")
+				continue
+			}
+			sem.note("omitted sandbox_mode = %q: Codex ignores it in agent files; the "+
+				"session's sandbox and approvals apply", fields[key])
 		case "skills":
 			sem.note("omitted skills settings: they only disable Codex skills")
 		case "nickname_candidates":
@@ -338,14 +411,12 @@ func (a codexAdapter) Semantics(id string, variant *agent.VariantFile) (*Semanti
 // search, delegation and MCP servers follow the parent session and are noted.
 func (a codexAdapter) Convert(sem *Semantics) (Artifact, error) {
 	check, err := begin(agent.Codex, sem)
-	if err == nil {
-		err = check.requireWithheld(CapRead|CapSearch|CapEdit,
-			"a Codex agent file has no tool allowlist or read-only mode to withhold it")
-	}
-	if err == nil {
-		err = check.requireForeground()
-	}
 	if err != nil {
+		return Artifact{}, err
+	}
+	sem = check.sem
+	if err := check.requireWithheld(CapRead|CapSearch|CapEdit,
+		"a Codex agent file has no tool allowlist or read-only mode to withhold it"); err != nil {
 		return Artifact{}, err
 	}
 	if !utf8.ValidString(sem.Description) || !utf8.ValidString(sem.Instructions) {
@@ -385,11 +456,5 @@ func (a codexAdapter) Convert(sem *Semantics) (Artifact, error) {
 		(parsed.Features == nil) != (file.Features == nil) {
 		return Artifact{}, fmt.Errorf("serialize Codex agent %q: text does not round-trip", sem.ID)
 	}
-	return selfCheck(a, sem.ID, Artifact{
-		FileName:  sem.ID + ".toml",
-		Content:   content,
-		Generated: true,
-		Converter: converterID(agent.Codex),
-		Notes:     check.notes,
-	})
+	return selfCheck(a, sem.ID, check.artifact(sem.ID+".toml", content))
 }

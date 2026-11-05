@@ -97,7 +97,7 @@ func TestGeminiNativeRefusesWhatGeminiRejectsOrCannotHonor(t *testing.T) {
 }
 
 func TestGeminiConversionRefusesDelegationAndRestrictions(t *testing.T) {
-	for _, field := range []string{"spawns: [helper]", "agents: [helper]", "tools: [read]", "readonly: true"} {
+	for _, field := range []string{"spawns: [helper]", "agents: [helper]", "readonly: true", "permission: {edit: deny}"} {
 		doc := portable(t, "---\nname: reviewer\ndescription: d\n"+field+"\n---\nBody\n")
 		_, err := convert(installer(t, agent.Gemini), "reviewer", doc)
 		requireIncompatible(t, err)
@@ -114,7 +114,7 @@ func TestGeminiConversionIsAValidGeminiAgent(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !artifact.Generated || artifact.Converter != "gemini/v4" || len(artifact.Notes) == 0 {
+	if !artifact.Generated || artifact.Converter != "gemini/v5" || len(artifact.Notes) == 0 {
 		t.Fatalf("generated artifact must record converter and omissions: %+v", artifact)
 	}
 	if _, err := gemini.Native(

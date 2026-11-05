@@ -68,6 +68,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.claude/agents/claude-shaped.md",
+      "digest": "sha256:0495ec9a35499fc421c8d196b796ac127bccdd07b0d34c5b87c3e2b18888ed89",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "claude-shaped",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.claude/agents/colon-native.md",
       "digest": "sha256:35d1f81dc452f8003feecba40b8e861f9bb90ba1dbba87c219cb1e540b5249d7",
       "harness": "claude",
@@ -145,6 +156,39 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.claude/agents/cx-sandboxed.md",
+      "digest": "sha256:f551a1e9896708b8f5c51edde5394e220fd04e3a49739859ab4e6215f88dcaff",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cx-sandboxed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/cx-solo.md",
+      "digest": "sha256:ade9857190f75b91a1d756fb0e976593155dede2dc8512194ba6cec512fc4349",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cx-solo",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/cx-workspace.md",
+      "digest": "sha256:bdcf7be87aac3daf01c7b581ae86cd221155ab74eb79ca7f324370536e56a7d4",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cx-workspace",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.claude/agents/defaulted.md",
       "digest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
       "harness": "claude",
@@ -163,6 +207,17 @@
       "destination": "user",
       "source": "git:localhost:8443/layouts.git",
       "agent": "delegator",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/differ.md",
+      "digest": "sha256:f34d2b83d43c92767414489fcc9c4e0bf1ac99d953a6a91f2b3eb4d61347fb07",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "differ",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -288,6 +343,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.claude/agents/mcp-owner.md",
+      "digest": "sha256:ee0eff3e15edd400db1b4bf3ff95acf51c14ab7ba552e818cdfac4109a1d743a",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "mcp-owner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.claude/agents/mcp-wide.md",
       "digest": "sha256:f364f5a6fbed5ae66025777291f65b8f33e48ec39a3d09f9119ac30f9e054fb1",
       "harness": "claude",
@@ -306,6 +372,17 @@
       "destination": "user",
       "source": "git:localhost:8443/layouts.git",
       "agent": "misnamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.claude/agents/modelled.md",
+      "digest": "sha256:3d52a9d90250746cb40d20913b4d1bc01c4a5b313259f51dc8bc6bf92035666e",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "modelled",
       "origin": "direct",
       "installedAt": "<time>"
     },

@@ -1,7 +1,7 @@
 $ agnthub add https://localhost:8443/manifest.git --agent lead --harness opencode --yes
 exit status: 0
 --- stdout
-Installed · localhost:8443/manifest.git@1fc96c7c4fac · project scope
+Installed · localhost:8443/manifest.git@eafafe63d176 · project scope
 harnesses: opencode
 
 Skills
@@ -28,7 +28,7 @@ helper [2]     opencode  + create  .opencode/agents/helper.md
 lead           opencode  + create  .opencode/agents/lead.md
 
 [1] companion: dependency of lead, from localhost:8443/companion.git#v1@7baafb2b236d
-[2] helper: dependency of lead, from localhost:8443/manifest.git@1fc96c7c4fac
+[2] helper: dependency of lead, from localhost:8443/manifest.git@eafafe63d176
 
 3 created · 0 updated · 0 deleted · skills: 1 install
 $ agnthub remove lead --yes

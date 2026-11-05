@@ -15,7 +15,7 @@
           "variant": "generated",
           "sourcePath": "agents/large-probe.md",
           "sourceDigest": "sha256:96ba3da630d537cfbc09c4a35980eb414a83113049cb2f7f5d333e47eea5d4cc",
-          "converter": "opencode/v4",
+          "converter": "opencode/v5",
           "path": ".opencode/agents/large-probe.md",
           "digest": "sha256:f6f588e3f7d1b1b293f3525a19f350dac280b2cc06aac2977e1a7e189cfb9a49",
           "requires": []

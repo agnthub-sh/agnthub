@@ -22,6 +22,8 @@ type lifecycleOptions struct {
 	yes    bool
 	json   bool
 	extras []string
+	// allowWithoutShell plans agents that lose the shell access they use.
+	allowWithoutShell bool
 }
 
 func (o *lifecycleOptions) flags(cmd *cobra.Command, mutating bool) {
@@ -34,6 +36,7 @@ func (o *lifecycleOptions) flags(cmd *cobra.Command, mutating bool) {
 		"use the user-scope lock instead of the project's",
 	)
 	flags.BoolVar(&o.json, "json", false, "print machine-readable JSON; never prompts")
+	flags.BoolVar(&o.allowWithoutShell, allowWithoutShellFlag, false, allowWithoutShellUsage)
 	if !mutating {
 		return
 	}
@@ -113,6 +116,7 @@ func (a *App) runCheck(ctx context.Context, ids []string, opts *lifecycleOptions
 	if err != nil {
 		return err
 	}
+	l.allowWithoutShell = opts.allowWithoutShell
 	defer func() { _ = l.Close() }()
 	include, err := selectLocked(l.planner.Lock, ids, false)
 	if err != nil {
@@ -144,6 +148,7 @@ func (a *App) runUpdate(ctx context.Context, ids []string, opts *lifecycleOption
 	if err != nil {
 		return err
 	}
+	l.allowWithoutShell = opts.allowWithoutShell
 	defer func() { _ = l.Close() }()
 	lock := l.planner.Lock
 	include, err := selectLocked(lock, ids, true)
@@ -187,6 +192,7 @@ func (a *App) runRestore(ctx context.Context, opts *lifecycleOptions) error {
 	if err != nil {
 		return err
 	}
+	l.allowWithoutShell = opts.allowWithoutShell
 	defer func() { _ = l.Close() }()
 	include := func(*state.LockedAgent) bool { return true }
 	interactive := a.Interactive && !opts.yes && !opts.json

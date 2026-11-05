@@ -82,6 +82,9 @@ type VariantFile struct {
 	// Plugin names the Claude Code plugin whose agent this file is, when
 	// discovery found it through a plugin manifest; empty otherwise.
 	Plugin string
+	// Marketplace names the Claude Code marketplace (the repository's
+	// .claude-plugin/marketplace.json) that lists Plugin; empty otherwise.
+	Marketplace string
 	// Dependencies are added to the Agent's common Dependencies for this Harness.
 	Dependencies Dependencies
 }

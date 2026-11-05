@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/differ.md",
+      "digest": "sha256:638617917bf18638511ced48a299bf5a6843eb354ae93df9ff381cd957124a40",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "differ",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/guarded.md",
+      "digest": "sha256:42b5b84e8dd5adde435a091a0b02a76ea854209f6736b28c5c6ed8d51cdfeeb8",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "guarded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/layouts --agent differ --agent guarded --harness copilot --allow-without-shell --yes --json
+exit status: 0

@@ -45,7 +45,7 @@ func TestCodexConvertPreservesInstructionTextExactly(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if !artifact.Generated || artifact.Converter != "codex/v4" ||
+			if !artifact.Generated || artifact.Converter != "codex/v5" ||
 				artifact.FileName != "reviewer.toml" {
 				t.Fatalf("unexpected artifact metadata: %+v", artifact)
 			}
@@ -70,7 +70,7 @@ func TestCodexConvertPreservesInstructionTextExactly(t *testing.T) {
 
 func TestCodexConvertRefusesNonPortableFields(t *testing.T) {
 	codex := codexInstaller(t)
-	for _, key := range []string{"tools", "model", "sandbox_mode", "readonly", "mcp_servers"} {
+	for _, key := range []string{"tools", "sandbox_mode", "readonly", "mcp_servers"} {
 		_, err := convert(codex, "reviewer", portableDoc(
 			map[string]any{"name": "reviewer", "description": "x", key: "value"},
 			"body\n",
@@ -135,7 +135,7 @@ func TestCodexNativeRejectsInvalidAndParentOverridingVariants(t *testing.T) {
 		"invalid toml":          "name = ",
 		"name mismatch":         "name = \"other\"\ndescription = \"d\"\ndeveloper_instructions = \"i\"\n",
 		"missing instructions":  "name = \"reviewer\"\ndescription = \"d\"\n",
-		"sandbox":               base + "sandbox_mode = \"danger-full-access\"\n",
+		"unknown sandbox":       base + "sandbox_mode = \"everything\"\n",
 		"approval":              base + "approval_policy = \"never\"\n",
 		"provider":              base + "model_provider = \"openrouter\"\n",
 		"mcp":                   base + "[mcp_servers.x]\ncommand = \"x\"\n",

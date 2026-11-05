@@ -2,6 +2,20 @@
   "version": 1,
   "records": [
     {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/allowlisted.md",
+      "digest": "sha256:7c884b1dd05348b23d8cb3e0bc1ff78d7281e886f4eb0f80655ae8b5bcb40bfb",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "allowlisted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.omp/agent/agents/annotated.md",
       "digest": "sha256:c93c4c71c813a9c59503394465e3eb499c3e8370183209c677f2ef4fc3da2b9d",
       "harness": "omp",
@@ -12,6 +26,20 @@
       "destination": "default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "annotated",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/backgrounder.md",
+      "digest": "sha256:67a1bccf65815313fefb43c425f6e16de1dcd4fe4b5f51745651feaa073ac540",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "backgrounder",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -54,6 +82,20 @@
       "destination": "default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "bounded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/claude-shaped.md",
+      "digest": "sha256:0e33db1b69565f66feac273faa955feb97fb798c1d1bfcb378466a9a020ff156",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "claude-shaped",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -152,6 +194,48 @@
       "destination": "default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "cx-nicknamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/cx-sandboxed.md",
+      "digest": "sha256:4b3ac57102245c8ab0970605a3af9d71bf2817add149738dce0c0b9586fbb7a0",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-sandboxed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/cx-solo.md",
+      "digest": "sha256:2dec5c00ef3b114ebfcc1ddf3583bd5b04c28f59f1a6e9577ad7429948dd88f4",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-solo",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/cx-workspace.md",
+      "digest": "sha256:bdcf7be87aac3daf01c7b581ae86cd221155ab74eb79ca7f324370536e56a7d4",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-workspace",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -348,6 +432,20 @@
       "destination": "default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "misnamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/modelled.md",
+      "digest": "sha256:fdb1107e42dcdc3cbb93b88c19b559a970fd13e7c0d67b11895b4c0f71108231",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "modelled",
       "origin": "direct",
       "installedAt": "<time>"
     },

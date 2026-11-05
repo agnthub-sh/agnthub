@@ -15,13 +15,13 @@ The CLI's own model (packages `discovery`, `harness`, `install`, `resolve`, `ski
 
 | Dimension | What exists |
 |---|---|
-| Portable layouts | root `AGENT.md` (needs `name`), `agents/<id>.md`, `agents/<id>/AGENT.md`; `AGENTS.md`/`README.md` are not agents. Portable core = `name`, `description`, body; descriptive metadata (`version`, `tags`, `author`, `license`, `homepage`, `metadata`) is noted and omitted; any other key (e.g. `model`) makes the agent unconvertible. |
+| Portable layouts | root `AGENT.md` (needs `name`), `agents/<id>.md`, `agents/<id>/AGENT.md`; `AGENTS.md`/`README.md` are not agents. Portable core = `name`, `description`, body; descriptive metadata (`version`, `tags`, `author`, `license`, `homepage`, `metadata`) is noted and omitted; other keys are read as Claude Code reads them (`model` kept on Claude Code and noted elsewhere, `tools` the tool policy, `color` omitted), and keys that read as restrictions Claude Code ignores refuse. |
 | Native layouts | `.claude/agents/**/*.md` (recursive, lenient YAML), `.opencode/agents/*.md` (id = file name), `.codex/agents/*.toml`, `.github/agents/*.agent.md` and `*.md` (id = file name), `.cursor/agents/*.md` (one-line keys), `.gemini/agents/*.md`, `.omp/agents/*.md`. |
 | Manifest | `agnthub.yaml` is the whole inventory: declared ids, `categories`, `portable`, per-Harness `variants` (any path), common and Variant-only `dependencies.agents` (same repository or external Git source with ref) and `dependencies.skills` (source, skill, version bounds). |
 | Variant selection | An authored Variant for the target installs byte for byte after native validation; otherwise the portable core is converted, else another authored Variant (claude, opencode, codex, copilot, cursor, gemini, omp order). An invalid Variant for the target is refused, never replaced by a conversion. |
-| Conversion | Name, description and instructions carry; tool allowlists, denylists, read-only, MCP tool references, `maxTurns` and background map by capability into each Harness's form or are refused when the target cannot enforce them; model strings are dropped with a note; cosmetic fields are noted; permission modes, hooks, agent-scoped MCP servers are refused everywhere; keys Claude Code ignores are noted, unless they read as restrictions (refused); persistent memory and preloaded skills never refuse: native field, delimited instructions, or a note. |
+| Conversion | Name, description and instructions carry; tool allowlists, denylists, read-only, MCP tool references and `maxTurns` map by capability into each Harness's form or are refused when the target cannot enforce them; a capability the target cannot grant (Copilot CLI web search, Gemini CLI delegation) is withheld and shown as `reduced`; an agent that would lose the shell it uses (Cursor `readonly`, scoped `Bash(...)` rules outside OpenCode, `permissionMode: plan`) installs only with `--allow-without-shell`; Codex `sandbox_mode = "read-only"` withholds edits elsewhere and is refused on Codex; background agents run in the foreground with a note; model strings are dropped with a note; cosmetic fields are noted; agent-scoped MCP servers carry only to Gemini CLI's `mcp_servers`; `permissionMode: dontAsk` and hooks with real events are refused; keys Claude Code ignores are noted, unless they read as restrictions (refused; `allowed-tools` is the allowlist elsewhere); persistent memory and preloaded skills never refuse: native field, delimited instructions, or a note. |
 | Identity | Ambiguous identities (two portable files, two native files of one Harness) refuse that agent only. |
-| Selection | `--agent`/`'*'`, `--harness`/`all`, `--all`, `--global`, `--yes` (never reduces a plan), `--extra omp.profile=<name>` (omp only; refused for unselected Harnesses; profiles must exist). |
+| Selection | `--agent`/`'*'`, `--harness`/`all`, `--all`, `--global`, `--yes` (never reduces a plan), `--allow-without-shell` (installs agents that lose the shell they use), `--extra omp.profile=<name>` (omp only; refused for unselected Harnesses; profiles must exist). |
 | Lifecycle | `list`, `check` (updates, drift), `update` (locked ref, refuses local edits), `restore` (lock only, byte-identical, refuses mismatches), `remove` (owned and unchanged files only), `remove --clean-dependencies`. |
 | Dependencies | Agent Dependencies install with the selection (origin `dependency`); Skill Dependencies install through skills.sh into the Harness's skill directory, refused where the Harness would not load them (Gemini CLI untrusted project). |
 
@@ -73,6 +73,9 @@ with `--network none`, so no check reaches a real model or account.
 
 Cell codes: `W` the golden shows the agent written (files, lock and ownership byte for byte)
 in every scope and source of the row; `R` the golden shows it refused and nothing written;
+`O` the plan refuses it only because it would lose the shell access it uses, the refusal
+golden shows it refused without the opt-in, and `install-layouts-without-shell` writes it
+with `--allow-without-shell` (project · local);
 `A` the goldens show the agent is not installed for that Harness (not part of its
 selection); `✓` the step's golden output (inventory, selection, lifecycle) with exit status
 0; `N` the real Harness CLI loaded what the step installed; `N0` the real CLI provably does
@@ -87,13 +90,13 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | root `AGENT.md` (portable) | `root-helper` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | `agents/<id>.md` (portable) | `planner` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | `agents/<id>/AGENT.md` (portable) | `researcher` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
-| `.claude/agents/*.md` (Claude Code native) | `reviewer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | R | W N | W N |
+| `.claude/agents/*.md` (Claude Code native) | `reviewer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | O N | W N | W N |
 | `.claude/agents/<dir>/*.md` (recursive) | `fixer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | `.opencode/agents/*.md` (OpenCode native, CRLF) | `oc-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
 | `.codex/agents/*.toml` (Codex TOML) | `cx-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | R | W N | W N |
 | `.github/agents/*.agent.md` (Copilot CLI) | `gh-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
 | `.github/agents/*.md` (Copilot CLI, plain suffix) | `gh-plain` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
-| `.cursor/agents/*.md` (Cursor, `readonly`) | `cu-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | W N N0 | W N | W N |
+| `.cursor/agents/*.md` (Cursor, `readonly`) | `cu-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
 | `.gemini/agents/*.md` (Gemini CLI) | `gm-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
 | `.omp/agents/*.md` (omp) | `omp-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
 | `AGENTS.md` and `README.md` are not agents (inventory) | — | inventory · local | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -135,34 +138,40 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | authored native Variant wins over conversion (portable + Claude + OpenCode) | `dual` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | invalid native Variant for the target: refused, never converted instead | `broken` | global · git<br>global · local<br>project · git<br>project · local | R | R | R | R | R | R | R |
 | portable core with descriptive metadata (noted, omitted) | `tagged` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
-| Claude-only `permissionMode: plan`: native on Claude Code, refused elsewhere | `guarded` | global · git<br>global · local<br>project · git<br>project · local | W N | R | R | R | R | R | R |
+| portable core written for Claude Code (`model`, `tools`, `color`): read as a Claude Code agent | `claude-shaped` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
+| Claude-only `permissionMode: plan`: native on Claude Code, read-only elsewhere (no edits or shell) with `--allow-without-shell`, refused on Codex | `guarded` | global · git<br>global · local<br>project · git<br>project · local | W N | O N | R | O N | O N | O N | O N |
 | `permissionMode: acceptEdits`, which only approves more: native on Claude Code, dropped with a note elsewhere (the harness asks for approval as usual) | `relaxed` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | `hooks` whose events Claude Code ignores (`pre`, `post`): native on Claude Code, omitted with a note elsewhere | `scripted` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | Copilot CLI Variant with keys Copilot CLI ignores (`color`, `title`): installed as written with a note | `gh-colored` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
-| Cursor Variant with keys Cursor ignores (`category`, `color`): installed as written with a note | `cu-tagged` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | W N N0 | W N | W N |
+| Cursor Variant with keys Cursor ignores (`category`, `color`): installed as written with a note | `cu-tagged` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
 | Codex `nickname_candidates`: native on Codex, omitted with a note elsewhere | `cx-nicknamed` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | R | W N | W N |
+| Codex `sandbox_mode = "read-only"`: refused on Codex (it runs agents in the parent session's sandbox), edits withheld elsewhere | `cx-sandboxed` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | O N | W N | W N |
+| Codex `sandbox_mode = "workspace-write"`: installed on Codex with a note (the parent session's sandbox applies), omitted with a note elsewhere | `cx-workspace` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| Codex `features.multi_agent = false`: installed on Codex with a warning (not enforced there), delegation withheld elsewhere | `cx-solo` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | Claude Code fields at their default or empty (`permissionMode: default`, `disallowedTools: []`, `hooks: {}`, `mcpServers: []`): native on Claude Code, omitted with a note elsewhere | `defaulted` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 
 ### Tool restrictions
 
 | Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
 |---|---|---|---|---|---|---|---|---|---|
-| allowlist Read/Grep/Glob/Bash | `reviewer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | R | W N | W N |
+| allowlist Read/Grep/Glob/Bash (Cursor: `readonly`, without the shell, with `--allow-without-shell`) | `reviewer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | O N | W N | W N |
 | allowlist with edit and shell | `fixer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | read-only allowlist (Read, Grep) | `colon-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
 | OpenCode `permission` edit/bash deny | `oc-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
-| Cursor `readonly: true` | `cu-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | W N N0 | W N | W N |
+| Cursor `readonly: true` | `cu-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
 | Codex `features.shell_tool = false` | `cx-native` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | R | W N | W N |
 | denylist (`disallowedTools: Bash`) | `no-shell` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | R | W N | W N |
 | MCP tool reference (`mcp__github__get_issue`) | `issue-reader` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | R | W N | W N |
 | whole MCP server (`mcp__github__*`) | `mcp-wide` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | R | W N | W N |
-| web fetch and web search | `web-searcher` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | R | W N | W N |
+| web fetch and web search (Copilot CLI: installed without web search, `reduced`) | `web-searcher` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | R | W N | W N |
+| scoped shell rule `Bash(git diff *)` with edits: OpenCode `permission.bash`, shell withheld elsewhere with `--allow-without-shell` (Cursor: refused) | `differ` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | O N | O N | R | O N | O N |
 | allowlist names with no equivalent (`read`, `ListMcpResourcesTool`, `playwright`): left out with a note | `misnamed` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
-| delegation (`Agent`) | `delegator` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | R | W N |
+| delegation (`Agent`; Gemini CLI: installed without it, `reduced`) | `delegator` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
 | turn limit (`maxTurns`) | `bounded` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
-| background execution (`background: true`) | `backgrounder` | global · git<br>global · local<br>project · git<br>project · local | W N | R | R | R | W N N0 | R | R |
+| background execution (`background: true`): in the foreground with a note where the Harness has no background agents | `backgrounder` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | Gemini `mcp_servers` + `mcp_<server>_<tool>`: native on Gemini CLI | `gm-mcp` | global · git<br>global · local<br>project · git<br>project · local | R | R | R | R | R | W N | R |
 | Gemini `mcpServers` (camelCase), which Gemini CLI rejects: refused | `gm-camel` | global · git<br>global · local<br>project · git<br>project · local | R | R | R | R | R | R | R |
+| agent-scoped `mcpServers`: native on Claude Code, Gemini CLI `mcp_servers`, refused elsewhere | `mcp-owner` | global · git<br>global · local<br>project · git<br>project · local | W N | R | R | R | R | W N | R |
 
 ### Additive capabilities
 
@@ -179,7 +188,7 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
 |---|---|---|---|---|---|---|---|---|---|
 | keys Claude Code ignores (`capabilities`, `category`, `domain`): omitted with a note | `annotated` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
-| ignored key that reads as a restriction (`allowed-tools`): refused | `allowlisted` | global · git<br>global · local<br>project · git<br>project · local | W N | R | R | R | R | R | R |
+| `allowed-tools`, which Claude Code ignores in agents: kept with a warning on Claude Code, the tool allowlist elsewhere | `allowlisted` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
 
 ### Additive capabilities
 
@@ -191,8 +200,8 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 
 | Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
 |---|---|---|---|---|---|---|---|---|---|
-| native `model: sonnet` kept byte-for-byte, dropped with a note on conversion | `reviewer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | R | W N | W N |
-| portable `model`: uninstallable everywhere | `modelled` | global · git<br>global · local<br>project · git<br>project · local | R | R | R | R | R | R | R |
+| native `model: sonnet` kept byte-for-byte, dropped with a note on conversion | `reviewer` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | O N | W N | W N |
+| portable `model`, read as Claude Code's: kept on Claude Code, dropped with a note elsewhere | `modelled` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 
 ### Frontmatter edge cases
 
@@ -208,7 +217,7 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | folded description (`>-`) | `researcher` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | literal block description (`|`) | `literal` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | description with a colon and both quote characters: one quoted line on Cursor | `quoted` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
-| Cursor Variant with a multi-line description: folded onto one line | `cu-folded` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | W N N0 | W N | W N |
+| Cursor Variant with a multi-line description: folded onto one line | `cu-folded` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
 
 ### Ambiguous identities
 

@@ -1,0 +1,77 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/layouts"
+  },
+  "harnesses": [
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot CLI",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "differ",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/differ.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/differ.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "tools grants only part of edit (no Write); converted agents get edit as a whole",
+        "goes without shell: it may run only some shell commands (* (deny), git diff * (allow)), and copilot cannot limit the shell to commands"
+      ],
+      "reduced": [
+        "shell"
+      ],
+      "optIn": "allow-without-shell"
+    },
+    {
+      "agent": "guarded",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/guarded.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/guarded.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode plan converted as a read-only tool policy: no edits, shell, delegation or MCP tools",
+        "goes without shell: permissionMode plan allows read-only shell commands, and copilot cannot limit the shell to them",
+        "goes without delegation: permissionMode plan is read-only, and a delegated agent could edit",
+        "goes without MCP tools: permissionMode plan is read-only, and MCP tools could write",
+        "goes without web search: Copilot CLI offers custom agents no web search tool"
+      ],
+      "reduced": [
+        "shell",
+        "delegation",
+        "MCP tools",
+        "web search"
+      ],
+      "optIn": "allow-without-shell"
+    }
+  ],
+  "summary": {
+    "create": 2
+  }
+}

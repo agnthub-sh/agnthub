@@ -4,7 +4,7 @@
   "source": {
     "kind": "git",
     "locator": "localhost:8443/layouts.git",
-    "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+    "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
   },
   "harnesses": [
     {
@@ -22,6 +22,31 @@
   ],
   "items": [
     {
+      "agent": "allowlisted",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/allowlisted.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/allowlisted.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "read allowed-tools as the tool allowlist: Claude Code ignores it in agents (it is a skill field), other harnesses enforce it",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
+    },
+    {
       "agent": "annotated",
       "harness": "omp",
       "settings": {},
@@ -35,7 +60,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -46,6 +71,29 @@
         "omitted domain: Claude Code ignores it",
         "excludes web fetch, but omp's read tool also fetches URLs",
         "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
+    },
+    {
+      "agent": "backgrounder",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/backgrounder.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/backgrounder.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "runs in the foreground: omp cannot run an agent in the background"
       ]
     },
     {
@@ -62,7 +110,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -81,7 +129,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -105,13 +153,38 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the claude variant",
         "turn limit of 5 isn't enforced on omp: it has no per-agent turn limit, so the instructions ask the agent to finish within about 5 turns"
+      ]
+    },
+    {
+      "agent": "claude-shaped",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/claude-shaped.md",
+      "variant": "generated",
+      "sourcePath": "agents/claude-shaped.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted color: cosmetic",
+        "model \"opus\" is specific to claude; the agent uses the harness default model",
+        "excludes web fetch, but omp's read tool also fetches URLs",
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
       ]
     },
     {
@@ -128,7 +201,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -147,7 +220,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -171,7 +244,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -195,7 +268,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -219,7 +292,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -245,7 +318,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -267,13 +340,82 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the codex variant",
         "omitted nickname_candidates: display names for Codex's spawned agents"
+      ]
+    },
+    {
+      "agent": "cx-sandboxed",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/cx-sandboxed.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-sandboxed.toml",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "sandbox_mode = \"read-only\": converted without edit tools; shell commands are not sandboxed outside Codex"
+      ]
+    },
+    {
+      "agent": "cx-solo",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/cx-solo.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-solo.toml",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "features.multi_agent = false: converted without delegation"
+      ]
+    },
+    {
+      "agent": "cx-workspace",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/cx-workspace.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-workspace.toml",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "omitted sandbox_mode = \"workspace-write\": Codex ignores it in agent files; the session's sandbox and approvals apply"
       ]
     },
     {
@@ -290,7 +432,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -317,7 +459,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -341,7 +483,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -360,7 +502,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -384,7 +526,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -410,7 +552,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -434,7 +576,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -458,7 +600,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -482,7 +624,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -507,7 +649,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -532,7 +674,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -551,7 +693,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -574,7 +716,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -599,7 +741,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -608,6 +750,28 @@
         "omitted tools entries read, ListMcpResourcesTool, playwright: no omp equivalent, so the agent goes without them",
         "excludes web fetch, but omp's read tool also fetches URLs",
         "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
+    },
+    {
+      "agent": "modelled",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/modelled.md",
+      "variant": "generated",
+      "sourcePath": "agents/modelled.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model"
       ]
     },
     {
@@ -624,7 +788,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -646,7 +810,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -668,7 +832,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -690,7 +854,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -709,7 +873,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -733,7 +897,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -758,7 +922,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -783,7 +947,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -808,7 +972,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -827,7 +991,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -853,7 +1017,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -872,7 +1036,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -897,7 +1061,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -922,7 +1086,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -949,12 +1113,14 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
-        "omitted descriptive metadata: author, tags, version"
+        "omitted author: descriptive metadata",
+        "omitted tags: descriptive metadata",
+        "omitted version: descriptive metadata"
       ]
     },
     {
@@ -971,7 +1137,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -982,6 +1148,6 @@
     }
   ],
   "summary": {
-    "create": 41
+    "create": 48
   }
 }

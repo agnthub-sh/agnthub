@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "differ",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/differ.md",
+          "sourceDigest": "sha256:f34d2b83d43c92767414489fcc9c4e0bf1ac99d953a6a91f2b3eb4d61347fb07",
+          "converter": "codex/v5",
+          "path": ".codex/agents/differ.toml",
+          "digest": "sha256:33d359805ed8578b801201146cd62d4c460f0d180676e2cfbdb60fdd758de3da",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

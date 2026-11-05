@@ -64,6 +64,8 @@ var nonClaude = []agent.HarnessID{
 }
 
 func TestClaudeAgentsConvertToEveryHarnessTheirToolsAllow(t *testing.T) {
+	// A target either converts the agent (ok), refuses it, or installs it
+	// without capabilities it uses (the reduced capability, comma-separated).
 	const (
 		ok     = ""
 		refuse = "refuse"
@@ -78,7 +80,7 @@ func TestClaudeAgentsConvertToEveryHarnessTheirToolsAllow(t *testing.T) {
 			tools: []string{"Read", "Grep", "Glob", "Bash"},
 			want: map[agent.HarnessID]string{
 				agent.OpenCode: ok, agent.Codex: refuse, agent.Copilot: ok,
-				agent.Cursor: refuse, agent.Gemini: ok, agent.OMP: ok,
+				agent.Cursor: "shell", agent.Gemini: ok, agent.OMP: ok,
 			},
 		},
 		{
@@ -101,7 +103,7 @@ func TestClaudeAgentsConvertToEveryHarnessTheirToolsAllow(t *testing.T) {
 			name:  "web search",
 			tools: []string{"Read", "Edit", "Write", "Bash", "WebSearch"},
 			want: map[agent.HarnessID]string{
-				agent.OpenCode: ok, agent.Codex: ok, agent.Copilot: refuse,
+				agent.OpenCode: ok, agent.Codex: ok, agent.Copilot: "web search",
 				agent.Cursor: ok, agent.Gemini: ok, agent.OMP: ok,
 			},
 		},
@@ -110,7 +112,7 @@ func TestClaudeAgentsConvertToEveryHarnessTheirToolsAllow(t *testing.T) {
 			tools: []string{"Read", "Edit", "Write", "Bash", "Agent"},
 			want: map[agent.HarnessID]string{
 				agent.OpenCode: ok, agent.Codex: ok, agent.Copilot: ok,
-				agent.Cursor: ok, agent.Gemini: refuse, agent.OMP: ok,
+				agent.Cursor: ok, agent.Gemini: "delegation", agent.OMP: ok,
 			},
 		},
 		{
@@ -126,7 +128,7 @@ func TestClaudeAgentsConvertToEveryHarnessTheirToolsAllow(t *testing.T) {
 			tools: []string{"Read", "Grep", "Glob", "mcp__github__get_commit"},
 			want: map[agent.HarnessID]string{
 				agent.OpenCode: ok, agent.Codex: refuse, agent.Copilot: ok,
-				agent.Cursor: refuse, agent.Gemini: ok, agent.OMP: ok,
+				agent.Cursor: "MCP tools", agent.Gemini: ok, agent.OMP: ok,
 			},
 		},
 		{
@@ -152,8 +154,11 @@ func TestClaudeAgentsConvertToEveryHarnessTheirToolsAllow(t *testing.T) {
 					t.Errorf("%s → %s: %v", tc.name, target, err)
 					continue
 				}
-				if !artifact.Generated || !strings.HasSuffix(artifact.Converter, "/v4") {
-					t.Errorf("%s → %s: not a v4 generated artifact: %+v", tc.name, target, artifact)
+				if got := strings.Join(artifact.ReducedNames(), ", "); got != tc.want[target] {
+					t.Errorf("%s → %s: reduced %q, want %q", tc.name, target, got, tc.want[target])
+				}
+				if !artifact.Generated || !strings.HasSuffix(artifact.Converter, "/v5") {
+					t.Errorf("%s → %s: not a v5 generated artifact: %+v", tc.name, target, artifact)
 				}
 				if !hasNote(artifact.Notes, "harness default model") {
 					t.Errorf("%s → %s: the source model must be noted, got %q",
@@ -241,7 +246,6 @@ func TestGeneratedToolPoliciesRoundTrip(t *testing.T) {
 func TestBehavioralFieldsRefuseConversion(t *testing.T) {
 	for _, field := range []string{
 		"hooks:\n  Stop:\n    - command: echo\n",
-		"permissionMode: plan\n",
 		"mcpServers:\n  - github\n",
 		"isolation: worktree\n",
 	} {
@@ -399,11 +403,25 @@ func TestOtherHarnessVariantsConvertToClaude(t *testing.T) {
 	}
 }
 
+// Approval prompts have no per-agent equivalent elsewhere. A shell that asks,
+// or runs only some commands, is withheld instead, as a reduction that needs
+// the opt-in; Codex cannot withhold the edits this agent excludes.
 func TestApprovalPromptsHaveNoEquivalent(t *testing.T) {
 	source := "---\ndescription: Reviews\nmode: subagent\npermission:\n  edit: deny\n  bash:\n" +
 		"    \"*\": ask\n    \"git diff\": allow\n---\nReview.\n"
+	for _, target := range []agent.HarnessID{agent.Claude, agent.Gemini} {
+		artifact, err := generateFrom(t, agent.OpenCode, target, ".opencode/agents/reviewer.md",
+			source)
+		if err != nil || !artifact.WithoutShell() {
+			t.Errorf("%s: want the shell withheld as a reduction, got %v %v", target,
+				artifact.Reduced, err)
+		}
+	}
+	_, err := generateFrom(t, agent.OpenCode, agent.Codex, ".opencode/agents/reviewer.md", source)
+	requireIncompatible(t, err)
+	asks := "---\ndescription: Reviews\nmode: subagent\npermission:\n  edit: ask\n---\nReview.\n"
 	for _, target := range []agent.HarnessID{agent.Claude, agent.Codex, agent.Gemini} {
-		_, err := generateFrom(t, agent.OpenCode, target, ".opencode/agents/reviewer.md", source)
+		_, err := generateFrom(t, agent.OpenCode, target, ".opencode/agents/reviewer.md", asks)
 		requireIncompatible(t, err)
 	}
 }
@@ -427,14 +445,14 @@ func TestPortableCoreIsPreferredOverOtherVariants(t *testing.T) {
 
 func TestOlderLocksRestoreUnderTheCurrentConverter(t *testing.T) {
 	for _, h := range agent.AllHarnesses {
-		for _, old := range []string{"v1", "v2", "v3"} {
-			if !harness.ConverterReproduces(string(h)+"/"+old, string(h)+"/v4") {
-				t.Errorf("%s: v4 must restore %s locks", h, old)
+		for _, old := range []string{"v1", "v2", "v3", "v4"} {
+			if !harness.ConverterReproduces(string(h)+"/"+old, string(h)+"/v5") {
+				t.Errorf("%s: v5 must restore %s locks", h, old)
 			}
 		}
 	}
-	if harness.ConverterReproduces("claude/v2", "codex/v4") ||
-		harness.ConverterReproduces("claude/v5", "claude/v4") {
+	if harness.ConverterReproduces("claude/v2", "codex/v5") ||
+		harness.ConverterReproduces("claude/v6", "claude/v5") {
 		t.Fatal("only the same harness's older converters are reproducible")
 	}
 }
@@ -523,7 +541,6 @@ func TestMCPToolsTargetsCannotAddressAreRefused(t *testing.T) {
 		},
 		{"OpenCode server matching a built-in", []string{"Read", "mcp__apply"}, agent.OpenCode},
 		{"OpenCode's own namespace", []string{"Read", "mcp__opencode__x"}, agent.OpenCode},
-		{"Cursor readonly", []string{"Read", "Grep", "mcp__github__get_commit"}, agent.Cursor},
 		{
 			"Copilot name over 64 characters",
 			[]string{"Read", "mcp__context7__" + strings.Repeat("x", 60)},

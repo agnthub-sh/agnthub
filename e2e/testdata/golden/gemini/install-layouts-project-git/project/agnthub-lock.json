@@ -5,7 +5,28 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "agent": "allowlisted",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/allowlisted.md",
+          "sourceDigest": "sha256:f3ff55dcde035238f85d0fdae8958a9aff05a4776d32adde1c8d30fa96889af8",
+          "converter": "gemini/v5",
+          "path": ".gemini/agents/allowlisted.md",
+          "digest": "sha256:3c09d1db751baa39134f254b19ed0be2783f89594fb5ea05830ace8e8f55df09",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "annotated",
       "origin": "direct",
@@ -15,7 +36,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/annotated.md",
           "sourceDigest": "sha256:8cf577c3db790479f198a536eb7ad1011f84a0827e2bb2a07bfe5836a4254087",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/annotated.md",
           "digest": "sha256:702061a135b288f798bba4b5f070f00696360c4cf5f1b0d308f6cebb0bb872c4",
           "requires": []
@@ -26,7 +47,28 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "agent": "backgrounder",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/backgrounder.md",
+          "sourceDigest": "sha256:db764d016ee2d92946ed60cf836c8b3fc1f08052face2ee6fc019dbb27de0bc2",
+          "converter": "gemini/v5",
+          "path": ".gemini/agents/backgrounder.md",
+          "digest": "sha256:67a1bccf65815313fefb43c425f6e16de1dcd4fe4b5f51745651feaa073ac540",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "bom",
       "origin": "direct",
@@ -36,7 +78,7 @@
           "variant": "generated",
           "sourcePath": "agents/bom.md",
           "sourceDigest": "sha256:4a06ac5e6bf431ff6070e79391195c1ff4e3c7e8f0b093dbfa06fb32e692f629",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/bom.md",
           "digest": "sha256:153b3d74ed17217d3add75e5a05821e72eeda1b02b4edfbe91542b1fa2adcb62",
           "requires": []
@@ -47,7 +89,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "bom-native",
       "origin": "direct",
@@ -57,7 +99,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/bom-native.md",
           "sourceDigest": "sha256:4625951c9f6cb88f9476953c5a7dcb191bb1ccb2ff8ad6bbdd98a2c9baeb593c",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/bom-native.md",
           "digest": "sha256:ef5c57800f4835bcf4da07eb35cea5fc05af29278aa6711aad89907cf589a617",
           "requires": []
@@ -68,7 +110,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "bounded",
       "origin": "direct",
@@ -78,7 +120,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/bounded.md",
           "sourceDigest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/bounded.md",
           "digest": "sha256:2e095236fe32c9f768e25371ec215dad3695b44db8e2374f90efaaa661ffcb98",
           "requires": []
@@ -89,7 +131,28 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "agent": "claude-shaped",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": "agents/claude-shaped.md",
+          "sourceDigest": "sha256:fd5067a2a12f6e18f26f14d9a44bdf5e355fc65476c81afd0b70ce124c95c9ad",
+          "converter": "gemini/v5",
+          "path": ".gemini/agents/claude-shaped.md",
+          "digest": "sha256:f42ca7006f59e532065b69785bc5ba3ea2f34c5f099c202f8fcb2ff227226177",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "colon",
       "origin": "direct",
@@ -99,7 +162,7 @@
           "variant": "generated",
           "sourcePath": "agents/colon.md",
           "sourceDigest": "sha256:89cfd9750c6cd78419f7c04dc07bbc55508cbd9e43767be467bca82fefd1bd34",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/colon.md",
           "digest": "sha256:ec277a9554a398e568c45ee3d061abd25e0e952506d01c5654be2e6c265f1c1f",
           "requires": []
@@ -110,7 +173,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "colon-native",
       "origin": "direct",
@@ -120,7 +183,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/colon-native.md",
           "sourceDigest": "sha256:35d1f81dc452f8003feecba40b8e861f9bb90ba1dbba87c219cb1e540b5249d7",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/colon-native.md",
           "digest": "sha256:f42a87d53bfccca4296355d40f4f6aff223eca33f67577288ce7f2427dbd65a6",
           "requires": []
@@ -131,7 +194,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "cu-folded",
       "origin": "direct",
@@ -141,7 +204,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-folded.md",
           "sourceDigest": "sha256:269f1c668e921158450159bc7643fb769ff5af270bc46ab39cdd8ccaa5ac764c",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/cu-folded.md",
           "digest": "sha256:baa896f4f9da5140b0195bba26628bceae603800aa83d78eb4531bd3ec0473c8",
           "requires": []
@@ -152,7 +215,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "cu-native",
       "origin": "direct",
@@ -162,7 +225,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-native.md",
           "sourceDigest": "sha256:90e2a7aaee545f416f39f918470e649abfde0a5d1d00e05c5f3eb07cd57778bd",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/cu-native.md",
           "digest": "sha256:3f3fb877d04007370dc9f55402880205949b0f1f6b30c3dae14e9be898d09c49",
           "requires": []
@@ -173,7 +236,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "cu-tagged",
       "origin": "direct",
@@ -183,7 +246,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-tagged.md",
           "sourceDigest": "sha256:970c3f3b68d411a7b90dc24c2b42c1e5f3355966a2427f158fa3b42b3c726970",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/cu-tagged.md",
           "digest": "sha256:7947233ff5a98a01dbd3bf0dcfba129c27022125e910678a1eb4a5c7857fc760",
           "requires": []
@@ -194,7 +257,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "cx-native",
       "origin": "direct",
@@ -204,7 +267,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-native.toml",
           "sourceDigest": "sha256:a885e8934fcddf4cf363afdb2c3f69d15dec952f974f37fcfd39c1c7a66bc1a1",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/cx-native.md",
           "digest": "sha256:0c812101ad01269ef0854e2c3fe6900836d961b6b686b906136f73910676f7a2",
           "requires": []
@@ -215,7 +278,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "cx-nicknamed",
       "origin": "direct",
@@ -225,7 +288,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-nicknamed.toml",
           "sourceDigest": "sha256:afe1f7c1493cd1348a68552047006bd3c87c0ebb0e102a4200365a2a6fb42436",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/cx-nicknamed.md",
           "digest": "sha256:c3e18495def0e5260816ab184915d860d83befaadf31564af6eaa070ce04c05a",
           "requires": []
@@ -236,7 +299,70 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "agent": "cx-sandboxed",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": ".codex/agents/cx-sandboxed.toml",
+          "sourceDigest": "sha256:dcaa98695697729de4d531213e23fa532f915b87e3ec07b5e09cec4f3249ede2",
+          "converter": "gemini/v5",
+          "path": ".gemini/agents/cx-sandboxed.md",
+          "digest": "sha256:c52a056c631cbdce69520dc63b8b49afd1d6b042539969ca528bb2de2dc9e21b",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "agent": "cx-solo",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": ".codex/agents/cx-solo.toml",
+          "sourceDigest": "sha256:e782111961e86540d80e45850dbb038dfb01c39f7fc510ddf1f325a6071983f3",
+          "converter": "gemini/v5",
+          "path": ".gemini/agents/cx-solo.md",
+          "digest": "sha256:6d66c5f5506adbeb1fd5796c9f6f92d65637506c486738f71e180963aad7d73a",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "agent": "cx-workspace",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": ".codex/agents/cx-workspace.toml",
+          "sourceDigest": "sha256:24a94e115878b83ba14cac3d632c14bd1a98380f1ea48bdabebd076fb5293d87",
+          "converter": "gemini/v5",
+          "path": ".gemini/agents/cx-workspace.md",
+          "digest": "sha256:bdcf7be87aac3daf01c7b581ae86cd221155ab74eb79ca7f324370536e56a7d4",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "defaulted",
       "origin": "direct",
@@ -246,7 +372,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/defaulted.md",
           "sourceDigest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/defaulted.md",
           "digest": "sha256:5a614e95b5c778a19739e14fef46f03e0238bce044d02d801c48528a52ad7e80",
           "requires": []
@@ -257,7 +383,28 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "agent": "delegator",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/delegator.md",
+          "sourceDigest": "sha256:d55cbc4849ca6e3c63b9d2d51bd5489a1979c2f519369759a3dd2bd55b7d3bce",
+          "converter": "gemini/v5",
+          "path": ".gemini/agents/delegator.md",
+          "digest": "sha256:610ba48be81728e6a4f3eee94fdd3a2281a6da7702a34bb548fe7bf000c3d08e",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "dual",
       "origin": "direct",
@@ -267,7 +414,7 @@
           "variant": "generated",
           "sourcePath": "agents/dual.md",
           "sourceDigest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/dual.md",
           "digest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
           "requires": []
@@ -278,7 +425,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "fixer",
       "origin": "direct",
@@ -288,7 +435,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/team/fixer.md",
           "sourceDigest": "sha256:11404f0e334d2b363d7bc45e6d952817a29d4568e08f2545c04cf83eaa5686e8",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/fixer.md",
           "digest": "sha256:7089acfee6e7d38b633dd2082c9c464537e3a5c23afd054a637b2354859276a8",
           "requires": []
@@ -299,7 +446,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "gh-colored",
       "origin": "direct",
@@ -309,7 +456,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-colored.agent.md",
           "sourceDigest": "sha256:cf7c2dcc846ea6083bd4a55c95a8ef6105f2a6fd4587cbd090a078c3584c2d25",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/gh-colored.md",
           "digest": "sha256:df79bd2e4ec1753889bd68677097e0c1db20b2f2dd4039d3263c9b5ebc8fc367",
           "requires": []
@@ -320,7 +467,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "gh-native",
       "origin": "direct",
@@ -330,7 +477,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-native.agent.md",
           "sourceDigest": "sha256:864618375986b42a604b63514ac52ca854ba652da1b19574df74aac49db3acc3",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/gh-native.md",
           "digest": "sha256:922cc9faf4673787d1c9ddc6bd0e55293d1b67aa191a3c622e9f4d2e9da8a938",
           "requires": []
@@ -341,7 +488,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "gh-plain",
       "origin": "direct",
@@ -351,7 +498,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-plain.md",
           "sourceDigest": "sha256:00d467065c9f6ab9e2344d19d1262dd45ed81922b8d89907de43b5bc8a9e8fea",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/gh-plain.md",
           "digest": "sha256:874711acd749f974386f7696fc69b2c282f402d973923fe3116e78c8e2895238",
           "requires": []
@@ -362,7 +509,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "gm-mcp",
       "origin": "direct",
@@ -382,7 +529,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "gm-native",
       "origin": "direct",
@@ -402,7 +549,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "issue-reader",
       "origin": "direct",
@@ -412,7 +559,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/issue-reader.md",
           "sourceDigest": "sha256:c5cf513142027c5ce8dcbea7dfacadf3fd23fbd5e748c9fc999dd1fd00902358",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/issue-reader.md",
           "digest": "sha256:9e81073450be5f5188ab51210338da43cfe7558b6dc97361a3a01dd1cbf99fb7",
           "requires": []
@@ -423,7 +570,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "journaler",
       "origin": "direct",
@@ -433,7 +580,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/journaler.md",
           "sourceDigest": "sha256:8054d0e04ddedf2eb8559ad2a2a6c9d1a60d4e0f0b41eebf631e6d03d1d0e361",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/journaler.md",
           "digest": "sha256:48038df0f04a5b4f470a2d793379cab29f4e7dbd6eb36aa0a5ffb6d1017e565c",
           "requires": []
@@ -444,7 +591,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "literal",
       "origin": "direct",
@@ -454,7 +601,7 @@
           "variant": "generated",
           "sourcePath": "agents/literal.md",
           "sourceDigest": "sha256:b973b211d0f1640b3dec85aa413b974bd3a3bd92b362105f58b2044100ffdf23",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/literal.md",
           "digest": "sha256:a378de546edf844a868e42125c07f521c84f9cd546e6b742c56b508905e5392a",
           "requires": []
@@ -465,7 +612,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "local-notes",
       "origin": "direct",
@@ -475,7 +622,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/local-notes.md",
           "sourceDigest": "sha256:4d831bcbb3fb7890336981e00b967572db3011ba4cf6404b531ab134ea9ad8f0",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/local-notes.md",
           "digest": "sha256:da341fdda1b258814d81f9827b9b49e7167cc7e012071919dd29f739c7c068d6",
           "requires": []
@@ -486,7 +633,28 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "agent": "mcp-owner",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/mcp-owner.md",
+          "sourceDigest": "sha256:ee0eff3e15edd400db1b4bf3ff95acf51c14ab7ba552e818cdfac4109a1d743a",
+          "converter": "gemini/v5",
+          "path": ".gemini/agents/mcp-owner.md",
+          "digest": "sha256:2dadcec1ff1ff0668e012f0fb3d0b6b84bd7430b44cb6de0cfff7508e7d86972",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "mcp-wide",
       "origin": "direct",
@@ -496,7 +664,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/mcp-wide.md",
           "sourceDigest": "sha256:f364f5a6fbed5ae66025777291f65b8f33e48ec39a3d09f9119ac30f9e054fb1",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/mcp-wide.md",
           "digest": "sha256:b3d31f6c0f64227dadee42591d5347de10022b9b374efc410c4df4e9077c3764",
           "requires": []
@@ -507,7 +675,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "misnamed",
       "origin": "direct",
@@ -517,7 +685,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/misnamed.md",
           "sourceDigest": "sha256:c5c73ca9bb6c15b435d0584078dd5bb855ca728acba4339cd9bdb0c8ac46ea4e",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/misnamed.md",
           "digest": "sha256:6d83d53c0bf39a096156925b792421f80fe88b4bb85d851c336e0d6536e86a4a",
           "requires": []
@@ -528,7 +696,28 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "agent": "modelled",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": "agents/modelled.md",
+          "sourceDigest": "sha256:3d52a9d90250746cb40d20913b4d1bc01c4a5b313259f51dc8bc6bf92035666e",
+          "converter": "gemini/v5",
+          "path": ".gemini/agents/modelled.md",
+          "digest": "sha256:fdb1107e42dcdc3cbb93b88c19b559a970fd13e7c0d67b11895b4c0f71108231",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "no-shell",
       "origin": "direct",
@@ -538,7 +727,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/no-shell.md",
           "sourceDigest": "sha256:63a2ad194c53901523f07f8f3ec3303517e950b53a482f2f2e13b84902d155f3",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/no-shell.md",
           "digest": "sha256:1dfd246d5859fa2c3927da253c09207860188da2c79b6f3e8eb0d6d1632f3dba",
           "requires": []
@@ -549,7 +738,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "oc-native",
       "origin": "direct",
@@ -559,7 +748,7 @@
           "variant": "generated",
           "sourcePath": ".opencode/agents/oc-native.md",
           "sourceDigest": "sha256:5951d5e75a6de4429a8f579c654bb4589d12db75deba1844913b6c4b421cf5d0",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/oc-native.md",
           "digest": "sha256:63c13a48cafeac56e6ef103551430c6e0549fadb9fa2c57094d2477e7a9c46db",
           "requires": []
@@ -570,7 +759,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "omp-native",
       "origin": "direct",
@@ -580,7 +769,7 @@
           "variant": "generated",
           "sourcePath": ".omp/agents/omp-native.md",
           "sourceDigest": "sha256:f0e791fe64b2035a1eab0136e814e470e570bd86b6b2a69dffdf2b3661a0611a",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/omp-native.md",
           "digest": "sha256:9a5f208535b5e081394880760159089d3acb17115d59000ad07f6269bc95048c",
           "requires": []
@@ -591,7 +780,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "planner",
       "origin": "direct",
@@ -601,7 +790,7 @@
           "variant": "generated",
           "sourcePath": "agents/planner.md",
           "sourceDigest": "sha256:6e67f8119738e58371e61f662e332d971058192a6dc99791e7c19094691376f2",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/planner.md",
           "digest": "sha256:54e13fd735b5360bc11d7c3ad899a9c0eada9db11dfaf204af45db749f1d8e58",
           "requires": []
@@ -612,7 +801,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "quoted",
       "origin": "direct",
@@ -622,7 +811,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/quoted.md",
           "sourceDigest": "sha256:a92554a3420863b7acc442ea397337ac1bae541f07c7a50f8a3be291d02b0dd1",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/quoted.md",
           "digest": "sha256:af310266cb85fc2975a8ae692cef1b8ce38a6abfcb93dcd9d0e37b4a80394b6c",
           "requires": []
@@ -633,7 +822,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "recaller",
       "origin": "direct",
@@ -643,7 +832,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/recaller.md",
           "sourceDigest": "sha256:a30571bad4b7bff23bdacaaac67fb2667016a24a7c89682f52832bfda484b7d1",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/recaller.md",
           "digest": "sha256:b6e6d7709799244aa469dda9410963930acfcbe94d0a211dce300f6a44b3e6d1",
           "requires": []
@@ -654,7 +843,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "relaxed",
       "origin": "direct",
@@ -664,7 +853,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/relaxed.md",
           "sourceDigest": "sha256:88b6be1e2b64ae4bbfbab2c958f917bca08a5abedebecac673fa17ba8826ce95",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/relaxed.md",
           "digest": "sha256:01f1f5c3dbf2f0044bd7c0b40e23efb69885255bf0c7e8e4e750430f26736431",
           "requires": []
@@ -675,7 +864,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "rememberer",
       "origin": "direct",
@@ -685,7 +874,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/rememberer.md",
           "sourceDigest": "sha256:e876bb3f846cda6620fed5b2d357e0a6997129a7a526e240789ed2e4b8e965ef",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/rememberer.md",
           "digest": "sha256:7e4a1a87dacca9927fe0ab513b04dc2d785fc5019f1e37662aae3f9b360cbec5",
           "requires": []
@@ -696,7 +885,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "researcher",
       "origin": "direct",
@@ -706,7 +895,7 @@
           "variant": "generated",
           "sourcePath": "agents/researcher/AGENT.md",
           "sourceDigest": "sha256:dd13ee557398466dd574705483ce5697cfb0b3352c2ef6e815509612dc32282b",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/researcher.md",
           "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
           "requires": []
@@ -717,7 +906,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "reviewer",
       "origin": "direct",
@@ -727,7 +916,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/reviewer.md",
           "sourceDigest": "sha256:a9c4c55855bdcff3eb2fa4bd246ff94f4de189219525d61086c93cac478e5070",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/reviewer.md",
           "digest": "sha256:965ef5a12ac3212363f719987e00418854db7b25912dc3048b0f092ec4c1b5b8",
           "requires": []
@@ -738,7 +927,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "root-helper",
       "origin": "direct",
@@ -748,7 +937,7 @@
           "variant": "generated",
           "sourcePath": "AGENT.md",
           "sourceDigest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/root-helper.md",
           "digest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
           "requires": []
@@ -759,7 +948,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "scripted",
       "origin": "direct",
@@ -769,7 +958,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/scripted.md",
           "sourceDigest": "sha256:1527e595b5b95f417d832f97ccb0ef2cd0579cb27cdc6944de2071946ee4b82c",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/scripted.md",
           "digest": "sha256:7435dc503e07d7d10807d23103ec17ae5d4a565b80a228d6780baf18fd5c907b",
           "requires": []
@@ -780,7 +969,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "skilled",
       "origin": "direct",
@@ -790,7 +979,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/skilled.md",
           "sourceDigest": "sha256:e13388a2a0e7989773c6eced86e91871233b762fbe37b11597e0ebdd58e42d69",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/skilled.md",
           "digest": "sha256:6dda76836cf5bd52daacd61b1a7aeac8b09ba8eb1923a4d7bf40d4eb9dc153c9",
           "requires": []
@@ -801,7 +990,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "studio-qa",
       "origin": "direct",
@@ -811,7 +1000,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/studio-qa.md",
           "sourceDigest": "sha256:cfe15b9951529179d27ad3396fc10136bcf5a2455518aed3464720354c2fa3e8",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/studio-qa.md",
           "digest": "sha256:ab8b583563c40f3fd0c18b8b27f1962343bc71b5090ba8fc20bddc7f619aee81",
           "requires": []
@@ -822,7 +1011,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "tagged",
       "origin": "direct",
@@ -832,7 +1021,7 @@
           "variant": "generated",
           "sourcePath": "agents/tagged.md",
           "sourceDigest": "sha256:c2e1fd2aa97993885900bee70813de29afe532bcc2833e7742ec2a604eceadf9",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/tagged.md",
           "digest": "sha256:ae21c1e2605ac84b36d9a0c26c183998cac584ef45e006af52b7f9316d6f23a0",
           "requires": []
@@ -843,7 +1032,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "agent": "web-searcher",
       "origin": "direct",
@@ -853,7 +1042,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/web-searcher.md",
           "sourceDigest": "sha256:445f4b734cae55d1068397452bb0a8ae3cdb891d2f5c18ce8014b6f2ff54ecde",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/web-searcher.md",
           "digest": "sha256:27f9541a7a304f12f23184edfb12f5c3cfeae86922e039ab3376091f876d0101",
           "requires": []

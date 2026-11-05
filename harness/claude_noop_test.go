@@ -59,7 +59,6 @@ func TestClaudeNoopFieldsConvert(t *testing.T) {
 // refused on every other Harness.
 func TestClaudeRestrictingFieldsStayRefused(t *testing.T) {
 	for _, field := range []string{
-		"permissionMode: plan\n",
 		"permissionMode: dontAsk\n",
 		"permissionMode: Default\n",
 		"permissionMode: [default]\n",
@@ -71,8 +70,6 @@ func TestClaudeRestrictingFieldsStayRefused(t *testing.T) {
 		"initialPrompt: go\n",
 		"maxTurns: 0\n",
 		"readonly: true\n",
-		"allowed-tools: []\n",
-		"allowed-tools: [Read]\n",
 		"permissions:\n  deny: [Bash]\n",
 	} {
 		source := withField(field)

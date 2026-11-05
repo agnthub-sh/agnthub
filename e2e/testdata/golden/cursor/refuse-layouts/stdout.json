@@ -15,19 +15,6 @@
   ],
   "items": [
     {
-      "agent": "allowlisted",
-      "harness": "cursor",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which cursor cannot express"
-    },
-    {
       "agent": "bom-native",
       "harness": "cursor",
       "settings": {},
@@ -51,7 +38,7 @@
       },
       "origin": "direct",
       "action": "invalid",
-      "reason": "invalid cursor variant .cursor/agents/broken.md: Cursor does not document \"tools\"; its behavior would not be enforced"
+      "reason": "invalid cursor variant .cursor/agents/broken.md: frontmatter requires a description"
     },
     {
       "agent": "cx-native",
@@ -68,6 +55,43 @@
     },
     {
       "agent": "cx-nicknamed",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes shell but allows edits, and Cursor can only withhold shell by making the agent read-only"
+    },
+    {
+      "agent": "cx-sandboxed",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it would lose the shell access it uses: Cursor's only restriction, readonly, blocks every shell command; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the codex variant",
+        "sandbox_mode = \"read-only\": converted without edit tools; shell commands are not sandboxed outside Codex",
+        "goes without shell: Cursor's only restriction, readonly, blocks every shell command",
+        "goes without MCP tools: Cursor's only restriction, readonly, blocks every MCP tool call"
+      ],
+      "reduced": [
+        "shell",
+        "MCP tools"
+      ],
+      "optIn": "allow-without-shell"
+    },
+    {
+      "agent": "differ",
       "harness": "cursor",
       "settings": {},
       "effectiveSettings": {},
@@ -116,7 +140,19 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which cursor cannot express"
+      "reason": "it would lose the shell access it uses: permissionMode plan allows read-only shell commands, and cursor cannot limit the shell to them; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode plan converted as a read-only tool policy: no edits, shell, delegation or MCP tools",
+        "goes without shell: permissionMode plan allows read-only shell commands, and cursor cannot limit the shell to them",
+        "goes without MCP tools: permissionMode plan is read-only, and MCP tools could write",
+        "excludes delegation, but Cursor cannot withhold them from an agent"
+      ],
+      "reduced": [
+        "shell",
+        "MCP tools"
+      ],
+      "optIn": "allow-without-shell"
     },
     {
       "agent": "issue-reader",
@@ -132,6 +168,19 @@
       "reason": "it excludes search, but Cursor cannot withhold it"
     },
     {
+      "agent": "mcp-owner",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares MCP servers scoped to the agent (github), which cursor cannot express; only Gemini CLI has per-agent MCP servers"
+    },
+    {
       "agent": "mcp-wide",
       "harness": "cursor",
       "settings": {},
@@ -143,19 +192,6 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "it excludes search, but Cursor cannot withhold it"
-    },
-    {
-      "agent": "modelled",
-      "harness": "cursor",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native cursor variant"
     },
     {
       "agent": "no-shell",
@@ -181,7 +217,18 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "it uses shell without edits, but Cursor's only restriction (readonly) blocks every shell command"
+      "reason": "it would lose the shell access it uses: Cursor's only restriction, readonly, blocks every shell command; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the claude variant",
+        "omitted color: cosmetic",
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model",
+        "goes without shell: Cursor's only restriction, readonly, blocks every shell command",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent"
+      ],
+      "reduced": [
+        "shell"
+      ],
+      "optIn": "allow-without-shell"
     },
     {
       "agent": "web-searcher",
@@ -198,7 +245,7 @@
     }
   ],
   "summary": {
-    "incompatible": 13,
+    "incompatible": 14,
     "invalid": 1
   }
 }

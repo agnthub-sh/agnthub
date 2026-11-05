@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/differ.md",
+      "digest": "sha256:68bb455677f3f5eb35423879a797a42bf771c12fd9d2b276fdf68e9f0aa31c39",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "differ",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/guarded.md",
+      "digest": "sha256:268b9ffeeefdfc70991aa196d45072063ebc1983ad349c3350c0e1de7c2e6734",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "guarded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

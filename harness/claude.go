@@ -94,11 +94,15 @@ func (a claudeAdapter) Native(id string, variant *agent.VariantFile) (Artifact, 
 		}
 	}
 	doc, _ := agent.ParseMarkdownLenient(variant.Path, content)
-	return Artifact{
-		FileName: id + ".md",
-		Content:  content,
-		Notes:    append(notes, executableFieldNotes(doc, "hooks", "mcpServers")...),
-	}, nil
+	notes = append(notes, executableFieldNotes(doc, "hooks", "mcpServers")...)
+	for _, key := range sortedKeys(doc.Frontmatter) {
+		if claudeSkillAllowlist(key) {
+			notes = append(notes, fmt.Sprintf("Claude Code does not enforce %s in agents (it "+
+				"is a skill field): on Claude Code the agent is not limited to those tools; "+
+				"other harnesses enforce it", key))
+		}
+	}
+	return Artifact{FileName: id + ".md", Content: content, Notes: notes}, nil
 }
 
 // claudePluginIgnored are the frontmatter fields Claude Code ignores in a
@@ -126,12 +130,15 @@ func claudePluginAgent(variant *agent.VariantFile) ([]byte, []string, error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	for _, variable := range claudePluginVariables {
-		if strings.Contains(doc.Body, variable) {
-			return nil, nil, fmt.Errorf(
-				"its instructions reference %s, which only resolves inside the installed "+
-					"plugin %s", strings.Replace(variable, ".", ".<key>}", 1), variant.Plugin)
+	if variable := claudePluginVariable(doc.Body); variable != "" {
+		install := "/plugin install " + variant.Plugin
+		if variant.Marketplace != "" {
+			install += "@" + variant.Marketplace
 		}
+		return nil, nil, fmt.Errorf(
+			"its instructions reference %s, which only resolves inside the installed "+
+				"plugin %s; in Claude Code, install the plugin itself (%s)",
+			variable, variant.Plugin, install)
 	}
 	content, omitted, err := agent.OmitKeys(variant.Path, variant.Raw, claudePluginIgnored...)
 	if err != nil {
@@ -144,6 +151,17 @@ func claudePluginAgent(variant *agent.VariantFile) ([]byte, []string, error) {
 				"it would take effect", key, variant.Plugin))
 	}
 	return content, notes, nil
+}
+
+// claudePluginVariable returns the first plugin variable body references, as
+// a reason spells it, or "".
+func claudePluginVariable(body string) string {
+	for _, variable := range claudePluginVariables {
+		if strings.Contains(body, variable) {
+			return strings.Replace(variable, ".", ".<key>}", 1)
+		}
+	}
+	return ""
 }
 
 // executableFieldNotes flags native fields that make the Harness run commands or
@@ -329,13 +347,18 @@ var claudeAllowlistLike = map[string]bool{
 // restrictionLike reports whether an ignored key with this value reads as a
 // restriction.
 func restrictionLike(key string, value any) bool {
-	folded := strings.Map(func(r rune) rune {
+	folded := foldKey(key)
+	return claudeRestrictionLike[folded] && (claudeAllowlistLike[folded] || !emptyValue(value))
+}
+
+// foldKey compares keys without case, '-', '_' or spaces.
+func foldKey(key string) string {
+	return strings.Map(func(r rune) rune {
 		if r == '-' || r == '_' || r == ' ' {
 			return -1
 		}
 		return unicode.ToLower(r)
 	}, key)
-	return claudeRestrictionLike[folded] && (claudeAllowlistLike[folded] || !emptyValue(value))
 }
 
 // claudeNoop reports why a value of a Claude Code behavior field does what
@@ -373,8 +396,8 @@ func claudeNoop(key string, value any) (string, bool) {
 // acceptEdits accepts file edits, auto lets a classifier approve in the user's
 // place, and bypassPermissions skips prompts. Another harness that asks for
 // approval as usual is at least as strict, so conversion drops them with a note
-// (Semantics.PermissionMode). plan and dontAsk restrict the agent and stay
-// refused.
+// (Semantics.PermissionMode). plan restricts the agent to read-only tools and
+// is carried as a read-only tool policy (ADR 0012); dontAsk stays refused.
 var claudeRelaxingModes = map[string]bool{
 	"acceptEdits": true, "auto": true, "bypassPermissions": true,
 }
@@ -410,14 +433,23 @@ func (a claudeAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 		Source:       agent.Claude,
 		Notes:        notes,
 	}
-	var allowed, disallowed []string
-	var hasAllowlist bool
+	readClaudeFields(sem, doc)
+	return sem, nil
+}
+
+// readClaudeFields reads a Claude Code agent's frontmatter into sem: a
+// .claude/agents file, a plugin's agent or a portable core (ADR 0012).
+func readClaudeFields(sem *Semantics, doc *agent.Document) {
+	var allowed, disallowed, skillAllowed []string
+	var hasAllowlist, hasSkillAllowlist bool
 	for _, key := range sortedKeys(doc.Frontmatter) {
 		value := doc.Frontmatter[key]
 		switch key {
 		case "name", "description":
 		case "model":
-			sem.Model = fmt.Sprint(value)
+			if value != nil {
+				sem.Model = fmt.Sprint(value)
+			}
 		case "tools":
 			allowed, hasAllowlist = claudeToolEntries(sem, key, value), true
 		case "disallowedTools":
@@ -453,16 +485,12 @@ func (a claudeAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 			case claudeNotes[key] != "":
 				sem.note("omitted %s: %s", key, claudeNotes[key])
 			case claudeBehaviors[key] != "":
-				if why, noop := claudeNoop(key, value); noop {
-					sem.note("omitted %s: %s", key, why)
-					continue
-				}
-				if mode, ok := value.(string); ok && key == "permissionMode" &&
-					claudeRelaxingModes[mode] {
-					sem.PermissionMode = mode
-					continue
-				}
-				sem.unsupported(key, claudeBehaviors[key])
+				readClaudeBehavior(sem, key, value)
+			case claudeSkillAllowlist(key):
+				skillAllowed, hasSkillAllowlist = claudeToolEntries(sem, key, value), true
+				sem.relaxed = true
+				sem.note("read %s as the tool allowlist: Claude Code ignores it in agents "+
+					"(it is a skill field), other harnesses enforce it", key)
 			case restrictionLike(key, value):
 				sem.unsupported(key, "a field Claude Code ignores, but it reads as a tool or "+
 					"permission restriction")
@@ -474,7 +502,110 @@ func (a claudeAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 		}
 	}
 	claudeToolPolicy(sem, hasAllowlist, allowed, disallowed)
-	return sem, nil
+	if hasSkillAllowlist {
+		extra := &Semantics{Source: sem.Source}
+		claudeToolPolicy(extra, true, skillAllowed, disallowed)
+		sem.Notes = append(sem.Notes, extra.Notes...)
+		sem.Unsupported = append(sem.Unsupported, extra.Unsupported...)
+		sem.intersectTools("allowed-tools", extra.Tools)
+	}
+}
+
+// readClaudeBehavior reads a Claude Code behavior field: omitted when it does
+// what omitting it does, kept when another harness can carry it, otherwise
+// unsupported.
+func readClaudeBehavior(sem *Semantics, key string, value any) {
+	if why, noop := claudeNoop(key, value); noop {
+		sem.note("omitted %s: %s", key, why)
+		return
+	}
+	mode, _ := value.(string)
+	switch {
+	case key == "permissionMode" && (claudeRelaxingModes[mode] || mode == "plan"):
+		sem.PermissionMode = mode
+	case key == "mcpServers":
+		servers, reason := claudeMCPServers(value)
+		if reason != "" {
+			sem.unsupported(key, "MCP servers scoped to the agent; "+reason)
+			return
+		}
+		sem.MCPServers = servers
+	default:
+		sem.unsupported(key, claudeBehaviors[key])
+	}
+}
+
+// claudeSkillAllowlist reports allowed-tools in any spelling: a skill field
+// that Claude Code ignores in agents and authors use as the agent's
+// allowlist.
+func claudeSkillAllowlist(key string) bool {
+	return foldKey(key) == "allowedtools"
+}
+
+// intersectTools narrows the Agent's tools to what field also grants. Two
+// shell command lists keep the commands both allow; when they share none the
+// Agent is refused rather than silently left without the shell.
+func (s *Semantics) intersectTools(field string, other ToolPolicy) {
+	tools, ok := intersectPolicies(s.Tools, other)
+	if !ok {
+		s.unsupported(field, "limits the shell to other commands than the agent's tools, "+
+			"so no command would be allowed")
+	}
+	s.Tools = tools
+}
+
+// intersectPolicies returns what both policies grant: the stricter reading
+// of an agent that declares two allowlists. It reports false when both limit
+// the shell to commands and share none, so the shell is withheld.
+func intersectPolicies(a, b ToolPolicy) (ToolPolicy, bool) {
+	if !b.Restricted {
+		a.withhold(b.Denied)
+		if a.Denied&CapShell != 0 || (a.Restricted && a.Allowed&CapShell == 0) {
+			a.Shell = nil
+		}
+		return a, true
+	}
+	if !a.Restricted {
+		b.Allowed &^= a.Denied
+		return b, true
+	}
+	out := a
+	out.Allowed &= b.Allowed
+	out.MCP = nil
+	for _, tool := range a.MCP {
+		if slices.Contains(b.MCP, tool) {
+			out.MCP = append(out.MCP, tool)
+		}
+	}
+	out.Unknown = slices.Clone(a.Unknown)
+	for _, name := range b.Unknown {
+		if !slices.Contains(out.Unknown, name) {
+			out.Unknown = append(out.Unknown, name)
+		}
+	}
+	switch {
+	case out.Allowed&CapShell == 0:
+		out.Shell = nil
+	case a.Shell == nil:
+		out.Shell = b.Shell
+	case b.Shell != nil && !slices.Equal(a.Shell.Rules, b.Shell.Rules):
+		if !a.Shell.claudeForm() || !b.Shell.claudeForm() {
+			out.Allowed &^= CapShell
+			out.Shell = nil
+			return out, false
+		}
+		// Both are allowlists of commands (Claude Code's form): keep the
+		// commands both allow.
+		common := slices.DeleteFunc(slices.Clone(a.Shell.Rules),
+			func(r ShellRule) bool { return !slices.Contains(b.Shell.Rules, r) })
+		if len(common) == 0 {
+			out.Allowed &^= CapShell
+			out.Shell = nil
+			return out, false
+		}
+		out.Shell = &ShellScope{Default: a.Shell.Default, Rules: common}
+	}
+	return out, true
 }
 
 // claudeToolEntries splits a tools value the way Claude Code does: a list or a
@@ -530,8 +661,9 @@ func claudeToolEntries(sem *Semantics, field string, value any) []string {
 // claudeToolPolicy combines tools and disallowedTools. A "*" allows every tool.
 // A denied entry with a specifier withholds the whole tool, as in Claude Code.
 // Agent(...) lists only apply to a main-session agent, so a subagent's entry
-// allows delegation; any other allowed specifier, such as Bash(git diff *),
-// scopes a tool in a way other harnesses cannot express.
+// allows delegation. Bash(...) entries limit the shell to those commands
+// (ShellScope); any other allowed specifier, such as Read(./src/**), scopes a
+// tool in a way other harnesses cannot express.
 func claudeToolPolicy(sem *Semantics, hasAllowlist bool, allowed, disallowed []string) {
 	bare := func(name string) (string, bool) {
 		base, _, scoped := strings.Cut(name, "(")
@@ -548,6 +680,8 @@ func claudeToolPolicy(sem *Semantics, hasAllowlist bool, allowed, disallowed []s
 		return
 	}
 	allowNames := make([]string, 0, len(allowed))
+	var commands []ShellRule
+	wholeShell := false
 	for _, name := range allowed {
 		base, scoped := bare(name)
 		if tool, ok := claudeMCPTool(base); ok && tool.Server == claudeIDEServer &&
@@ -558,9 +692,14 @@ func claudeToolPolicy(sem *Semantics, hasAllowlist bool, allowed, disallowed []s
 		}
 		switch {
 		case !scoped:
+			wholeShell = wholeShell || base == "Bash"
 		case base == "Agent" || base == "Task":
 			sem.note("tools entry %s: other harnesses cannot limit which agents it delegates to",
 				name)
+		case base == "Bash" && strings.HasSuffix(name, ")"):
+			pattern := claudeShellPattern(name[len("Bash(") : len(name)-1])
+			wholeShell = wholeShell || pattern == "*"
+			commands = append(commands, ShellRule{Pattern: pattern, Effect: "allow"})
 		default:
 			sem.unsupported(name, "a scoped tool rule other harnesses cannot express")
 			continue
@@ -569,6 +708,27 @@ func claudeToolPolicy(sem *Semantics, hasAllowlist bool, allowed, disallowed []s
 	}
 	sem.allow("tools", allowNames, claudeTools)
 	sem.Tools.Allowed &^= denied
+	if len(commands) > 0 && !wholeShell && sem.Tools.Allowed&CapShell != 0 {
+		sem.Tools.Shell = &ShellScope{Default: "deny", Rules: commands}
+	}
+}
+
+// claudeShellPattern spells a Bash(...) command pattern in OpenCode's syntax:
+// Claude Code's legacy "git diff:*" is "git diff *", which also matches the
+// bare command in both harnesses.
+func claudeShellPattern(pattern string) string {
+	pattern = strings.TrimSpace(pattern)
+	if prefix, ok := strings.CutSuffix(pattern, ":*"); ok {
+		return strings.TrimSpace(prefix) + " *"
+	}
+	return pattern
+}
+
+// claudeForm reports whether Claude Code's Bash(...) entries express the
+// scope exactly: an allowlist of commands with every other command denied.
+func (s *ShellScope) claudeForm() bool {
+	return s.Default == "deny" &&
+		!slices.ContainsFunc(s.Rules, func(r ShellRule) bool { return r.Effect != "allow" })
 }
 
 // positiveInt reads a positive whole number decoded from YAML or TOML; values
@@ -593,6 +753,8 @@ func (a claudeAdapter) Convert(sem *Semantics) (Artifact, error) {
 	if err != nil {
 		return Artifact{}, err
 	}
+	sem = check.sem
+	native := sem.claudeNative(agent.Claude)
 	fields := []agent.Field{
 		{Key: "name", Value: sem.ID},
 		{Key: "description", Value: sem.Description},
@@ -606,16 +768,29 @@ func (a claudeAdapter) Convert(sem *Semantics) (Artifact, error) {
 		if err != nil {
 			return Artifact{}, err
 		}
+		tools := toolNames(claudeTools.tools, sem.Tools.Allowed)
+		if scope := sem.Tools.Shell; scope != nil {
+			commands := make([]string, len(scope.Rules))
+			for i, rule := range scope.Rules {
+				commands[i] = "Bash(" + rule.Pattern + ")"
+			}
+			tools = slices.Concat(commands, slices.DeleteFunc(tools,
+				func(name string) bool { return name == "Bash" }))
+		}
 		fields = append(fields, agent.Field{
-			Key: "tools",
-			Value: strings.Join(
-				append(toolNames(claudeTools.tools, sem.Tools.Allowed), mcp...), ", "),
+			Key: "tools", Value: strings.Join(append(tools, mcp...), ", "),
 		})
 	case sem.Tools.Denied != 0:
 		fields = append(fields, agent.Field{
 			Key:   "disallowedTools",
 			Value: strings.Join(toolNames(claudeTools.tools, sem.Tools.Denied), ", "),
 		})
+	}
+	if model := strings.TrimSpace(sem.Model); native && model != "" {
+		fields = append(fields, agent.Field{Key: "model", Value: model})
+	}
+	if native && sem.PermissionMode != "" {
+		fields = append(fields, agent.Field{Key: "permissionMode", Value: sem.PermissionMode})
 	}
 	if sem.MaxTurns > 0 {
 		fields = append(fields, agent.Field{Key: "maxTurns", Value: sem.MaxTurns})
@@ -636,13 +811,7 @@ func (a claudeAdapter) Convert(sem *Semantics) (Artifact, error) {
 	if err != nil {
 		return Artifact{}, err
 	}
-	return selfCheck(a, sem.ID, Artifact{
-		FileName:  sem.ID + ".md",
-		Content:   content,
-		Generated: true,
-		Converter: converterID(agent.Claude),
-		Notes:     check.notes,
-	})
+	return selfCheck(a, sem.ID, check.artifact(sem.ID+".md", content))
 }
 
 func (claudeAdapter) Detect(ctx Context) bool {

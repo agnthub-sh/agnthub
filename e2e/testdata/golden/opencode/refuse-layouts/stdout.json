@@ -15,32 +15,6 @@
   ],
   "items": [
     {
-      "agent": "allowlisted",
-      "harness": "opencode",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which opencode cannot express"
-    },
-    {
-      "agent": "backgrounder",
-      "harness": "opencode",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant runs the agent in the background, which opencode cannot express"
-    },
-    {
       "agent": "broken",
       "harness": "opencode",
       "settings": {},
@@ -90,10 +64,23 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which opencode cannot express"
+      "reason": "it would lose the shell access it uses: permissionMode plan allows read-only shell commands, and opencode cannot limit the shell to them; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode plan converted as a read-only tool policy: no edits, shell, delegation or MCP tools",
+        "goes without shell: permissionMode plan allows read-only shell commands, and opencode cannot limit the shell to them",
+        "goes without delegation: permissionMode plan is read-only, and a delegated agent could edit",
+        "goes without MCP tools: permissionMode plan is read-only, and MCP tools could write"
+      ],
+      "reduced": [
+        "shell",
+        "delegation",
+        "MCP tools"
+      ],
+      "optIn": "allow-without-shell"
     },
     {
-      "agent": "modelled",
+      "agent": "mcp-owner",
       "harness": "opencode",
       "settings": {},
       "effectiveSettings": {},
@@ -103,11 +90,11 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native opencode variant"
+      "reason": "its claude variant declares MCP servers scoped to the agent (github), which opencode cannot express; only Gemini CLI has per-agent MCP servers"
     }
   ],
   "summary": {
-    "incompatible": 6,
+    "incompatible": 4,
     "invalid": 1
   }
 }

@@ -31,6 +31,8 @@ type lifecycle struct {
 	lockPath string
 	planner  *install.Planner
 	cache    *sourceCache
+	// allowWithoutShell plans agents that lose the shell access they use.
+	allowWithoutShell bool
 }
 
 // newLifecycle opens the lock check (read-only), update and restore (writes) use.
@@ -348,6 +350,8 @@ func (l *lifecycle) planLatest(
 			Settings:  map[agent.HarnessID]harness.Settings{c.harness: c.settings},
 			Scope:     l.scope,
 			Context:   l.app.harnessContext(),
+
+			AllowWithoutShell: l.allowWithoutShell,
 		})
 		if err != nil {
 			return nil, err
@@ -541,6 +545,8 @@ func (l *lifecycle) planFrozen(
 			Settings:  settings,
 			Scope:     l.scope,
 			Context:   l.app.harnessContext(),
+
+			AllowWithoutShell: l.allowWithoutShell,
 		})
 		if err != nil {
 			return nil, err

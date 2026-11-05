@@ -48,8 +48,10 @@ type HarnessAdoption struct {
 
 // SearchHarness is a Harness an Agent installs into.
 type SearchHarness struct {
-	Harness string `json:"harness"`
-	Status  string `json:"status"  jsonschema:"native: an authored Variant; generated: converted from the portable definition"`
+	Harness string   `json:"harness"`
+	Status  string   `json:"status"            jsonschema:"native: an authored Variant; generated: converted from the portable definition"`
+	Reduced []string `json:"reduced,omitempty" jsonschema:"capabilities the agent uses that this harness cannot grant; the installed agent goes without them"`
+	OptIn   *string  `json:"opt_in,omitempty"  jsonschema:"allow-without-shell: installs only with agnthub add --allow-without-shell, because the agent loses the shell access it uses"`
 }
 
 // SnippetSegment is a run of matched or unmatched snippet text.
@@ -178,6 +180,8 @@ type HarnessTarget struct {
 	Reason     *string  `json:"reason,omitempty"`
 	SourcePath *string  `json:"source_path,omitempty"`
 	Notes      []string `json:"notes,omitempty"`
+	Reduced    []string `json:"reduced,omitempty"     jsonschema:"capabilities the agent uses that this harness cannot grant; the installed agent goes without them"`
+	OptIn      *string  `json:"opt_in,omitempty"      jsonschema:"allow-without-shell: installs only with agnthub add --allow-without-shell, because the agent loses the shell access it uses"`
 }
 
 // Agent is one Agent of a repository's indexed snapshot.

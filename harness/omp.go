@@ -375,7 +375,7 @@ func (a ompAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics
 		case "spawns":
 			names, _ := nameList(value)
 			if !slices.Equal(names, []string{"*"}) {
-				sem.unsupported(key, "limits which agents it can delegate to")
+				sem.Spawns = append([]string{}, names...)
 			}
 			spawnsAll = true
 		default:
@@ -392,6 +392,11 @@ func (a ompAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics
 	}
 	if spawnsAll && sem.Tools.Restricted {
 		sem.Tools.Allowed |= CapDelegate
+	}
+	if sem.Spawns != nil && len(sem.Spawns) == 0 {
+		sem.Spawns = nil
+		sem.Tools.withhold(CapDelegate)
+		sem.note("spawns: [] converted without delegation")
 	}
 	return sem, nil
 }
@@ -419,7 +424,8 @@ func ompToolPolicy(sem *Semantics, names []string) {
 
 // Convert writes an omp task agent. omp's tools list selects built-ins only:
 // MCP, extension and custom tools stay available, so allowlisted MCP tools
-// need no entry, and read also fetches URLs.
+// need no entry, and read also fetches URLs. Delegation limited to some
+// agents becomes spawns.
 func (a ompAdapter) Convert(sem *Semantics) (Artifact, error) {
 	if ompReservedNames[strings.ToLower(strings.TrimSpace(sem.ID))] {
 		return Artifact{}, &IncompatibleError{
@@ -428,12 +434,10 @@ func (a ompAdapter) Convert(sem *Semantics) (Artifact, error) {
 		}
 	}
 	check, err := begin(agent.OMP, sem)
-	if err == nil {
-		err = check.requireForeground()
-	}
 	if err != nil {
 		return Artifact{}, err
 	}
+	sem = check.sem
 	fields := []agent.Field{
 		{Key: "name", Value: sem.ID},
 		{Key: "description", Value: sem.Description},
@@ -462,6 +466,9 @@ func (a ompAdapter) Convert(sem *Semantics) (Artifact, error) {
 		}
 		fields = append(fields, agent.Field{Key: "tools", Value: tools})
 	}
+	if len(sem.Spawns) > 0 && sem.Tools.Allows(CapDelegate) {
+		fields = append(fields, agent.Field{Key: "spawns", Value: sem.Spawns})
+	}
 	if len(sem.Skills) > 0 {
 		fields = append(fields, agent.Field{Key: "autoload-skills", Value: sem.Skills})
 	}
@@ -469,13 +476,7 @@ func (a ompAdapter) Convert(sem *Semantics) (Artifact, error) {
 	if err != nil {
 		return Artifact{}, err
 	}
-	return selfCheck(a, sem.ID, Artifact{
-		FileName:  sem.ID + ".md",
-		Content:   content,
-		Generated: true,
-		Converter: converterID(agent.OMP),
-		Notes:     check.notes,
-	})
+	return selfCheck(a, sem.ID, check.artifact(sem.ID+".md", content))
 }
 
 func (ompAdapter) Detect(ctx Context) bool {

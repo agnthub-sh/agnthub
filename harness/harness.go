@@ -90,6 +90,45 @@ type Artifact struct {
 	Converter string
 	// Notes lists harmless omissions or advisories.
 	Notes []string
+	// Reduced lists capabilities the Agent uses that the Harness cannot grant
+	// within the Agent's restrictions: the installed agent goes without them.
+	// Plans show them prominently; one for shell needs an explicit opt-in.
+	Reduced []Reduction
+}
+
+// Reduction is one capability an installed Agent goes without, and why.
+type Reduction struct {
+	// Capability names what is lost, e.g. "web search", "delegation", "shell".
+	Capability string
+	// Why says what keeps the Harness from granting it.
+	Why string
+}
+
+// ReducedShell is the reduction that installs only on request: an agent that
+// runs shell commands usually cannot do its job without them.
+const ReducedShell = "shell"
+
+// WithoutShell reports whether installing the artifact loses shell access the
+// Agent uses, which needs the user's explicit opt-in.
+func (a Artifact) WithoutShell() bool {
+	for _, r := range a.Reduced {
+		if r.Capability == ReducedShell {
+			return true
+		}
+	}
+	return false
+}
+
+// ReducedNames lists the capabilities of Reduced.
+func (a Artifact) ReducedNames() []string {
+	if len(a.Reduced) == 0 {
+		return nil
+	}
+	names := make([]string, len(a.Reduced))
+	for i, r := range a.Reduced {
+		names[i] = r.Capability
+	}
+	return names
 }
 
 // IncompatibleError reports that an Agent cannot be represented for a Harness

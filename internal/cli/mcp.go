@@ -94,6 +94,8 @@ type installInput struct {
 	Extra      []string `json:"extra,omitempty"       jsonschema:"harness settings <harness>.<key>=<value>, e.g. omp.profile=work"`
 	ProjectDir string   `json:"project_dir,omitempty" jsonschema:"absolute project directory; default: the directory this server runs in"`
 	Confirm    bool     `json:"confirm,omitempty"     jsonschema:"apply the plan; only after the user approved the preview. Without it nothing is written"`
+	// AllowWithoutShell is agnthub add --allow-without-shell.
+	AllowWithoutShell bool `json:"allow_without_shell,omitempty" jsonschema:"install agents that lose the shell access they use where a harness cannot grant it (agnthub add --allow-without-shell); such items show optIn in the plan and are refused without it. Ask the user first"`
 }
 
 // installOutput is install_agents' result.
@@ -164,6 +166,8 @@ func (a *App) installAgents(
 		project:   in.Scope == "project",
 		json:      true,
 		yes:       in.Confirm,
+
+		allowWithoutShell: in.AllowWithoutShell,
 	})
 	var plan struct {
 		Status string `json:"status"`
@@ -188,7 +192,9 @@ func (a *App) installAgents(
 	case plan.Status == statusRefused:
 		out.Message = "Refused: some items are blocked (see each item's reason, e.g. a file " +
 			"agnthub does not own, a local modification or an incompatible harness). Nothing " +
-			"was written. Change the selection or resolve the conflicts first."
+			"was written. Change the selection or resolve the conflicts first; items with " +
+			"optIn allow-without-shell install with allow_without_shell: true, without the " +
+			"shell access they use, if the user agrees."
 	case payload == nil:
 		if err == nil {
 			err = errors.New("agnthub add produced no plan")

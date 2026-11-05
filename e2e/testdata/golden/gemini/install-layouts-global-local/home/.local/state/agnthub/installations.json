@@ -2,6 +2,17 @@
   "version": 1,
   "records": [
     {
+      "path": "/agnthub-e2e/home/.gemini/agents/allowlisted.md",
+      "digest": "sha256:3c09d1db751baa39134f254b19ed0be2783f89594fb5ea05830ace8e8f55df09",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "allowlisted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.gemini/agents/annotated.md",
       "digest": "sha256:702061a135b288f798bba4b5f070f00696360c4cf5f1b0d308f6cebb0bb872c4",
       "harness": "gemini",
@@ -9,6 +20,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "annotated",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.gemini/agents/backgrounder.md",
+      "digest": "sha256:67a1bccf65815313fefb43c425f6e16de1dcd4fe4b5f51745651feaa073ac540",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "backgrounder",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -42,6 +64,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "bounded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.gemini/agents/claude-shaped.md",
+      "digest": "sha256:f42ca7006f59e532065b69785bc5ba3ea2f34c5f099c202f8fcb2ff227226177",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "claude-shaped",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -123,6 +156,39 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.gemini/agents/cx-sandboxed.md",
+      "digest": "sha256:c52a056c631cbdce69520dc63b8b49afd1d6b042539969ca528bb2de2dc9e21b",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-sandboxed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.gemini/agents/cx-solo.md",
+      "digest": "sha256:6d66c5f5506adbeb1fd5796c9f6f92d65637506c486738f71e180963aad7d73a",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-solo",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.gemini/agents/cx-workspace.md",
+      "digest": "sha256:bdcf7be87aac3daf01c7b581ae86cd221155ab74eb79ca7f324370536e56a7d4",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-workspace",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.gemini/agents/defaulted.md",
       "digest": "sha256:5a614e95b5c778a19739e14fef46f03e0238bce044d02d801c48528a52ad7e80",
       "harness": "gemini",
@@ -130,6 +196,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "defaulted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.gemini/agents/delegator.md",
+      "digest": "sha256:610ba48be81728e6a4f3eee94fdd3a2281a6da7702a34bb548fe7bf000c3d08e",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "delegator",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -255,6 +332,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.gemini/agents/mcp-owner.md",
+      "digest": "sha256:2dadcec1ff1ff0668e012f0fb3d0b6b84bd7430b44cb6de0cfff7508e7d86972",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "mcp-owner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.gemini/agents/mcp-wide.md",
       "digest": "sha256:b3d31f6c0f64227dadee42591d5347de10022b9b374efc410c4df4e9077c3764",
       "harness": "gemini",
@@ -273,6 +361,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "misnamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.gemini/agents/modelled.md",
+      "digest": "sha256:fdb1107e42dcdc3cbb93b88c19b559a970fd13e7c0d67b11895b4c0f71108231",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "modelled",
       "origin": "direct",
       "installedAt": "<time>"
     },

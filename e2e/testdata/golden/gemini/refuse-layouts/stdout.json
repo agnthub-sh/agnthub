@@ -15,32 +15,6 @@
   ],
   "items": [
     {
-      "agent": "allowlisted",
-      "harness": "gemini",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which gemini cannot express"
-    },
-    {
-      "agent": "backgrounder",
-      "harness": "gemini",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant runs the agent in the background, which gemini cannot express"
-    },
-    {
       "agent": "broken",
       "harness": "gemini",
       "settings": {},
@@ -54,7 +28,7 @@
       "reason": "invalid gemini variant .gemini/agents/broken.md: Gemini CLI rejects \"color\" in a local agent"
     },
     {
-      "agent": "delegator",
+      "agent": "differ",
       "harness": "gemini",
       "settings": {},
       "effectiveSettings": {},
@@ -64,7 +38,16 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "it uses delegation, but Gemini CLI subagents cannot invoke other agents"
+      "reason": "it would lose the shell access it uses: it may run only some shell commands (* (deny), git diff * (allow)), and gemini cannot limit the shell to commands; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the claude variant",
+        "tools grants only part of edit (no Write); converted agents get edit as a whole",
+        "goes without shell: it may run only some shell commands (* (deny), git diff * (allow)), and gemini cannot limit the shell to commands"
+      ],
+      "reduced": [
+        "shell"
+      ],
+      "optIn": "allow-without-shell"
     },
     {
       "agent": "gm-camel",
@@ -90,24 +73,24 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which gemini cannot express"
-    },
-    {
-      "agent": "modelled",
-      "harness": "gemini",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native gemini variant"
+      "reason": "it would lose the shell access it uses: permissionMode plan allows read-only shell commands, and gemini cannot limit the shell to them; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode plan converted as a read-only tool policy: no edits, shell, delegation or MCP tools",
+        "goes without shell: permissionMode plan allows read-only shell commands, and gemini cannot limit the shell to them",
+        "goes without delegation: permissionMode plan is read-only, and a delegated agent could edit",
+        "goes without MCP tools: permissionMode plan is read-only, and MCP tools could write"
+      ],
+      "reduced": [
+        "shell",
+        "delegation",
+        "MCP tools"
+      ],
+      "optIn": "allow-without-shell"
     }
   ],
   "summary": {
-    "incompatible": 5,
+    "incompatible": 2,
     "invalid": 2
   }
 }

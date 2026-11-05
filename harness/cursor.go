@@ -119,6 +119,12 @@ func validateCursorVariant(id, filePath string, raw []byte) ([]string, string) {
 		case cursorFields[key] || harmlessPortableKeys[key]:
 		case descriptiveKeys[key]:
 			notes = append(notes, key+" is not used by Cursor")
+		case key == "tools":
+			if _, ok := nameList(doc.Frontmatter[key]); !ok {
+				return nil, "tools has a shape agnthub cannot read"
+			}
+			notes = append(notes, "Cursor does not enforce tools: on Cursor the agent gets "+
+				"every tool unless readonly; other harnesses enforce it")
 		default:
 			return nil, fmt.Sprintf(
 				"Cursor does not document %q; its behavior would not be enforced", key,
@@ -297,10 +303,11 @@ func cursorDescription(description string) (*yaml.Node, string, bool) {
 	return best, bestLine, best != nil
 }
 
-// cursorReadonlyCaps are what a Cursor readonly agent keeps: it blocks edits,
-// every shell command and MCP tool calls. Delegation is not carried, since a
-// delegated agent could edit.
-const cursorReadonlyCaps = CapRead | CapSearch | CapWeb | CapTodo | CapSkill
+// readOnlyCaps are what a read-only agent keeps: Cursor's readonly blocks
+// edits, every shell command and MCP tool calls, and Claude Code's plan mode
+// converts the same way. Delegation is not carried, since a delegated agent
+// could edit.
+const readOnlyCaps = CapRead | CapSearch | CapWeb | CapTodo | CapSkill
 
 func (a cursorAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics, error) {
 	if _, err := a.Native(id, variant); err != nil {
@@ -321,11 +328,22 @@ func (a cursorAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 			sem.Model, _ = value.(string)
 		case "readonly":
 			if value == true {
-				sem.Tools = ToolPolicy{Restricted: true, Allowed: cursorReadonlyCaps}
+				sem.intersectTools(key, ToolPolicy{Restricted: true, Allowed: readOnlyCaps})
 				sem.note("Cursor readonly: converted without edits, shell, MCP tools or delegation")
 			}
 		case "is_background":
 			sem.Background = value == true
+		case "tools":
+			// Cursor ignores tools; authors copy it from Claude Code agents, so
+			// other harnesses read it as a Claude Code allowlist.
+			sem.relaxed = true
+			listed := &Semantics{Source: agent.Cursor}
+			claudeToolPolicy(listed, true, claudeToolEntries(listed, key, value), nil)
+			sem.Notes = append(sem.Notes, listed.Notes...)
+			sem.Unsupported = append(sem.Unsupported, listed.Unsupported...)
+			sem.intersectTools(key, listed.Tools)
+			sem.note("read tools as the tool allowlist: Cursor ignores it, other harnesses " +
+				"enforce it")
 		default:
 			sem.note("omitted %s: descriptive metadata", key)
 		}
@@ -335,27 +353,31 @@ func (a cursorAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 
 // Convert writes a Cursor subagent. Cursor has no tool allowlist: readonly: true
 // is its only restriction and blocks edits, every shell command and MCP tool
-// calls together, so an Agent withholding exactly one of them is refused.
+// calls together. An Agent without edits becomes read-only and goes without
+// its shell and MCP tools, as reductions; one that withholds shell but edits
+// is refused, since Cursor cannot withhold shell alone.
 func (a cursorAdapter) Convert(sem *Semantics) (Artifact, error) {
 	check, err := begin(agent.Cursor, sem)
-	if err == nil {
-		err = check.requireWithheld(CapRead|CapSearch, "Cursor cannot withhold it")
-	}
-	readonly := !sem.Tools.Allows(CapEdit)
-	switch {
-	case err != nil:
-	case readonly && sem.Tools.Allows(CapShell):
-		err = check.refuse("it uses shell without edits, but Cursor's only restriction " +
-			"(readonly) blocks every shell command")
-	case !readonly && !sem.Tools.Allows(CapShell):
-		err = check.refuse("it excludes shell but allows edits, and Cursor can only " +
-			"withhold shell by making the agent read-only")
-	case readonly && len(sem.Tools.MCP) > 0:
-		err = check.refuse("it allows MCP tool %s without edits, but Cursor's only "+
-			"restriction (readonly) blocks every MCP tool call", sem.Tools.MCP[0])
-	}
 	if err != nil {
 		return Artifact{}, err
+	}
+	sem = check.sem
+	if err := check.requireWithheld(CapRead|CapSearch, "Cursor cannot withhold it"); err != nil {
+		return Artifact{}, err
+	}
+	readonly := !sem.Tools.Allows(CapEdit)
+	if !readonly && !sem.Tools.Allows(CapShell) {
+		return Artifact{}, check.refuse("it excludes shell but allows edits, and Cursor can " +
+			"only withhold shell by making the agent read-only")
+	}
+	if readonly && sem.Tools.Allows(CapShell) {
+		check.reduce(ReducedShell, "Cursor's only restriction, readonly, blocks every shell "+
+			"command")
+	}
+	// An agent without a tool list uses the session's MCP tools too.
+	if readonly && (len(sem.Tools.MCP) > 0 || !sem.Tools.Restricted) {
+		check.reduce("MCP tools", "Cursor's only restriction, readonly, blocks every MCP "+
+			"tool call")
 	}
 	check.noteWithheld(CapWeb|CapDelegate, "Cursor cannot withhold them from an agent")
 	if sem.Tools.Restricted && !readonly {
@@ -389,13 +411,7 @@ func (a cursorAdapter) Convert(sem *Semantics) (Artifact, error) {
 	if err != nil {
 		return Artifact{}, err
 	}
-	return selfCheck(a, sem.ID, Artifact{
-		FileName:  sem.ID + ".md",
-		Content:   content,
-		Generated: true,
-		Converter: converterID(agent.Cursor),
-		Notes:     check.notes,
-	})
+	return selfCheck(a, sem.ID, check.artifact(sem.ID+".md", content))
 }
 
 // cursorUserMemory holds user-scope memories on Cursor: its agents may write

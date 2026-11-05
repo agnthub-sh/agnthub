@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "differ",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/differ.md",
+          "sourceDigest": "sha256:f34d2b83d43c92767414489fcc9c4e0bf1ac99d953a6a91f2b3eb4d61347fb07",
+          "converter": "copilot/v5",
+          "path": ".github/agents/differ.agent.md",
+          "digest": "sha256:3213d0aa44bf07b2d2686168be0f8b3111a2eee6116068a207ed79c43e13e829",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "guarded",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/guarded.md",
+          "sourceDigest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
+          "converter": "copilot/v5",
+          "path": ".github/agents/guarded.agent.md",
+          "digest": "sha256:d0c6db40bca3c4385c529bdfc32c7fae8930d91b72eed07f2cc890d683dd6817",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

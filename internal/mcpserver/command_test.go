@@ -33,6 +33,16 @@ func TestBuildCommandMatchesTheSiteBuilder(t *testing.T) {
 				"--harness claude --harness omp --global --extra omp.profile=work",
 		},
 		{
+			name: "the shell opt-in follows the scope",
+			in: mcpserver.CommandInput{
+				Source: "octo/agents", Agents: []string{"reviewer"},
+				Harnesses: []agent.HarnessID{agent.Cursor}, Global: true,
+				AllowWithoutShell: true, OMPProfile: "work",
+			},
+			want: "npx agnthub-cli add octo/agents --agent reviewer --harness cursor --global " +
+				"--allow-without-shell",
+		},
+		{
 			name: "all drops the selection but keeps the profile",
 			in: mcpserver.CommandInput{
 				Source: "octo/agents", All: true, Harnesses: []agent.HarnessID{agent.Codex},

@@ -1,9 +1,12 @@
 0644 home/.config/agnthub/config.yaml
 0644 home/.config/agnthub/global-lock.json
+0644 home/.config/opencode/agents/allowlisted.md
 0644 home/.config/opencode/agents/annotated.md
+0644 home/.config/opencode/agents/backgrounder.md
 0644 home/.config/opencode/agents/bom-native.md
 0644 home/.config/opencode/agents/bom.md
 0644 home/.config/opencode/agents/bounded.md
+0644 home/.config/opencode/agents/claude-shaped.md
 0644 home/.config/opencode/agents/colon-native.md
 0644 home/.config/opencode/agents/colon.md
 0644 home/.config/opencode/agents/cu-folded.md
@@ -11,8 +14,12 @@
 0644 home/.config/opencode/agents/cu-tagged.md
 0644 home/.config/opencode/agents/cx-native.md
 0644 home/.config/opencode/agents/cx-nicknamed.md
+0644 home/.config/opencode/agents/cx-sandboxed.md
+0644 home/.config/opencode/agents/cx-solo.md
+0644 home/.config/opencode/agents/cx-workspace.md
 0644 home/.config/opencode/agents/defaulted.md
 0644 home/.config/opencode/agents/delegator.md
+0644 home/.config/opencode/agents/differ.md
 0644 home/.config/opencode/agents/dual.md
 0644 home/.config/opencode/agents/fixer.md
 0644 home/.config/opencode/agents/gh-colored.md
@@ -25,6 +32,7 @@
 0644 home/.config/opencode/agents/local-notes.md
 0644 home/.config/opencode/agents/mcp-wide.md
 0644 home/.config/opencode/agents/misnamed.md
+0644 home/.config/opencode/agents/modelled.md
 0644 home/.config/opencode/agents/no-shell.md
 0644 home/.config/opencode/agents/oc-native.md
 0644 home/.config/opencode/agents/omp-native.md

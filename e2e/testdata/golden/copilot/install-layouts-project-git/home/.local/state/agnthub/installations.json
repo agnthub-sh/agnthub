@@ -2,6 +2,18 @@
   "version": 1,
   "records": [
     {
+      "path": "/agnthub-e2e/project/.github/agents/allowlisted.agent.md",
+      "digest": "sha256:1412c19f445db926cc435b66ca38987ecd28020900eeb66def6097926d775683",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "allowlisted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.github/agents/annotated.agent.md",
       "digest": "sha256:d045e84dcee9e5a2ceb38e937ef6f2f6983ce06d1961b6cc7b3ef7fdeb7dee7f",
       "harness": "copilot",
@@ -10,6 +22,18 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "annotated",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/backgrounder.agent.md",
+      "digest": "sha256:67a1bccf65815313fefb43c425f6e16de1dcd4fe4b5f51745651feaa073ac540",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "backgrounder",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -50,6 +74,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.github/agents/claude-shaped.agent.md",
+      "digest": "sha256:1440e87a63be36fced89dd23e8f338abb964402b17caafc3ae184e9ba22bb657",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "claude-shaped",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.github/agents/colon-native.agent.md",
       "digest": "sha256:d0ec2110dd6f67f1d19fd8d9b0e715b110da7f1149c19549eb5db944c7dc02f0",
       "harness": "copilot",
@@ -74,6 +110,42 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.github/agents/cu-folded.agent.md",
+      "digest": "sha256:0b6b6d45b96aec53d6bdea9966176aeadc9a4e1f8e56f652d1cedefa31390f67",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cu-folded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/cu-native.agent.md",
+      "digest": "sha256:417e436b6b91091668c9be4eb460a2676b0410697338d5665f959c79839a78b5",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cu-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/cu-tagged.agent.md",
+      "digest": "sha256:5e5801a2a77dc067d0a8cccd412c3a23d6c53ce4d1569fa37a1c4aab55a9f00d",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cu-tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.github/agents/cx-native.agent.md",
       "digest": "sha256:41d232a0e2f5fcd0f345c6bb85dbb29da3a0f3ae048e766e007239c4ff37d06a",
       "harness": "copilot",
@@ -94,6 +166,42 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "cx-nicknamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/cx-sandboxed.agent.md",
+      "digest": "sha256:5f712cb2b76cd01bea398fb2013b06d5a9a5979ac5f608984daa9ae3009fd3ec",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cx-sandboxed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/cx-solo.agent.md",
+      "digest": "sha256:a01de66173c1c26ba17b9578fc2cd21959266cac7cc1ba392bcfc4086a74a6c7",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cx-solo",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/cx-workspace.agent.md",
+      "digest": "sha256:bdcf7be87aac3daf01c7b581ae86cd221155ab74eb79ca7f324370536e56a7d4",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cx-workspace",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -250,6 +358,18 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "misnamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/modelled.agent.md",
+      "digest": "sha256:fdb1107e42dcdc3cbb93b88c19b559a970fd13e7c0d67b11895b4c0f71108231",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "modelled",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -430,6 +550,18 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/web-searcher.agent.md",
+      "digest": "sha256:c8cb47379ae7d0e5f8cdc1fb96dbaf801776d593c8c637628cb9ae9bec477565",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "web-searcher",
       "origin": "direct",
       "installedAt": "<time>"
     }

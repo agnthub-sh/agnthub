@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "agents/drifter.md",
           "sourceDigest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
-          "converter": "codex/v4",
+          "converter": "codex/v5",
           "path": ".codex/agents/drifter.toml",
           "digest": "sha256:b4745946769bcaef3e25194d572f851d2e1df969a64ae631eab49d2174188c71",
           "requires": []

@@ -15,32 +15,6 @@
   ],
   "items": [
     {
-      "agent": "allowlisted",
-      "harness": "copilot",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which copilot cannot express"
-    },
-    {
-      "agent": "backgrounder",
-      "harness": "copilot",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant runs the agent in the background, which copilot cannot express"
-    },
-    {
       "agent": "broken",
       "harness": "copilot",
       "settings": {},
@@ -54,7 +28,7 @@
       "reason": "invalid copilot variant .github/agents/broken.agent.md: handoffs-to is not a Copilot CLI agent field; the CLI would silently ignore it"
     },
     {
-      "agent": "cu-folded",
+      "agent": "differ",
       "harness": "copilot",
       "settings": {},
       "effectiveSettings": {},
@@ -64,33 +38,16 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "it uses web search, but Copilot CLI has no web search tool"
-    },
-    {
-      "agent": "cu-native",
-      "harness": "copilot",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "it uses web search, but Copilot CLI has no web search tool"
-    },
-    {
-      "agent": "cu-tagged",
-      "harness": "copilot",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "it uses web search, but Copilot CLI has no web search tool"
+      "reason": "it would lose the shell access it uses: it may run only some shell commands (* (deny), git diff * (allow)), and copilot cannot limit the shell to commands; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the claude variant",
+        "tools grants only part of edit (no Write); converted agents get edit as a whole",
+        "goes without shell: it may run only some shell commands (* (deny), git diff * (allow)), and copilot cannot limit the shell to commands"
+      ],
+      "reduced": [
+        "shell"
+      ],
+      "optIn": "allow-without-shell"
     },
     {
       "agent": "gm-camel",
@@ -129,7 +86,35 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which copilot cannot express"
+      "reason": "it would lose the shell access it uses: permissionMode plan allows read-only shell commands, and copilot cannot limit the shell to them; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode plan converted as a read-only tool policy: no edits, shell, delegation or MCP tools",
+        "goes without shell: permissionMode plan allows read-only shell commands, and copilot cannot limit the shell to them",
+        "goes without delegation: permissionMode plan is read-only, and a delegated agent could edit",
+        "goes without MCP tools: permissionMode plan is read-only, and MCP tools could write",
+        "goes without web search: Copilot CLI offers custom agents no web search tool"
+      ],
+      "reduced": [
+        "shell",
+        "delegation",
+        "MCP tools",
+        "web search"
+      ],
+      "optIn": "allow-without-shell"
+    },
+    {
+      "agent": "mcp-owner",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares MCP servers scoped to the agent (github), which copilot cannot express; only Gemini CLI has per-agent MCP servers"
     },
     {
       "agent": "mcp-wide",
@@ -143,36 +128,10 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "it allows MCP tool github/*, but Copilot CLI cannot select every tool of an MCP server"
-    },
-    {
-      "agent": "modelled",
-      "harness": "copilot",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native copilot variant"
-    },
-    {
-      "agent": "web-searcher",
-      "harness": "copilot",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "it uses web search, but Copilot CLI has no web search tool"
     }
   ],
   "summary": {
-    "incompatible": 11,
+    "incompatible": 6,
     "invalid": 1
   }
 }

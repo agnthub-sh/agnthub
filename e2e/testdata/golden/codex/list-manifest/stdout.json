@@ -1,6 +1,6 @@
 {
   "source": "localhost:8443/manifest.git",
-  "revision": "1fc96c7c4fac361e5cb258ea67b735f0a5a23da1",
+  "revision": "eafafe63d17670563e2773525238100a8184657e",
   "manifest": true,
   "categories": [
     "software-engineering",
@@ -77,6 +77,10 @@
     {
       "path": "native/copilot/strict.agent.md",
       "message": "invalid copilot variant of strict: native/copilot/strict.agent.md: infer-from is not a Copilot CLI agent field; the CLI would silently ignore it"
+    },
+    {
+      "path": "native/cursor/strict.md",
+      "message": "invalid cursor variant of strict: native/cursor/strict.md: frontmatter requires a description"
     },
     {
       "path": "native/omp/strict.md",

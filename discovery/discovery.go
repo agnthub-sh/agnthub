@@ -126,6 +126,8 @@ type scanner struct {
 	// not fetched records it in pending instead (errDeferred).
 	partial source.Partial
 	pending map[string]bool
+	// marketplace is the name of the repository's Claude Code marketplace.
+	marketplace string
 }
 
 // errDeferred is a planning read of a file that is not fetched yet. The scan
@@ -329,8 +331,10 @@ type candidate struct {
 	doc     *agent.Document
 	raw     []byte
 	desc    string
-	// plugin names the Claude Code plugin that provides a native file.
-	plugin string
+	// plugin names the Claude Code plugin that provides a native file, and
+	// marketplace the marketplace listing it.
+	plugin      string
+	marketplace string
 }
 
 func (s *scanner) fromLayouts() (*Inventory, error) {
@@ -596,6 +600,7 @@ func (s *scanner) merge(id string, group []candidate) *agent.Definition {
 		seen[c.harness] = c.path
 		def.Variants[c.harness] = &agent.VariantFile{
 			Harness: c.harness, Path: c.path, Raw: c.raw, Plugin: c.plugin,
+			Marketplace: c.marketplace,
 		}
 		if def.Description == "" {
 			def.Description = c.desc

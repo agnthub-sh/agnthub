@@ -25,20 +25,7 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which codex cannot express"
-    },
-    {
-      "agent": "backgrounder",
-      "harness": "codex",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant runs the agent in the background, which codex cannot express"
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
       "agent": "bom-native",
@@ -64,7 +51,20 @@
       },
       "origin": "direct",
       "action": "invalid",
-      "reason": "invalid codex variant .codex/agents/broken.toml: \"sandbox_mode\" is parent session configuration that a Codex agent file cannot override"
+      "reason": "invalid codex variant .codex/agents/broken.toml: \"approval_policy\" is parent session configuration that a Codex agent file cannot override"
+    },
+    {
+      "agent": "claude-shaped",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
       "agent": "colon-native",
@@ -119,6 +119,19 @@
       "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
+      "agent": "cx-sandboxed",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its codex variant declares sandbox_mode = \"read-only\", which Codex does not enforce: custom agents run in the parent session's sandbox, so the agent could edit files"
+    },
+    {
       "agent": "delegator",
       "harness": "codex",
       "settings": {},
@@ -130,6 +143,30 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
+      "agent": "differ",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it would lose the shell access it uses: it may run only some shell commands (* (deny), git diff * (allow)), and codex cannot limit the shell to commands; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the claude variant",
+        "tools grants only part of edit (no Write); converted agents get edit as a whole",
+        "goes without shell: it may run only some shell commands (* (deny), git diff * (allow)), and codex cannot limit the shell to commands",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ],
+      "reduced": [
+        "shell"
+      ],
+      "optIn": "allow-without-shell"
     },
     {
       "agent": "gh-colored",
@@ -220,7 +257,7 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which codex cannot express"
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
       "agent": "issue-reader",
@@ -236,6 +273,19 @@
       "reason": "it excludes search, edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
+      "agent": "mcp-owner",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares MCP servers scoped to the agent (github), which codex cannot express; only Gemini CLI has per-agent MCP servers"
+    },
+    {
       "agent": "mcp-wide",
       "harness": "codex",
       "settings": {},
@@ -247,19 +297,6 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "it excludes search, edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
-    },
-    {
-      "agent": "modelled",
-      "harness": "codex",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native codex variant"
     },
     {
       "agent": "oc-native",
@@ -328,7 +365,7 @@
     }
   ],
   "summary": {
-    "incompatible": 23,
+    "incompatible": 25,
     "invalid": 1
   }
 }

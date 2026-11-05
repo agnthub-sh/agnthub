@@ -34,7 +34,7 @@ func TestOpenCodeConversionRegistersAnExplicitSubagent(t *testing.T) {
 	}
 	if artifact.FileName != "reviewer.md" || doc.String("mode") != "subagent" ||
 		doc.String("description") != "Reviews" || doc.Body != "Review it.\n" ||
-		!artifact.Generated || artifact.Converter != "opencode/v4" {
+		!artifact.Generated || artifact.Converter != "opencode/v5" {
 		t.Fatalf("unexpected conversion: %+v\n%s", artifact, artifact.Content)
 	}
 	if _, named := doc.Frontmatter["name"]; named {
@@ -46,7 +46,7 @@ func TestOpenCodeConversionRefusesBehavioralFields(t *testing.T) {
 	_, err := convert(
 		installer(t, agent.OpenCode),
 		"reviewer",
-		portable(t, "---\nname: reviewer\ndescription: Reviews\ntools: Read\n---\nbody\n"),
+		portable(t, "---\nname: reviewer\ndescription: Reviews\nisolation: worktree\n---\nbody\n"),
 	)
 	requireIncompatible(t, err)
 }

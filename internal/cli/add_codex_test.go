@@ -46,9 +46,9 @@ func TestAddCodexNativeVariantWinsAndParentOverridesRefuseBeforeWriting(t *testi
 
 	h2 := newHarness(t)
 	h2.write("agents/reviewer.md", reviewer)
-	h2.write(".codex/agents/reviewer.toml", native+"sandbox_mode = \"danger-full-access\"\n")
+	h2.write(".codex/agents/reviewer.toml", native+"approval_policy = \"never\"\n")
 	code, out := h2.run("add", h2.source, "--harness", "codex", "--yes")
-	if code == 0 || !strings.Contains(out, "sandbox_mode") {
+	if code == 0 || !strings.Contains(out, "approval_policy") {
 		t.Fatalf("parent-overriding variant must fail, exit %d: %s", code, out)
 	}
 	if _, err := os.Stat(filepath.Join(h2.project, ".codex")); !os.IsNotExist(err) {
@@ -58,8 +58,9 @@ func TestAddCodexNativeVariantWinsAndParentOverridesRefuseBeforeWriting(t *testi
 	h3 := newHarness(t)
 	h3.write("agents/reviewer.md", "---\nname: reviewer\ndescription: x\ntools: Read\n---\nbody\n")
 	code, out = h3.run("add", h3.source, "--harness", "codex", "--yes")
-	if code == 0 || !strings.Contains(out, `"tools"`) {
-		t.Fatalf("declared tools must refuse Codex conversion, exit %d: %s", code, out)
+	if code == 0 || !strings.Contains(out, "excludes search, edit") {
+		t.Fatalf("a portable allowlist without edits must refuse Codex conversion, exit %d: %s",
+			code, out)
 	}
 	if _, err := os.Stat(filepath.Join(h3.project, ".codex")); !os.IsNotExist(err) {
 		t.Fatal("nothing may be written when conversion is refused")

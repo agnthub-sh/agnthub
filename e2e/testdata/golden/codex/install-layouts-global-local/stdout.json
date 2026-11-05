@@ -39,6 +39,26 @@
       ]
     },
     {
+      "agent": "backgrounder",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/backgrounder.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/backgrounder.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "runs in the foreground: codex cannot run an agent in the background"
+      ]
+    },
+    {
       "agent": "bom",
       "harness": "codex",
       "settings": {},
@@ -121,6 +141,44 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "cx-solo",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/cx-solo.toml",
+      "variant": "native",
+      "sourcePath": ".codex/agents/cx-solo.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "Codex does not enforce features.multi_agent = false in an agent file: on Codex the agent may still delegate; other harnesses enforce it"
+      ]
+    },
+    {
+      "agent": "cx-workspace",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/cx-workspace.toml",
+      "variant": "native",
+      "sourcePath": ".codex/agents/cx-workspace.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "sandbox_mode = \"workspace-write\" is not applied: Codex runs custom agents in the parent session's sandbox"
+      ]
     },
     {
       "agent": "defaulted",
@@ -261,6 +319,25 @@
         "omitted tools entries read, ListMcpResourcesTool, playwright: no codex equivalent, so the agent goes without them",
         "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
         "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ]
+    },
+    {
+      "agent": "modelled",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/modelled.toml",
+      "variant": "generated",
+      "sourcePath": "agents/modelled.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model"
       ]
     },
     {
@@ -479,11 +556,13 @@
       "origin": "direct",
       "action": "create",
       "notes": [
-        "omitted descriptive metadata: author, tags, version"
+        "omitted author: descriptive metadata",
+        "omitted tags: descriptive metadata",
+        "omitted version: descriptive metadata"
       ]
     }
   ],
   "summary": {
-    "create": 24
+    "create": 28
   }
 }

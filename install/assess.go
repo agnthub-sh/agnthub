@@ -34,9 +34,19 @@ type Assessment struct {
 	// Notes are the advisories a plan would show: harmless omissions and
 	// Dependency semantics.
 	Notes []string
+	// Reduced lists capabilities the installed agent goes without because the
+	// Harness cannot grant them within its restrictions, e.g. "web search".
+	Reduced []string
+	// OptIn names the flag, without its dashes, that installing it requires
+	// (OptInWithoutShell), or "" when it installs without one.
+	OptIn string
 	// Dependencies are the Agent's common Dependencies plus its Variant's.
 	Dependencies agent.Dependencies
 }
+
+// OptInWithoutShell is the opt-in (agnthub add --allow-without-shell) to
+// install an Agent that loses the shell access it uses.
+const OptInWithoutShell = "allow-without-shell"
 
 // Assess renders def for harnessID exactly as Planner.Build does (an explicit
 // Variant first, never falling back from an invalid one) without resolving a
@@ -67,6 +77,10 @@ func Assess(
 		return out
 	}
 	out.Status, out.SourcePath, out.Notes = StatusGenerated, sourcePath, artifact.Notes
+	out.Reduced = artifact.ReducedNames()
+	if artifact.WithoutShell() {
+		out.OptIn = OptInWithoutShell
+	}
 	if def.Variant(harnessID) != nil {
 		out.Status = StatusNative
 	}

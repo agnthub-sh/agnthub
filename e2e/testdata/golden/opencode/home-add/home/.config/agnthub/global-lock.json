@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "opencode/v4",
+          "converter": "opencode/v5",
           "path": "/agnthub-e2e/home/.config/opencode/agents/companion.md",
           "digest": "sha256:7d3f9a795bad13166e76e115d6e8f9e5aaf4ebdad9ab62ebb62bc9cb57dcf987",
           "requires": []

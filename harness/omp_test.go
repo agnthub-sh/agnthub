@@ -395,12 +395,12 @@ func TestOMPNativeVariantsStayFaithful(t *testing.T) {
 		}
 	}
 	doc, err := agent.ParseMarkdown("agents/reviewer.md",
-		[]byte("---\nname: reviewer\ndescription: d\ntools: [read]\n---\nBody\n"))
+		[]byte("---\nname: reviewer\ndescription: d\nreadonly: true\n---\nBody\n"))
 	if err != nil {
 		t.Fatal(err)
 	}
 	var incompatible *harness.IncompatibleError
 	if _, err := convert(installer, "reviewer", doc); !errors.As(err, &incompatible) {
-		t.Fatalf("portable tools must refuse conversion, got %v", err)
+		t.Fatalf("a portable restriction Claude Code ignores must refuse conversion, got %v", err)
 	}
 }

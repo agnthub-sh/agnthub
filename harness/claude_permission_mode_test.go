@@ -104,26 +104,11 @@ func TestClaudeRelaxingPermissionModesConvert(t *testing.T) {
 	}
 }
 
-// plan and dontAsk restrict the agent, and modes are case-sensitive: these
-// stay refused. A relaxing mode never lifts another refusal.
+// dontAsk restricts the agent, and modes are case-sensitive: these stay
+// refused. A relaxing mode never lifts another refusal. plan converts as a
+// read-only tool policy (policy_test.go).
 func TestClaudeRestrictingPermissionModesStayRefused(t *testing.T) {
-	// https://github.com/jagadeesh-profile/InstantDeploy/blob/8c0149e9b00e/.claude/agents/debugger.md
-	// (minimized)
-	const debugger = `---
-name: reviewer
-description: >
-  Expert debugging and root cause analysis specialist at ShaConnects. Invoke
-  when any error, crash, test failure, unexpected behaviour, or production
-  incident needs to be diagnosed and fixed.
-tools: Read, Grep, Glob, Bash
-model: sonnet
-permissionMode: plan
----
-
-Diagnose the failure.
-`
 	sources := []string{
-		debugger,
 		withField("permissionMode: dontAsk\n"),
 		withField("permissionMode: AcceptEdits\n"),
 		withField("permissionMode: [acceptEdits]\n"),

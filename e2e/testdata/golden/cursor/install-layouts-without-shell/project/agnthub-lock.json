@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "cx-sandboxed",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "cursor",
+          "variant": "generated",
+          "sourcePath": ".codex/agents/cx-sandboxed.toml",
+          "sourceDigest": "sha256:dcaa98695697729de4d531213e23fa532f915b87e3ec07b5e09cec4f3249ede2",
+          "converter": "cursor/v5",
+          "path": ".cursor/agents/cx-sandboxed.md",
+          "digest": "sha256:8d96dbf9442bee2ee37a7fec23d46ccf5c4b93348673490cc5b50c19d2e01137",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "guarded",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "cursor",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/guarded.md",
+          "sourceDigest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
+          "converter": "cursor/v5",
+          "path": ".cursor/agents/guarded.md",
+          "digest": "sha256:df19e8dcdd75bc1146eecdc7c3c8a334d0aac9152917101ebb90a68a3647e881",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "reviewer",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "cursor",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/reviewer.md",
+          "sourceDigest": "sha256:a9c4c55855bdcff3eb2fa4bd246ff94f4de189219525d61086c93cac478e5070",
+          "converter": "cursor/v5",
+          "path": ".cursor/agents/reviewer.md",
+          "digest": "sha256:82542448146ab61cfdfc5f2fa7ed1729366b0bb763e90a71369dad14199126f6",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

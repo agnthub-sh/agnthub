@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "agents/drifter.md",
           "sourceDigest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
-          "converter": "gemini/v4",
+          "converter": "gemini/v5",
           "path": ".gemini/agents/drifter.md",
           "digest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
           "requires": []

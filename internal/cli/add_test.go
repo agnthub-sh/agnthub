@@ -279,7 +279,7 @@ func TestPortableBehavioralFieldsRefuseConversion(t *testing.T) {
 		"---\nname: reviewer\ndescription: x\nreadonly: true\n---\nbody\n",
 	)
 	code, out := h.run("add", h.source, "--harness", "claude", "--yes")
-	if code == 0 || !strings.Contains(out, `"readonly"`) {
+	if code == 0 || !strings.Contains(out, "readonly") {
 		t.Fatalf("undeclared constraint must refuse conversion, exit %d: %s", code, out)
 	}
 }

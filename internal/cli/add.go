@@ -33,7 +33,17 @@ type addOptions struct {
 	yes     bool
 	json    bool
 	all     bool
+	// allowWithoutShell installs agents that lose the shell access they use.
+	allowWithoutShell bool
 }
+
+// allowWithoutShellFlag installs agents into harnesses that cannot grant the
+// shell access they use (install.OptInWithoutShell).
+const (
+	allowWithoutShellFlag  = install.OptInWithoutShell
+	allowWithoutShellUsage = "install agents that lose the shell access they use where a " +
+		"harness cannot grant it (e.g. Cursor read-only agents)"
+)
 
 // allSelector selects every agent (--agent '*') or every supported harness
 // (--harness '*'), as skills.sh's --skill '*' and --agent '*' do.
@@ -129,6 +139,7 @@ install first through the skill installer (skills.sh, or skillInstaller in
 	flags.BoolVarP(&opts.yes, "yes", "y", false, "apply without prompting")
 	flags.BoolVar(&opts.json, "json", false, "print machine-readable JSON; never prompts")
 	flags.BoolVar(&opts.all, "all", false, "shorthand for --agent '*' --harness all --yes")
+	flags.BoolVar(&opts.allowWithoutShell, allowWithoutShellFlag, false, allowWithoutShellUsage)
 	return cmd
 }
 
@@ -211,6 +222,8 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 		Settings:  settings,
 		Scope:     scope,
 		Context:   a.harnessContext(),
+
+		AllowWithoutShell: opts.allowWithoutShell,
 	})
 	if err != nil {
 		return err

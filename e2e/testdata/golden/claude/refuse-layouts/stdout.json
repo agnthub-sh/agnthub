@@ -52,23 +52,10 @@
       "origin": "direct",
       "action": "incompatible",
       "reason": "its gemini variant declares mcp_servers (MCP servers scoped to the agent), which claude cannot express"
-    },
-    {
-      "agent": "modelled",
-      "harness": "claude",
-      "settings": {},
-      "effectiveSettings": {},
-      "source": {
-        "kind": "local",
-        "locator": "/agnthub-e2e/src/layouts"
-      },
-      "origin": "direct",
-      "action": "incompatible",
-      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native claude variant"
     }
   ],
   "summary": {
-    "incompatible": 3,
+    "incompatible": 2,
     "invalid": 1
   }
 }

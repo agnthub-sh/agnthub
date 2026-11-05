@@ -251,6 +251,9 @@ type Request struct {
 	Settings  map[agent.HarnessID]harness.Settings
 	Scope     harness.Scope
 	Context   harness.Context
+	// AllowWithoutShell installs Agents that lose the shell access they use
+	// (agnthub add --allow-without-shell); without it they are refused.
+	AllowWithoutShell bool
 }
 
 // Planner resolves requests against existing local state.
@@ -334,6 +337,11 @@ func (p *Planner) item(req Request, target Target, harnessID agent.HarnessID) (I
 			artifact.Notes,
 			advisor.DependencyNotes(dependencies(def, harnessID))...)
 	}
+	if artifact.WithoutShell() && !req.AllowWithoutShell {
+		item.Artifact = artifact
+		item.Action, item.Reason = ActionIncompatible, withoutShellReason(artifact)
+		return item, nil
+	}
 	destination, err := installer.Destination(req.Context, req.Scope, item.Settings)
 	if err != nil {
 		item.Action, item.Reason = ActionIncompatible, err.Error()
@@ -382,6 +390,19 @@ func render(
 		return artifact, variant.Path, variant.Raw, err
 	}
 	return registry.Generate(installer, def)
+}
+
+// withoutShellReason refuses an Agent that would lose the shell access it uses
+// and says how to install it anyway.
+func withoutShellReason(artifact harness.Artifact) string {
+	why := "it would lose the shell access it uses"
+	for _, r := range artifact.Reduced {
+		if r.Capability == harness.ReducedShell {
+			why += ": " + r.Why
+			break
+		}
+	}
+	return why + "; run again with --allow-without-shell to install it without shell"
 }
 
 // dependencies returns the Agent's common Dependencies plus its Variant's for h.

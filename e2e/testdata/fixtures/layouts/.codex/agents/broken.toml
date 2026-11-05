@@ -1,4 +1,4 @@
 name = "broken"
-description = "Codex variant that tries to choose the parent's sandbox."
+description = "Codex variant that tries to choose the parent's approval policy."
 developer_instructions = "Codex instructions."
-sandbox_mode = "danger-full-access"
+approval_policy = "never"

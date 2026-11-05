@@ -19,13 +19,20 @@
       "harness": "gemini",
       "settings": {},
       "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/allowlisted.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/allowlisted.md",
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
       "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which gemini cannot express"
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "read allowed-tools as the tool allowlist: Claude Code ignores it in agents (it is a skill field), other harnesses enforce it"
+      ]
     },
     {
       "agent": "annotated",
@@ -54,13 +61,20 @@
       "harness": "gemini",
       "settings": {},
       "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/backgrounder.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/backgrounder.md",
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
       "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant runs the agent in the background, which gemini cannot express"
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "runs in the foreground: gemini cannot run an agent in the background"
+      ]
     },
     {
       "agent": "bom",
@@ -128,6 +142,26 @@
       "origin": "direct",
       "action": "invalid",
       "reason": "invalid gemini variant .gemini/agents/broken.md: Gemini CLI rejects \"color\" in a local agent"
+    },
+    {
+      "agent": "claude-shaped",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/claude-shaped.md",
+      "variant": "generated",
+      "sourcePath": "agents/claude-shaped.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted color: cosmetic",
+        "model \"opus\" is specific to claude; the agent uses the harness default model"
+      ]
     },
     {
       "agent": "colon",
@@ -266,6 +300,66 @@
       ]
     },
     {
+      "agent": "cx-sandboxed",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/cx-sandboxed.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-sandboxed.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "sandbox_mode = \"read-only\": converted without edit tools; shell commands are not sandboxed outside Codex"
+      ]
+    },
+    {
+      "agent": "cx-solo",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/cx-solo.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-solo.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "features.multi_agent = false: converted without delegation"
+      ]
+    },
+    {
+      "agent": "cx-workspace",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/cx-workspace.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-workspace.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "omitted sandbox_mode = \"workspace-write\": Codex ignores it in agent files; the session's sandbox and approvals apply"
+      ]
+    },
+    {
       "agent": "defaulted",
       "harness": "gemini",
       "settings": {},
@@ -292,13 +386,45 @@
       "harness": "gemini",
       "settings": {},
       "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/delegator.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/delegator.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "goes without delegation: Gemini CLI subagents cannot invoke other agents"
+      ],
+      "reduced": [
+        "delegation"
+      ]
+    },
+    {
+      "agent": "differ",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "it uses delegation, but Gemini CLI subagents cannot invoke other agents"
+      "reason": "it would lose the shell access it uses: it may run only some shell commands (* (deny), git diff * (allow)), and gemini cannot limit the shell to commands; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the claude variant",
+        "tools grants only part of edit (no Write); converted agents get edit as a whole",
+        "goes without shell: it may run only some shell commands (* (deny), git diff * (allow)), and gemini cannot limit the shell to commands"
+      ],
+      "reduced": [
+        "shell"
+      ],
+      "optIn": "allow-without-shell"
     },
     {
       "agent": "dual",
@@ -453,7 +579,20 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which gemini cannot express"
+      "reason": "it would lose the shell access it uses: permissionMode plan allows read-only shell commands, and gemini cannot limit the shell to them; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode plan converted as a read-only tool policy: no edits, shell, delegation or MCP tools",
+        "goes without shell: permissionMode plan allows read-only shell commands, and gemini cannot limit the shell to them",
+        "goes without delegation: permissionMode plan is read-only, and a delegated agent could edit",
+        "goes without MCP tools: permissionMode plan is read-only, and MCP tools could write"
+      ],
+      "reduced": [
+        "shell",
+        "delegation",
+        "MCP tools"
+      ],
+      "optIn": "allow-without-shell"
     },
     {
       "agent": "issue-reader",
@@ -532,6 +671,26 @@
       ]
     },
     {
+      "agent": "mcp-owner",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/mcp-owner.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/mcp-owner.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "declares mcp_servers, which runs when the agent is used"
+      ]
+    },
+    {
       "agent": "mcp-wide",
       "harness": "gemini",
       "settings": {},
@@ -576,13 +735,19 @@
       "harness": "gemini",
       "settings": {},
       "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/modelled.md",
+      "variant": "generated",
+      "sourcePath": "agents/modelled.md",
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
       "origin": "direct",
-      "action": "incompatible",
-      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native gemini variant"
+      "action": "create",
+      "notes": [
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model"
+      ]
     },
     {
       "agent": "no-shell",
@@ -866,7 +1031,9 @@
       "origin": "direct",
       "action": "create",
       "notes": [
-        "omitted descriptive metadata: author, tags, version"
+        "omitted author: descriptive metadata",
+        "omitted tags: descriptive metadata",
+        "omitted version: descriptive metadata"
       ]
     },
     {
@@ -890,8 +1057,8 @@
     }
   ],
   "summary": {
-    "create": 41,
-    "incompatible": 5,
+    "create": 50,
+    "incompatible": 2,
     "invalid": 2
   }
 }

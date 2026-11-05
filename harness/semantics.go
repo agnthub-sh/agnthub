@@ -19,8 +19,12 @@ type Semantics struct {
 	// Source is the Harness whose native Variant was parsed, or "" for the
 	// portable core.
 	Source agent.HarnessID
+	// Dialect is the Harness whose field meanings a portable core is read
+	// with: Claude Code (ADR 0012). It is "" for a native Variant.
+	Dialect agent.HarnessID
 	// Model is the source Harness's model choice. Model strings are not portable:
-	// renderers never carry it and note that the target's default model applies.
+	// renderers never carry it to another Harness and note that the target's
+	// default model applies.
 	Model string
 	// Tools is the tool policy; the zero value inherits every tool.
 	Tools ToolPolicy
@@ -28,11 +32,17 @@ type Semantics struct {
 	MaxTurns int
 	// Background runs the Agent without blocking the caller.
 	Background bool
-	// PermissionMode is a Claude Code permission mode that only approves more
-	// without asking (claudeRelaxingModes). Other Harnesses have no such mode
-	// for one agent and ask for approval as their session does, which is at
-	// least as strict, so renderers drop it with a note.
+	// PermissionMode is a Claude Code permission mode: one that only approves
+	// more without asking (claudeRelaxingModes), which other Harnesses drop
+	// with a note since they ask for approval as their session does, or plan,
+	// which other Harnesses carry as a read-only tool policy.
 	PermissionMode string
+	// Spawns limits delegation to these agents; nil leaves it unlimited. Only
+	// omp can limit it: other targets withhold delegation.
+	Spawns []string
+	// MCPServers are MCP servers scoped to the Agent. Only Gemini CLI has
+	// per-agent servers; other targets refuse them.
+	MCPServers []MCPServer
 	// Memory is the Agent's persistent memory scope, or "" for none. Memory
 	// and Skills are additive: renderers carry them natively, emulate them with
 	// instructions, or omit them with a note (see additive.go).
@@ -46,6 +56,12 @@ type Semantics struct {
 	// Unsupported are declared behaviors no other Harness can express; every
 	// renderer refuses an Agent that declares one.
 	Unsupported []Feature
+	// relaxed marks a source read through a reading ADR 0012 added: a portable
+	// core with Claude Code fields, or a Variant field its own Harness does not
+	// apply (Codex sandbox_mode and features.multi_agent, Cursor tools, Copilot
+	// CLI agents, allowed-tools and maxTurns, Claude Code allowed-tools).
+	// Generate prefers sources that convert without one (relaxedFor).
+	relaxed bool
 }
 
 // Feature is one declared behavior without a cross-harness equivalent.
@@ -119,6 +135,70 @@ type ToolPolicy struct {
 	// Unknown lists allowlisted tool names with no known capability; renderers
 	// leave them out of the allowlist with a note.
 	Unknown []string
+	// Shell limits a granted shell to some commands; nil when the shell, if
+	// granted, runs any command. Only OpenCode carries it: other targets
+	// withhold the shell.
+	Shell *ShellScope
+}
+
+// ShellScope is shell access limited by command patterns, in OpenCode's
+// pattern syntax ('*' matches anything; a trailing " *" also matches the bare
+// command), evaluated like OpenCode: the last matching rule wins.
+type ShellScope struct {
+	// Default is the effect for commands no rule matches: allow, ask or deny.
+	Default string
+	// Rules are the command patterns in evaluation order.
+	Rules []ShellRule
+}
+
+// ShellRule is one command pattern and its effect: allow, ask or deny.
+type ShellRule struct {
+	Pattern string
+	Effect  string
+}
+
+// runs reports whether the scope lets the agent run any command, with or
+// without approval.
+func (s *ShellScope) runs() bool {
+	if s.Default != "deny" {
+		return true
+	}
+	return slices.ContainsFunc(s.Rules, func(r ShellRule) bool { return r.Effect != "deny" })
+}
+
+// String lists the rules for notes, e.g. "git diff * (allow), * (deny)".
+func (s *ShellScope) String() string {
+	parts := make([]string, 0, len(s.Rules)+1)
+	parts = append(parts, "* ("+s.Default+")")
+	for _, rule := range s.Rules {
+		parts = append(parts, rule.Pattern+" ("+rule.Effect+")")
+	}
+	return strings.Join(parts, ", ")
+}
+
+// withhold removes the capabilities in c from the policy.
+func (p *ToolPolicy) withhold(c Capability) {
+	if p.Restricted {
+		p.Allowed &^= c
+	} else {
+		p.Denied |= c
+	}
+}
+
+// MCPServer is an MCP server scoped to one Agent: started for it, with the
+// configuration the Agent declares.
+type MCPServer struct {
+	Name string
+	// Transport is stdio, http (streamable HTTP) or sse.
+	Transport string
+	Command   string
+	Args      []string
+	Env       map[string]string
+	Cwd       string
+	URL       string
+	Headers   map[string]string
+	// Tools limits the server's tools; nil offers all of them.
+	Tools []string
 }
 
 // Allows reports whether the policy grants every capability in c.
@@ -164,7 +244,7 @@ func (t MCPTool) String() string {
 }
 
 // converterVersion is the conversion contract of every generated artifact.
-const converterVersion = "v4"
+const converterVersion = "v5"
 
 // converterID names the conversion contract for h.
 func converterID(h agent.HarnessID) string {
@@ -175,31 +255,81 @@ func converterID(h agent.HarnessID) string {
 // artifacts recorded under the converter id recorded. Each version renders
 // what its predecessors converted byte for byte (v2 added native Variant
 // sources, v3 MCP tool references, v4 persistent memory and preloaded
-// skills), so a lock written by an earlier version restores when its recorded
-// digest still matches.
+// skills, v5 portable cores read as Claude Code agents and reduced
+// capability), so a lock written by an earlier version restores when its
+// recorded digest still matches.
 func ConverterReproduces(recorded, current string) bool {
 	if recorded == current {
 		return true
 	}
 	harnessID, version, ok := strings.Cut(recorded, "/")
-	return ok && (version == "v1" || version == "v2" || version == "v3") &&
+	return ok && slices.Contains([]string{"v1", "v2", "v3", "v4"}, version) &&
 		current == converterID(agent.HarnessID(harnessID))
 }
 
-// PortableSemantics parses the portable core: identity, description and
-// instructions with no tool policy. Harmless metadata is noted; any other field
-// refuses conversion for target.
+// portableDelegationKeys limit which agents an Agent delegates to in other
+// harnesses' dialects. Claude Code ignores them, so a portable core declaring
+// one is refused rather than read as unlimited.
+var portableDelegationKeys = []string{"spawns", "subagents", "agents", "handoffs"}
+
+// portableRestrictionKeys, compared like claudeRestrictionLike, are other
+// dialects' restrictions that Claude Code ignores: Gemini CLI's excluded tools
+// and time limit, OpenCode's step limit and Codex features. A portable core
+// may be written in those dialects, so declaring one is refused rather than
+// read as unrestricted; a .claude/agents file keeps Claude Code's reading.
+var portableRestrictionKeys = map[string]bool{
+	"excludetools": true, "disabledtools": true, "steps": true, "maxsteps": true,
+	"timeoutmins": true, "features": true,
+}
+
+// PortableSemantics parses the portable core as a Claude Code agent (ADR
+// 0012): the same fields, values and refusals as a .claude/agents file, plus
+// the delegation lists of other dialects, which still refuse. It requires a
+// description and instructions.
 func PortableSemantics(target agent.HarnessID, id string, doc *agent.Document) (*Semantics, error) {
-	core, err := ExtractPortable(target, id, doc)
-	if err != nil {
-		return nil, err
+	if doc == nil {
+		return nil, &IncompatibleError{
+			Harness: target,
+			Reason:  "no authored variant and no portable definition",
+		}
 	}
-	return &Semantics{
-		ID:           core.ID,
-		Description:  core.Description,
-		Instructions: core.Instructions,
-		Notes:        core.OmissionNotes(),
-	}, nil
+	description, ok := doc.Frontmatter["description"].(string)
+	if !ok || strings.TrimSpace(description) == "" {
+		return nil, fmt.Errorf("%s: portable definition requires a description", doc.Path)
+	}
+	if strings.TrimSpace(doc.Body) == "" {
+		return nil, fmt.Errorf("%s: portable definition has no instructions", doc.Path)
+	}
+	sem := &Semantics{
+		ID:           id,
+		Description:  description,
+		Instructions: doc.Body,
+		Dialect:      agent.Claude,
+	}
+	for key := range doc.Frontmatter {
+		if key != "name" && key != "description" && !harmlessPortableKeys[key] {
+			sem.relaxed = true
+			break
+		}
+	}
+	readClaudeFields(sem, doc)
+	for _, key := range portableDelegationKeys {
+		if value, set := doc.Frontmatter[key]; set && !emptyValue(value) {
+			sem.unsupported(key, "limits which agents it delegates to, a field Claude Code "+
+				"ignores")
+		}
+	}
+	for _, key := range sortedKeys(doc.Frontmatter) {
+		if portableRestrictionKeys[foldKey(key)] && !emptyValue(doc.Frontmatter[key]) {
+			sem.unsupported(key, "a field Claude Code ignores, but it reads as a tool or "+
+				"permission restriction in another harness's dialect")
+		}
+	}
+	if variable := claudePluginVariable(doc.Body); variable != "" {
+		sem.unsupported(variable, "instructions that only resolve inside an installed Claude "+
+			"Code plugin")
+	}
+	return sem, nil
 }
 
 // sourceLabel names where the semantics came from for notes and reasons.
@@ -223,18 +353,22 @@ func (s *Semantics) unsupported(field, meaning string) {
 // renderCheck holds what a renderer accumulates for one target.
 type renderCheck struct {
 	target agent.HarnessID
-	sem    *Semantics
-	notes  []string
+	// sem is what the target renders: the parsed Semantics, lowered by begin
+	// to what the target can carry.
+	sem   *Semantics
+	notes []string
+	// reduced are the capabilities the Agent uses that the target cannot grant.
+	reduced []Reduction
 	// memoryDir is the folder of emulated memory, set by carry.
 	memoryDir string
 	// skillGranted reports that skillTools added the skill tool.
 	skillGranted bool
 }
 
-// begin validates the parts every target treats alike and starts the notes:
-// unsupported features refuse; unknown tools, relaxing permission modes and
-// the model are noted. Renderers map MCP tools themselves, with mcpNames or
-// mcpSession.
+// begin validates the parts every target treats alike, lowers what only some
+// targets carry, and starts the notes: unsupported features refuse; unknown
+// tools, relaxing permission modes and the model are noted. Renderers render
+// check.sem and map MCP tools themselves, with mcpNames or mcpSession.
 func begin(target agent.HarnessID, sem *Semantics) (*renderCheck, error) {
 	check := &renderCheck{target: target, sem: sem, notes: slices.Clone(sem.Notes)}
 	if len(sem.Unsupported) > 0 {
@@ -245,7 +379,19 @@ func begin(target agent.HarnessID, sem *Semantics) (*renderCheck, error) {
 	if strings.TrimSpace(sem.Instructions) == "" {
 		return nil, check.refuse("its %s has no instructions", sem.sourceLabel())
 	}
-	if mode := sem.PermissionMode; mode != "" {
+	if len(sem.MCPServers) > 0 && target != agent.Gemini {
+		names := make([]string, len(sem.MCPServers))
+		for i, server := range sem.MCPServers {
+			names[i] = server.Name
+		}
+		return nil, check.refuse("its %s declares MCP servers scoped to the agent (%s), which "+
+			"%s cannot express; only Gemini CLI has per-agent MCP servers",
+			sem.sourceLabel(), strings.Join(names, ", "), target)
+	}
+	native := sem.claudeNative(target)
+	check.lower(native)
+	sem = check.sem
+	if mode := sem.PermissionMode; mode != "" && !native {
 		check.note("permissionMode %s isn't available in %s; the harness asks for approval "+
 			"as usual", mode, target)
 	}
@@ -255,14 +401,155 @@ func begin(target agent.HarnessID, sem *Semantics) (*renderCheck, error) {
 		check.note("omitted tools entries %s: no %s equivalent, so the agent goes without "+
 			"them", strings.Join(unknown, ", "), target)
 	}
-	if model := strings.TrimSpace(sem.Model); model != "" && model != "inherit" {
+	if model := strings.TrimSpace(sem.Model); model != "" && model != "inherit" && !native {
 		check.note("model %q is specific to %s; the agent uses the harness default model",
-			model, sourceName(sem.Source))
+			model, sem.dialectName())
 	}
 	if sem.Source != "" && sem.Source != target {
 		check.notes = append([]string{"converted from the " + sem.sourceLabel()}, check.notes...)
 	}
 	return check, nil
+}
+
+// claudeNative reports whether target reads the Agent's Claude Code fields
+// natively: Claude Code rendering a portable core read as a Claude Code agent
+// keeps its model and permission mode.
+func (s *Semantics) claudeNative(target agent.HarnessID) bool {
+	return target == agent.Claude && s.Dialect == agent.Claude
+}
+
+// dialectName names whose field meanings the Agent's model follows.
+func (s *Semantics) dialectName() string {
+	if s.Source == "" && s.Dialect != "" {
+		return string(s.Dialect)
+	}
+	return sourceName(s.Source)
+}
+
+// lower rewrites what the target cannot carry into what it can without
+// widening the Agent's access: a plan-mode agent becomes read-only, a shell
+// limited to some commands is withheld outside OpenCode, delegation limited
+// to some agents is withheld outside omp, and background agents run in the
+// foreground outside Claude Code and Cursor. A capability the Agent uses
+// and loses is recorded as a reduction.
+func (c *renderCheck) lower(native bool) {
+	sem := *c.sem
+	changed := false
+	if sem.PermissionMode == "plan" && !native {
+		shell := sem.Tools.Allows(CapShell)
+		delegates := sem.Tools.Allows(CapDelegate)
+		mcp := len(sem.Tools.MCP) > 0 || !sem.Tools.Restricted
+		// Plan mode only reads: delegated agents and MCP tools could write.
+		sem.Tools, _ = intersectPolicies(sem.Tools,
+			ToolPolicy{Restricted: true, Allowed: readOnlyCaps})
+		sem.PermissionMode = ""
+		c.note("permissionMode plan converted as a read-only tool policy: no edits, shell, " +
+			"delegation or MCP tools")
+		if shell {
+			c.reduce(ReducedShell, fmt.Sprintf("permissionMode plan allows read-only shell "+
+				"commands, and %s cannot limit the shell to them", c.target))
+		}
+		if delegates && canWithholdDelegation(c.target) {
+			c.reduce("delegation", "permissionMode plan is read-only, and a delegated agent "+
+				"could edit")
+		}
+		if mcp && c.target != agent.OMP {
+			c.reduce("MCP tools", "permissionMode plan is read-only, and MCP tools could write")
+		}
+		changed = true
+	}
+	if scope := sem.Tools.Shell; scope != nil && c.target != agent.OpenCode &&
+		(!native || !scope.claudeForm()) {
+		sem.Tools.Shell = nil
+		sem.Tools.withhold(CapShell)
+		if scope.runs() {
+			c.reduce(ReducedShell, fmt.Sprintf("it may run only some shell commands (%s), and "+
+				"%s cannot limit the shell to commands", scope, c.target))
+		}
+		changed = true
+	}
+	if spawns := sem.Spawns; spawns != nil && c.target != agent.OMP {
+		delegates := sem.Tools.Allows(CapDelegate)
+		sem.Spawns = nil
+		switch {
+		case !delegates || len(spawns) == 0:
+			sem.Tools.withhold(CapDelegate)
+		case !canWithholdDelegation(c.target):
+			// As for an Agent that withholds delegation there, the limit is
+			// noted: these targets offer delegation to every agent.
+			c.note("it may delegate only to %s, but %s cannot limit or withhold "+
+				"delegation", strings.Join(spawns, ", "), c.target)
+		default:
+			sem.Tools.withhold(CapDelegate)
+			c.reduce("delegation", fmt.Sprintf("it may delegate only to %s, and %s cannot "+
+				"limit which agents it delegates to", strings.Join(spawns, ", "), c.target))
+		}
+		changed = true
+	}
+	if sem.Background && c.target != agent.Claude && c.target != agent.Cursor {
+		sem.Background = false
+		c.note("runs in the foreground: %s cannot run an agent in the background", c.target)
+		changed = true
+	}
+	if changed {
+		c.sem = &sem
+	}
+}
+
+// relaxedFor reports whether converting s for target relies on a reading
+// ADR 0012 added: a relaxed source, or a declaration the target only carries
+// lowered (plan mode, a shell or delegation limit, background execution) or
+// agent-scoped MCP servers.
+func (s *Semantics) relaxedFor(target agent.HarnessID) bool {
+	return s.relaxed || len(s.MCPServers) > 0 || s.Tools.Shell != nil || s.Spawns != nil ||
+		(s.PermissionMode == "plan" && !s.claudeNative(target)) ||
+		(s.Background && target != agent.Claude && target != agent.Cursor)
+}
+
+// canWithholdDelegation reports whether target can take delegation away from
+// an agent. Codex and Cursor always offer it (harness-agent-formats.md).
+func canWithholdDelegation(target agent.HarnessID) bool {
+	return target != agent.Codex && target != agent.Cursor
+}
+
+// reduce records a capability the Agent uses that the target cannot grant,
+// and notes why.
+func (c *renderCheck) reduce(capability, why string) {
+	if slices.ContainsFunc(
+		c.reduced,
+		func(r Reduction) bool { return r.Capability == capability },
+	) {
+		return
+	}
+	c.reduced = append(c.reduced, Reduction{Capability: capability, Why: why})
+	c.note("goes without %s: %s", capability, why)
+}
+
+// reduceGrant records a reduction for each capability in caps that an
+// allowlist grants and the target cannot. An inherited policy grants
+// whatever the target offers, so it loses nothing it named.
+func (c *renderCheck) reduceGrant(caps Capability, why string) {
+	if !c.sem.Tools.Restricted {
+		return
+	}
+	for _, entry := range capabilityNames {
+		if c.sem.Tools.Allowed&caps&entry.cap != 0 {
+			c.reduce(entry.name, why)
+		}
+	}
+}
+
+// artifact finishes a generated artifact with the check's notes and
+// reductions.
+func (c *renderCheck) artifact(fileName string, content []byte) Artifact {
+	return Artifact{
+		FileName:  fileName,
+		Content:   content,
+		Generated: true,
+		Converter: converterID(c.target),
+		Notes:     c.notes,
+		Reduced:   c.reduced,
+	}
 }
 
 // mcpNames maps every allowlisted MCP tool to the target's native name, or
@@ -295,10 +582,15 @@ func (c *renderCheck) mcpSession() {
 	}
 }
 
-// noteMCPServers names the MCP servers the Agent's tools come from.
+// noteMCPServers names the MCP servers the Agent's tools come from, except
+// those the Agent declares itself (they install with it).
 func (c *renderCheck) noteMCPServers() {
 	var servers []string
 	for _, tool := range c.sem.Tools.MCP {
+		if slices.ContainsFunc(c.sem.MCPServers,
+			func(s MCPServer) bool { return s.Name == tool.Server }) {
+			continue
+		}
 		server := tool.Server
 		if tool.Plugin != "" {
 			server += " (provided in Claude Code by plugin " + tool.Plugin + ")"
@@ -306,6 +598,9 @@ func (c *renderCheck) noteMCPServers() {
 		if !slices.Contains(servers, server) {
 			servers = append(servers, server)
 		}
+	}
+	if len(servers) == 0 {
+		return
 	}
 	c.note("needs MCP servers configured for %s under these names: %s; "+
 		"agnthub does not install or configure MCP servers",
@@ -325,18 +620,6 @@ func (c *renderCheck) note(format string, args ...any) {
 
 func (c *renderCheck) refuse(format string, args ...any) error {
 	return &IncompatibleError{Harness: c.target, Reason: fmt.Sprintf(format, args...)}
-}
-
-// requireGrant refuses when an allowlist grants a capability in caps the target
-// cannot grant. An inherited policy grants whatever the target offers.
-func (c *renderCheck) requireGrant(caps Capability, why string) error {
-	if !c.sem.Tools.Restricted {
-		return nil
-	}
-	if missing := c.sem.Tools.Allowed & caps; missing != 0 {
-		return c.refuse("it uses %s, but %s", missing, why)
-	}
-	return nil
 }
 
 // requireWithheld refuses when the Agent withholds a capability in caps the
@@ -364,15 +647,6 @@ func (p ToolPolicy) reach() Capability {
 		granted |= CapRead | CapSearch
 	}
 	return granted
-}
-
-// requireForeground refuses background execution the target cannot express.
-func (c *renderCheck) requireForeground() error {
-	if c.sem.Background {
-		return c.refuse("its %s runs the agent in the background, which %s cannot express",
-			c.sem.sourceLabel(), c.target)
-	}
-	return nil
 }
 
 // toolNames returns the native names granting caps, in table order.

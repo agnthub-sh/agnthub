@@ -100,13 +100,6 @@ func TestUndocumentedKeysThatMatterStayInvalid(t *testing.T) {
 				"Shell, Write\n---\n\nRun the loop.\n",
 		},
 		{
-			// https://github.com/sqlcss/sqlcsi/blob/763f93ba2bf5/.github/agents/tss-log-analysis.agent.md
-			"copilot agents", agent.Copilot, ".github/agents/reviewer.agent.md",
-			"---\nname: reviewer\ndescription: >-\n  General TSS log investigation.\ntools: " +
-				"[execute, read, edit, search, agent, todo, web]\nagents: [errorlog-analysis, " +
-				"import-xevent]\n---\n\nInvestigate the logs.\n",
-		},
-		{
 			"copilot readonly", agent.Copilot, ".github/agents/reviewer.agent.md",
 			"---\nname: reviewer\ndescription: Diagnoses failures.\nreadonly: true\ncolor: red\n" +
 				"---\n\nDiagnose.\n",
@@ -152,7 +145,12 @@ func TestUndocumentedKeysThatMatterStayInvalid(t *testing.T) {
 			t.Errorf("%s: want an invalid variant", tc.name)
 			continue
 		}
-		requireInvalid(t, err)
+		if strings.Contains(tc.name, "sandbox_mode") {
+			// A read-only sandbox Codex would not enforce (ADR 0012).
+			requireIncompatible(t, err)
+		} else {
+			requireInvalid(t, err)
+		}
 		if strings.Contains(tc.name, "sandbox_mode") &&
 			!strings.Contains(err.Error(), "sandbox_mode") {
 			t.Errorf("%s: want the sandbox_mode refusal, got %v", tc.name, err)

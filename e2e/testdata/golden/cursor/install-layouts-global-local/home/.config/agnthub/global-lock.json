@@ -6,6 +6,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "allowlisted",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "cursor",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/allowlisted.md",
+          "sourceDigest": "sha256:f3ff55dcde035238f85d0fdae8958a9aff05a4776d32adde1c8d30fa96889af8",
+          "converter": "cursor/v5",
+          "path": "/agnthub-e2e/home/.cursor/agents/allowlisted.md",
+          "digest": "sha256:67e1c2072980558f2d88d3c57f28b71d2825bd1a1f270d042725e317b025d649",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "annotated",
       "origin": "direct",
       "artifacts": [
@@ -14,7 +34,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/annotated.md",
           "sourceDigest": "sha256:8cf577c3db790479f198a536eb7ad1011f84a0827e2bb2a07bfe5836a4254087",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/annotated.md",
           "digest": "sha256:f209fda51ee8bb1c84d700f227c7ec399c217417ea178d7b9b5bd395d002a30e",
           "requires": []
@@ -34,7 +54,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/backgrounder.md",
           "sourceDigest": "sha256:db764d016ee2d92946ed60cf836c8b3fc1f08052face2ee6fc019dbb27de0bc2",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/backgrounder.md",
           "digest": "sha256:94ea9da035fc2e67434b44d4f9e40bd96c6c981cbe39c09256c81efb801211b0",
           "requires": []
@@ -54,7 +74,7 @@
           "variant": "generated",
           "sourcePath": "agents/bom.md",
           "sourceDigest": "sha256:4a06ac5e6bf431ff6070e79391195c1ff4e3c7e8f0b093dbfa06fb32e692f629",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/bom.md",
           "digest": "sha256:153b3d74ed17217d3add75e5a05821e72eeda1b02b4edfbe91542b1fa2adcb62",
           "requires": []
@@ -74,9 +94,29 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/bounded.md",
           "sourceDigest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/bounded.md",
           "digest": "sha256:dbe17a641e6d0f24b1dae7225e703e45430b4cbee953497bb6e6a34cf7f8171b",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "claude-shaped",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "cursor",
+          "variant": "generated",
+          "sourcePath": "agents/claude-shaped.md",
+          "sourceDigest": "sha256:fd5067a2a12f6e18f26f14d9a44bdf5e355fc65476c81afd0b70ce124c95c9ad",
+          "converter": "cursor/v5",
+          "path": "/agnthub-e2e/home/.cursor/agents/claude-shaped.md",
+          "digest": "sha256:72facd389b84dfe60602b2eba0cfb96b5ed661cad830b0a6436690071b8d7893",
           "requires": []
         }
       ]
@@ -94,7 +134,7 @@
           "variant": "generated",
           "sourcePath": "agents/colon.md",
           "sourceDigest": "sha256:89cfd9750c6cd78419f7c04dc07bbc55508cbd9e43767be467bca82fefd1bd34",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/colon.md",
           "digest": "sha256:ec277a9554a398e568c45ee3d061abd25e0e952506d01c5654be2e6c265f1c1f",
           "requires": []
@@ -114,7 +154,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/colon-native.md",
           "sourceDigest": "sha256:35d1f81dc452f8003feecba40b8e861f9bb90ba1dbba87c219cb1e540b5249d7",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/colon-native.md",
           "digest": "sha256:6511f876f01ff336984d8d3ea71f7af028b6253b061ea320c2c34aaf309d58ed",
           "requires": []
@@ -183,6 +223,46 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "cx-solo",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "cursor",
+          "variant": "generated",
+          "sourcePath": ".codex/agents/cx-solo.toml",
+          "sourceDigest": "sha256:e782111961e86540d80e45850dbb038dfb01c39f7fc510ddf1f325a6071983f3",
+          "converter": "cursor/v5",
+          "path": "/agnthub-e2e/home/.cursor/agents/cx-solo.md",
+          "digest": "sha256:77f61a361def23ad58c19068fad7d4034802429ef480fe27e18a4f50426b3490",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "cx-workspace",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "cursor",
+          "variant": "generated",
+          "sourcePath": ".codex/agents/cx-workspace.toml",
+          "sourceDigest": "sha256:24a94e115878b83ba14cac3d632c14bd1a98380f1ea48bdabebd076fb5293d87",
+          "converter": "cursor/v5",
+          "path": "/agnthub-e2e/home/.cursor/agents/cx-workspace.md",
+          "digest": "sha256:bdcf7be87aac3daf01c7b581ae86cd221155ab74eb79ca7f324370536e56a7d4",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "defaulted",
       "origin": "direct",
       "artifacts": [
@@ -191,7 +271,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/defaulted.md",
           "sourceDigest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/defaulted.md",
           "digest": "sha256:99516281cbbe6f572b5e87199961280c4571d9e3428de359b0f50e073f111163",
           "requires": []
@@ -211,7 +291,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/delegator.md",
           "sourceDigest": "sha256:d55cbc4849ca6e3c63b9d2d51bd5489a1979c2f519369759a3dd2bd55b7d3bce",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/delegator.md",
           "digest": "sha256:26a27721a627c7e71562ff5eab80d876f56bafb78fa6ba52e37aef63f88ae8e6",
           "requires": []
@@ -231,7 +311,7 @@
           "variant": "generated",
           "sourcePath": "agents/dual.md",
           "sourceDigest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/dual.md",
           "digest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
           "requires": []
@@ -251,7 +331,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/team/fixer.md",
           "sourceDigest": "sha256:11404f0e334d2b363d7bc45e6d952817a29d4568e08f2545c04cf83eaa5686e8",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/fixer.md",
           "digest": "sha256:1488598c0c0be10015f7c9c98ab97c32f59610f38bf975f5b0b3d55799c3feea",
           "requires": []
@@ -271,7 +351,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-colored.agent.md",
           "sourceDigest": "sha256:cf7c2dcc846ea6083bd4a55c95a8ef6105f2a6fd4587cbd090a078c3584c2d25",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/gh-colored.md",
           "digest": "sha256:b8525b800ab4eac4e68e9684f22ea1fd10ec17ae533ba8e6fcb323531ebb1091",
           "requires": []
@@ -291,7 +371,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-native.agent.md",
           "sourceDigest": "sha256:864618375986b42a604b63514ac52ca854ba652da1b19574df74aac49db3acc3",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/gh-native.md",
           "digest": "sha256:04090ee685ee41cfbdcdff329f05cdb4aef06f287cebb4ddd6ad57312d4b4892",
           "requires": []
@@ -311,7 +391,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-plain.md",
           "sourceDigest": "sha256:00d467065c9f6ab9e2344d19d1262dd45ed81922b8d89907de43b5bc8a9e8fea",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/gh-plain.md",
           "digest": "sha256:17d7344756da06d24fef4c684eac72b9451261bf15fd699f7ffef170394a4756",
           "requires": []
@@ -331,7 +411,7 @@
           "variant": "generated",
           "sourcePath": ".gemini/agents/gm-native.md",
           "sourceDigest": "sha256:ab77641ac4f6666fa0d80ee36d4fdf2332dbd2f1bc5d0106cd69fb9446f670e9",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/gm-native.md",
           "digest": "sha256:ea4afdddd6cae97b4f462c705afc27b84247c0d4cb11720da47c3949d12fa47b",
           "requires": []
@@ -351,7 +431,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/journaler.md",
           "sourceDigest": "sha256:8054d0e04ddedf2eb8559ad2a2a6c9d1a60d4e0f0b41eebf631e6d03d1d0e361",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/journaler.md",
           "digest": "sha256:6f051da0152516d1421f063e8cb7ae9915faf5d90a944cd54177af16058e8b58",
           "requires": []
@@ -371,7 +451,7 @@
           "variant": "generated",
           "sourcePath": "agents/literal.md",
           "sourceDigest": "sha256:b973b211d0f1640b3dec85aa413b974bd3a3bd92b362105f58b2044100ffdf23",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/literal.md",
           "digest": "sha256:a378de546edf844a868e42125c07f521c84f9cd546e6b742c56b508905e5392a",
           "requires": []
@@ -391,7 +471,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/local-notes.md",
           "sourceDigest": "sha256:4d831bcbb3fb7890336981e00b967572db3011ba4cf6404b531ab134ea9ad8f0",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/local-notes.md",
           "digest": "sha256:da341fdda1b258814d81f9827b9b49e7167cc7e012071919dd29f739c7c068d6",
           "requires": []
@@ -411,9 +491,29 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/misnamed.md",
           "sourceDigest": "sha256:c5c73ca9bb6c15b435d0584078dd5bb855ca728acba4339cd9bdb0c8ac46ea4e",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/misnamed.md",
           "digest": "sha256:8f03f6536f5efb61284270b2863c516b23ce67c99d88c634d56a362effd34bc4",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "modelled",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "cursor",
+          "variant": "generated",
+          "sourcePath": "agents/modelled.md",
+          "sourceDigest": "sha256:3d52a9d90250746cb40d20913b4d1bc01c4a5b313259f51dc8bc6bf92035666e",
+          "converter": "cursor/v5",
+          "path": "/agnthub-e2e/home/.cursor/agents/modelled.md",
+          "digest": "sha256:fdb1107e42dcdc3cbb93b88c19b559a970fd13e7c0d67b11895b4c0f71108231",
           "requires": []
         }
       ]
@@ -431,7 +531,7 @@
           "variant": "generated",
           "sourcePath": ".opencode/agents/oc-native.md",
           "sourceDigest": "sha256:5951d5e75a6de4429a8f579c654bb4589d12db75deba1844913b6c4b421cf5d0",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/oc-native.md",
           "digest": "sha256:5183dab09264535e2a21ffe386abe49a7cd20ffd42cf2642b8aa2cc9e99a0c68",
           "requires": []
@@ -451,7 +551,7 @@
           "variant": "generated",
           "sourcePath": ".omp/agents/omp-native.md",
           "sourceDigest": "sha256:f0e791fe64b2035a1eab0136e814e470e570bd86b6b2a69dffdf2b3661a0611a",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/omp-native.md",
           "digest": "sha256:5ed9c1807421c4df9473653fcc279acf330a049e064165e7013a2a0db73f50c7",
           "requires": []
@@ -471,7 +571,7 @@
           "variant": "generated",
           "sourcePath": "agents/planner.md",
           "sourceDigest": "sha256:6e67f8119738e58371e61f662e332d971058192a6dc99791e7c19094691376f2",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/planner.md",
           "digest": "sha256:54e13fd735b5360bc11d7c3ad899a9c0eada9db11dfaf204af45db749f1d8e58",
           "requires": []
@@ -491,7 +591,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/quoted.md",
           "sourceDigest": "sha256:a92554a3420863b7acc442ea397337ac1bae541f07c7a50f8a3be291d02b0dd1",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/quoted.md",
           "digest": "sha256:1e3e4046536111f023763afcef29134cdd1b67b975ed8e6eaf3751c2b42fd2d6",
           "requires": []
@@ -511,7 +611,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/recaller.md",
           "sourceDigest": "sha256:a30571bad4b7bff23bdacaaac67fb2667016a24a7c89682f52832bfda484b7d1",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/recaller.md",
           "digest": "sha256:a42b30498ec5df54a6cfd0859345728052bb5ae1853c465d27cec4a0c1f17de8",
           "requires": []
@@ -531,7 +631,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/relaxed.md",
           "sourceDigest": "sha256:88b6be1e2b64ae4bbfbab2c958f917bca08a5abedebecac673fa17ba8826ce95",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/relaxed.md",
           "digest": "sha256:bd67a7ad58ac9f7b1342f171c9e8e1fe6dccab31366fbba511bcc6c0b4fb14a4",
           "requires": []
@@ -551,7 +651,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/rememberer.md",
           "sourceDigest": "sha256:e876bb3f846cda6620fed5b2d357e0a6997129a7a526e240789ed2e4b8e965ef",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/rememberer.md",
           "digest": "sha256:d352ca3d5c323d1e4f271ee0d5c95ec69b187d53b614da72c298d2e435751839",
           "requires": []
@@ -571,7 +671,7 @@
           "variant": "generated",
           "sourcePath": "agents/researcher/AGENT.md",
           "sourceDigest": "sha256:dd13ee557398466dd574705483ce5697cfb0b3352c2ef6e815509612dc32282b",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/researcher.md",
           "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
           "requires": []
@@ -591,7 +691,7 @@
           "variant": "generated",
           "sourcePath": "AGENT.md",
           "sourceDigest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/root-helper.md",
           "digest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
           "requires": []
@@ -611,7 +711,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/scripted.md",
           "sourceDigest": "sha256:1527e595b5b95f417d832f97ccb0ef2cd0579cb27cdc6944de2071946ee4b82c",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/scripted.md",
           "digest": "sha256:61085b56af41b6b861d512d76a91c342b1cd10955a7161b08591c8ee0658fd7b",
           "requires": []
@@ -631,7 +731,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/skilled.md",
           "sourceDigest": "sha256:e13388a2a0e7989773c6eced86e91871233b762fbe37b11597e0ebdd58e42d69",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/skilled.md",
           "digest": "sha256:8c86af8022728cfdb5effbeaa8e56695af4580c7961617e927452f2746f9ea25",
           "requires": []
@@ -651,7 +751,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/studio-qa.md",
           "sourceDigest": "sha256:cfe15b9951529179d27ad3396fc10136bcf5a2455518aed3464720354c2fa3e8",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/studio-qa.md",
           "digest": "sha256:7307b89a9637f99f85b8317a8707bb9135dce2d2ae064e41955f42b5a66f3943",
           "requires": []
@@ -671,7 +771,7 @@
           "variant": "generated",
           "sourcePath": "agents/tagged.md",
           "sourceDigest": "sha256:c2e1fd2aa97993885900bee70813de29afe532bcc2833e7742ec2a604eceadf9",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": "/agnthub-e2e/home/.cursor/agents/tagged.md",
           "digest": "sha256:ae21c1e2605ac84b36d9a0c26c183998cac584ef45e006af52b7f9316d6f23a0",
           "requires": []

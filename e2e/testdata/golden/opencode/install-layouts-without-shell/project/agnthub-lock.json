@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "guarded",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/guarded.md",
+          "sourceDigest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
+          "converter": "opencode/v5",
+          "path": ".opencode/agents/guarded.md",
+          "digest": "sha256:2be33711697ec1c2cb7b8787db917b810c8cb68c64053141e250a3c0fd0be148",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

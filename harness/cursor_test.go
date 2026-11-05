@@ -79,8 +79,8 @@ func TestCursorNativeRefusesReadonlyCursorWouldNotEnforce(t *testing.T) {
 
 func TestCursorNativeRefusesUnenforcedOrMisidentifiedVariants(t *testing.T) {
 	cases := map[string]struct{ id, content string }{
-		"undocumented tools": {
-			"reviewer", "---\nname: reviewer\ndescription: d\ntools: Read, Grep\n---\nBody\n",
+		"undocumented disallowedTools": {
+			"reviewer", "---\nname: reviewer\ndescription: d\ndisallowedTools: Bash\n---\nBody\n",
 		},
 		"name mismatch": {"reviewer", "---\nname: other\ndescription: d\n---\nBody\n"},
 		"quoted name":   {"reviewer", "---\nname: \"reviewer\"\ndescription: d\n---\nBody\n"},
@@ -114,7 +114,7 @@ func TestCursorNativeAcceptsFilenameIdentity(t *testing.T) {
 }
 
 func TestCursorConversionRefusesRestrictionsInsteadOfDemotingThem(t *testing.T) {
-	for _, field := range []string{"readonly: true", "tools: [read]", "model: fast"} {
+	for _, field := range []string{"readonly: true", "tools: [read]", "disallowedTools: [Bash]"} {
 		doc := portable(
 			t,
 			"---\nname: reviewer\ndescription: d\n"+field+"\n---\nNever edit files.\n",
@@ -138,7 +138,7 @@ func TestCursorConversionIsReadableByCursor(t *testing.T) {
 		if err != nil {
 			t.Fatalf("%q: %v", description, err)
 		}
-		if !artifact.Generated || artifact.Converter != "cursor/v4" || len(artifact.Notes) == 0 {
+		if !artifact.Generated || artifact.Converter != "cursor/v5" || len(artifact.Notes) == 0 {
 			t.Fatalf("generated artifact must record converter and omissions: %+v", artifact)
 		}
 		// The generated file must pass the same checks as an authored Cursor variant.

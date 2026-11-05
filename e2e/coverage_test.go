@@ -138,6 +138,9 @@ func (e evidence) allSteps() []string {
 	if e.refuse != "" {
 		steps = append(steps, e.refuse)
 	}
+	if e.optIn != "" {
+		steps = append(steps, e.optIn)
+	}
 	steps = append(steps, e.absent...)
 	return append(steps, e.steps...)
 }
@@ -153,6 +156,7 @@ type goldenItem struct {
 	Agent   string `json:"agent"`
 	Harness string `json:"harness"`
 	Action  string `json:"action"`
+	OptIn   string `json:"optIn"`
 }
 
 func readGolden(harness, step string) (*golden, error) {
@@ -215,6 +219,26 @@ func (g *golden) outcome(agentID, harness string) string {
 	return result
 }
 
+// optedIn reports whether g refuses the agent for harness only for
+// --allow-without-shell: every refused item names that opt-in.
+func (g *golden) optedIn(agentID, harness string) bool {
+	refused := false
+	for _, item := range g.items {
+		if item.Agent != agentID || item.Harness != harness {
+			continue
+		}
+		switch item.Action {
+		case "create", "replace", "unchanged":
+		default:
+			if item.OptIn != "allow-without-shell" {
+				return false
+			}
+			refused = true
+		}
+	}
+	return refused
+}
+
 // nativeMark is the native proof of step for harness: "N" (the real Harness
 // loaded what it installed), "N0" (it provably does not load that scope, see
 // nativeExclusions) or "".
@@ -243,6 +267,9 @@ func evaluateCell(sc scenario, harness string) (string, error) {
 		e = per
 	}
 	for _, step := range e.allSteps() {
+		if step == e.optIn {
+			continue // needed only when the plan asks for the opt-in (agentCell)
+		}
 		if !stepSpecs[step].appliesTo(harness) {
 			return "", fmt.Errorf("step %s does not run for %s", step, harness)
 		}
@@ -276,7 +303,7 @@ func agentCell(sc scenario, e evidence, harness string, marks map[string]bool) e
 	if e.plan == "" && len(e.install) == 0 {
 		return nil
 	}
-	installable := true
+	installable, optedIn := true, false
 	if e.plan != "" {
 		g, err := readGolden(harness, e.plan)
 		if err != nil {
@@ -287,10 +314,18 @@ func agentCell(sc scenario, e evidence, harness string, marks map[string]bool) e
 			return fmt.Errorf("the %s golden does not list %s", e.plan, sc.agent)
 		case "R":
 			installable = false
+			optedIn = g.optedIn(sc.agent, harness)
+		}
+	}
+	if optedIn {
+		if err := optInCell(sc, e, harness, marks); err != nil {
+			return err
 		}
 	}
 	if !installable {
-		marks["R"] = true
+		if !optedIn {
+			marks["R"] = true
+		}
 		if e.refuse == "" {
 			return nil
 		}
@@ -325,6 +360,32 @@ func agentCell(sc scenario, e evidence, harness string, marks map[string]bool) e
 	return nil
 }
 
+// optInCell proves an agent the plan refuses only for --allow-without-shell:
+// the opt-in step installs it (and the Harness loads it).
+func optInCell(sc scenario, e evidence, harness string, marks map[string]bool) error {
+	if e.optIn == "" {
+		return fmt.Errorf("%s needs --allow-without-shell, but no step installs it with it",
+			sc.agent)
+	}
+	if !stepSpecs[e.optIn].appliesTo(harness) {
+		return fmt.Errorf("%s needs --allow-without-shell, but %s does not run for %s",
+			sc.agent, e.optIn, harness)
+	}
+	g, err := readGolden(harness, e.optIn)
+	if err != nil {
+		return err
+	}
+	if g.outcome(sc.agent, harness) != "W" || g.exit != 0 {
+		return fmt.Errorf("%s needs --allow-without-shell, but the %s golden does not write it",
+			sc.agent, e.optIn)
+	}
+	marks["O"] = true
+	if mark := nativeMark(e.optIn, harness); mark != "" {
+		marks[mark] = true
+	}
+	return nil
+}
+
 func stepsCell(e evidence, harness string, marks map[string]bool) error {
 	for _, step := range e.steps {
 		g, err := readGolden(harness, step)
@@ -346,7 +407,7 @@ func stepsCell(e evidence, harness string, marks map[string]bool) error {
 	return nil
 }
 
-var markOrder = []string{"W", "✓", "R", "A", "N", "N0"}
+var markOrder = []string{"W", "✓", "O", "R", "A", "N", "N0"}
 
 func formatMarks(marks map[string]bool) string {
 	var parts []string

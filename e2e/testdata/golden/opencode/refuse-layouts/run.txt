@@ -1,2 +1,2 @@
-$ agnthub add /agnthub-e2e/src/layouts --agent allowlisted --agent backgrounder --agent broken --agent gm-camel --agent gm-mcp --agent guarded --agent modelled --harness opencode --yes --json
+$ agnthub add /agnthub-e2e/src/layouts --agent broken --agent gm-camel --agent gm-mcp --agent guarded --agent mcp-owner --harness opencode --yes --json
 exit status: 1

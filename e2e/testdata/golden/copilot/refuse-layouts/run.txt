@@ -1,2 +1,2 @@
-$ agnthub add /agnthub-e2e/src/layouts --agent allowlisted --agent backgrounder --agent broken --agent cu-folded --agent cu-native --agent cu-tagged --agent gm-camel --agent gm-mcp --agent guarded --agent mcp-wide --agent modelled --agent web-searcher --harness copilot --yes --json
+$ agnthub add /agnthub-e2e/src/layouts --agent broken --agent differ --agent gm-camel --agent gm-mcp --agent guarded --agent mcp-owner --agent mcp-wide --harness copilot --yes --json
 exit status: 1

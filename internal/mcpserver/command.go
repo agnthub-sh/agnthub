@@ -21,6 +21,9 @@ type CommandInput struct {
 	Global    bool
 	// OMPProfile is the omp profile (--extra omp.profile=…); empty leaves it unset.
 	OMPProfile string
+	// AllowWithoutShell adds --allow-without-shell, which installs agents into
+	// harnesses that cannot grant the shell access they use.
+	AllowWithoutShell bool
 }
 
 // BuildCommand renders the `npx agnthub-cli add …` command exactly as the site's install builder
@@ -47,6 +50,9 @@ func BuildCommand(in *CommandInput) (string, error) {
 	}
 	if in.Global {
 		args = append(args, "--global")
+	}
+	if in.AllowWithoutShell {
+		args = append(args, "--allow-without-shell")
 	}
 	if in.OMPProfile != "" &&
 		(in.All || len(in.Harnesses) == 0 || slices.Contains(in.Harnesses, agent.OMP)) {

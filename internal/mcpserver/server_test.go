@@ -50,7 +50,9 @@ const repoJSON = `{
      "portable":{"path":"agents/reviewer.md","source_url":"u","body":"Review carefully."},
      "variants":[],"dependencies":{"agents":[],"skills":[]},"problems":[],
      "targets":[{"harness":"claude","status":"generated","notes":[]},
-                {"harness":"gemini","status":"incompatible","reason":"uses tools","notes":[]}],
+                {"harness":"gemini","status":"incompatible","reason":"uses tools","notes":[]},
+                {"harness":"cursor","status":"generated","notes":[],"reduced":["shell"],
+                 "opt_in":"allow-without-shell"}],
      "adoption":{"total":5,"direct":5,"dependency":0,"last_7_days":1,"last_30_days":2,"harnesses":[]},
      "agnthub_stars":1},
     {"id":"planner","from_manifest":false,"variants":[],"dependencies":{"agents":[],"skills":[]},
@@ -281,6 +283,24 @@ func TestInstallCommandValidatesAgainstTheListing(t *testing.T) {
 	}
 	if len(out.Warnings) != 1 || !strings.Contains(out.Warnings[0], "gemini") {
 		t.Fatalf("want one warning for the incompatible gemini target: %v", out.Warnings)
+	}
+
+	// A selected harness that installs the agent only without its shell adds
+	// the opt-in, as the site's builder does; letting the CLI ask does not.
+	out = decode[mcpserver.CommandOutput](t, call(t, cs, "install_command", map[string]any{
+		"repository": "octo/agents", "agents": []string{"reviewer"},
+		"harnesses": []string{"cursor", "claude"},
+	}))
+	if out.Command != "npx agnthub-cli add octo/agents --agent reviewer --harness claude "+
+		"--harness cursor --allow-without-shell" || len(out.Warnings) != 1 ||
+		!strings.Contains(out.Warnings[0], "without the shell") {
+		t.Fatalf("want the opt-in added and explained: %+v", out)
+	}
+	out = decode[mcpserver.CommandOutput](t, call(t, cs, "install_command", map[string]any{
+		"repository": "octo/agents", "agents": []string{"reviewer"},
+	}))
+	if strings.Contains(out.Command, "allow-without-shell") {
+		t.Fatalf("the CLI asks for harnesses, so the opt-in is left to the user: %q", out.Command)
 	}
 
 	for name, args := range map[string]map[string]any{

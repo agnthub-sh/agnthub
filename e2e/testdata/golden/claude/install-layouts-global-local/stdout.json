@@ -28,7 +28,10 @@
         "locator": "/agnthub-e2e/src/layouts"
       },
       "origin": "direct",
-      "action": "create"
+      "action": "create",
+      "notes": [
+        "Claude Code does not enforce allowed-tools in agents (it is a skill field): on Claude Code the agent is not limited to those tools; other harnesses enforce it"
+      ]
     },
     {
       "agent": "annotated",
@@ -109,6 +112,25 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "claude-shaped",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/claude-shaped.md",
+      "variant": "generated",
+      "sourcePath": "agents/claude-shaped.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted color: cosmetic"
+      ]
     },
     {
       "agent": "colon",
@@ -244,6 +266,66 @@
       ]
     },
     {
+      "agent": "cx-sandboxed",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/cx-sandboxed.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-sandboxed.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "sandbox_mode = \"read-only\": converted without edit tools; shell commands are not sandboxed outside Codex"
+      ]
+    },
+    {
+      "agent": "cx-solo",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/cx-solo.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-solo.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "features.multi_agent = false: converted without delegation"
+      ]
+    },
+    {
+      "agent": "cx-workspace",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/cx-workspace.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-workspace.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "omitted sandbox_mode = \"workspace-write\": Codex ignores it in agent files; the session's sandbox and approvals apply"
+      ]
+    },
+    {
       "agent": "defaulted",
       "harness": "claude",
       "settings": {},
@@ -268,6 +350,22 @@
       "path": "/agnthub-e2e/home/.claude/agents/delegator.md",
       "variant": "native",
       "sourcePath": ".claude/agents/delegator.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "differ",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/differ.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/differ.md",
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
@@ -466,6 +564,25 @@
       "action": "create"
     },
     {
+      "agent": "mcp-owner",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/mcp-owner.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/mcp-owner.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "declares mcpServers, which runs when the agent is used"
+      ]
+    },
+    {
       "agent": "mcp-wide",
       "harness": "claude",
       "settings": {},
@@ -490,6 +607,22 @@
       "path": "/agnthub-e2e/home/.claude/agents/misnamed.md",
       "variant": "native",
       "sourcePath": ".claude/agents/misnamed.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "modelled",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/modelled.md",
+      "variant": "generated",
+      "sourcePath": "agents/modelled.md",
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
@@ -743,7 +876,9 @@
       "origin": "direct",
       "action": "create",
       "notes": [
-        "omitted descriptive metadata: author, tags, version"
+        "omitted author: descriptive metadata",
+        "omitted tags: descriptive metadata",
+        "omitted version: descriptive metadata"
       ]
     },
     {
@@ -764,6 +899,6 @@
     }
   ],
   "summary": {
-    "create": 44
+    "create": 51
   }
 }

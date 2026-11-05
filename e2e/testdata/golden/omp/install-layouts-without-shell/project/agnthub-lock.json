@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "differ",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/differ.md",
+          "sourceDigest": "sha256:f34d2b83d43c92767414489fcc9c4e0bf1ac99d953a6a91f2b3eb4d61347fb07",
+          "converter": "omp/v5",
+          "path": ".omp/agents/differ.md",
+          "digest": "sha256:68bb455677f3f5eb35423879a797a42bf771c12fd9d2b276fdf68e9f0aa31c39",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "guarded",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/guarded.md",
+          "sourceDigest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
+          "converter": "omp/v5",
+          "path": ".omp/agents/guarded.md",
+          "digest": "sha256:268b9ffeeefdfc70991aa196d45072063ebc1983ad349c3350c0e1de7c2e6734",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

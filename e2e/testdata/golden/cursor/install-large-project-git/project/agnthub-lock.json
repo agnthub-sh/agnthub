@@ -15,7 +15,7 @@
           "variant": "generated",
           "sourcePath": "agents/large-probe.md",
           "sourceDigest": "sha256:96ba3da630d537cfbc09c4a35980eb414a83113049cb2f7f5d333e47eea5d4cc",
-          "converter": "cursor/v4",
+          "converter": "cursor/v5",
           "path": ".cursor/agents/large-probe.md",
           "digest": "sha256:96ba3da630d537cfbc09c4a35980eb414a83113049cb2f7f5d333e47eea5d4cc",
           "requires": []

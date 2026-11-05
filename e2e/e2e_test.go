@@ -187,6 +187,25 @@ func (s *suite) layouts(t *testing.T) {
 		name: stepRefuseLy, refused: true,
 		args: argv("add", local, agentFlags(refused), h, "--yes", "--json"),
 	})
+	// Agents refused only because they would lose the shell install with the
+	// opt-in, and the Harness loads them.
+	withoutShell := plan.plan.optInOnly()
+	if !stepSpecs[stepWithoutShell].appliesTo(s.harness) {
+		if len(withoutShell) > 0 {
+			t.Fatalf("plan-layouts: %v need --allow-without-shell, but stepSpecs does not run "+
+				"%s for %s", withoutShell, stepWithoutShell, s.harness)
+		}
+		return
+	}
+	if len(withoutShell) == 0 {
+		t.Fatal("plan-layouts: no agent needs --allow-without-shell; the opt-in fixtures " +
+			"stopped needing it")
+	}
+	s.run(t, step{
+		name: stepWithoutShell, native: scopeProject,
+		args: argv("add", local, agentFlags(withoutShell), h, "--allow-without-shell",
+			"--yes", "--json"),
+	})
 }
 
 // manifest: agnthub.yaml with Variants, same-repository and external Agent
@@ -837,7 +856,30 @@ type planOutput struct {
 		Path    string `json:"path"`
 		Origin  string `json:"origin"`
 		Action  string `json:"action"`
+		OptIn   string `json:"optIn"`
 	} `json:"items"`
+}
+
+// optInOnly returns the refused agents whose every refused item installs with
+// --allow-without-shell, sorted.
+func (p planOutput) optInOnly() []string {
+	optIn := map[string]bool{}
+	for _, item := range p.Items {
+		switch item.Action {
+		case "create", "replace", "unchanged":
+		default:
+			ok, seen := optIn[item.Agent]
+			optIn[item.Agent] = item.OptIn == "allow-without-shell" && (ok || !seen)
+		}
+	}
+	var agents []string
+	for agent, ok := range optIn {
+		if ok {
+			agents = append(agents, agent)
+		}
+	}
+	slices.Sort(agents)
+	return agents
 }
 
 // split returns the agents whose items all install and the agents with any

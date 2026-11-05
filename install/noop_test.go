@@ -31,10 +31,12 @@ func TestAssessTreatsClaudeDefaultFieldsAsAbsent(t *testing.T) {
 				t.Errorf("claude: want the authored file installed as is, got %+v", a)
 			}
 		case h == agent.Copilot:
-			// Copilot CLI refuses the agent's web search, not its default fields.
-			if a.Status != install.StatusIncompatible ||
-				strings.Contains(a.Reason, "permissionMode") {
-				t.Errorf("copilot: want only the web search refused, got %+v", a)
+			// Copilot CLI installs it without web search, the one capability it
+			// cannot grant; the default fields change nothing.
+			if a.Status != install.StatusGenerated ||
+				strings.Join(a.Reduced, ",") != "web search" ||
+				a.OptIn != "" {
+				t.Errorf("copilot: want only the web search reduced, got %+v", a)
 			}
 		case a.Status != install.StatusGenerated || a.SourcePath != path:
 			t.Errorf("%s: want a conversion of %s, got %+v", h, path, a)

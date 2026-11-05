@@ -49,14 +49,14 @@ func TestAssessGeneratesEveryHarnessFromAPortableCore(t *testing.T) {
 func TestAssessPrefersValidVariantsAndRefusesUnsupportedPortableFields(t *testing.T) {
 	def := &agent.Definition{
 		ID:       "reviewer",
-		Portable: portableDoc(t, "tools: Read\n"),
+		Portable: portableDoc(t, "readonly: true\n"),
 		Variants: map[agent.HarnessID]*agent.VariantFile{
 			agent.Claude: {
 				Harness: agent.Claude,
 				Path:    ".claude/agents/reviewer.md",
 				Raw: []byte(
 					"---\nname: reviewer\ndescription: Reviews\ntools: Read\n" +
-						"permissionMode: plan\n---\nReview.\n",
+						"permissionMode: dontAsk\n---\nReview.\n",
 				),
 			},
 		},
@@ -68,7 +68,7 @@ func TestAssessPrefersValidVariantsAndRefusesUnsupportedPortableFields(t *testin
 	}
 	for _, h := range agent.AllHarnesses[1:] {
 		a := got[h]
-		if a.Status != install.StatusIncompatible || !strings.Contains(a.Reason, `"tools"`) {
+		if a.Status != install.StatusIncompatible || !strings.Contains(a.Reason, "readonly") {
 			t.Errorf("%s: want incompatible naming the field, got %+v", h, a)
 		}
 	}

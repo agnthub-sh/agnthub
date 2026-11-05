@@ -1,0 +1,16 @@
+---
+name: cx-sandboxed
+description: Codex agent that asks for a read-only sandbox.
+tools:
+  - read_file
+  - list_directory
+  - glob
+  - grep_search
+  - run_shell_command
+  - web_fetch
+  - google_web_search
+  - write_todos
+  - activate_skill
+  - mcp_*
+---
+Inspect the code and report findings without changing files.

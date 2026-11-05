@@ -274,8 +274,6 @@ func TestKeysClaudeCodeIgnoresAreOmittedWithANote(t *testing.T) {
 
 func TestIgnoredKeysThatReadAsRestrictionsStillRefuse(t *testing.T) {
 	for _, field := range []string{
-		"allowed-tools: Read, Grep\n",
-		"allowedTools: [Read]\n",
 		"readonly: true\n",
 		"read_only: true\n",
 		"permissions:\n  edit: deny\n",

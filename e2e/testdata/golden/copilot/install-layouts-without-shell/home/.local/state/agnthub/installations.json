@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.github/agents/differ.agent.md",
+      "digest": "sha256:3213d0aa44bf07b2d2686168be0f8b3111a2eee6116068a207ed79c43e13e829",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "differ",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/guarded.agent.md",
+      "digest": "sha256:d0c6db40bca3c4385c529bdfc32c7fae8930d91b72eed07f2cc890d683dd6817",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "guarded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

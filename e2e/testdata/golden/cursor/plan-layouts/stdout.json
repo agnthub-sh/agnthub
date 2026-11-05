@@ -19,13 +19,21 @@
       "harness": "cursor",
       "settings": {},
       "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/allowlisted.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/allowlisted.md",
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
       "origin": "direct",
-      "action": "incompatible",
-      "reason": "its claude variant declares allowed-tools (a field Claude Code ignores, but it reads as a tool or permission restriction), which cursor cannot express"
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "read allowed-tools as the tool allowlist: Claude Code ignores it in agents (it is a skill field), other harnesses enforce it",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent"
+      ]
     },
     {
       "agent": "annotated",
@@ -130,7 +138,28 @@
       },
       "origin": "direct",
       "action": "invalid",
-      "reason": "invalid cursor variant .cursor/agents/broken.md: Cursor does not document \"tools\"; its behavior would not be enforced"
+      "reason": "invalid cursor variant .cursor/agents/broken.md: frontmatter requires a description"
+    },
+    {
+      "agent": "claude-shaped",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/claude-shaped.md",
+      "variant": "generated",
+      "sourcePath": "agents/claude-shaped.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted color: cosmetic",
+        "model \"opus\" is specific to claude; the agent uses the harness default model",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent"
+      ]
     },
     {
       "agent": "colon",
@@ -247,6 +276,71 @@
       "reason": "it excludes shell but allows edits, and Cursor can only withhold shell by making the agent read-only"
     },
     {
+      "agent": "cx-sandboxed",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it would lose the shell access it uses: Cursor's only restriction, readonly, blocks every shell command; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the codex variant",
+        "sandbox_mode = \"read-only\": converted without edit tools; shell commands are not sandboxed outside Codex",
+        "goes without shell: Cursor's only restriction, readonly, blocks every shell command",
+        "goes without MCP tools: Cursor's only restriction, readonly, blocks every MCP tool call"
+      ],
+      "reduced": [
+        "shell",
+        "MCP tools"
+      ],
+      "optIn": "allow-without-shell"
+    },
+    {
+      "agent": "cx-solo",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/cx-solo.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-solo.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "features.multi_agent = false: converted without delegation",
+        "excludes delegation, but Cursor cannot withhold them from an agent"
+      ]
+    },
+    {
+      "agent": "cx-workspace",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/cx-workspace.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-workspace.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "omitted sandbox_mode = \"workspace-write\": Codex ignores it in agent files; the session's sandbox and approvals apply"
+      ]
+    },
+    {
       "agent": "defaulted",
       "harness": "cursor",
       "settings": {},
@@ -289,6 +383,19 @@
         "converted from the claude variant",
         "excludes web fetch, web search, but Cursor cannot withhold them from an agent"
       ]
+    },
+    {
+      "agent": "differ",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes shell but allows edits, and Cursor can only withhold shell by making the agent read-only"
     },
     {
       "agent": "dual",
@@ -446,7 +553,19 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "its claude variant declares permissionMode (a Claude Code permission mode for tool approvals), which cursor cannot express"
+      "reason": "it would lose the shell access it uses: permissionMode plan allows read-only shell commands, and cursor cannot limit the shell to them; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode plan converted as a read-only tool policy: no edits, shell, delegation or MCP tools",
+        "goes without shell: permissionMode plan allows read-only shell commands, and cursor cannot limit the shell to them",
+        "goes without MCP tools: permissionMode plan is read-only, and MCP tools could write",
+        "excludes delegation, but Cursor cannot withhold them from an agent"
+      ],
+      "reduced": [
+        "shell",
+        "MCP tools"
+      ],
+      "optIn": "allow-without-shell"
     },
     {
       "agent": "issue-reader",
@@ -520,6 +639,19 @@
       ]
     },
     {
+      "agent": "mcp-owner",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares MCP servers scoped to the agent (github), which cursor cannot express; only Gemini CLI has per-agent MCP servers"
+    },
+    {
       "agent": "mcp-wide",
       "harness": "cursor",
       "settings": {},
@@ -559,13 +691,19 @@
       "harness": "cursor",
       "settings": {},
       "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/modelled.md",
+      "variant": "generated",
+      "sourcePath": "agents/modelled.md",
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
       "origin": "direct",
-      "action": "incompatible",
-      "reason": "portable definition declares \"model\", which has no verified equivalent; author a native cursor variant"
+      "action": "create",
+      "notes": [
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model"
+      ]
     },
     {
       "agent": "no-shell",
@@ -596,7 +734,11 @@
       "origin": "direct",
       "action": "create",
       "notes": [
-        "converted from the opencode variant"
+        "converted from the opencode variant",
+        "goes without MCP tools: Cursor's only restriction, readonly, blocks every MCP tool call"
+      ],
+      "reduced": [
+        "MCP tools"
       ]
     },
     {
@@ -748,7 +890,18 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "it uses shell without edits, but Cursor's only restriction (readonly) blocks every shell command"
+      "reason": "it would lose the shell access it uses: Cursor's only restriction, readonly, blocks every shell command; run again with --allow-without-shell to install it without shell",
+      "notes": [
+        "converted from the claude variant",
+        "omitted color: cosmetic",
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model",
+        "goes without shell: Cursor's only restriction, readonly, blocks every shell command",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent"
+      ],
+      "reduced": [
+        "shell"
+      ],
+      "optIn": "allow-without-shell"
     },
     {
       "agent": "root-helper",
@@ -850,7 +1003,9 @@
       "origin": "direct",
       "action": "create",
       "notes": [
-        "omitted descriptive metadata: author, tags, version"
+        "omitted author: descriptive metadata",
+        "omitted tags: descriptive metadata",
+        "omitted version: descriptive metadata"
       ]
     },
     {
@@ -868,8 +1023,8 @@
     }
   ],
   "summary": {
-    "create": 34,
-    "incompatible": 13,
+    "create": 39,
+    "incompatible": 14,
     "invalid": 1
   }
 }

@@ -2,6 +2,17 @@
   "version": 1,
   "records": [
     {
+      "path": "/agnthub-e2e/home/.cursor/agents/allowlisted.md",
+      "digest": "sha256:67e1c2072980558f2d88d3c57f28b71d2825bd1a1f270d042725e317b025d649",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "allowlisted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.cursor/agents/annotated.md",
       "digest": "sha256:f209fda51ee8bb1c84d700f227c7ec399c217417ea178d7b9b5bd395d002a30e",
       "harness": "cursor",
@@ -42,6 +53,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "bounded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.cursor/agents/claude-shaped.md",
+      "digest": "sha256:72facd389b84dfe60602b2eba0cfb96b5ed661cad830b0a6436690071b8d7893",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "claude-shaped",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -97,6 +119,28 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "cu-tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.cursor/agents/cx-solo.md",
+      "digest": "sha256:77f61a361def23ad58c19068fad7d4034802429ef480fe27e18a4f50426b3490",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-solo",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.cursor/agents/cx-workspace.md",
+      "digest": "sha256:bdcf7be87aac3daf01c7b581ae86cd221155ab74eb79ca7f324370536e56a7d4",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-workspace",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -229,6 +273,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "misnamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.cursor/agents/modelled.md",
+      "digest": "sha256:fdb1107e42dcdc3cbb93b88c19b559a970fd13e7c0d67b11895b4c0f71108231",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "modelled",
       "origin": "direct",
       "installedAt": "<time>"
     },

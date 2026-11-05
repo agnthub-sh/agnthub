@@ -189,10 +189,11 @@ func RenderMarkdown(fields []Field, body string) ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// MappingKeys returns the keys of the frontmatter mapping field in authored
-// order, or nil when field is absent or not a mapping. Decoded frontmatter maps
-// lose key order, which matters where a Harness applies the last matching rule.
-func MappingKeys(raw []byte, field string) []string {
+// MappingKeys returns the keys of the frontmatter mapping field (or of the
+// mapping at field, then each of nested in turn) in authored order, or nil when
+// it is absent or not a mapping. Decoded frontmatter maps lose key order, which
+// matters where a Harness applies the last matching rule.
+func MappingKeys(raw []byte, field string, nested ...string) []string {
 	header, _, err := splitFrontmatter("", raw)
 	if err != nil {
 		return nil
@@ -201,19 +202,25 @@ func MappingKeys(raw []byte, field string) []string {
 	if yaml.Unmarshal([]byte(header), &node) != nil || len(node.Content) != 1 {
 		return nil
 	}
-	root := node.Content[0]
-	for i := 0; i+1 < len(root.Content); i += 2 {
-		if root.Content[i].Value != field || root.Content[i+1].Kind != yaml.MappingNode {
-			continue
+	current := node.Content[0]
+	for _, key := range append([]string{field}, nested...) {
+		var next *yaml.Node
+		for i := 0; i+1 < len(current.Content); i += 2 {
+			if current.Content[i].Value == key && current.Content[i+1].Kind == yaml.MappingNode {
+				next = current.Content[i+1]
+				break
+			}
 		}
-		value := root.Content[i+1]
-		keys := make([]string, 0, len(value.Content)/2)
-		for j := 0; j+1 < len(value.Content); j += 2 {
-			keys = append(keys, value.Content[j].Value)
+		if next == nil {
+			return nil
 		}
-		return keys
+		current = next
 	}
-	return nil
+	keys := make([]string, 0, len(current.Content)/2)
+	for j := 0; j+1 < len(current.Content); j += 2 {
+		keys = append(keys, current.Content[j].Value)
+	}
+	return keys
 }
 
 // OmitKeys returns raw without the listed top-level frontmatter keys, removing

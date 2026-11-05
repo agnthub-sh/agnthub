@@ -5,7 +5,7 @@
     "kind": "git",
     "locator": "localhost:8443/layouts.git",
     "ref": "v1.0.0",
-    "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+    "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
   },
   "harnesses": [
     {
@@ -16,6 +16,28 @@
     }
   ],
   "items": [
+    {
+      "agent": "allowlisted",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.config/opencode/agents/allowlisted.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/allowlisted.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "read allowed-tools as the tool allowlist: Claude Code ignores it in agents (it is a skill field), other harnesses enforce it"
+      ]
+    },
     {
       "agent": "annotated",
       "harness": "opencode",
@@ -29,7 +51,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -38,6 +60,28 @@
         "omitted capabilities: Claude Code ignores it",
         "omitted category: Claude Code ignores it",
         "omitted domain: Claude Code ignores it"
+      ]
+    },
+    {
+      "agent": "backgrounder",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.config/opencode/agents/backgrounder.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/backgrounder.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "runs in the foreground: opencode cannot run an agent in the background"
       ]
     },
     {
@@ -53,7 +97,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -71,7 +115,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -92,12 +136,34 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "claude-shaped",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.config/opencode/agents/claude-shaped.md",
+      "variant": "generated",
+      "sourcePath": "agents/claude-shaped.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted color: cosmetic",
+        "model \"opus\" is specific to claude; the agent uses the harness default model"
       ]
     },
     {
@@ -113,7 +179,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -131,7 +197,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -152,7 +218,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -174,7 +240,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -196,7 +262,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -220,7 +286,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -241,13 +307,79 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the codex variant",
         "omitted nickname_candidates: display names for Codex's spawned agents"
+      ]
+    },
+    {
+      "agent": "cx-sandboxed",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.config/opencode/agents/cx-sandboxed.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-sandboxed.toml",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "sandbox_mode = \"read-only\": converted without edit tools; shell commands are not sandboxed outside Codex"
+      ]
+    },
+    {
+      "agent": "cx-solo",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.config/opencode/agents/cx-solo.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-solo.toml",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "features.multi_agent = false: converted without delegation"
+      ]
+    },
+    {
+      "agent": "cx-workspace",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.config/opencode/agents/cx-workspace.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-workspace.toml",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "omitted sandbox_mode = \"workspace-write\": Codex ignores it in agent files; the session's sandbox and approvals apply"
       ]
     },
     {
@@ -263,7 +395,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -287,12 +419,35 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "differ",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.config/opencode/agents/differ.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/differ.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "tools grants only part of edit (no Write); converted agents get edit as a whole",
+        "its shell is limited to these commands: * (deny), git diff * (allow)"
       ]
     },
     {
@@ -308,7 +463,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -326,7 +481,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -347,7 +502,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -370,7 +525,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -391,7 +546,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -412,7 +567,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -433,7 +588,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -456,7 +611,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -478,7 +633,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -496,7 +651,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -518,7 +673,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -541,13 +696,34 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the claude variant",
         "omitted tools entries read, ListMcpResourcesTool, playwright: no opencode equivalent, so the agent goes without them"
+      ]
+    },
+    {
+      "agent": "modelled",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.config/opencode/agents/modelled.md",
+      "variant": "generated",
+      "sourcePath": "agents/modelled.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model"
       ]
     },
     {
@@ -563,7 +739,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -584,7 +760,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -602,7 +778,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -623,7 +799,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -641,7 +817,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -662,7 +838,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -684,7 +860,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -706,7 +882,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -728,7 +904,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -746,7 +922,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -769,7 +945,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create"
@@ -787,7 +963,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -809,7 +985,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -831,7 +1007,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -854,12 +1030,14 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
-        "omitted descriptive metadata: author, tags, version"
+        "omitted author: descriptive metadata",
+        "omitted tags: descriptive metadata",
+        "omitted version: descriptive metadata"
       ]
     },
     {
@@ -875,7 +1053,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+        "revision": "ff5ee5706f083745aa4b578ab970f0e9acf3e492"
       },
       "origin": "direct",
       "action": "create",
@@ -885,6 +1063,6 @@
     }
   ],
   "summary": {
-    "create": 41
+    "create": 49
   }
 }

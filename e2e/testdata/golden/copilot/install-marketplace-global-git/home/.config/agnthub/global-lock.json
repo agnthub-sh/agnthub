@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/more/mk-guarded.md",
           "sourceDigest": "sha256:8aa77306d8b0d60797e85a008e128ee544994ce1c6d2607ce4e0256ad3107476",
-          "converter": "copilot/v4",
+          "converter": "copilot/v5",
           "path": "/agnthub-e2e/home/.copilot/agents/mk-guarded.agent.md",
           "digest": "sha256:6b3cd96d0e896475b5e71c31684230b8fd99973b18cdafda6baf71c51bb44095",
           "requires": []
@@ -38,7 +38,7 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/mk-lister.md",
           "sourceDigest": "sha256:42b4caf101f87d5da5feeb015372dbe5a70a7f809c819eef8f9113b10ee6b375",
-          "converter": "copilot/v4",
+          "converter": "copilot/v5",
           "path": "/agnthub-e2e/home/.copilot/agents/mk-lister.agent.md",
           "digest": "sha256:7bd5f18d4fba6068ac33c8e7ff734e06620c7cfeb4cd74505adc5bfcce24ee34",
           "requires": []
@@ -60,7 +60,7 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/deep/mk-nested.md",
           "sourceDigest": "sha256:33799b1ca12e3ccb8449a66e4c19a09a37d09d14f69cd7dff0c7097f42dfcc0d",
-          "converter": "copilot/v4",
+          "converter": "copilot/v5",
           "path": "/agnthub-e2e/home/.copilot/agents/mk-nested.agent.md",
           "digest": "sha256:33799b1ca12e3ccb8449a66e4c19a09a37d09d14f69cd7dff0c7097f42dfcc0d",
           "requires": []
@@ -82,7 +82,7 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/mk-scanner.md",
           "sourceDigest": "sha256:5e6a2950be2c2e8fcfb2427622cc0ee6e963a4cbc730d26d8c830ffb3e7c6d7f",
-          "converter": "copilot/v4",
+          "converter": "copilot/v5",
           "path": "/agnthub-e2e/home/.copilot/agents/mk-scanner.agent.md",
           "digest": "sha256:5e6a2950be2c2e8fcfb2427622cc0ee6e963a4cbc730d26d8c830ffb3e7c6d7f",
           "requires": []

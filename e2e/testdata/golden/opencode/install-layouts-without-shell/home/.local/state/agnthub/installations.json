@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/guarded.md",
+      "digest": "sha256:2be33711697ec1c2cb7b8787db917b810c8cb68c64053141e250a3c0fd0be148",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "guarded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

@@ -20,11 +20,14 @@ const (
 
 // Steps several scenarios refer to.
 const (
-	stepPlan      = "plan-layouts"
-	stepPlanMan   = "plan-manifest"
-	stepRefuseLy  = "refuse-layouts"
-	stepPlanMkt   = "plan-marketplace"
-	stepRefuseMkt = "refuse-marketplace"
+	stepPlan     = "plan-layouts"
+	stepPlanMan  = "plan-manifest"
+	stepRefuseLy = "refuse-layouts"
+	// stepWithoutShell installs the layout agents that need
+	// --allow-without-shell; Claude Code has none.
+	stepWithoutShell = "install-layouts-without-shell"
+	stepPlanMkt      = "plan-marketplace"
+	stepRefuseMkt    = "refuse-marketplace"
 )
 
 // harnessIDs lists every supported Harness; adding one to agent.AllHarnesses
@@ -108,6 +111,9 @@ var stepSpecs = map[string]stepSpec{
 	"install-layouts-global-local":  {scope: scopeUser, source: sourceLocal, native: true},
 	"install-layouts-global-git":    {scope: scopeUser, source: sourceGit, native: true},
 	stepRefuseLy:                    {scope: scopeProj, source: sourceLocal},
+	stepWithoutShell: {
+		scope: scopeProj, source: sourceLocal, native: true, except: []string{"claude"},
+	},
 
 	"refuse-manifest-project-untrusted": {
 		scope: scopeProj, source: sourceGit, only: []string{"gemini"},
@@ -178,6 +184,9 @@ type evidence struct {
 	plan    string
 	install []string
 	refuse  string
+	// optIn is the step that installs, with --allow-without-shell, an agent
+	// the plan refuses only for that opt-in.
+	optIn string
 	// steps prove a behavior of the whole run (no single agent): each must
 	// have a golden; its exit status says success or refusal.
 	steps []string
@@ -207,7 +216,9 @@ type scenario struct {
 
 // layoutEvidence proves a layout agent: its plan outcome, then a write in every
 // scope and source when it installs, or the run-wide refusal when it does not.
-var layoutEvidence = evidence{plan: stepPlan, install: layoutInstalls, refuse: stepRefuseLy}
+var layoutEvidence = evidence{
+	plan: stepPlan, install: layoutInstalls, refuse: stepRefuseLy, optIn: stepWithoutShell,
+}
 
 // manifestEvidence proves a manifest agent the same way; refused manifest
 // agents are refused in the plan, which writes nothing.
@@ -343,8 +354,12 @@ var scenarios = []scenario{
 		"invalid native Variant for the target: refused, never converted instead", "broken"),
 	conversion("Variants and conversion", "convert-portable-metadata",
 		"portable core with descriptive metadata (noted, omitted)", "tagged"),
+	conversion("Variants and conversion", "portable-as-claude",
+		"portable core written for Claude Code (`model`, `tools`, `color`): read as a Claude "+
+			"Code agent", "claude-shaped"),
 	conversion("Variants and conversion", "unsupported-permission-mode",
-		"Claude-only `permissionMode: plan`: native on Claude Code, refused elsewhere", "guarded"),
+		"Claude-only `permissionMode: plan`: native on Claude Code, read-only elsewhere (no "+
+			"edits or shell) with `--allow-without-shell`, refused on Codex", "guarded"),
 	conversion("Variants and conversion", "claude-relaxing-permission-mode",
 		"`permissionMode: acceptEdits`, which only approves more: native on Claude Code, "+
 			"dropped with a note elsewhere (the harness asks for approval as usual)", "relaxed"),
@@ -360,13 +375,23 @@ var scenarios = []scenario{
 	conversion("Variants and conversion", "codex-nicknames",
 		"Codex `nickname_candidates`: native on Codex, omitted with a note elsewhere",
 		"cx-nicknamed"),
+	conversion("Variants and conversion", "codex-sandbox-read-only",
+		"Codex `sandbox_mode = \"read-only\"`: refused on Codex (it runs agents in the parent "+
+			"session's sandbox), edits withheld elsewhere", "cx-sandboxed"),
+	conversion("Variants and conversion", "codex-sandbox-workspace-write",
+		"Codex `sandbox_mode = \"workspace-write\"`: installed on Codex with a note (the parent "+
+			"session's sandbox applies), omitted with a note elsewhere", "cx-workspace"),
+	conversion("Variants and conversion", "codex-multi-agent",
+		"Codex `features.multi_agent = false`: installed on Codex with a warning (not "+
+			"enforced there), delegation withheld elsewhere", "cx-solo"),
 	conversion("Variants and conversion", "claude-default-fields",
 		"Claude Code fields at their default or empty (`permissionMode: default`, "+
 			"`disallowedTools: []`, `hooks: {}`, `mcpServers: []`): native on Claude Code, "+
 			"omitted with a note elsewhere", "defaulted"),
 
 	conversion("Tool restrictions", "tools-read-search-shell",
-		"allowlist Read/Grep/Glob/Bash", "reviewer"),
+		"allowlist Read/Grep/Glob/Bash (Cursor: `readonly`, without the shell, with "+
+			"`--allow-without-shell`)", "reviewer"),
 	conversion("Tool restrictions", "tools-full", "allowlist with edit and shell", "fixer"),
 	conversion("Tool restrictions", "tools-read-only-claude",
 		"read-only allowlist (Read, Grep)", "colon-native"),
@@ -382,18 +407,28 @@ var scenarios = []scenario{
 		"MCP tool reference (`mcp__github__get_issue`)", "issue-reader"),
 	conversion("Tool restrictions", "tools-mcp-server",
 		"whole MCP server (`mcp__github__*`)", "mcp-wide"),
-	conversion("Tool restrictions", "tools-web", "web fetch and web search", "web-searcher"),
+	conversion("Tool restrictions", "tools-web",
+		"web fetch and web search (Copilot CLI: installed without web search, `reduced`)",
+		"web-searcher"),
+	conversion("Tool restrictions", "tools-scoped-shell",
+		"scoped shell rule `Bash(git diff *)` with edits: OpenCode `permission.bash`, shell "+
+			"withheld elsewhere with `--allow-without-shell` (Cursor: refused)", "differ"),
 	conversion("Tool restrictions", "tools-unknown-names",
 		"allowlist names with no equivalent (`read`, `ListMcpResourcesTool`, `playwright`): "+
 			"left out with a note", "misnamed"),
-	conversion("Tool restrictions", "tools-delegate", "delegation (`Agent`)", "delegator"),
+	conversion("Tool restrictions", "tools-delegate",
+		"delegation (`Agent`; Gemini CLI: installed without it, `reduced`)", "delegator"),
 	conversion("Tool restrictions", "tools-max-turns", "turn limit (`maxTurns`)", "bounded"),
 	conversion("Tool restrictions", "tools-background",
-		"background execution (`background: true`)", "backgrounder"),
+		"background execution (`background: true`): in the foreground with a note where the "+
+			"Harness has no background agents", "backgrounder"),
 	conversion("Tool restrictions", "gemini-mcp-servers",
 		"Gemini `mcp_servers` + `mcp_<server>_<tool>`: native on Gemini CLI", "gm-mcp"),
 	conversion("Tool restrictions", "gemini-mcp-camel",
 		"Gemini `mcpServers` (camelCase), which Gemini CLI rejects: refused", "gm-camel"),
+	conversion("Tool restrictions", "claude-mcp-servers",
+		"agent-scoped `mcpServers`: native on Claude Code, Gemini CLI `mcp_servers`, refused "+
+			"elsewhere", "mcp-owner"),
 
 	conversion(
 		"Additive capabilities",
@@ -418,7 +453,8 @@ var scenarios = []scenario{
 		"annotated",
 	),
 	conversion("Variants and conversion", "claude-ignored-restriction",
-		"ignored key that reads as a restriction (`allowed-tools`): refused", "allowlisted"),
+		"`allowed-tools`, which Claude Code ignores in agents: kept with a warning on Claude "+
+			"Code, the tool allowlist elsewhere", "allowlisted"),
 	conversion("Additive capabilities", "memory-skills-turns",
 		"memory, skills and `maxTurns` together (the qa-lead shape)", "studio-qa"),
 
@@ -426,7 +462,8 @@ var scenarios = []scenario{
 		"native `model: sonnet` kept byte-for-byte, dropped with a note on conversion",
 		"reviewer"),
 	conversion("Model fields", "model-portable",
-		"portable `model`: uninstallable everywhere", "modelled"),
+		"portable `model`, read as Claude Code's: kept on Claude Code, dropped with a note "+
+			"elsewhere", "modelled"),
 
 	conversion("Frontmatter edge cases", "fm-colon-portable",
 		"unquoted colon in a portable description", "colon"),

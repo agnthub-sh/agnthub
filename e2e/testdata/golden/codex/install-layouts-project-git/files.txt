@@ -1,11 +1,14 @@
 0644 home/.config/agnthub/config.yaml
 0600 home/.local/state/agnthub/installations.json
 0644 project/.codex/agents/annotated.toml
+0644 project/.codex/agents/backgrounder.toml
 0644 project/.codex/agents/bom.toml
 0644 project/.codex/agents/bounded.toml
 0644 project/.codex/agents/colon.toml
 0644 project/.codex/agents/cx-native.toml
 0644 project/.codex/agents/cx-nicknamed.toml
+0644 project/.codex/agents/cx-solo.toml
+0644 project/.codex/agents/cx-workspace.toml
 0644 project/.codex/agents/defaulted.toml
 0644 project/.codex/agents/dual.toml
 0644 project/.codex/agents/fixer.toml
@@ -13,6 +16,7 @@
 0644 project/.codex/agents/literal.toml
 0644 project/.codex/agents/local-notes.toml
 0644 project/.codex/agents/misnamed.toml
+0644 project/.codex/agents/modelled.toml
 0644 project/.codex/agents/no-shell.toml
 0644 project/.codex/agents/planner.toml
 0644 project/.codex/agents/quoted.toml

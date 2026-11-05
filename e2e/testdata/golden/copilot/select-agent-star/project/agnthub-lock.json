@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "copilot/v4",
+          "converter": "copilot/v5",
           "path": ".github/agents/companion.agent.md",
           "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
           "requires": []
@@ -34,7 +34,7 @@
           "variant": "generated",
           "sourcePath": "agents/sidekick.md",
           "sourceDigest": "sha256:47843ea71bee050cacb41e460bb1b0f57fac11dc56b53318c5fd9273d2835506",
-          "converter": "copilot/v4",
+          "converter": "copilot/v5",
           "path": ".github/agents/sidekick.agent.md",
           "digest": "sha256:47843ea71bee050cacb41e460bb1b0f57fac11dc56b53318c5fd9273d2835506",
           "requires": []

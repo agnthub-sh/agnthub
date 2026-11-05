@@ -1,0 +1,103 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/layouts"
+  },
+  "harnesses": [
+    {
+      "id": "cursor",
+      "name": "Cursor",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "cx-sandboxed",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/cx-sandboxed.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-sandboxed.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "sandbox_mode = \"read-only\": converted without edit tools; shell commands are not sandboxed outside Codex",
+        "goes without shell: Cursor's only restriction, readonly, blocks every shell command",
+        "goes without MCP tools: Cursor's only restriction, readonly, blocks every MCP tool call"
+      ],
+      "reduced": [
+        "shell",
+        "MCP tools"
+      ],
+      "optIn": "allow-without-shell"
+    },
+    {
+      "agent": "guarded",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/guarded.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/guarded.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode plan converted as a read-only tool policy: no edits, shell, delegation or MCP tools",
+        "goes without shell: permissionMode plan allows read-only shell commands, and cursor cannot limit the shell to them",
+        "goes without MCP tools: permissionMode plan is read-only, and MCP tools could write",
+        "excludes delegation, but Cursor cannot withhold them from an agent"
+      ],
+      "reduced": [
+        "shell",
+        "MCP tools"
+      ],
+      "optIn": "allow-without-shell"
+    },
+    {
+      "agent": "reviewer",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/reviewer.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/reviewer.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted color: cosmetic",
+        "model \"sonnet\" is specific to claude; the agent uses the harness default model",
+        "goes without shell: Cursor's only restriction, readonly, blocks every shell command",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent"
+      ],
+      "reduced": [
+        "shell"
+      ],
+      "optIn": "allow-without-shell"
+    }
+  ],
+  "summary": {
+    "create": 3
+  }
+}

@@ -1,0 +1,2 @@
+$ agnthub add /agnthub-e2e/src/layouts --agent differ --harness codex --allow-without-shell --yes --json
+exit status: 0

@@ -8,6 +8,8 @@ import (
 	"slices"
 	"strings"
 
+	"go.yaml.in/yaml/v3"
+
 	"github.com/agnthub-sh/agnthub/agent"
 )
 
@@ -345,8 +347,13 @@ func opencodePermissionRules(sem *Semantics, raw []byte, value any) []opencodeRu
 		case string:
 			rules = append(rules, opencodeRule{action: action, effect: rule})
 		case map[string]any:
-			for pattern, effect := range rule {
-				text, _ := effect.(string)
+			patterns := agent.MappingKeys(raw, "permission", action)
+			if len(patterns) != len(rule) {
+				sem.unsupported("permission."+action, "a pattern map agnthub cannot read")
+				continue
+			}
+			for _, pattern := range patterns {
+				text, _ := rule[pattern].(string)
 				rules = append(rules, opencodeRule{
 					action: action, effect: text, pattern: pattern, scoped: pattern != "*",
 				})
@@ -396,7 +403,8 @@ var opencodeEnvRules = map[string]string{
 
 // opencodePolicy evaluates rules like OpenCode: everything is allowed unless
 // the last rule matching an action says otherwise. A trailing "*" deny makes the
-// agent an allowlist. Approval prompts and scoped rules have no equivalent.
+// agent an allowlist. Shell command patterns and shell approval prompts become
+// a ShellScope; other approval prompts and scoped rules have no equivalent.
 func opencodePolicy(sem *Semantics, all []opencodeRule) {
 	rules := make([]opencodeRule, 0, len(all))
 	for _, rule := range all {
@@ -415,10 +423,15 @@ func opencodePolicy(sem *Semantics, all []opencodeRule) {
 		}
 		return effect
 	}
+	var commands []ShellRule
 	for _, rule := range rules {
 		field := "permission." + rule.action
+		shell := opencodeNormal(rule.action) == "bash"
 		switch {
 		case opencodeInertActions[rule.action]:
+		case shell && rule.scoped:
+			commands = append(commands, ShellRule{Pattern: rule.pattern, Effect: rule.effect})
+		case shell && rule.effect == "ask":
 		case rule.scoped:
 			sem.unsupported(field, "allows or denies only some commands, paths or agents")
 		case rule.effect == "ask":
@@ -446,6 +459,18 @@ func opencodePolicy(sem *Semantics, all []opencodeRule) {
 			sem.Tools.Allowed |= entry.cap
 		case denied && !restricted:
 			sem.Tools.Denied |= entry.cap
+		}
+	}
+	if def := effectOf("bash"); len(commands) > 0 || def == "ask" {
+		scope := &ShellScope{Default: def, Rules: commands}
+		sem.Tools.withhold(CapShell)
+		if scope.runs() {
+			if restricted {
+				sem.Tools.Allowed |= CapShell
+			} else {
+				sem.Tools.Denied &^= CapShell
+			}
+			sem.Tools.Shell = scope
 		}
 	}
 	opencodeOtherActions(sem, rules, effectOf, restricted)
@@ -503,15 +528,14 @@ func opencodeNormal(action string) string {
 // permission map, which OpenCode V2 still reads: an allowlist denies "*" first
 // (OpenCode applies the last matching rule, so this also hides MCP tools and
 // files outside the project) and then allows each granted action, MCP tools
-// included, plus the folder of emulated user-scope memory.
+// included, plus the folder of emulated user-scope memory. A shell limited to
+// some commands becomes bash command patterns.
 func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
 	check, err := begin(agent.OpenCode, sem)
-	if err == nil {
-		err = check.requireForeground()
-	}
 	if err != nil {
 		return Artifact{}, err
 	}
+	sem = check.sem
 	fields := []agent.Field{
 		{Key: "description", Value: sem.Description},
 		{Key: "mode", Value: "subagent"},
@@ -523,7 +547,7 @@ func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
 		loadSkill:   "Load each one with the `skill` tool.",
 		tools:       tools,
 	})
-	if tools.Limited() {
+	if tools.Limited() || tools.Shell != nil {
 		permission := map[string]any{}
 		if tools.Restricted {
 			permission["*"] = "deny"
@@ -539,6 +563,21 @@ func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
 					permission[action] = "deny"
 				}
 			}
+		}
+		if scope := tools.Shell; scope != nil && tools.Allows(CapShell) {
+			// OpenCode applies the last matching pattern, so they keep their order.
+			commands := &yaml.Node{Kind: yaml.MappingNode, Tag: "!!map"}
+			add := func(pattern, effect string) {
+				commands.Content = append(commands.Content,
+					&yaml.Node{Kind: yaml.ScalarNode, Tag: "!!str", Value: pattern},
+					&yaml.Node{Kind: yaml.ScalarNode, Tag: "!!str", Value: effect})
+			}
+			add("*", scope.Default)
+			for _, rule := range scope.Rules {
+				add(rule.Pattern, rule.Effect)
+			}
+			permission["bash"] = commands
+			check.note("its shell is limited to these commands: %s", scope)
 		}
 		mcp, err := check.mcpNames(opencodeMCPAction)
 		if err != nil {
@@ -566,13 +605,7 @@ func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
 	if err != nil {
 		return Artifact{}, err
 	}
-	return selfCheck(a, sem.ID, Artifact{
-		FileName:  sem.ID + ".md",
-		Content:   content,
-		Generated: true,
-		Converter: converterID(agent.OpenCode),
-		Notes:     check.notes,
-	})
+	return selfCheck(a, sem.ID, check.artifact(sem.ID+".md", content))
 }
 
 // opencodeExternalDirectory is the permission OpenCode checks before a tool

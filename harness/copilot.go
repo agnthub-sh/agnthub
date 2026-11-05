@@ -101,6 +101,12 @@ func validateCopilot(doc *agent.Document) ([]string, error) {
 			}
 		case copilotIDEOnlyFields[key] || harmlessPortableKeys[key] || descriptiveKeys[key]:
 			notes = append(notes, fmt.Sprintf("%s is not used by Copilot CLI", key))
+		case copilotUnenforced[key] != "":
+			if !copilotUnenforcedShape(key, value) {
+				return nil, fmt.Errorf("%s has a shape agnthub cannot read: %v", key, value)
+			}
+			notes = append(notes, fmt.Sprintf("Copilot CLI does not enforce %s: %s; other "+
+				"harnesses do", key, copilotUnenforced[key]))
 		default:
 			return nil, fmt.Errorf(
 				"%s is not a Copilot CLI agent field; the CLI would silently ignore it",
@@ -121,6 +127,28 @@ func validateCopilot(doc *agent.Document) ([]string, error) {
 		return nil, fmt.Errorf("modelPolicy must be preferred or required, got %q", policy)
 	}
 	return notes, nil
+}
+
+// copilotUnenforced are restriction-like fields authors write into Copilot
+// agents (from VS Code custom agents and Claude Code) that Copilot CLI 1.0.105
+// ignores, with what that means there. The authored agent installs as written
+// with that warning; other harnesses honor the restriction where they can
+// (ADR 0012).
+var copilotUnenforced = map[string]string{
+	"agents":        "on Copilot CLI the agent may delegate to any agent",
+	"allowed-tools": "on Copilot CLI only tools limits the agent",
+	"maxTurns":      "on Copilot CLI the agent has no turn limit",
+}
+
+// copilotUnenforcedShape checks that an unenforced field reads as a list of
+// names, or for maxTurns a positive number.
+func copilotUnenforcedShape(key string, value any) bool {
+	if key == "maxTurns" {
+		_, ok := positiveInt(value)
+		return ok
+	}
+	_, ok := nameList(value)
+	return ok
 }
 
 func checkCopilotField(key string, kind copilotFieldKind, value any) error {
@@ -257,6 +285,8 @@ func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Seman
 		Instructions: doc.Body,
 		Source:       agent.Copilot,
 	}
+	var skillAllowlist []string
+	hasSkillAllowlist := false
 	for _, key := range sortedKeys(doc.Frontmatter) {
 		value := doc.Frontmatter[key]
 		switch key {
@@ -268,6 +298,19 @@ func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Seman
 		case "tools":
 			names, _ := nameList(value)
 			copilotToolPolicy(sem, names)
+		case "allowed-tools":
+			skillAllowlist, _ = nameList(value)
+			hasSkillAllowlist = true
+			sem.relaxed = true
+		case "agents":
+			sem.relaxed = true
+			names, _ := nameList(value)
+			if !slices.Contains(names, "*") {
+				sem.Spawns = append([]string{}, names...)
+			}
+		case "maxTurns":
+			sem.MaxTurns, _ = positiveInt(value)
+			sem.relaxed = true
 		case "infer":
 			if value == false {
 				sem.unsupported(key, "Copilot never delegates to it automatically")
@@ -281,12 +324,34 @@ func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Seman
 				sem.note("omitted user-invocable: false: other harnesses let users select it")
 			}
 		case "mcp-servers":
-			sem.unsupported(key, "MCP servers scoped to the agent")
+			if emptyValue(value) {
+				sem.note("omitted mcp-servers: it declares none")
+				continue
+			}
+			servers, reason := copilotMCPServers(value)
+			if reason != "" {
+				sem.unsupported(key, "MCP servers scoped to the agent; "+reason)
+				continue
+			}
+			sem.MCPServers = servers
 		case "skills":
 			readSkills(sem, key, value)
 		default:
 			sem.note("omitted %s: not used by Copilot CLI", key)
 		}
+	}
+	if hasSkillAllowlist {
+		extra := &Semantics{Source: agent.Copilot}
+		copilotToolPolicy(extra, skillAllowlist)
+		sem.Notes = append(sem.Notes, extra.Notes...)
+		sem.intersectTools("allowed-tools", extra.Tools)
+		sem.note("read allowed-tools as a second tool allowlist: Copilot CLI ignores it, " +
+			"other harnesses enforce it")
+	}
+	if sem.Spawns != nil && len(sem.Spawns) == 0 {
+		sem.Spawns = nil
+		sem.Tools.withhold(CapDelegate)
+		sem.note("agents: [] converted without delegation")
 	}
 	return sem, nil
 }
@@ -357,18 +422,15 @@ func copilotNormalize(name string) string {
 
 // Convert writes a Copilot CLI agent. Tool policies become primary aliases;
 // Copilot has no denylist, so one is written as the allowlist of the remaining
-// built-in aliases.
+// built-in aliases. Copilot CLI offers custom agents no web search tool, so an
+// allowlist granting it installs without it, as a reduction.
 func (a copilotAdapter) Convert(sem *Semantics) (Artifact, error) {
 	check, err := begin(agent.Copilot, sem)
-	if err == nil {
-		err = check.requireGrant(CapWebSearch, "Copilot CLI has no web search tool")
-	}
-	if err == nil {
-		err = check.requireForeground()
-	}
 	if err != nil {
 		return Artifact{}, err
 	}
+	sem = check.sem
+	check.reduceGrant(CapWebSearch, copilotNoWebSearch)
 	fields := []agent.Field{
 		{Key: "name", Value: sem.ID},
 		{Key: "description", Value: sem.Description},
@@ -401,14 +463,14 @@ func (a copilotAdapter) Convert(sem *Semantics) (Artifact, error) {
 	if err != nil {
 		return Artifact{}, err
 	}
-	return selfCheck(a, sem.ID, Artifact{
-		FileName:  sem.ID + ".agent.md",
-		Content:   content,
-		Generated: true,
-		Converter: converterID(agent.Copilot),
-		Notes:     check.notes,
-	})
+	return selfCheck(a, sem.ID, check.artifact(sem.ID+".agent.md", content))
 }
+
+// copilotNoWebSearch is why a Copilot CLI agent goes without web search,
+// observed with Copilot CLI 1.0.105: a tools entry web_search grants nothing,
+// and github-mcp-server/web_search asks GitHub's MCP server for a tool it
+// does not offer, so the agent gets no search tool.
+const copilotNoWebSearch = "Copilot CLI offers custom agents no web search tool"
 
 func (copilotAdapter) Detect(ctx Context) bool {
 	return detect(ctx, "copilot", copilotHome(ctx))

@@ -32,8 +32,6 @@ var (
 		"kind": true, "name": true, "description": true, "display_name": true,
 		"auth": true, "agent_card_url": true, "agent_card_json": true,
 	}
-	// delegationKeys are portable or foreign declarations of agent orchestration.
-	delegationKeys = []string{"spawns", "subagents", "agents", "handoffs"}
 )
 
 func (geminiAdapter) ID() agent.HarnessID { return agent.Gemini }
@@ -410,19 +408,16 @@ func (a geminiAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 }
 
 // Convert writes a Gemini CLI local subagent. Gemini subagents cannot invoke
-// other agents, so an allowlist granting delegation is refused. Gemini has no
-// denylist: one becomes the remaining built-in tools plus every MCP tool.
+// other agents, so an allowlist granting delegation installs without it, as a
+// reduction. Gemini has no denylist: one becomes the remaining built-in tools
+// plus every MCP tool. MCP servers scoped to the Agent become mcp_servers.
 func (a geminiAdapter) Convert(sem *Semantics) (Artifact, error) {
 	check, err := begin(agent.Gemini, sem)
-	if err == nil {
-		err = check.requireGrant(CapDelegate, "Gemini CLI subagents cannot invoke other agents")
-	}
-	if err == nil {
-		err = check.requireForeground()
-	}
 	if err != nil {
 		return Artifact{}, err
 	}
+	sem = check.sem
+	check.reduceGrant(CapDelegate, "Gemini CLI subagents cannot invoke other agents")
 	fields := []agent.Field{
 		{Key: "name", Value: sem.ID},
 		{Key: "description", Value: sem.Description},
@@ -449,6 +444,13 @@ func (a geminiAdapter) Convert(sem *Semantics) (Artifact, error) {
 		}
 		fields = append(fields, agent.Field{Key: "tools", Value: tools})
 	}
+	if len(sem.MCPServers) > 0 {
+		fields = append(fields, agent.Field{
+			Key:   "mcp_servers",
+			Value: geminiMCPServers(sem.MCPServers),
+		})
+		check.note("declares mcp_servers, which runs when the agent is used")
+	}
 	if sem.MaxTurns > 0 {
 		fields = append(fields, agent.Field{Key: "max_turns", Value: sem.MaxTurns})
 	}
@@ -456,13 +458,7 @@ func (a geminiAdapter) Convert(sem *Semantics) (Artifact, error) {
 	if err != nil {
 		return Artifact{}, err
 	}
-	return selfCheck(a, sem.ID, Artifact{
-		FileName:  sem.ID + ".md",
-		Content:   content,
-		Generated: true,
-		Converter: converterID(agent.Gemini),
-		Notes:     check.notes,
-	})
+	return selfCheck(a, sem.ID, check.artifact(sem.ID+".md", content))
 }
 
 // DependencyNotes reports that installing companion Agents does not let a Gemini

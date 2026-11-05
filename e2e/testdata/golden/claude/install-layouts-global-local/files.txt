@@ -4,6 +4,7 @@
 0644 home/.claude/agents/bom-native.md
 0644 home/.claude/agents/bom.md
 0644 home/.claude/agents/bounded.md
+0644 home/.claude/agents/claude-shaped.md
 0644 home/.claude/agents/colon-native.md
 0644 home/.claude/agents/colon.md
 0644 home/.claude/agents/cu-folded.md
@@ -11,8 +12,12 @@
 0644 home/.claude/agents/cu-tagged.md
 0644 home/.claude/agents/cx-native.md
 0644 home/.claude/agents/cx-nicknamed.md
+0644 home/.claude/agents/cx-sandboxed.md
+0644 home/.claude/agents/cx-solo.md
+0644 home/.claude/agents/cx-workspace.md
 0644 home/.claude/agents/defaulted.md
 0644 home/.claude/agents/delegator.md
+0644 home/.claude/agents/differ.md
 0644 home/.claude/agents/dual.md
 0644 home/.claude/agents/fixer.md
 0644 home/.claude/agents/gh-colored.md
@@ -24,8 +29,10 @@
 0644 home/.claude/agents/journaler.md
 0644 home/.claude/agents/literal.md
 0644 home/.claude/agents/local-notes.md
+0644 home/.claude/agents/mcp-owner.md
 0644 home/.claude/agents/mcp-wide.md
 0644 home/.claude/agents/misnamed.md
+0644 home/.claude/agents/modelled.md
 0644 home/.claude/agents/no-shell.md
 0644 home/.claude/agents/oc-native.md
 0644 home/.claude/agents/omp-native.md

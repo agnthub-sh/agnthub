@@ -85,7 +85,7 @@
       },
       "origin": "direct",
       "action": "incompatible",
-      "reason": "cannot convert: invalid claude variant plugins/scanned/agents/mk-rooted.md: its instructions reference ${CLAUDE_PLUGIN_ROOT}, which only resolves inside the installed plugin mk-scanned"
+      "reason": "cannot convert: invalid claude variant plugins/scanned/agents/mk-rooted.md: its instructions reference ${CLAUDE_PLUGIN_ROOT}, which only resolves inside the installed plugin mk-scanned; in Claude Code, install the plugin itself (/plugin install mk-scanned@e2e-marketplace)"
     },
     {
       "agent": "mk-scanner",

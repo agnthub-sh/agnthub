@@ -1,0 +1,6 @@
+name = "cx-workspace"
+description = "Codex agent that asks for a workspace-write sandbox."
+sandbox_mode = "workspace-write"
+developer_instructions = """
+Make the requested change inside the workspace.
+"""
