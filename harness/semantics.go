@@ -28,6 +28,11 @@ type Semantics struct {
 	MaxTurns int
 	// Background runs the Agent without blocking the caller.
 	Background bool
+	// PermissionMode is a Claude Code permission mode that only approves more
+	// without asking (claudeRelaxingModes). Other Harnesses have no such mode
+	// for one agent and ask for approval as their session does, which is at
+	// least as strict, so renderers drop it with a note.
+	PermissionMode string
 	// Memory is the Agent's persistent memory scope, or "" for none. Memory
 	// and Skills are additive: renderers carry them natively, emulate them with
 	// instructions, or omit them with a note (see additive.go).
@@ -111,7 +116,8 @@ type ToolPolicy struct {
 	Denied Capability
 	// MCP lists allowlisted MCP tools in authored order.
 	MCP []MCPTool
-	// Unknown lists allowlisted tool names with no known capability.
+	// Unknown lists allowlisted tool names with no known capability; renderers
+	// leave them out of the allowlist with a note.
 	Unknown []string
 }
 
@@ -226,8 +232,9 @@ type renderCheck struct {
 }
 
 // begin validates the parts every target treats alike and starts the notes:
-// unsupported features and unknown tools refuse; the model is noted. Renderers
-// map MCP tools themselves, with mcpNames or mcpSession.
+// unsupported features refuse; unknown tools, relaxing permission modes and
+// the model are noted. Renderers map MCP tools themselves, with mcpNames or
+// mcpSession.
 func begin(target agent.HarnessID, sem *Semantics) (*renderCheck, error) {
 	check := &renderCheck{target: target, sem: sem, notes: slices.Clone(sem.Notes)}
 	if len(sem.Unsupported) > 0 {
@@ -238,9 +245,15 @@ func begin(target agent.HarnessID, sem *Semantics) (*renderCheck, error) {
 	if strings.TrimSpace(sem.Instructions) == "" {
 		return nil, check.refuse("its %s has no instructions", sem.sourceLabel())
 	}
-	if len(sem.Tools.Unknown) > 0 {
-		return nil, check.refuse("it allows tool %q, which has no %s equivalent",
-			sem.Tools.Unknown[0], target)
+	if mode := sem.PermissionMode; mode != "" {
+		check.note("permissionMode %s isn't available in %s; the harness asks for approval "+
+			"as usual", mode, target)
+	}
+	// Leaving a tool out of an allowlist withholds it, which never widens what
+	// the agent may do.
+	if unknown := sem.Tools.Unknown; len(unknown) > 0 {
+		check.note("omitted tools entries %s: no %s equivalent, so the agent goes without "+
+			"them", strings.Join(unknown, ", "), target)
 	}
 	if model := strings.TrimSpace(sem.Model); model != "" && model != "inherit" {
 		check.note("model %q is specific to %s; the agent uses the harness default model",

@@ -56,7 +56,7 @@ func TestAssessPrefersValidVariantsAndRefusesUnsupportedPortableFields(t *testin
 				Path:    ".claude/agents/reviewer.md",
 				Raw: []byte(
 					"---\nname: reviewer\ndescription: Reviews\ntools: Read\n" +
-						"permissionMode: acceptEdits\n---\nReview.\n",
+						"permissionMode: plan\n---\nReview.\n",
 				),
 			},
 		},

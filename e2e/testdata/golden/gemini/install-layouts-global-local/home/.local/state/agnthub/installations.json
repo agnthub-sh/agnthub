@@ -68,6 +68,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.gemini/agents/cu-folded.md",
+      "digest": "sha256:baa896f4f9da5140b0195bba26628bceae603800aa83d78eb4531bd3ec0473c8",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cu-folded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.gemini/agents/cu-native.md",
       "digest": "sha256:3f3fb877d04007370dc9f55402880205949b0f1f6b30c3dae14e9be898d09c49",
       "harness": "gemini",
@@ -79,6 +90,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.gemini/agents/cu-tagged.md",
+      "digest": "sha256:7947233ff5a98a01dbd3bf0dcfba129c27022125e910678a1eb4a5c7857fc760",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cu-tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.gemini/agents/cx-native.md",
       "digest": "sha256:0c812101ad01269ef0854e2c3fe6900836d961b6b686b906136f73910676f7a2",
       "harness": "gemini",
@@ -86,6 +108,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "cx-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.gemini/agents/cx-nicknamed.md",
+      "digest": "sha256:c3e18495def0e5260816ab184915d860d83befaadf31564af6eaa070ce04c05a",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-nicknamed",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -119,6 +152,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "fixer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.gemini/agents/gh-colored.md",
+      "digest": "sha256:df79bd2e4ec1753889bd68677097e0c1db20b2f2dd4039d3263c9b5ebc8fc367",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "gh-colored",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -222,6 +266,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.gemini/agents/misnamed.md",
+      "digest": "sha256:6d83d53c0bf39a096156925b792421f80fe88b4bb85d851c336e0d6536e86a4a",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "misnamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.gemini/agents/no-shell.md",
       "digest": "sha256:1dfd246d5859fa2c3927da253c09207860188da2c79b6f3e8eb0d6d1632f3dba",
       "harness": "gemini",
@@ -266,6 +321,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.gemini/agents/quoted.md",
+      "digest": "sha256:af310266cb85fc2975a8ae692cef1b8ce38a6abfcb93dcd9d0e37b4a80394b6c",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "quoted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.gemini/agents/recaller.md",
       "digest": "sha256:b6e6d7709799244aa469dda9410963930acfcbe94d0a211dce300f6a44b3e6d1",
       "harness": "gemini",
@@ -273,6 +339,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "recaller",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.gemini/agents/relaxed.md",
+      "digest": "sha256:01f1f5c3dbf2f0044bd7c0b40e23efb69885255bf0c7e8e4e750430f26736431",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "relaxed",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -317,6 +394,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.gemini/agents/scripted.md",
+      "digest": "sha256:7435dc503e07d7d10807d23103ec17ae5d4a565b80a228d6780baf18fd5c907b",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "scripted",
       "origin": "direct",
       "installedAt": "<time>"
     },

@@ -79,6 +79,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.copilot/agents/cx-nicknamed.agent.md",
+      "digest": "sha256:ef5ced04014614741c86c980413484218a0b5106af3d838831228a64a311b055",
+      "harness": "copilot",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cx-nicknamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.copilot/agents/defaulted.agent.md",
       "digest": "sha256:f36caedc4f62847b1719dadc10ee6365ea465f14f36ef991dddd258a9f7b76e2",
       "harness": "copilot",
@@ -119,6 +130,17 @@
       "destination": "user",
       "source": "git:localhost:8443/layouts.git",
       "agent": "fixer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.copilot/agents/gh-colored.agent.md",
+      "digest": "sha256:cf7c2dcc846ea6083bd4a55c95a8ef6105f2a6fd4587cbd090a078c3584c2d25",
+      "harness": "copilot",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "gh-colored",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -200,6 +222,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.copilot/agents/misnamed.agent.md",
+      "digest": "sha256:7e393cb5b5e3ff052d38bcf3ffca6b7c1a630f1872885f97c713a62e72fe0c2e",
+      "harness": "copilot",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "misnamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.copilot/agents/no-shell.agent.md",
       "digest": "sha256:93dc7c41704cf941425eb56a648b0ad48778de9447751cb3bd1d897993824558",
       "harness": "copilot",
@@ -244,6 +277,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.copilot/agents/quoted.agent.md",
+      "digest": "sha256:5cd00715272b996f54dc1b95a0d34b4d45056f534bb53eccd052725408d9a9b0",
+      "harness": "copilot",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "quoted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.copilot/agents/recaller.agent.md",
       "digest": "sha256:a8f334f3babce4c6b677a49290dfbf708d8657f3936284739c9df7f2c0ef0228",
       "harness": "copilot",
@@ -251,6 +295,17 @@
       "destination": "user",
       "source": "git:localhost:8443/layouts.git",
       "agent": "recaller",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.copilot/agents/relaxed.agent.md",
+      "digest": "sha256:44cad1c1b24f8edf2d62a7ae6968a942a72c3913cac0f32b93640e997f0bf8b2",
+      "harness": "copilot",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "relaxed",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -295,6 +350,17 @@
       "destination": "user",
       "source": "git:localhost:8443/layouts.git",
       "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.copilot/agents/scripted.agent.md",
+      "digest": "sha256:e9e1c7c430c2a09486dcee8e486b818839cb545725acde19cd81d555304f5b46",
+      "harness": "copilot",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "scripted",
       "origin": "direct",
       "installedAt": "<time>"
     },

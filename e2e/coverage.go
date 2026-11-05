@@ -344,7 +344,22 @@ var scenarios = []scenario{
 	conversion("Variants and conversion", "convert-portable-metadata",
 		"portable core with descriptive metadata (noted, omitted)", "tagged"),
 	conversion("Variants and conversion", "unsupported-permission-mode",
-		"Claude-only `permissionMode`: native on Claude Code, refused elsewhere", "guarded"),
+		"Claude-only `permissionMode: plan`: native on Claude Code, refused elsewhere", "guarded"),
+	conversion("Variants and conversion", "claude-relaxing-permission-mode",
+		"`permissionMode: acceptEdits`, which only approves more: native on Claude Code, "+
+			"dropped with a note elsewhere (the harness asks for approval as usual)", "relaxed"),
+	conversion("Variants and conversion", "claude-ignored-hook-events",
+		"`hooks` whose events Claude Code ignores (`pre`, `post`): native on Claude Code, "+
+			"omitted with a note elsewhere", "scripted"),
+	conversion("Variants and conversion", "copilot-descriptive-keys",
+		"Copilot CLI Variant with keys Copilot CLI ignores (`color`, `title`): installed as "+
+			"written with a note", "gh-colored"),
+	conversion("Variants and conversion", "cursor-descriptive-keys",
+		"Cursor Variant with keys Cursor ignores (`category`, `color`): installed as written "+
+			"with a note", "cu-tagged"),
+	conversion("Variants and conversion", "codex-nicknames",
+		"Codex `nickname_candidates`: native on Codex, omitted with a note elsewhere",
+		"cx-nicknamed"),
 	conversion("Variants and conversion", "claude-default-fields",
 		"Claude Code fields at their default or empty (`permissionMode: default`, "+
 			"`disallowedTools: []`, `hooks: {}`, `mcpServers: []`): native on Claude Code, "+
@@ -368,6 +383,9 @@ var scenarios = []scenario{
 	conversion("Tool restrictions", "tools-mcp-server",
 		"whole MCP server (`mcp__github__*`)", "mcp-wide"),
 	conversion("Tool restrictions", "tools-web", "web fetch and web search", "web-searcher"),
+	conversion("Tool restrictions", "tools-unknown-names",
+		"allowlist names with no equivalent (`read`, `ListMcpResourcesTool`, `playwright`): "+
+			"left out with a note", "misnamed"),
 	conversion("Tool restrictions", "tools-delegate", "delegation (`Agent`)", "delegator"),
 	conversion("Tool restrictions", "tools-max-turns", "turn limit (`maxTurns`)", "bounded"),
 	conversion("Tool restrictions", "tools-background",
@@ -426,6 +444,11 @@ var scenarios = []scenario{
 		"folded description (`>-`)", "researcher"),
 	conversion("Frontmatter edge cases", "fm-literal",
 		"literal block description (`|`)", "literal"),
+	conversion("Frontmatter edge cases", "fm-quoted-description",
+		"description with a colon and both quote characters: one quoted line on Cursor",
+		"quoted"),
+	conversion("Frontmatter edge cases", "fm-cursor-multiline",
+		"Cursor Variant with a multi-line description: folded onto one line", "cu-folded"),
 
 	{
 		id: "ambiguous-portable", group: "Ambiguous identities",

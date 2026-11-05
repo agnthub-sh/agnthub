@@ -143,6 +143,26 @@
       "action": "create"
     },
     {
+      "agent": "cu-folded",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/cu-folded.md",
+      "variant": "generated",
+      "sourcePath": ".cursor/agents/cu-folded.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the cursor variant",
+        "Cursor readonly: converted without edits, shell, MCP tools or delegation"
+      ]
+    },
+    {
       "agent": "cu-native",
       "harness": "claude",
       "settings": {},
@@ -163,6 +183,28 @@
       ]
     },
     {
+      "agent": "cu-tagged",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/cu-tagged.md",
+      "variant": "generated",
+      "sourcePath": ".cursor/agents/cu-tagged.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the cursor variant",
+        "omitted category: descriptive metadata",
+        "omitted color: descriptive metadata",
+        "Cursor readonly: converted without edits, shell, MCP tools or delegation"
+      ]
+    },
+    {
       "agent": "cx-native",
       "harness": "claude",
       "settings": {},
@@ -179,6 +221,26 @@
       "action": "create",
       "notes": [
         "converted from the codex variant"
+      ]
+    },
+    {
+      "agent": "cx-nicknamed",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/cx-nicknamed.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-nicknamed.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "omitted nickname_candidates: display names for Codex's spawned agents"
       ]
     },
     {
@@ -244,6 +306,27 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "gh-colored",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/gh-colored.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-colored.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "omitted color: not used by Copilot CLI",
+        "omitted title: not used by Copilot CLI"
+      ]
     },
     {
       "agent": "gh-native",
@@ -399,6 +482,22 @@
       "action": "create"
     },
     {
+      "agent": "misnamed",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/misnamed.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/misnamed.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "no-shell",
       "harness": "claude",
       "settings": {},
@@ -469,6 +568,22 @@
       "action": "create"
     },
     {
+      "agent": "quoted",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/quoted.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/quoted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "recaller",
       "harness": "claude",
       "settings": {},
@@ -477,6 +592,22 @@
       "path": "/agnthub-e2e/home/.claude/agents/recaller.md",
       "variant": "native",
       "sourcePath": ".claude/agents/recaller.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "relaxed",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/relaxed.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/relaxed.md",
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
@@ -541,6 +672,22 @@
       "path": "/agnthub-e2e/home/.claude/agents/root-helper.md",
       "variant": "generated",
       "sourcePath": "AGENT.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "scripted",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.claude/agents/scripted.md",
+      "variant": "native",
+      "sourcePath": ".claude/agents/scripted.md",
       "source": {
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
@@ -617,6 +764,6 @@
     }
   ],
   "summary": {
-    "create": 36
+    "create": 44
   }
 }

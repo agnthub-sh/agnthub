@@ -135,7 +135,12 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | authored native Variant wins over conversion (portable + Claude + OpenCode) | `dual` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | invalid native Variant for the target: refused, never converted instead | `broken` | global · git<br>global · local<br>project · git<br>project · local | R | R | R | R | R | R | R |
 | portable core with descriptive metadata (noted, omitted) | `tagged` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
-| Claude-only `permissionMode`: native on Claude Code, refused elsewhere | `guarded` | global · git<br>global · local<br>project · git<br>project · local | W N | R | R | R | R | R | R |
+| Claude-only `permissionMode: plan`: native on Claude Code, refused elsewhere | `guarded` | global · git<br>global · local<br>project · git<br>project · local | W N | R | R | R | R | R | R |
+| `permissionMode: acceptEdits`, which only approves more: native on Claude Code, dropped with a note elsewhere (the harness asks for approval as usual) | `relaxed` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| `hooks` whose events Claude Code ignores (`pre`, `post`): native on Claude Code, omitted with a note elsewhere | `scripted` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| Copilot CLI Variant with keys Copilot CLI ignores (`color`, `title`): installed as written with a note | `gh-colored` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | W N | W N |
+| Cursor Variant with keys Cursor ignores (`category`, `color`): installed as written with a note | `cu-tagged` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | W N N0 | W N | W N |
+| Codex `nickname_candidates`: native on Codex, omitted with a note elsewhere | `cx-nicknamed` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | R | W N | W N |
 | Claude Code fields at their default or empty (`permissionMode: default`, `disallowedTools: []`, `hooks: {}`, `mcpServers: []`): native on Claude Code, omitted with a note elsewhere | `defaulted` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 
 ### Tool restrictions
@@ -152,6 +157,7 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | MCP tool reference (`mcp__github__get_issue`) | `issue-reader` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | R | W N | W N |
 | whole MCP server (`mcp__github__*`) | `mcp-wide` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | R | W N | W N |
 | web fetch and web search | `web-searcher` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | R | W N | W N |
+| allowlist names with no equivalent (`read`, `ListMcpResourcesTool`, `playwright`): left out with a note | `misnamed` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | delegation (`Agent`) | `delegator` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | W N | W N N0 | R | W N |
 | turn limit (`maxTurns`) | `bounded` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | background execution (`background: true`) | `backgrounder` | global · git<br>global · local<br>project · git<br>project · local | W N | R | R | R | W N N0 | R | R |
@@ -201,6 +207,8 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | non-ASCII description and body | `planner` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | folded description (`>-`) | `researcher` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | literal block description (`|`) | `literal` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| description with a colon and both quote characters: one quoted line on Cursor | `quoted` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
+| Cursor Variant with a multi-line description: folded onto one line | `cu-folded` | global · git<br>global · local<br>project · git<br>project · local | W N | W N | R | R | W N N0 | W N | W N |
 
 ### Ambiguous identities
 

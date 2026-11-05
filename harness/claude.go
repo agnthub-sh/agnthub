@@ -148,16 +148,18 @@ func claudePluginAgent(variant *agent.VariantFile) ([]byte, []string, error) {
 
 // executableFieldNotes flags native fields that make the Harness run commands or
 // servers when the Agent is used, so previews never hide them. An empty field
-// declares nothing to run.
+// declares nothing to run, and neither do hooks whose events Claude Code ignores.
 func executableFieldNotes(doc *agent.Document, keys ...string) []string {
 	var notes []string
 	for _, key := range keys {
-		if value, ok := doc.Frontmatter[key]; ok && !emptyValue(value) {
-			notes = append(
-				notes,
-				fmt.Sprintf("declares %s, which runs when the agent is used", key),
-			)
+		value, ok := doc.Frontmatter[key]
+		if !ok || emptyValue(value) {
+			continue
 		}
+		if _, ignored := ClaudeIgnoredHookEvents(value); key == "hooks" && ignored {
+			continue
+		}
+		notes = append(notes, fmt.Sprintf("declares %s, which runs when the agent is used", key))
 	}
 	return notes
 }
@@ -344,6 +346,8 @@ func restrictionLike(key string, value any) bool {
 //     the mode the subagent has unless the session runs in another one. Modes
 //     are case-sensitive: Claude Code ignores Default with a warning, and
 //     conversion refuses it like any mode it does not know.
+//   - hooks whose every event Claude Code ignores (ClaudeIgnoredHookEvents), such as
+//     the pre and post scripts of a widely copied agent template.
 //   - Any field empty (null, false, a blank string, [] or {}): Claude Code
 //     reads no hooks, servers, isolation, mode or initial prompt, except that
 //     hooks: [] is not a hook map and keeps Claude Code from loading the agent.
@@ -357,7 +361,22 @@ func claudeNoop(key string, value any) (string, bool) {
 	if emptyValue(value) {
 		return "empty, so Claude Code ignores it", true
 	}
+	if events, ignored := ClaudeIgnoredHookEvents(value); key == "hooks" && ignored {
+		return fmt.Sprintf("Claude Code ignores these events (%s)", strings.Join(events, ", ")),
+			true
+	}
 	return "", false
+}
+
+// claudeRelaxingModes are the Claude Code permission modes that only approve
+// more without asking (https://code.claude.com/docs/en/sub-agents#permission-modes):
+// acceptEdits accepts file edits, auto lets a classifier approve in the user's
+// place, and bypassPermissions skips prompts. Another harness that asks for
+// approval as usual is at least as strict, so conversion drops them with a note
+// (Semantics.PermissionMode). plan and dontAsk restrict the agent and stay
+// refused.
+var claudeRelaxingModes = map[string]bool{
+	"acceptEdits": true, "auto": true, "bypassPermissions": true,
 }
 
 // claudeBehaviors are Claude Code subagent fields with no cross-harness equivalent.
@@ -436,6 +455,11 @@ func (a claudeAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 			case claudeBehaviors[key] != "":
 				if why, noop := claudeNoop(key, value); noop {
 					sem.note("omitted %s: %s", key, why)
+					continue
+				}
+				if mode, ok := value.(string); ok && key == "permissionMode" &&
+					claudeRelaxingModes[mode] {
+					sem.PermissionMode = mode
 					continue
 				}
 				sem.unsupported(key, claudeBehaviors[key])

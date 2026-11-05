@@ -126,6 +126,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "cu-folded",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".cursor/agents/cu-folded.md",
+          "sourceDigest": "sha256:269f1c668e921158450159bc7643fb769ff5af270bc46ab39cdd8ccaa5ac764c",
+          "converter": "omp/v4",
+          "path": "/agnthub-e2e/home/.omp/agent/agents/cu-folded.md",
+          "digest": "sha256:dce8c8a3eebc7093c6e54faff20d655783776e709b6899dffccff94a95aaae5b",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "cu-native",
       "origin": "direct",
       "artifacts": [
@@ -146,6 +166,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "cu-tagged",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".cursor/agents/cu-tagged.md",
+          "sourceDigest": "sha256:970c3f3b68d411a7b90dc24c2b42c1e5f3355966a2427f158fa3b42b3c726970",
+          "converter": "omp/v4",
+          "path": "/agnthub-e2e/home/.omp/agent/agents/cu-tagged.md",
+          "digest": "sha256:8590cc4b071166eb15ac1ecd1241cc06ef13ec496ba9034742793bd11d366d39",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "cx-native",
       "origin": "direct",
       "artifacts": [
@@ -157,6 +197,26 @@
           "converter": "omp/v4",
           "path": "/agnthub-e2e/home/.omp/agent/agents/cx-native.md",
           "digest": "sha256:9d92584b2a9cd98842addf79e63b12f675be2c7e07dd9d78848388eb18de63fe",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "cx-nicknamed",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".codex/agents/cx-nicknamed.toml",
+          "sourceDigest": "sha256:afe1f7c1493cd1348a68552047006bd3c87c0ebb0e102a4200365a2a6fb42436",
+          "converter": "omp/v4",
+          "path": "/agnthub-e2e/home/.omp/agent/agents/cx-nicknamed.md",
+          "digest": "sha256:3495cd4e6a016190fea231f059034ba7106b413fdd1037ef2cc9df7327e06606",
           "requires": []
         }
       ]
@@ -237,6 +297,26 @@
           "converter": "omp/v4",
           "path": "/agnthub-e2e/home/.omp/agent/agents/fixer.md",
           "digest": "sha256:4d3acfe5bcdcb8e9dc19b44e3a265793aa87fb48426801da26b2f2190b39356e",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "gh-colored",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".github/agents/gh-colored.agent.md",
+          "sourceDigest": "sha256:cf7c2dcc846ea6083bd4a55c95a8ef6105f2a6fd4587cbd090a078c3584c2d25",
+          "converter": "omp/v4",
+          "path": "/agnthub-e2e/home/.omp/agent/agents/gh-colored.md",
+          "digest": "sha256:54b515d64c7b936e51ce29639ef249988f6b86ecfd2338ffdfd3f10b01d9d9ee",
           "requires": []
         }
       ]
@@ -406,6 +486,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "misnamed",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/misnamed.md",
+          "sourceDigest": "sha256:c5c73ca9bb6c15b435d0584078dd5bb855ca728acba4339cd9bdb0c8ac46ea4e",
+          "converter": "omp/v4",
+          "path": "/agnthub-e2e/home/.omp/agent/agents/misnamed.md",
+          "digest": "sha256:b27164e0b1a2b31400a3d89833671719bd744cb801dc741feaeca75e68f2e220",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "no-shell",
       "origin": "direct",
       "artifacts": [
@@ -485,6 +585,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "quoted",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/quoted.md",
+          "sourceDigest": "sha256:a92554a3420863b7acc442ea397337ac1bae541f07c7a50f8a3be291d02b0dd1",
+          "converter": "omp/v4",
+          "path": "/agnthub-e2e/home/.omp/agent/agents/quoted.md",
+          "digest": "sha256:94d36c369eda42a7ba16986270504feebbad85793da905468179d857c74cacfb",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "recaller",
       "origin": "direct",
       "artifacts": [
@@ -496,6 +616,26 @@
           "converter": "omp/v4",
           "path": "/agnthub-e2e/home/.omp/agent/agents/recaller.md",
           "digest": "sha256:38fa0c21a0f6a4c22686bb55c0f95cf9cdbf2fbf80cbc4f3f75cd7cef5ea3166",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "relaxed",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/relaxed.md",
+          "sourceDigest": "sha256:88b6be1e2b64ae4bbfbab2c958f917bca08a5abedebecac673fa17ba8826ce95",
+          "converter": "omp/v4",
+          "path": "/agnthub-e2e/home/.omp/agent/agents/relaxed.md",
+          "digest": "sha256:4f282324f66abbcb16b1f542f86d43d6ccdaa51b7b3183d7b23d512852d8bbee",
           "requires": []
         }
       ]
@@ -576,6 +716,26 @@
           "converter": "omp/v4",
           "path": "/agnthub-e2e/home/.omp/agent/agents/root-helper.md",
           "digest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "scripted",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/scripted.md",
+          "sourceDigest": "sha256:1527e595b5b95f417d832f97ccb0ef2cd0579cb27cdc6944de2071946ee4b82c",
+          "converter": "omp/v4",
+          "path": "/agnthub-e2e/home/.omp/agent/agents/scripted.md",
+          "digest": "sha256:edb0548cc8ca6566869aa65e2d88f499801714565d298dd1e91ee09325f3ddc1",
           "requires": []
         }
       ]

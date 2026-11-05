@@ -5,7 +5,7 @@
     "kind": "git",
     "locator": "localhost:8443/layouts.git",
     "ref": "v1.0.0",
-    "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+    "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
   },
   "harnesses": [
     {
@@ -29,7 +29,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -55,7 +55,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
@@ -73,7 +73,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -95,7 +95,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
@@ -113,7 +113,25 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "cx-nicknamed",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/cx-nicknamed.toml",
+      "variant": "native",
+      "sourcePath": ".codex/agents/cx-nicknamed.toml",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
@@ -131,7 +149,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -157,7 +175,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
@@ -175,7 +193,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -198,7 +216,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -222,7 +240,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
@@ -240,13 +258,37 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the claude variant",
         "persistent memory (memory: local) emulated: codex has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory-local/local-notes/ (Claude Code's folder; agnthub does not add it to .gitignore)"
+      ]
+    },
+    {
+      "agent": "misnamed",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/misnamed.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/misnamed.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted tools entries read, ListMcpResourcesTool, playwright: no codex equivalent, so the agent goes without them",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
       ]
     },
     {
@@ -262,7 +304,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -283,10 +325,57 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "quoted",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/quoted.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/quoted.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ]
+    },
+    {
+      "agent": "relaxed",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/relaxed.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/relaxed.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode acceptEdits isn't available in codex; the harness asks for approval as usual",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ]
     },
     {
       "agent": "rememberer",
@@ -301,7 +390,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -325,7 +414,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
@@ -343,10 +432,34 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "scripted",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/scripted.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/scripted.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "ref": "v1.0.0",
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted hooks: Claude Code ignores these events (post, pre)",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ]
     },
     {
       "agent": "skilled",
@@ -361,7 +474,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -385,7 +498,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -411,7 +524,7 @@
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
         "ref": "v1.0.0",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -421,6 +534,6 @@
     }
   ],
   "summary": {
-    "create": 19
+    "create": 24
   }
 }

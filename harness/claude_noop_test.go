@@ -60,7 +60,6 @@ func TestClaudeNoopFieldsConvert(t *testing.T) {
 func TestClaudeRestrictingFieldsStayRefused(t *testing.T) {
 	for _, field := range []string{
 		"permissionMode: plan\n",
-		"permissionMode: acceptEdits\n",
 		"permissionMode: dontAsk\n",
 		"permissionMode: Default\n",
 		"permissionMode: [default]\n",

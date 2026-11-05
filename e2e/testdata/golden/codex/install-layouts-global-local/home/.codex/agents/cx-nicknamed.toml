@@ -1,0 +1,9 @@
+name = "cx-nicknamed"
+description = "Codex agent with display nicknames."
+nickname_candidates = ["Atlas", "Delta Two"]
+developer_instructions = """
+Explain the code without running commands.
+"""
+
+[features]
+shell_tool = false

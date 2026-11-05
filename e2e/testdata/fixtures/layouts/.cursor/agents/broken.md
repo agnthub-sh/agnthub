@@ -1,7 +1,6 @@
 ---
 name: broken
-description: >
-  Cursor variant whose description Cursor would read
-  as a single ">" character.
+description: Cursor variant with a tools line Cursor would not enforce.
+tools: Read, Grep
 ---
 Cursor instructions.

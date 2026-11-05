@@ -1,6 +1,6 @@
 ---
 name: strict
-description: >
-  Cursor variant with a folded description.
+description: Cursor variant with a tools line Cursor would not enforce.
+tools: Read, Grep
 ---
 Cursor instructions.

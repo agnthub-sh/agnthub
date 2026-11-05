@@ -80,6 +80,19 @@
       "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
+      "agent": "cu-folded",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
       "agent": "cu-native",
       "harness": "codex",
       "settings": {},
@@ -93,7 +106,33 @@
       "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
+      "agent": "cu-tagged",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
       "agent": "delegator",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
+      "agent": "gh-colored",
       "harness": "codex",
       "settings": {},
       "effectiveSettings": {},
@@ -289,7 +328,7 @@
     }
   ],
   "summary": {
-    "incompatible": 20,
+    "incompatible": 23,
     "invalid": 1
   }
 }

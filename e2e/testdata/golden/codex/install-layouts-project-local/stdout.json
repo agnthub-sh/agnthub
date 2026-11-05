@@ -107,6 +107,22 @@
       "action": "create"
     },
     {
+      "agent": "cx-nicknamed",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/cx-nicknamed.toml",
+      "variant": "native",
+      "sourcePath": ".codex/agents/cx-nicknamed.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "defaulted",
       "harness": "codex",
       "settings": {},
@@ -226,6 +242,28 @@
       ]
     },
     {
+      "agent": "misnamed",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/misnamed.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/misnamed.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted tools entries read, ListMcpResourcesTool, playwright: no codex equivalent, so the agent goes without them",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ]
+    },
+    {
       "agent": "no-shell",
       "harness": "codex",
       "settings": {},
@@ -259,6 +297,49 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "quoted",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/quoted.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/quoted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ]
+    },
+    {
+      "agent": "relaxed",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/relaxed.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/relaxed.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode acceptEdits isn't available in codex; the harness asks for approval as usual",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ]
     },
     {
       "agent": "rememberer",
@@ -313,6 +394,28 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "scripted",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/scripted.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/scripted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted hooks: Claude Code ignores these events (post, pre)",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ]
     },
     {
       "agent": "skilled",
@@ -381,6 +484,6 @@
     }
   ],
   "summary": {
-    "create": 19
+    "create": 24
   }
 }

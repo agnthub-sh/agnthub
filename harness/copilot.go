@@ -99,7 +99,7 @@ func validateCopilot(doc *agent.Document) ([]string, error) {
 			if err := checkCopilotField(key, kind, value); err != nil {
 				return nil, err
 			}
-		case copilotIDEOnlyFields[key] || harmlessPortableKeys[key]:
+		case copilotIDEOnlyFields[key] || harmlessPortableKeys[key] || descriptiveKeys[key]:
 			notes = append(notes, fmt.Sprintf("%s is not used by Copilot CLI", key))
 		default:
 			return nil, fmt.Errorf(

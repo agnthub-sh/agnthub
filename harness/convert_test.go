@@ -241,7 +241,7 @@ func TestGeneratedToolPoliciesRoundTrip(t *testing.T) {
 func TestBehavioralFieldsRefuseConversion(t *testing.T) {
 	for _, field := range []string{
 		"hooks:\n  Stop:\n    - command: echo\n",
-		"permissionMode: acceptEdits\n",
+		"permissionMode: plan\n",
 		"mcpServers:\n  - github\n",
 		"isolation: worktree\n",
 	} {
@@ -524,8 +524,6 @@ func TestMCPToolsTargetsCannotAddressAreRefused(t *testing.T) {
 		{"OpenCode server matching a built-in", []string{"Read", "mcp__apply"}, agent.OpenCode},
 		{"OpenCode's own namespace", []string{"Read", "mcp__opencode__x"}, agent.OpenCode},
 		{"Cursor readonly", []string{"Read", "Grep", "mcp__github__get_commit"}, agent.Cursor},
-		{"MCP wildcard pattern", []string{"Read", "mcp__github__get_*"}, agent.Gemini},
-		{"every MCP server", []string{"Read", "mcp__*"}, agent.OpenCode},
 		{
 			"Copilot name over 64 characters",
 			[]string{"Read", "mcp__context7__" + strings.Repeat("x", 60)},
@@ -557,20 +555,20 @@ func TestMCPToolsConvertToClaudeCode(t *testing.T) {
 
 // Copilot CLI grants session MCP tools only by their exposed <server>-<tool>
 // name, which cannot be split into server and tool; documented <server>/<tool>
-// entries grant nothing, so they never carry over.
+// entries grant nothing, and a <server>-<tool> entry has no other harness's
+// equivalent, so neither carries over.
 func TestCopilotMCPEntriesNeverWidenConversions(t *testing.T) {
-	artifact, err := generateFrom(t, agent.Copilot, agent.Claude,
-		".github/agents/reviewer.agent.md",
-		"---\ndescription: Reviews\ntools: [read, context7/query-docs]\n---\nReview.\n")
-	if err != nil {
-		t.Fatal(err)
+	for _, entry := range []string{"context7/query-docs", "context7-query-docs"} {
+		artifact, err := generateFrom(t, agent.Copilot, agent.Claude,
+			".github/agents/reviewer.agent.md",
+			"---\ndescription: Reviews\ntools: [read, "+entry+"]\n---\nReview.\n")
+		if err != nil {
+			t.Fatal(err)
+		}
+		if strings.Contains(string(artifact.Content), "mcp__") {
+			t.Errorf("%s must not grant an MCP tool:\n%s", entry, artifact.Content)
+		}
 	}
-	if strings.Contains(string(artifact.Content), "mcp__") {
-		t.Errorf("an entry Copilot ignores must not grant an MCP tool:\n%s", artifact.Content)
-	}
-	_, err = generateFrom(t, agent.Copilot, agent.Claude, ".github/agents/reviewer.agent.md",
-		"---\ndescription: Reviews\ntools: [read, context7-query-docs]\n---\nReview.\n")
-	requireIncompatible(t, err)
 }
 
 func hasNote(notes []string, fragment string) bool {

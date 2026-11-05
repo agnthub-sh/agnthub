@@ -105,6 +105,25 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "cx-nicknamed",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "native",
+          "sourcePath": ".codex/agents/cx-nicknamed.toml",
+          "sourceDigest": "sha256:afe1f7c1493cd1348a68552047006bd3c87c0ebb0e102a4200365a2a6fb42436",
+          "path": "/agnthub-e2e/home/.codex/agents/cx-nicknamed.toml",
+          "digest": "sha256:afe1f7c1493cd1348a68552047006bd3c87c0ebb0e102a4200365a2a6fb42436",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "defaulted",
       "origin": "direct",
       "artifacts": [
@@ -225,6 +244,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "misnamed",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/misnamed.md",
+          "sourceDigest": "sha256:c5c73ca9bb6c15b435d0584078dd5bb855ca728acba4339cd9bdb0c8ac46ea4e",
+          "converter": "codex/v4",
+          "path": "/agnthub-e2e/home/.codex/agents/misnamed.toml",
+          "digest": "sha256:b90ad43281d6643aeb0caaed139d32e15885aff6b34f496c28f1192afc2a2b4e",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "no-shell",
       "origin": "direct",
       "artifacts": [
@@ -256,6 +295,46 @@
           "converter": "codex/v4",
           "path": "/agnthub-e2e/home/.codex/agents/planner.toml",
           "digest": "sha256:8deba390f39ab25d9c83dcac3ecfda0a2f9296abced19191234230805cc043d1",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "quoted",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/quoted.md",
+          "sourceDigest": "sha256:a92554a3420863b7acc442ea397337ac1bae541f07c7a50f8a3be291d02b0dd1",
+          "converter": "codex/v4",
+          "path": "/agnthub-e2e/home/.codex/agents/quoted.toml",
+          "digest": "sha256:c3c9adf6288b0912e213b61a1391e78a45321880d0baa4a1d33df27fbf41f395",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "relaxed",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/relaxed.md",
+          "sourceDigest": "sha256:88b6be1e2b64ae4bbfbab2c958f917bca08a5abedebecac673fa17ba8826ce95",
+          "converter": "codex/v4",
+          "path": "/agnthub-e2e/home/.codex/agents/relaxed.toml",
+          "digest": "sha256:9735bc67afe02633b3d7127f60b6499c1e45e0154ca495063e820cc8687b5fb0",
           "requires": []
         }
       ]
@@ -316,6 +395,26 @@
           "converter": "codex/v4",
           "path": "/agnthub-e2e/home/.codex/agents/root-helper.toml",
           "digest": "sha256:719a6d4ab1dcf138b888656a78027e5d2ceaab015e818620b40d07cda0a84394",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "scripted",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/scripted.md",
+          "sourceDigest": "sha256:1527e595b5b95f417d832f97ccb0ef2cd0579cb27cdc6944de2071946ee4b82c",
+          "converter": "codex/v4",
+          "path": "/agnthub-e2e/home/.codex/agents/scripted.toml",
+          "digest": "sha256:5a3afed97586b9ca72bb240ee33bbd3996f0dfad368fa356ac3d1268d5d2ef4a",
           "requires": []
         }
       ]

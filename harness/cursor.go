@@ -82,54 +82,100 @@ func cursorAgentsDir(ctx Context) string {
 	return filepath.Join(ctx.Env.Home(), ".cursor", "agents")
 }
 
+// Native installs an authored subagent as written, except a description
+// Cursor would not read whole (a block scalar or a value continued on more
+// lines, of which Cursor keeps the first line only): that line is rewritten as
+// one line with the same words, and every other byte is kept.
 func (cursorAdapter) Native(id string, variant *agent.VariantFile) (Artifact, error) {
-	if reason := validateCursorVariant(id, variant); reason != "" {
+	content := variant.Raw
+	notes, reason := validateCursorVariant(id, variant.Path, content)
+	if reason == cursorDescriptionReason {
+		if folded, ok := cursorFoldDescription(variant.Path, content); ok {
+			content = folded
+			notes, reason = validateCursorVariant(id, variant.Path, folded)
+		}
+	}
+	if reason != "" {
 		return Artifact{}, &InvalidVariantError{
 			Harness: agent.Cursor,
 			Path:    variant.Path,
 			Reason:  reason,
 		}
 	}
-	return Artifact{FileName: id + ".md", Content: variant.Raw}, nil
+	return Artifact{FileName: id + ".md", Content: content, Notes: notes}, nil
 }
 
-// validateCursorVariant returns why Cursor would not load variant as id with its
-// declared behavior, or "" when it would.
-func validateCursorVariant(id string, variant *agent.VariantFile) string {
-	doc, err := agent.ParseMarkdown(variant.Path, variant.Raw)
+// validateCursorVariant returns why Cursor would not load raw as id with its
+// declared behavior, or "" when it would, plus notes on documentation-only keys
+// Cursor ignores.
+func validateCursorVariant(id, filePath string, raw []byte) ([]string, string) {
+	doc, err := agent.ParseMarkdown(filePath, raw)
 	if err != nil {
-		return err.Error()
+		return nil, err.Error()
 	}
-	for key := range doc.Frontmatter {
-		if !cursorFields[key] && !harmlessPortableKeys[key] {
-			return fmt.Sprintf(
+	var notes []string
+	for _, key := range sortedKeys(doc.Frontmatter) {
+		switch {
+		case cursorFields[key] || harmlessPortableKeys[key]:
+		case descriptiveKeys[key]:
+			notes = append(notes, key+" is not used by Cursor")
+		default:
+			return nil, fmt.Sprintf(
 				"Cursor does not document %q; its behavior would not be enforced", key,
 			)
 		}
 	}
 	if strings.TrimSpace(doc.String("description")) == "" {
-		return "frontmatter requires a description"
+		return nil, "frontmatter requires a description"
 	}
 	if strings.TrimSpace(doc.Body) == "" {
-		return "Cursor skips subagents without instructions"
+		return nil, "Cursor skips subagents without instructions"
 	}
 	if value, ok := doc.Frontmatter["model"]; ok {
 		if model, isString := value.(string); !isString || strings.TrimSpace(model) == "" {
-			return "model must be a model ID or inherit"
+			return nil, "model must be a model ID or inherit"
 		}
 	}
 	for _, key := range []string{"readonly", "is_background"} {
 		if value, ok := doc.Frontmatter[key]; ok {
 			if _, isBool := value.(bool); !isBool {
-				return key + " must be a boolean"
+				return nil, key + " must be a boolean"
 			}
 		}
 	}
-	return cursorReadsAs(id, doc)
+	if reason := cursorReadsAs(id, doc); reason != "" {
+		return nil, reason
+	}
+	return notes, ""
+}
+
+// cursorDescriptionReason is why Cursor would not read a description whole.
+const cursorDescriptionReason = "Cursor reads one line per key; write the description on a " +
+	"single line"
+
+// cursorFoldDescription rewrites the description of an authored subagent onto
+// one line, its words joined by single spaces.
+func cursorFoldDescription(filePath string, raw []byte) ([]byte, bool) {
+	doc, err := agent.ParseMarkdown(filePath, raw)
+	if err != nil {
+		return nil, false
+	}
+	description, ok := doc.Frontmatter["description"].(string)
+	if !ok {
+		return nil, false
+	}
+	_, line, ok := cursorDescription(strings.Join(strings.Fields(description), " "))
+	if !ok {
+		return nil, false
+	}
+	folded, err := agent.ReplaceKey(filePath, raw, "description", line)
+	return folded, err == nil
 }
 
 // cursorReadsAs compares what Cursor's line reader sees with the decoded YAML and
-// returns why they disagree on identity, description or restrictions.
+// returns why they disagree on identity, restrictions or description. The
+// description comes last: Native folds a description only when Cursor reads
+// everything else as declared.
 func cursorReadsAs(id string, doc *agent.Document) string {
 	seen := cursorFrontmatter(doc.Raw)
 	name, declared := doc.Frontmatter["name"]
@@ -149,9 +195,6 @@ func cursorReadsAs(id string, doc *agent.Document) string {
 			id,
 		)
 	}
-	if unquote(seen["description"]) != doc.String("description") {
-		return "Cursor reads one line per key; write the description on a single line"
-	}
 	for _, key := range []string{"readonly", "is_background"} {
 		declaredTrue, _ := doc.Frontmatter[key].(bool)
 		readTrue := strings.EqualFold(seen[key], "true")
@@ -167,6 +210,9 @@ func cursorReadsAs(id string, doc *agent.Document) string {
 				fmt.Sprintf("%s: %t", key, declaredTrue),
 			)
 		}
+	}
+	if !cursorReadsDescription(seen["description"], doc.String("description")) {
+		return cursorDescriptionReason
 	}
 	return ""
 }
@@ -206,6 +252,49 @@ func unquote(value string) string {
 		}
 	}
 	return value
+}
+
+// cursorReadsDescription reports whether raw, the line value Cursor reads,
+// carries description: the same text, inside quotes Cursor keeps, or a quoted
+// YAML scalar whose escapes (\" or ”) Cursor shows as written.
+func cursorReadsDescription(raw, description string) bool {
+	if unquote(raw) == description {
+		return true
+	}
+	if raw == "" || raw[0] != '"' && raw[0] != '\'' {
+		return false
+	}
+	var decoded string
+	return yaml.Unmarshal([]byte(raw), &decoded) == nil && decoded == description
+}
+
+// cursorDescription renders a one-line description as a YAML scalar Cursor
+// reads, returning the scalar and its frontmatter line. Cursor keeps a value as
+// written, so a form it reads unchanged (plain, or quoted without escapes)
+// comes first; a description that needs quoting and contains quote characters
+// takes the quoted form with the fewest escapes, which Cursor shows as written.
+func cursorDescription(description string) (*yaml.Node, string, bool) {
+	var best *yaml.Node
+	var bestLine string
+	for _, style := range []yaml.Style{0, yaml.SingleQuotedStyle, yaml.DoubleQuotedStyle} {
+		node := &yaml.Node{Kind: yaml.ScalarNode, Tag: "!!str", Style: style, Value: description}
+		rendered, err := agent.RenderMarkdown([]agent.Field{{Key: "description", Value: node}}, "")
+		if err != nil {
+			continue
+		}
+		line := strings.TrimSuffix(strings.TrimPrefix(string(rendered), "---\n"), "\n---\n")
+		raw, found := strings.CutPrefix(line, "description: ")
+		if !found || strings.Contains(raw, "\n") || !cursorReadsDescription(raw, description) {
+			continue
+		}
+		if unquote(raw) == description {
+			return node, line, true
+		}
+		if best == nil || len(line) < len(bestLine) {
+			best, bestLine = node, line
+		}
+	}
+	return best, bestLine, best != nil
 }
 
 // cursorReadonlyCaps are what a Cursor readonly agent keeps: it blocks edits,
@@ -273,47 +362,32 @@ func (a cursorAdapter) Convert(sem *Semantics) (Artifact, error) {
 		check.note("Cursor agents keep the session's MCP tools unless read-only")
 		check.mcpSession()
 	}
-	description := strings.Join(strings.Fields(sem.Description), " ")
 	instructions := check.carry(additiveSupport{
 		userMemory:    cursorUserMemory,
 		loadSkill:     "Each one is listed among your available skills: read its SKILL.md.",
 		sessionSkills: true,
 		tools:         sem.Tools,
 	})
-	if description != strings.TrimSpace(sem.Description) {
-		check.note("description joined onto one line: Cursor reads one line per key")
+	// Cursor reads one line per key, so the description's words are joined
+	// onto one line, which keeps its meaning.
+	description, _, ok := cursorDescription(strings.Join(strings.Fields(sem.Description), " "))
+	if !ok {
+		return Artifact{}, check.refuse("description cannot be written on one line Cursor " +
+			"reads; author a native cursor variant")
 	}
-	// YAML's default style may single-quote a description containing ": ",
-	// doubling its apostrophes; Cursor keeps the raw line, so fall back to a
-	// double-quoted line, which needs no escapes unless the text has '"' or '\'.
-	var content []byte
-	for _, value := range []any{
-		description,
-		&yaml.Node{Kind: yaml.ScalarNode, Tag: "!!str", Style: yaml.DoubleQuotedStyle, Value: description},
-	} {
-		fields := []agent.Field{
-			{Key: "name", Value: sem.ID},
-			{Key: "description", Value: value},
-		}
-		if readonly {
-			fields = append(fields, agent.Field{Key: "readonly", Value: true})
-		}
-		if sem.Background {
-			fields = append(fields, agent.Field{Key: "is_background", Value: true})
-		}
-		rendered, err := agent.RenderMarkdown(fields, instructions)
-		if err != nil {
-			return Artifact{}, err
-		}
-		seen := cursorFrontmatter(rendered)
-		if seen["name"] == sem.ID && unquote(seen["description"]) == description {
-			content = rendered
-			break
-		}
+	fields := []agent.Field{
+		{Key: "name", Value: sem.ID},
+		{Key: "description", Value: description},
 	}
-	if content == nil {
-		return Artifact{}, check.refuse("description cannot be written in a form Cursor " +
-			"reads unchanged; author a native cursor variant")
+	if readonly {
+		fields = append(fields, agent.Field{Key: "readonly", Value: true})
+	}
+	if sem.Background {
+		fields = append(fields, agent.Field{Key: "is_background", Value: true})
+	}
+	content, err := agent.RenderMarkdown(fields, instructions)
+	if err != nil {
+		return Artifact{}, err
 	}
 	return selfCheck(a, sem.ID, Artifact{
 		FileName:  sem.ID + ".md",

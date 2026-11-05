@@ -126,6 +126,26 @@
       ]
     },
     {
+      "agent": "cu-folded",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/cu-folded.md",
+      "variant": "generated",
+      "sourcePath": ".cursor/agents/cu-folded.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the cursor variant",
+        "Cursor readonly: converted without edits, shell, MCP tools or delegation"
+      ]
+    },
+    {
       "agent": "cu-native",
       "harness": "gemini",
       "settings": {},
@@ -146,6 +166,28 @@
       ]
     },
     {
+      "agent": "cu-tagged",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/cu-tagged.md",
+      "variant": "generated",
+      "sourcePath": ".cursor/agents/cu-tagged.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the cursor variant",
+        "omitted category: descriptive metadata",
+        "omitted color: descriptive metadata",
+        "Cursor readonly: converted without edits, shell, MCP tools or delegation"
+      ]
+    },
+    {
       "agent": "cx-native",
       "harness": "gemini",
       "settings": {},
@@ -162,6 +204,26 @@
       "action": "create",
       "notes": [
         "converted from the codex variant"
+      ]
+    },
+    {
+      "agent": "cx-nicknamed",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/cx-nicknamed.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-nicknamed.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "omitted nickname_candidates: display names for Codex's spawned agents"
       ]
     },
     {
@@ -219,6 +281,27 @@
       "action": "create",
       "notes": [
         "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "gh-colored",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/gh-colored.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-colored.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "omitted color: not used by Copilot CLI",
+        "omitted title: not used by Copilot CLI"
       ]
     },
     {
@@ -391,6 +474,26 @@
       ]
     },
     {
+      "agent": "misnamed",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/misnamed.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/misnamed.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted tools entries read, ListMcpResourcesTool, playwright: no gemini equivalent, so the agent goes without them"
+      ]
+    },
+    {
       "agent": "no-shell",
       "harness": "gemini",
       "settings": {},
@@ -464,6 +567,25 @@
       "action": "create"
     },
     {
+      "agent": "quoted",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/quoted.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/quoted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
       "agent": "recaller",
       "harness": "gemini",
       "settings": {},
@@ -481,6 +603,26 @@
       "notes": [
         "converted from the claude variant",
         "persistent memory (memory: user) isn't available on gemini: the agent cannot read and edit files, and agnthub never grants tools for memory; the agent starts each session without its notes"
+      ]
+    },
+    {
+      "agent": "relaxed",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/relaxed.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/relaxed.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode acceptEdits isn't available in gemini; the harness asks for approval as usual"
       ]
     },
     {
@@ -555,6 +697,26 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "scripted",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/scripted.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/scripted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted hooks: Claude Code ignores these events (post, pre)"
+      ]
     },
     {
       "agent": "skilled",
@@ -637,6 +799,6 @@
     }
   ],
   "summary": {
-    "create": 33
+    "create": 41
   }
 }

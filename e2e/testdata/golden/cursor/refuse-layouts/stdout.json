@@ -51,10 +51,23 @@
       },
       "origin": "direct",
       "action": "invalid",
-      "reason": "invalid cursor variant .cursor/agents/broken.md: Cursor reads one line per key; write the description on a single line"
+      "reason": "invalid cursor variant .cursor/agents/broken.md: Cursor does not document \"tools\"; its behavior would not be enforced"
     },
     {
       "agent": "cx-native",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes shell but allows edits, and Cursor can only withhold shell by making the agent read-only"
+    },
+    {
+      "agent": "cx-nicknamed",
       "harness": "cursor",
       "settings": {},
       "effectiveSettings": {},
@@ -185,7 +198,7 @@
     }
   ],
   "summary": {
-    "incompatible": 12,
+    "incompatible": 13,
     "invalid": 1
   }
 }

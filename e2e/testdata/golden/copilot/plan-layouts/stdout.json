@@ -166,7 +166,33 @@
       ]
     },
     {
+      "agent": "cu-folded",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it uses web search, but Copilot CLI has no web search tool"
+    },
+    {
       "agent": "cu-native",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it uses web search, but Copilot CLI has no web search tool"
+    },
+    {
+      "agent": "cu-tagged",
       "harness": "copilot",
       "settings": {},
       "effectiveSettings": {},
@@ -195,6 +221,27 @@
       "action": "create",
       "notes": [
         "converted from the codex variant",
+        "Copilot CLI has no tool denylist, so the agent lists its built-in tools and does not get MCP tools"
+      ]
+    },
+    {
+      "agent": "cx-nicknamed",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/cx-nicknamed.agent.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-nicknamed.toml",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "omitted nickname_candidates: display names for Codex's spawned agents",
         "Copilot CLI has no tool denylist, so the agent lists its built-in tools and does not get MCP tools"
       ]
     },
@@ -272,6 +319,26 @@
       "action": "create",
       "notes": [
         "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "gh-colored",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/gh-colored.agent.md",
+      "variant": "native",
+      "sourcePath": ".github/agents/gh-colored.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "color is not used by Copilot CLI",
+        "title is not used by Copilot CLI"
       ]
     },
     {
@@ -454,6 +521,26 @@
       "reason": "it allows MCP tool github/*, but Copilot CLI cannot select every tool of an MCP server"
     },
     {
+      "agent": "misnamed",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/misnamed.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/misnamed.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted tools entries read, ListMcpResourcesTool, playwright: no copilot equivalent, so the agent goes without them"
+      ]
+    },
+    {
       "agent": "modelled",
       "harness": "copilot",
       "settings": {},
@@ -542,6 +629,25 @@
       "action": "create"
     },
     {
+      "agent": "quoted",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/quoted.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/quoted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
       "agent": "recaller",
       "harness": "copilot",
       "settings": {},
@@ -559,6 +665,26 @@
       "notes": [
         "converted from the claude variant",
         "persistent memory (memory: user) isn't available on copilot: the agent cannot read and edit files, and agnthub never grants tools for memory; the agent starts each session without its notes"
+      ]
+    },
+    {
+      "agent": "relaxed",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/relaxed.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/relaxed.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode acceptEdits isn't available in copilot; the harness asks for approval as usual"
       ]
     },
     {
@@ -633,6 +759,26 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "scripted",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/scripted.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/scripted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted hooks: Claude Code ignores these events (post, pre)"
+      ]
     },
     {
       "agent": "skilled",
@@ -710,8 +856,8 @@
     }
   ],
   "summary": {
-    "create": 30,
-    "incompatible": 9,
+    "create": 36,
+    "incompatible": 11,
     "invalid": 1
   }
 }

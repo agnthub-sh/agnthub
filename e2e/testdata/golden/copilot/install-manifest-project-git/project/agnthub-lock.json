@@ -27,7 +27,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
+        "revision": "1fc96c7c4fac361e5cb258ea67b735f0a5a23da1"
       },
       "agent": "helper",
       "origin": "dependency",
@@ -48,7 +48,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
+        "revision": "1fc96c7c4fac361e5cb258ea67b735f0a5a23da1"
       },
       "agent": "lead",
       "origin": "direct",
@@ -73,7 +73,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/manifest.git",
-        "revision": "23ce82da460220450fa388be0be34d10804fa7b0"
+        "revision": "1fc96c7c4fac361e5cb258ea67b735f0a5a23da1"
       },
       "agent": "native-only",
       "origin": "direct",

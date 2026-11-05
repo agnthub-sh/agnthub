@@ -160,6 +160,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "cu-folded",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": ".cursor/agents/cu-folded.md",
+          "sourceDigest": "sha256:269f1c668e921158450159bc7643fb769ff5af270bc46ab39cdd8ccaa5ac764c",
+          "converter": "claude/v4",
+          "path": ".claude/agents/cu-folded.md",
+          "digest": "sha256:f12af2e4181198b9cf2748f65a2f6f343f074a8c878759123c0e4d3e5c6331fb",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "cu-native",
       "origin": "direct",
       "artifacts": [
@@ -180,6 +200,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "cu-tagged",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": ".cursor/agents/cu-tagged.md",
+          "sourceDigest": "sha256:970c3f3b68d411a7b90dc24c2b42c1e5f3355966a2427f158fa3b42b3c726970",
+          "converter": "claude/v4",
+          "path": ".claude/agents/cu-tagged.md",
+          "digest": "sha256:e09d9c2e6a203b522ee6567523c488ee244bad47fad0236dec0a3897c59fb7f2",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "cx-native",
       "origin": "direct",
       "artifacts": [
@@ -191,6 +231,26 @@
           "converter": "claude/v4",
           "path": ".claude/agents/cx-native.md",
           "digest": "sha256:a9420ff7e4667ff482eb69e93ec11b1e78bc48f0a2607f59d47e81e3fa80980f",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "cx-nicknamed",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": ".codex/agents/cx-nicknamed.toml",
+          "sourceDigest": "sha256:afe1f7c1493cd1348a68552047006bd3c87c0ebb0e102a4200365a2a6fb42436",
+          "converter": "claude/v4",
+          "path": ".claude/agents/cx-nicknamed.md",
+          "digest": "sha256:f5264b62d26819bef95100c3a1165ac366705c97a41c11080174ebc406f6198e",
           "requires": []
         }
       ]
@@ -276,6 +336,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "gh-colored",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": ".github/agents/gh-colored.agent.md",
+          "sourceDigest": "sha256:cf7c2dcc846ea6083bd4a55c95a8ef6105f2a6fd4587cbd090a078c3584c2d25",
+          "converter": "claude/v4",
+          "path": ".claude/agents/gh-colored.md",
+          "digest": "sha256:a1f4f0f70dbbc676848bb2bbf9b6b3a8206adccc6a2263af3f45db69a93bbf3a",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "gh-native",
       "origin": "direct",
       "artifacts": [
@@ -343,9 +423,9 @@
           "harness": "claude",
           "variant": "native",
           "sourcePath": ".claude/agents/guarded.md",
-          "sourceDigest": "sha256:c52c61d02d1de9e0dc83eb2f0177aa3eed75462c291a2f1358247f6940f96378",
+          "sourceDigest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
           "path": ".claude/agents/guarded.md",
-          "digest": "sha256:c52c61d02d1de9e0dc83eb2f0177aa3eed75462c291a2f1358247f6940f96378",
+          "digest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
           "requires": []
         }
       ]
@@ -451,6 +531,25 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "misnamed",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/misnamed.md",
+          "sourceDigest": "sha256:c5c73ca9bb6c15b435d0584078dd5bb855ca728acba4339cd9bdb0c8ac46ea4e",
+          "path": ".claude/agents/misnamed.md",
+          "digest": "sha256:c5c73ca9bb6c15b435d0584078dd5bb855ca728acba4339cd9bdb0c8ac46ea4e",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "no-shell",
       "origin": "direct",
       "artifacts": [
@@ -530,6 +629,25 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "quoted",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/quoted.md",
+          "sourceDigest": "sha256:a92554a3420863b7acc442ea397337ac1bae541f07c7a50f8a3be291d02b0dd1",
+          "path": ".claude/agents/quoted.md",
+          "digest": "sha256:a92554a3420863b7acc442ea397337ac1bae541f07c7a50f8a3be291d02b0dd1",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "recaller",
       "origin": "direct",
       "artifacts": [
@@ -540,6 +658,25 @@
           "sourceDigest": "sha256:a30571bad4b7bff23bdacaaac67fb2667016a24a7c89682f52832bfda484b7d1",
           "path": ".claude/agents/recaller.md",
           "digest": "sha256:a30571bad4b7bff23bdacaaac67fb2667016a24a7c89682f52832bfda484b7d1",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "relaxed",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/relaxed.md",
+          "sourceDigest": "sha256:88b6be1e2b64ae4bbfbab2c958f917bca08a5abedebecac673fa17ba8826ce95",
+          "path": ".claude/agents/relaxed.md",
+          "digest": "sha256:88b6be1e2b64ae4bbfbab2c958f917bca08a5abedebecac673fa17ba8826ce95",
           "requires": []
         }
       ]
@@ -618,6 +755,25 @@
           "converter": "claude/v4",
           "path": ".claude/agents/root-helper.md",
           "digest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "scripted",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/scripted.md",
+          "sourceDigest": "sha256:1527e595b5b95f417d832f97ccb0ef2cd0579cb27cdc6944de2071946ee4b82c",
+          "path": ".claude/agents/scripted.md",
+          "digest": "sha256:1527e595b5b95f417d832f97ccb0ef2cd0579cb27cdc6944de2071946ee4b82c",
           "requires": []
         }
       ]

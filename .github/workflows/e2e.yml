@@ -59,7 +59,7 @@ jobs:
           go-version-file: go.mod
       - name: Compare the pinned Claude Code fields with its current reference
         if: env.LATEST == 'true' && matrix.harness == 'claude'
-        run: go test ./harness -run '^TestClaudeFieldsMatchTheDocs$' -args -claude-docs
+        run: go test ./harness -run '^TestClaude(Fields|HookEvents)MatchTheDocs$' -args -claude-docs
       - name: Run the suite
         env:
           E2E_LOG_DIR: e2e-logs

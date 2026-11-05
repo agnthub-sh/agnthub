@@ -177,6 +177,10 @@ func codexUnsupported(fields map[string]any) string {
 			if reason := codexSkills(value); reason != "" {
 				return reason
 			}
+		case key == "nickname_candidates":
+			if reason := codexNicknames(value); reason != "" {
+				return reason
+			}
 		case codexParentKeys[key]:
 			return fmt.Sprintf(
 				"%q is parent session configuration that a Codex agent file cannot override",
@@ -184,6 +188,34 @@ func codexUnsupported(fields map[string]any) string {
 			)
 		default:
 			return fmt.Sprintf("%q is not a supported Codex agent field", key)
+		}
+	}
+	return ""
+}
+
+// codexNicknames checks nickname_candidates, the display names Codex picks
+// from for an agent it spawns, the way Codex 0.164.0 loads an agent file: a
+// non-empty list of distinct, non-blank names of ASCII letters, digits, spaces,
+// hyphens and underscores. Codex skips an agent file with any other value.
+func codexNicknames(value any) string {
+	const reason = "nickname_candidates must be a non-empty list of distinct names of " +
+		"ASCII letters, digits, spaces, hyphens and underscores"
+	names, ok := value.([]any)
+	if !ok || len(names) == 0 {
+		return reason
+	}
+	seen := make(map[string]bool, len(names))
+	for _, entry := range names {
+		name, ok := entry.(string)
+		if !ok || strings.TrimSpace(name) == "" || seen[name] {
+			return reason
+		}
+		seen[name] = true
+		for _, r := range name {
+			if (r < 'a' || r > 'z') && (r < 'A' || r > 'Z') && (r < '0' || r > '9') &&
+				r != ' ' && r != '-' && r != '_' {
+				return reason
+			}
 		}
 	}
 	return ""
@@ -291,6 +323,8 @@ func (a codexAdapter) Semantics(id string, variant *agent.VariantFile) (*Semanti
 			}
 		case "skills":
 			sem.note("omitted skills settings: they only disable Codex skills")
+		case "nickname_candidates":
+			sem.note("omitted nickname_candidates: display names for Codex's spawned agents")
 		default:
 			sem.note("omitted %s: model settings are model-specific", key)
 		}

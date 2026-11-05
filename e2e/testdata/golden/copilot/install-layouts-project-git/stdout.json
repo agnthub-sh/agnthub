@@ -4,7 +4,7 @@
   "source": {
     "kind": "git",
     "locator": "localhost:8443/layouts.git",
-    "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+    "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
   },
   "harnesses": [
     {
@@ -27,7 +27,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -50,7 +50,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
@@ -67,7 +67,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -87,7 +87,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -108,7 +108,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
@@ -125,7 +125,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -145,12 +145,34 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the codex variant",
+        "Copilot CLI has no tool denylist, so the agent lists its built-in tools and does not get MCP tools"
+      ]
+    },
+    {
+      "agent": "cx-nicknamed",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/cx-nicknamed.agent.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/cx-nicknamed.toml",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "omitted nickname_candidates: display names for Codex's spawned agents",
         "Copilot CLI has no tool denylist, so the agent lists its built-in tools and does not get MCP tools"
       ]
     },
@@ -166,7 +188,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -189,7 +211,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -209,7 +231,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
@@ -226,12 +248,33 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "gh-colored",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/gh-colored.agent.md",
+      "variant": "native",
+      "sourcePath": ".github/agents/gh-colored.agent.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "color is not used by Copilot CLI",
+        "title is not used by Copilot CLI"
       ]
     },
     {
@@ -246,7 +289,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
@@ -263,7 +306,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
@@ -280,7 +323,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -300,7 +343,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -321,7 +364,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -342,7 +385,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
@@ -359,13 +402,34 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the claude variant",
         "persistent memory (memory: local) emulated: copilot has no per-agent memory, so the instructions keep the agent's notes in .claude/agent-memory-local/local-notes/ (Claude Code's folder; agnthub does not add it to .gitignore)"
+      ]
+    },
+    {
+      "agent": "misnamed",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/misnamed.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/misnamed.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted tools entries read, ListMcpResourcesTool, playwright: no copilot equivalent, so the agent goes without them"
       ]
     },
     {
@@ -380,7 +444,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -401,7 +465,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -422,7 +486,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -442,10 +506,30 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "quoted",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/quoted.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/quoted.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
     },
     {
       "agent": "recaller",
@@ -459,13 +543,34 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
       "notes": [
         "converted from the claude variant",
         "persistent memory (memory: user) isn't available on copilot: the agent cannot read and edit files, and agnthub never grants tools for memory; the agent starts each session without its notes"
+      ]
+    },
+    {
+      "agent": "relaxed",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/relaxed.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/relaxed.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode acceptEdits isn't available in copilot; the harness asks for approval as usual"
       ]
     },
     {
@@ -480,7 +585,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -501,7 +606,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
@@ -518,7 +623,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -540,10 +645,31 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "scripted",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/scripted.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/scripted.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/layouts.git",
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted hooks: Claude Code ignores these events (post, pre)"
+      ]
     },
     {
       "agent": "skilled",
@@ -557,7 +683,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -578,7 +704,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -601,7 +727,7 @@
       "source": {
         "kind": "git",
         "locator": "localhost:8443/layouts.git",
-        "revision": "9b6933f86deaa360742e0855bee0923e01a88af3"
+        "revision": "80d5c8d4b6049bfdc73a3bdbb510354f83ce62e7"
       },
       "origin": "direct",
       "action": "create",
@@ -611,6 +737,6 @@
     }
   ],
   "summary": {
-    "create": 30
+    "create": 36
   }
 }

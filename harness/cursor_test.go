@@ -87,8 +87,10 @@ func TestCursorNativeRefusesUnenforcedOrMisidentifiedVariants(t *testing.T) {
 		"filename name differs": {
 			"code_reviewer", "---\ndescription: d\n---\nBody\n",
 		},
-		"multi-line description": {
-			"reviewer", "---\nname: reviewer\ndescription: >\n  Reviews code\n---\nBody\n",
+		// Cursor would read the description's second line as readonly: true.
+		"multi-line description hiding a flag": {
+			"reviewer", "---\nname: reviewer\ndescription: >\n  Reviews code.\n" +
+				"  readonly: true\n---\nBody\n",
 		},
 		"empty body":    {"reviewer", "---\nname: reviewer\ndescription: d\n---\n"},
 		"numeric model": {"reviewer", "---\nname: reviewer\ndescription: d\nmodel: 5\n---\nBody\n"},

@@ -1,6 +1,6 @@
 ---
 name: guarded
 description: Runs with a Claude Code permission mode no other harness has.
-permissionMode: acceptEdits
+permissionMode: plan
 ---
-Apply the requested edits.
+Plan the requested edits.

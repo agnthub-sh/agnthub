@@ -15,6 +15,7 @@ import (
 	"time"
 
 	"github.com/bytedance/sonic"
+	"go.yaml.in/yaml/v3"
 
 	"github.com/agnthub-sh/agnthub/agent"
 	"github.com/agnthub-sh/agnthub/harness"
@@ -125,8 +126,8 @@ func requireLoaded(t *testing.T, n nativeContext, loaded []string, output []byte
 // describedAgents returns the agents a Harness listed whose description is the
 // one agnthub installed, so an agent shadowed by a built-in or another file of
 // the same name does not count as loaded. Cursor reads frontmatter values
-// verbatim, so a description YAML had to quote is listed with its quotes, which
-// agnthub accepts as the same description.
+// verbatim, so a description YAML had to quote is listed as written, quotes
+// and escapes included, which agnthub accepts as the same description.
 func describedAgents(t *testing.T, n nativeContext, listed map[string]string) []string {
 	t.Helper()
 	var loaded []string
@@ -156,9 +157,13 @@ func describedAgents(t *testing.T, n nativeContext, listed map[string]string) []
 
 func oneLine(s string) string { return strings.Join(strings.Fields(s), " ") }
 
-// unquoted strips one pair of matching YAML quotes.
+// unquoted reads a value written as a quoted YAML scalar, escapes included.
 func unquoted(s string) string {
 	if len(s) >= 2 && s[0] == s[len(s)-1] && (s[0] == '"' || s[0] == '\'') {
+		var value string
+		if yaml.Unmarshal([]byte(s), &value) == nil {
+			return value
+		}
 		return s[1 : len(s)-1]
 	}
 	return s
@@ -206,8 +211,9 @@ func checkClaude(t *testing.T, n nativeContext) {
 }
 
 // requireClaudeIgnores fails when Claude Code recognizes a frontmatter key of an
-// installed agent that conversion omits as ignored. Claude Code's debug log
-// names up to five unrecognized keys per agent file, so no fixture has more.
+// installed agent that conversion omits as ignored, or a hook event conversion
+// omits as one Claude Code does not have. Claude Code's debug log names up to
+// five unrecognized keys per agent file, so no fixture has more.
 func requireClaudeIgnores(t *testing.T, n nativeContext) {
 	t.Helper()
 	debugLog, err := os.ReadFile(filepath.Join(homeDir, ".claude", "debug", "latest"))
@@ -234,6 +240,14 @@ func requireClaudeIgnores(t *testing.T, n nativeContext) {
 			if harness.ClaudeIgnores(key) && !strings.Contains(line, `"`+key+`"`) {
 				t.Errorf("%s: Claude Code no longer reports %q as a key it ignores, but "+
 					"conversion omits it as one; debug log line: %q", id, key, line)
+			}
+		}
+		events, _ := harness.ClaudeIgnoredHookEvents(doc.Frontmatter["hooks"])
+		for _, event := range events {
+			want := "Agent '" + id + "': hooks." + event + ": unknown hook event; entry ignored"
+			if !bytes.Contains(debugLog, []byte(want)) {
+				t.Errorf("%s: Claude Code no longer logs %q, but conversion omits the hook as "+
+					"one it ignores", id, want)
 			}
 		}
 	}

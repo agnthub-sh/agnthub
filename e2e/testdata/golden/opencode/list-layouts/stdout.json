@@ -71,6 +71,13 @@
       }
     },
     {
+      "id": "cu-folded",
+      "description": "Cursor agent whose description spans several lines in the file.",
+      "variants": {
+        "cursor": ".cursor/agents/cu-folded.md"
+      }
+    },
+    {
       "id": "cu-native",
       "description": "Cursor-native read-only agent.",
       "variants": {
@@ -78,10 +85,24 @@
       }
     },
     {
+      "id": "cu-tagged",
+      "description": "Cursor agent with catalog keys Cursor ignores.",
+      "variants": {
+        "cursor": ".cursor/agents/cu-tagged.md"
+      }
+    },
+    {
       "id": "cx-native",
       "description": "Codex-native agent without the shell.",
       "variants": {
         "codex": ".codex/agents/cx-native.toml"
+      }
+    },
+    {
+      "id": "cx-nicknamed",
+      "description": "Codex agent with display nicknames.",
+      "variants": {
+        "codex": ".codex/agents/cx-nicknamed.toml"
       }
     },
     {
@@ -112,6 +133,13 @@
       "description": "Fixes failing tests with minimal edits.",
       "variants": {
         "claude": ".claude/agents/team/fixer.md"
+      }
+    },
+    {
+      "id": "gh-colored",
+      "description": "Copilot CLI agent with keys Copilot CLI ignores.",
+      "variants": {
+        "copilot": ".github/agents/gh-colored.agent.md"
       }
     },
     {
@@ -191,6 +219,13 @@
       }
     },
     {
+      "id": "misnamed",
+      "description": "Lists tools no other harness has, and names Claude Code does not know.",
+      "variants": {
+        "claude": ".claude/agents/misnamed.md"
+      }
+    },
+    {
       "id": "modelled",
       "description": "Portable agent that pins a model, which no portable target can honor.",
       "portable": "agents/modelled.md",
@@ -224,10 +259,24 @@
       "variants": {}
     },
     {
+      "id": "quoted",
+      "description": "Reviews: the \"risky\" parts of a change, and it's careful.",
+      "variants": {
+        "claude": ".claude/agents/quoted.md"
+      }
+    },
+    {
       "id": "recaller",
       "description": "Reads code with memory but cannot write files.",
       "variants": {
         "claude": ".claude/agents/recaller.md"
+      }
+    },
+    {
+      "id": "relaxed",
+      "description": "Applies edits without asking in Claude Code; other harnesses ask as usual.",
+      "variants": {
+        "claude": ".claude/agents/relaxed.md"
       }
     },
     {
@@ -255,6 +304,13 @@
       "description": "Portable root agent that answers questions about the repository.",
       "portable": "AGENT.md",
       "variants": {}
+    },
+    {
+      "id": "scripted",
+      "description": "Coordinates tasks; its pre and post scripts are hook events Claude Code does not have.",
+      "variants": {
+        "claude": ".claude/agents/scripted.md"
+      }
     },
     {
       "id": "skilled",

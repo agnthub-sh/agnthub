@@ -130,7 +130,7 @@
       },
       "origin": "direct",
       "action": "invalid",
-      "reason": "invalid cursor variant .cursor/agents/broken.md: Cursor reads one line per key; write the description on a single line"
+      "reason": "invalid cursor variant .cursor/agents/broken.md: Cursor does not document \"tools\"; its behavior would not be enforced"
     },
     {
       "agent": "colon",
@@ -169,6 +169,22 @@
       ]
     },
     {
+      "agent": "cu-folded",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/cu-folded.md",
+      "variant": "native",
+      "sourcePath": ".cursor/agents/cu-folded.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "cu-native",
       "harness": "cursor",
       "settings": {},
@@ -185,7 +201,40 @@
       "action": "create"
     },
     {
+      "agent": "cu-tagged",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/cu-tagged.md",
+      "variant": "native",
+      "sourcePath": ".cursor/agents/cu-tagged.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "category is not used by Cursor",
+        "color is not used by Cursor"
+      ]
+    },
+    {
       "agent": "cx-native",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes shell but allows edits, and Cursor can only withhold shell by making the agent read-only"
+    },
+    {
+      "agent": "cx-nicknamed",
       "harness": "cursor",
       "settings": {},
       "effectiveSettings": {},
@@ -276,6 +325,28 @@
         "converted from the claude variant",
         "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
         "Cursor agents keep the session's MCP tools unless read-only"
+      ]
+    },
+    {
+      "agent": "gh-colored",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/gh-colored.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-colored.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "omitted color: not used by Copilot CLI",
+        "omitted title: not used by Copilot CLI",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent"
       ]
     },
     {
@@ -462,6 +533,28 @@
       "reason": "it excludes search, but Cursor cannot withhold it"
     },
     {
+      "agent": "misnamed",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/misnamed.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/misnamed.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted tools entries read, ListMcpResourcesTool, playwright: no cursor equivalent, so the agent goes without them",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "Cursor agents keep the session's MCP tools unless read-only"
+      ]
+    },
+    {
       "agent": "modelled",
       "harness": "cursor",
       "settings": {},
@@ -543,6 +636,27 @@
       "action": "create"
     },
     {
+      "agent": "quoted",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/quoted.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/quoted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "Cursor agents keep the session's MCP tools unless read-only"
+      ]
+    },
+    {
       "agent": "recaller",
       "harness": "cursor",
       "settings": {},
@@ -561,6 +675,28 @@
         "converted from the claude variant",
         "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
         "persistent memory (memory: user) isn't available on cursor: the agent cannot read and edit files, and agnthub never grants tools for memory; the agent starts each session without its notes"
+      ]
+    },
+    {
+      "agent": "relaxed",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/relaxed.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/relaxed.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "permissionMode acceptEdits isn't available in cursor; the harness asks for approval as usual",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "Cursor agents keep the session's MCP tools unless read-only"
       ]
     },
     {
@@ -629,6 +765,28 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "scripted",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/scripted.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/scripted.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "omitted hooks: Claude Code ignores these events (post, pre)",
+        "excludes web fetch, web search, delegation, but Cursor cannot withhold them from an agent",
+        "Cursor agents keep the session's MCP tools unless read-only"
+      ]
     },
     {
       "agent": "skilled",
@@ -710,8 +868,8 @@
     }
   ],
   "summary": {
-    "create": 27,
-    "incompatible": 12,
+    "create": 34,
+    "incompatible": 13,
     "invalid": 1
   }
 }

@@ -54,7 +54,33 @@
       "reason": "invalid copilot variant .github/agents/broken.agent.md: handoffs-to is not a Copilot CLI agent field; the CLI would silently ignore it"
     },
     {
+      "agent": "cu-folded",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it uses web search, but Copilot CLI has no web search tool"
+    },
+    {
       "agent": "cu-native",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it uses web search, but Copilot CLI has no web search tool"
+    },
+    {
+      "agent": "cu-tagged",
       "harness": "copilot",
       "settings": {},
       "effectiveSettings": {},
@@ -146,7 +172,7 @@
     }
   ],
   "summary": {
-    "incompatible": 9,
+    "incompatible": 11,
     "invalid": 1
   }
 }

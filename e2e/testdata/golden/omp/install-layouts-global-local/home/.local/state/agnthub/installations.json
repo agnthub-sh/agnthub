@@ -86,6 +86,20 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/cu-folded.md",
+      "digest": "sha256:dce8c8a3eebc7093c6e54faff20d655783776e709b6899dffccff94a95aaae5b",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cu-folded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.omp/agent/agents/cu-native.md",
       "digest": "sha256:9fd70714a268b58c7665ccba39b6fbd24c0327c8fca7dcc748609b5cb9fe6922",
       "harness": "omp",
@@ -100,6 +114,20 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/cu-tagged.md",
+      "digest": "sha256:8590cc4b071166eb15ac1ecd1241cc06ef13ec496ba9034742793bd11d366d39",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cu-tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.omp/agent/agents/cx-native.md",
       "digest": "sha256:9d92584b2a9cd98842addf79e63b12f675be2c7e07dd9d78848388eb18de63fe",
       "harness": "omp",
@@ -110,6 +138,20 @@
       "destination": "default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "cx-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/cx-nicknamed.md",
+      "digest": "sha256:3495cd4e6a016190fea231f059034ba7106b413fdd1037ef2cc9df7327e06606",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-nicknamed",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -166,6 +208,20 @@
       "destination": "default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "fixer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/gh-colored.md",
+      "digest": "sha256:54b515d64c7b936e51ce29639ef249988f6b86ecfd2338ffdfd3f10b01d9d9ee",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "gh-colored",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -282,6 +338,20 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/misnamed.md",
+      "digest": "sha256:b27164e0b1a2b31400a3d89833671719bd744cb801dc741feaeca75e68f2e220",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "misnamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.omp/agent/agents/no-shell.md",
       "digest": "sha256:c896ffde57a374fbdbd54d8930cdb2efa566308f4d3204cb92a3f5c643606268",
       "harness": "omp",
@@ -338,6 +408,20 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/quoted.md",
+      "digest": "sha256:94d36c369eda42a7ba16986270504feebbad85793da905468179d857c74cacfb",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "quoted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.omp/agent/agents/recaller.md",
       "digest": "sha256:38fa0c21a0f6a4c22686bb55c0f95cf9cdbf2fbf80cbc4f3f75cd7cef5ea3166",
       "harness": "omp",
@@ -348,6 +432,20 @@
       "destination": "default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "recaller",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/relaxed.md",
+      "digest": "sha256:4f282324f66abbcb16b1f542f86d43d6ccdaa51b7b3183d7b23d512852d8bbee",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "relaxed",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -404,6 +502,20 @@
       "destination": "default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/scripted.md",
+      "digest": "sha256:edb0548cc8ca6566869aa65e2d88f499801714565d298dd1e91ee09325f3ddc1",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "scripted",
       "origin": "direct",
       "installedAt": "<time>"
     },

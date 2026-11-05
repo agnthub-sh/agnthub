@@ -235,22 +235,7 @@ func OmitKeys(path string, raw []byte, keys ...string) (out []byte, omitted []st
 		return raw, nil, nil
 	}
 	header, _, _ := splitFrontmatter(path, raw)
-	drop := headerKeyLines(header, omitted)
-	// Raw line 0 is the opening "---"; header line n (1-based) is raw line n.
-	var buf bytes.Buffer
-	buf.Grow(len(raw))
-	line := 0
-	for rest := raw; len(rest) > 0; line++ {
-		end := bytes.IndexByte(rest, '\n') + 1
-		if end == 0 {
-			end = len(rest)
-		}
-		if !drop[line] {
-			buf.Write(rest[:end])
-		}
-		rest = rest[end:]
-	}
-	out = buf.Bytes()
+	out = editLines(raw, headerKeyLines(header, omitted), "")
 	edited, err := ParseMarkdownLenient(path, out)
 	if err != nil {
 		return nil, nil, fmt.Errorf(
@@ -271,6 +256,65 @@ func OmitKeys(path string, raw []byte, keys ...string) (out []byte, omitted []st
 		)
 	}
 	return out, omitted, nil
+}
+
+// ReplaceKey returns raw with the lines declaring the top-level frontmatter key
+// replaced by line, written with the line ending of the line it replaces, so
+// every other byte is kept. It fails when key is absent or when the edit would
+// change other frontmatter or the body.
+func ReplaceKey(path string, raw []byte, key, line string) ([]byte, error) {
+	doc, err := ParseMarkdownLenient(path, raw)
+	if err != nil {
+		return nil, err
+	}
+	if _, ok := doc.Frontmatter[key]; !ok {
+		return nil, fmt.Errorf("%s: no %s to replace", path, key)
+	}
+	header, _, _ := splitFrontmatter(path, raw)
+	out := editLines(raw, headerKeyLines(header, []string{key}), line)
+	edited, err := ParseMarkdownLenient(path, out)
+	if err != nil {
+		return nil, fmt.Errorf("%s: cannot replace %s: %w", path, key, err)
+	}
+	_, kept := edited.Frontmatter[key]
+	want, got := maps.Clone(doc.Frontmatter), maps.Clone(edited.Frontmatter)
+	delete(want, key)
+	delete(got, key)
+	if !kept || edited.Body != doc.Body || !reflect.DeepEqual(got, want) {
+		return nil, fmt.Errorf("%s: cannot replace %s without changing other frontmatter",
+			path, key)
+	}
+	return out, nil
+}
+
+// editLines removes the 0-based raw lines in drop, writing replacement (when
+// not empty) in place of the first one. Raw line 0 is the opening "---", so
+// header line n (1-based) is raw line n.
+func editLines(raw []byte, drop map[int]bool, replacement string) []byte {
+	var buf bytes.Buffer
+	buf.Grow(len(raw) + len(replacement))
+	line := 0
+	for rest := raw; len(rest) > 0; line++ {
+		end := bytes.IndexByte(rest, '\n') + 1
+		if end == 0 {
+			end = len(rest)
+		}
+		switch current := rest[:end]; {
+		case !drop[line]:
+			buf.Write(current)
+		case replacement != "":
+			buf.WriteString(replacement)
+			switch {
+			case bytes.HasSuffix(current, []byte("\r\n")):
+				buf.WriteString("\r\n")
+			case bytes.HasSuffix(current, []byte("\n")):
+				buf.WriteByte('\n')
+			}
+			replacement = ""
+		}
+		rest = rest[end:]
+	}
+	return buf.Bytes()
 }
 
 // headerKeyLines returns the 1-based header lines that declare keys: from a

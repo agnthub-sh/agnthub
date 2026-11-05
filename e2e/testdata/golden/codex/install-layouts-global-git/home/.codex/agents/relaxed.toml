@@ -1,0 +1,5 @@
+name = 'relaxed'
+description = 'Applies edits without asking in Claude Code; other harnesses ask as usual.'
+developer_instructions = """
+Apply the requested edits.
+"""

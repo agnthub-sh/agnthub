@@ -74,6 +74,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.cursor/agents/cu-folded.md",
+      "digest": "sha256:560f4ba2575fe83aef8c0174744e39e694d8a2de59df4b4d69dfc22b9f14f277",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cu-folded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.cursor/agents/cu-native.md",
       "digest": "sha256:90e2a7aaee545f416f39f918470e649abfde0a5d1d00e05c5f3eb07cd57778bd",
       "harness": "cursor",
@@ -82,6 +94,18 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "cu-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/cu-tagged.md",
+      "digest": "sha256:970c3f3b68d411a7b90dc24c2b42c1e5f3355966a2427f158fa3b42b3c726970",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "cu-tagged",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -130,6 +154,18 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "fixer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/gh-colored.md",
+      "digest": "sha256:b8525b800ab4eac4e68e9684f22ea1fd10ec17ae533ba8e6fcb323531ebb1091",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "gh-colored",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -206,6 +242,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.cursor/agents/misnamed.md",
+      "digest": "sha256:8f03f6536f5efb61284270b2863c516b23ce67c99d88c634d56a362effd34bc4",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "misnamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.cursor/agents/oc-native.md",
       "digest": "sha256:5183dab09264535e2a21ffe386abe49a7cd20ffd42cf2642b8aa2cc9e99a0c68",
       "harness": "cursor",
@@ -242,6 +290,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.cursor/agents/quoted.md",
+      "digest": "sha256:1e3e4046536111f023763afcef29134cdd1b67b975ed8e6eaf3751c2b42fd2d6",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "quoted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.cursor/agents/recaller.md",
       "digest": "sha256:a42b30498ec5df54a6cfd0859345728052bb5ae1853c465d27cec4a0c1f17de8",
       "harness": "cursor",
@@ -250,6 +310,18 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "recaller",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/relaxed.md",
+      "digest": "sha256:bd67a7ad58ac9f7b1342f171c9e8e1fe6dccab31366fbba511bcc6c0b4fb14a4",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "relaxed",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -286,6 +358,18 @@
       "destination": "project",
       "source": "git:localhost:8443/layouts.git",
       "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/scripted.md",
+      "digest": "sha256:61085b56af41b6b861d512d76a91c342b1cd10955a7161b08591c8ee0658fd7b",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "scripted",
       "origin": "direct",
       "installedAt": "<time>"
     },

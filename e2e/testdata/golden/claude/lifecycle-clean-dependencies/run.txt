@@ -1,7 +1,7 @@
 $ agnthub add https://localhost:8443/manifest.git --agent lead --harness claude --yes
 exit status: 0
 --- stdout
-Installed · localhost:8443/manifest.git@23ce82da4602 · project scope
+Installed · localhost:8443/manifest.git@1fc96c7c4fac · project scope
 harnesses: claude
 
 Skills
@@ -28,7 +28,7 @@ helper [2]     claude   + create  .claude/agents/helper.md
 lead           claude   + create  .claude/agents/lead.md
 
 [1] companion: dependency of lead, from localhost:8443/companion.git#v1@7baafb2b236d
-[2] helper: dependency of lead, from localhost:8443/manifest.git@23ce82da4602
+[2] helper: dependency of lead, from localhost:8443/manifest.git@1fc96c7c4fac
 
 3 created · 0 updated · 0 deleted · skills: 1 install
 $ agnthub remove lead --yes

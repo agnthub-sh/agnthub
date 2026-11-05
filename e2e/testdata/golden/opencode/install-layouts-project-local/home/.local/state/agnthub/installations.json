@@ -74,6 +74,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.opencode/agents/cu-folded.md",
+      "digest": "sha256:82bbe66cb8f2c199e0cd0b6aebddcc4d9bc5e9f6faad72f461c7c834a3916984",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cu-folded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.opencode/agents/cu-native.md",
       "digest": "sha256:13cbfe463cc8e78c41f7443b4a9e8e8acee8fd47a939300d8647d64a4e091809",
       "harness": "opencode",
@@ -86,6 +98,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.opencode/agents/cu-tagged.md",
+      "digest": "sha256:3ae63b25dbd14d7e7a98cffa3e11b14dc498574c72647714091189b61eb75aed",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cu-tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.opencode/agents/cx-native.md",
       "digest": "sha256:9ab72ec15b12b37bc7ab8c99cffd31ad4dfd49f65c9881d06f898593a00f4bdc",
       "harness": "opencode",
@@ -94,6 +118,18 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "cx-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/cx-nicknamed.md",
+      "digest": "sha256:a2ef8ab5119da484cf86b156a41eadb87e68782154eb46e4f63167a9a4036471",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "cx-nicknamed",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -142,6 +178,18 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "fixer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/gh-colored.md",
+      "digest": "sha256:7da78cd475bc8b35e1d846a8d583d1cc7225d850a618e1faafced520bdfabb2c",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "gh-colored",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -242,6 +290,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.opencode/agents/misnamed.md",
+      "digest": "sha256:d6104fd13136ec7927369d830cee3cdca1df6941138948f6eca0ce120d9350f9",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "misnamed",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.opencode/agents/no-shell.md",
       "digest": "sha256:668b6a941babae2672e7ad60cd840aa14deeb45d1f6a29a13e49519cc59bc358",
       "harness": "opencode",
@@ -290,6 +350,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.opencode/agents/quoted.md",
+      "digest": "sha256:ec37fd47c5a17d474015a7d1f520132cef37fa6d95579dcc6ab1a2b96d8b3c95",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "quoted",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.opencode/agents/recaller.md",
       "digest": "sha256:817d7005a0277a74c491f332d94f3108dbf8abc92cfcbfb47579526f5ef94b5f",
       "harness": "opencode",
@@ -298,6 +370,18 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "recaller",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/relaxed.md",
+      "digest": "sha256:5adca010c3a7c215665035d89752ab9b7553dbb23af5c934d2c82656070e21b1",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "relaxed",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -346,6 +430,18 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "root-helper",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/scripted.md",
+      "digest": "sha256:63a968583278cdedbf14b90b00a8148e710f9510342913923d95f19a3b352b4a",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "scripted",
       "origin": "direct",
       "installedAt": "<time>"
     },
