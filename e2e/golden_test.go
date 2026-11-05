@@ -76,11 +76,10 @@ func snapshot(t *testing.T) map[string]file {
 // the command with its exit status and stderr (run.txt), stdout (stdout.json),
 // every file of the project and home trees with its mode (files.txt) and each
 // file's exact bytes.
-func goldenFiles(env, args []string, res *result) map[string][]byte {
+func goldenFiles(env []string, dir string, args []string, res *result) map[string][]byte {
 	var run bytes.Buffer
 	run.Write(res.transcript)
-	fmt.Fprintf(&run, "$ %s\nexit status: %d\n",
-		shellQuote(append(append(slices.Clone(env), "agnthub"), args...)), res.exit)
+	fmt.Fprintf(&run, "$ %s\nexit status: %d\n", command(env, dir, args), res.exit)
 	if len(res.stderr) > 0 {
 		fmt.Fprintf(&run, "--- stderr\n%s", normalize(res.stderr))
 	}
@@ -100,6 +99,16 @@ func goldenFiles(env, args []string, res *result) map[string][]byte {
 	}
 	out["files.txt"] = listing.Bytes()
 	return out
+}
+
+// command is the shell form of an agnthub run in dir (empty: the project), where
+// goldens prefix runs outside the project with a cd.
+func command(env []string, dir string, args []string) string {
+	line := shellQuote(append(append(slices.Clone(env), "agnthub"), args...))
+	if dir != "" && dir != projectDir {
+		line = "cd " + shellQuote([]string{dir}) + " && " + line
+	}
+	return line
 }
 
 var shellSafe = regexp.MustCompile(`^[A-Za-z0-9@%_+=:,./#-]+$`)

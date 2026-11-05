@@ -1,0 +1,37 @@
+{
+  "status": "applied",
+  "scope": "global",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/companion"
+  },
+  "harnesses": [
+    {
+      "id": "codex",
+      "name": "Codex",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "companion",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/companion.toml",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "origin": "direct",
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 1
+  }
+}

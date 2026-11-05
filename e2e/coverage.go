@@ -151,6 +151,10 @@ var stepSpecs = map[string]stepSpec{
 	"lifecycle-remove-refuse-modified": {scope: scopeProj, source: sourceGit},
 	"lifecycle-clean-dependencies":     {scope: scopeProj, source: sourceGit},
 	"lifecycle-global":                 {scope: scopeUser, source: sourceGit},
+
+	"home-add":            {scope: scopeUser, source: sourceLocal, native: true},
+	"home-refuse-project": {scope: scopeProj, source: sourceLocal},
+	"home-earlier-remove": {scope: scopeProj, source: sourceLocal},
 }
 
 // nativeExclusions are (Harness, scope) pairs whose native check proves that
@@ -488,10 +492,24 @@ var scenarios = []scenario{
 	lifecycle("lifecycle-clean-dependencies",
 		"`remove --clean-dependencies` removes unused companions and skills"),
 	lifecycle("lifecycle-global", "user scope: `add -g`, `list -g`, `check -g`, `remove -g`"),
+
+	homeDirectory("home-add",
+		"`add` in the home directory (no project) installs into user scope, which the "+
+			"Harness loads"),
+	homeDirectory("home-refuse-project",
+		"`add --global=false` in the home directory is refused; nothing is written"),
+	homeDirectory("home-earlier-remove",
+		"a project install agnthub 0.4.7 made in the home directory: listed and removed there"),
 }
 
 func lifecycle(id, title string) scenario {
 	return scenario{id: id, group: "Lifecycle", title: title, all: evidence{steps: []string{id}}}
+}
+
+func homeDirectory(id, title string) scenario {
+	return scenario{
+		id: id, group: "Home directory", title: title, all: evidence{steps: []string{id}},
+	}
 }
 
 // liveCredential is what the live tier needs to run one Harness with a real

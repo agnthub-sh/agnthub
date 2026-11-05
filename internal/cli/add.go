@@ -27,9 +27,12 @@ type addOptions struct {
 	harnesses []string
 	extras    []string
 	global    bool
-	yes       bool
-	json      bool
-	all       bool
+	// project reports an explicit project-scope request (--global=false), which the
+	// home directory refuses instead of installing into user scope.
+	project bool
+	yes     bool
+	json    bool
+	all     bool
 }
 
 // allSelector selects every agent (--agent '*') or every supported harness
@@ -80,6 +83,14 @@ In a terminal, add asks which agents and harnesses to install (detected harnesse
 are preselected), previews the plan and asks before writing. --yes, --all and
 --json never prompt and refuse any plan that is not entirely valid.
 
+Agents install into the project in the current directory, or into your user
+configuration with --global. Your home directory (or any directory above it) is
+no project: harnesses would apply project files there to projects below it or
+read them as user configuration, so there add installs into user scope as
+--global does, and --global=false refuses. list, check, update, restore and
+remove use user scope there too; a project install agnthub 0.4.7 or earlier made
+there (e.g. ~/.omp/agents) is removed with agnthub remove in the home directory.
+
 Required skills are reused when a compatible copy is already visible; missing ones
 install first through the skill installer (skills.sh, or skillInstaller in
 ~/.config/agnthub/config.yaml) and are verified before any agent file is written.`,
@@ -95,7 +106,8 @@ install first through the skill installer (skills.sh, or skillInstaller in
   agnthub add owner/repo --all
   agnthub add owner/repo --all --json`,
 		Args: cobra.ExactArgs(1),
-		RunE: func(_ *cobra.Command, args []string) error {
+		RunE: func(cmd *cobra.Command, args []string) error {
+			opts.project = cmd.Flags().Changed("global") && !opts.global
 			return a.runAdd(ctx, args[0], opts)
 		},
 	}
@@ -112,7 +124,7 @@ install first through the skill installer (skills.sh, or skillInstaller in
 		"global",
 		"g",
 		false,
-		"install into user scope instead of the project",
+		"install into user scope instead of the project (the default in your home directory)",
 	)
 	flags.BoolVarP(&opts.yes, "yes", "y", false, "apply without prompting")
 	flags.BoolVar(&opts.json, "json", false, "print machine-readable JSON; never prompts")
@@ -123,6 +135,14 @@ install first through the skill installer (skills.sh, or skillInstaller in
 func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	if err := opts.validate(); err != nil {
 		return err
+	}
+	scope := harness.ScopeProject
+	if !opts.list {
+		// Decided first: a refusal must come before any fetch or prompt.
+		var err error
+		if scope, err = a.addScope(opts.global, opts.project); err != nil {
+			return err
+		}
 	}
 	loc, err := source.Parse(raw, a.WorkDir, a.Env)
 	if err != nil {
@@ -180,10 +200,6 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 		return err
 	}
 	defer func() { _ = closure.Close() }()
-	scope := harness.ScopeProject
-	if opts.global {
-		scope = harness.ScopeGlobal
-	}
 	planner, err := a.planner(scope)
 	if err != nil {
 		return err

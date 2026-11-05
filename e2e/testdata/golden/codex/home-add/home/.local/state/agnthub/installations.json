@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/companion.toml",
+      "digest": "sha256:fca1ae6b7d4fdb1a7650b1772a792b8e6d4ec7ea187a6bca55106fe92706751a",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/companion",
+      "agent": "companion",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

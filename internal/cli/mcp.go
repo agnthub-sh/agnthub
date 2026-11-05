@@ -90,7 +90,7 @@ type installInput struct {
 	Source     string   `json:"source"                jsonschema:"GitHub owner/repo[#ref], a Git URL or an absolute local directory"`
 	Agents     []string `json:"agents"                jsonschema:"agent ids to install, or [\"*\"] for every agent"`
 	Harnesses  []string `json:"harnesses"             jsonschema:"harnesses to install into, or [\"*\"] for every supported harness"`
-	Scope      string   `json:"scope,omitempty"       jsonschema:"project (default: files go under project_dir) or global (the user's harness configuration)"`
+	Scope      string   `json:"scope,omitempty"       jsonschema:"project (files go under project_dir) or global (the user's harness configuration). Omitted: project, except in the home directory, which is no project: there an omitted scope installs globally and project is refused"`
 	Extra      []string `json:"extra,omitempty"       jsonschema:"harness settings <harness>.<key>=<value>, e.g. omp.profile=work"`
 	ProjectDir string   `json:"project_dir,omitempty" jsonschema:"absolute project directory; default: the directory this server runs in"`
 	Confirm    bool     `json:"confirm,omitempty"     jsonschema:"apply the plan; only after the user approved the preview. Without it nothing is written"`
@@ -125,8 +125,9 @@ func (a *App) addInstallTool(server *mcp.Server) {
 			p["harnesses"].MinItems = jsonschema.Ptr(1)
 			p["harnesses"].UniqueItems = true
 			p["harnesses"].Items.Enum = append(mcpserver.HarnessEnum(), allHarnesses, allSelector)
+			// No schema default: an omitted scope is project scope except in the home
+			// directory, where it is user scope and an explicit project is refused.
 			p["scope"].Enum = []any{"project", "global"}
-			p["scope"].Default = []byte(`"project"`)
 			p["extra"].MaxItems = jsonschema.Ptr(16)
 			p["project_dir"].MaxLength = jsonschema.Ptr(4096)
 		}),
@@ -160,6 +161,7 @@ func (a *App) installAgents(
 		harnesses: in.Harnesses,
 		extras:    in.Extra,
 		global:    in.Scope == "global",
+		project:   in.Scope == "project",
 		json:      true,
 		yes:       in.Confirm,
 	})

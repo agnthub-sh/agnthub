@@ -67,7 +67,11 @@ func (a *App) runList(opts *listOptions) error {
 		}
 		filter = append(filter, string(id))
 	}
-	lockPath := state.LockPath(a.WorkDir, a.Env.ConfigHome(), opts.global)
+	global, err := a.lockScope(opts.global, false)
+	if err != nil {
+		return err
+	}
+	lockPath := state.LockPath(a.WorkDir, a.Env.ConfigHome(), global)
 	lock, err := state.LoadLock(lockPath)
 	if err != nil {
 		return err
@@ -119,7 +123,7 @@ func (a *App) runList(opts *listOptions) error {
 	}
 	if len(listed) == 0 {
 		fmt.Fprintf(out.w, "No agents installed (%s).\n", lockPath)
-		if !opts.global {
+		if !global {
 			fmt.Fprintln(out.w, out.styles.dim.Render("Try listing user-scope agents with -g."))
 		}
 		return nil

@@ -22,6 +22,13 @@ Every install is previewed before anything is written, the project lock
 not install or that you changed. Repositories need no particular setup: agnthub reads portable
 `AGENT.md`/`agents/` definitions, each harness's native agent directory, the Claude Code plugins
 and marketplaces a repository packages (`.claude-plugin/`), and an optional `agnthub.yaml`.
+
+Agents install into the project in the current directory, or into your user configuration with
+`--global`. Your home directory is no project: run there, `add` installs into user scope (as
+`--global` does) and says so, and `--global=false` refuses. Installs that agnthub 0.4.7 and
+earlier made with the home directory as the project (for example `~/.omp/agents/<name>.md`) are
+removed with `agnthub remove <name>` run in the home directory.
+
 The full documentation is at
 [app.agnthub.sh/docs](https://app.agnthub.sh/docs).
 

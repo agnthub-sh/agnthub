@@ -1,0 +1,37 @@
+{
+  "status": "applied",
+  "scope": "global",
+  "source": {
+    "kind": "local",
+    "locator": "/agnthub-e2e/src/companion"
+  },
+  "harnesses": [
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot CLI",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "companion",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.copilot/agents/companion.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/companion.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "origin": "direct",
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 1
+  }
+}

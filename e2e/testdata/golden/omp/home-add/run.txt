@@ -1,0 +1,4 @@
+$ cd /agnthub-e2e/home && agnthub add /agnthub-e2e/src/companion --agent companion --harness omp --yes --json
+exit status: 0
+--- stderr
+note: /agnthub-e2e/home is your home directory, not a project: installing into user scope (as --global does). Run agnthub in a project's directory to install there.

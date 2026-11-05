@@ -222,3 +222,24 @@ func TestMCPInstallHonorsScopeSettingsAndValidation(t *testing.T) {
 		t.Fatal("rejected calls must not write anything")
 	}
 }
+
+func TestMCPInstallInHomeUsesUserScopeAndRefusesProjectScope(t *testing.T) {
+	h := newHarness(t)
+	h.write("agents/reviewer.md", reviewer)
+	cs := h.mcpSession("http://127.0.0.1:1")
+	args := map[string]any{
+		"source": h.source, "agents": []string{"reviewer"}, "harnesses": []string{"omp"},
+		"project_dir": h.home, "scope": "project", "confirm": true,
+	}
+	if _, isErr := h.install(cs, args); !isErr {
+		t.Fatal("an explicit project scope in the home directory must be refused")
+	}
+	requireAbsent(t, filepath.Join(h.home, ".omp"))
+	delete(args, "scope")
+	out, isErr := h.install(cs, args)
+	if isErr || out.Status != "applied" {
+		t.Fatalf("an install in the home directory must go to user scope: %+v", out)
+	}
+	requireFile(t, filepath.Join(h.home, ".omp", "agent", "agents", "reviewer.md"))
+	requireAbsent(t, filepath.Join(h.home, ".omp", "agents"))
+}

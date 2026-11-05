@@ -102,6 +102,7 @@ func TestHarness(t *testing.T) {
 	s.large(t)
 	s.selection(t)
 	s.lifecycle(t)
+	s.home(t)
 
 	s.finishGoldens(t)
 }
@@ -410,6 +411,37 @@ func (s *suite) lifecycle(t *testing.T) {
 	})
 }
 
+// home: the home directory is no project. add there installs into user scope,
+// which the Harness loads; an explicit project scope is refused; and the project
+// install agnthub 0.4.7 and earlier made there is listed and removed there.
+func (s *suite) home(t *testing.T) {
+	add := argv("add", source("companion"), "--agent", "companion", s.harnessFlag(), "--yes")
+	s.run(t, step{
+		name: "home-add", dir: homeDir, native: scopeGlobal,
+		args: argv(add, "--json"),
+	})
+	s.run(t, step{
+		name: "home-refuse-project", dir: homeDir, refused: true,
+		args: argv(add, "--global=false", "--json"),
+	})
+	earlier := action{
+		note: "install in the home directory as agnthub 0.4.7 did: seen from another " +
+			"HOME, the home directory is a plain project",
+		dir: homeDir,
+		env: []string{
+			"HOME=" + filepath.Join(scratchDir, "other-home"),
+			"XDG_CONFIG_HOME=" + filepath.Join(homeDir, ".config"),
+			"XDG_STATE_HOME=" + filepath.Join(homeDir, ".local", "state"),
+		},
+		args: add,
+	}
+	s.run(t, step{
+		name: "home-earlier-remove", dir: homeDir,
+		before: []action{earlier, {dir: homeDir, args: argv("list", "--json")}},
+		args:   argv("remove", "companion", "--yes", "--json"),
+	})
+}
+
 // argv flattens strings and string slices into one argument list.
 func argv(parts ...any) []string {
 	var args []string
@@ -446,6 +478,8 @@ const (
 type step struct {
 	name string
 	args []string
+	// dir is where agnthub runs; empty is the project.
+	dir string
 	// before runs first; its agnthub commands must succeed and are recorded too.
 	before []action
 	// env is added to agnthub's environment.
@@ -467,6 +501,10 @@ type step struct {
 // described by note.
 type action struct {
 	args []string
+	// dir is where agnthub runs (empty: the step's directory); env is added to
+	// the step's environment, later values winning.
+	dir  string
+	env  []string
 	note string
 	do   func(t *testing.T)
 }
@@ -510,7 +548,7 @@ func (s *suite) run(t *testing.T, st step) *result {
 		if !st.everyHarness {
 			requireOwnDirectories(t, s.harness, res.files)
 		}
-		s.compareGolden(t, st.name, goldenFiles(st.env, st.args, res))
+		s.compareGolden(t, st.name, goldenFiles(st.env, st.dir, st.args, res))
 		if st.native != "" && res.exit == 0 {
 			t.Run("native", func(t *testing.T) {
 				s.check(t, s.nativeContext(t, st))
@@ -545,14 +583,20 @@ func (s *suite) execute(t *testing.T, st step) *result {
 	res := &result{}
 	var transcript bytes.Buffer
 	for _, a := range st.before {
-		if a.do != nil {
+		if a.note != "" {
 			fmt.Fprintf(&transcript, "# %s\n", a.note)
+		}
+		if a.do != nil {
 			a.do(t)
 			continue
 		}
-		exit, stdout, stderr := s.agnthub(t, st.env, a.args)
-		fmt.Fprintf(&transcript, "$ %s\nexit status: %d\n",
-			shellQuote(append(append(slices.Clone(st.env), "agnthub"), a.args...)), exit)
+		dir := a.dir
+		if dir == "" {
+			dir = st.dir
+		}
+		actionEnv := append(slices.Clone(st.env), a.env...)
+		exit, stdout, stderr := s.agnthubIn(t, dir, actionEnv, a.args)
+		fmt.Fprintf(&transcript, "$ %s\nexit status: %d\n", command(actionEnv, dir, a.args), exit)
 		if len(stdout) > 0 {
 			fmt.Fprintf(&transcript, "--- stdout\n%s", normalize(stdout))
 		}
@@ -565,7 +609,7 @@ func (s *suite) execute(t *testing.T, st step) *result {
 	}
 	res.transcript = transcript.Bytes()
 	res.before = snapshot(t)
-	res.exit, res.stdout, res.stderr = s.agnthub(t, st.env, st.args)
+	res.exit, res.stdout, res.stderr = s.agnthubIn(t, st.dir, st.env, st.args)
 	if len(res.stdout) > 0 && bytes.HasPrefix(bytes.TrimSpace(res.stdout), []byte("{")) {
 		if err := sonic.Unmarshal(res.stdout, &res.plan); err != nil {
 			t.Fatalf("agnthub --json printed invalid JSON: %v\n%s", err, res.stdout)
@@ -578,8 +622,21 @@ func (s *suite) execute(t *testing.T, st step) *result {
 // agnthub runs the CLI in the project with the suite's environment.
 func (s *suite) agnthub(t *testing.T, extraEnv, args []string) (exit int, stdout, stderr []byte) {
 	t.Helper()
+	return s.agnthubIn(t, "", extraEnv, args)
+}
+
+// agnthubIn runs the CLI in dir (empty: the project) with the suite's environment.
+func (s *suite) agnthubIn(
+	t *testing.T,
+	dir string,
+	extraEnv, args []string,
+) (exit int, stdout, stderr []byte) {
+	t.Helper()
+	if dir == "" {
+		dir = projectDir
+	}
 	cmd := exec.Command("agnthub", args...)
-	cmd.Dir = projectDir
+	cmd.Dir = dir
 	cmd.Env = append(s.agnthubEnv(), extraEnv...)
 	var out, errOut bytes.Buffer
 	cmd.Stdout, cmd.Stderr = &out, &errOut

@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/companion.md",
+      "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/companion",
+      "agent": "companion",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

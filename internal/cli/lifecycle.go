@@ -33,7 +33,12 @@ type lifecycle struct {
 	cache    *sourceCache
 }
 
-func (a *App) newLifecycle(global, frozen bool) (*lifecycle, error) {
+// newLifecycle opens the lock check (read-only), update and restore (writes) use.
+func (a *App) newLifecycle(global, writes, frozen bool) (*lifecycle, error) {
+	global, err := a.lockScope(global, writes)
+	if err != nil {
+		return nil, err
+	}
 	scope := harness.ScopeProject
 	if global {
 		scope = harness.ScopeGlobal

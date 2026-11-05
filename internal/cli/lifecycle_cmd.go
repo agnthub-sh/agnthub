@@ -109,7 +109,7 @@ substituted. On a machine without recorded bindings, harnesses with settings nee
 }
 
 func (a *App) runCheck(ctx context.Context, ids []string, opts *lifecycleOptions) error {
-	l, err := a.newLifecycle(opts.global, false)
+	l, err := a.newLifecycle(opts.global, false, false)
 	if err != nil {
 		return err
 	}
@@ -142,7 +142,7 @@ func (a *App) runCheck(ctx context.Context, ids []string, opts *lifecycleOptions
 }
 
 func (a *App) runUpdate(ctx context.Context, ids []string, opts *lifecycleOptions) error {
-	l, err := a.newLifecycle(opts.global, false)
+	l, err := a.newLifecycle(opts.global, true, false)
 	if err != nil {
 		return err
 	}
@@ -185,7 +185,7 @@ func (a *App) runUpdate(ctx context.Context, ids []string, opts *lifecycleOption
 }
 
 func (a *App) runRestore(ctx context.Context, opts *lifecycleOptions) error {
-	l, err := a.newLifecycle(opts.global, true)
+	l, err := a.newLifecycle(opts.global, true, true)
 	if err != nil {
 		return err
 	}

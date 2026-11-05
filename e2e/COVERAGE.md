@@ -235,6 +235,14 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | `remove --clean-dependencies` removes unused companions and skills | — | project · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | user scope: `add -g`, `list -g`, `check -g`, `remove -g` | — | global · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
+### Home directory
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| `add` in the home directory (no project) installs into user scope, which the Harness loads | — | global · local | ✓ N | ✓ N | ✓ N | ✓ N | ✓ N0 | ✓ N | ✓ N |
+| `add --global=false` in the home directory is refused; nothing is written | — | project · local | R | R | R | R | R | R | R |
+| a project install agnthub 0.4.7 made in the home directory: listed and removed there | — | project · local | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+
 ### Exclusions
 
 - native check, cursor × global scope (`N0`): cursor-agent loads only workspace agents (.cursor/.claude/.grok agents of the project); agnthub installs user agents where Cursor documents them (~/.cursor/agents, read by the Cursor editor). The native check runs the real CLI and asserts it still does not load them, so a Cursor release that starts loading user agents fails the nightly run and removes this exclusion.

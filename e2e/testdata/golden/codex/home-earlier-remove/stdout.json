@@ -1,0 +1,25 @@
+{
+  "status": "applied",
+  "mode": "remove",
+  "scope": "project",
+  "lock": "/agnthub-e2e/home/agnthub-lock.json",
+  "items": [
+    {
+      "kind": "agent",
+      "name": "companion",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "origin": "direct",
+      "harness": "codex",
+      "settings": {},
+      "path": "/agnthub-e2e/home/.codex/agents/companion.toml",
+      "action": "delete",
+      "result": "removed"
+    }
+  ],
+  "summary": {
+    "removed": 1
+  }
+}

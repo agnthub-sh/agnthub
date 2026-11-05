@@ -1,0 +1,25 @@
+{
+  "status": "applied",
+  "mode": "remove",
+  "scope": "project",
+  "lock": "/agnthub-e2e/home/agnthub-lock.json",
+  "items": [
+    {
+      "kind": "agent",
+      "name": "companion",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/companion"
+      },
+      "origin": "direct",
+      "harness": "gemini",
+      "settings": {},
+      "path": "/agnthub-e2e/home/.gemini/agents/companion.md",
+      "action": "delete",
+      "result": "removed"
+    }
+  ],
+  "summary": {
+    "removed": 1
+  }
+}

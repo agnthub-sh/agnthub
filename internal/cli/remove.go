@@ -4,7 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io/fs"
 	"maps"
+	"os"
 	"path/filepath"
 	"slices"
 	"strings"
@@ -131,6 +133,11 @@ func (a *App) runRemove(ctx context.Context, names []string, opts *removeOptions
 // the harness and binding filters.
 func (r *removal) load() error {
 	a := r.app
+	global, err := a.lockScope(r.opts.global, false)
+	if err != nil {
+		return err
+	}
+	r.opts.global = global
 	for _, name := range r.opts.harnesses {
 		id, err := agent.ParseHarness(name)
 		if err != nil {
@@ -586,7 +593,7 @@ func (r *removal) decide(ctx context.Context, plan *uninstall.Plan) error {
 
 func (r *removal) apply(out *printer, plan *uninstall.Plan) error {
 	applyErr := uninstall.Apply(r.inv, plan)
-	if err := r.inv.Lock.Save(r.lockPath); err != nil {
+	if err := r.saveLock(); err != nil {
 		r.print(out, plan, statusFailed)
 		return fmt.Errorf("save lock: %w", err)
 	}
@@ -600,6 +607,20 @@ func (r *removal) apply(out *printer, plan *uninstall.Plan) error {
 	}
 	r.print(out, plan, statusApplied)
 	return nil
+}
+
+// saveLock writes the lock back. A project lock in the home directory (written by
+// agnthub 0.4.7 and earlier) is deleted once it records nothing, so later commands
+// there use user scope.
+func (r *removal) saveLock() error {
+	lock := r.inv.Lock
+	if !r.opts.global && len(lock.Agents) == 0 && len(lock.Skills) == 0 && r.app.inHome() {
+		if err := os.Remove(r.lockPath); err != nil && !errors.Is(err, fs.ErrNotExist) {
+			return err
+		}
+		return nil
+	}
+	return lock.Save(r.lockPath)
 }
 
 type removeJSON struct {

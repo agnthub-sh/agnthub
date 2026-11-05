@@ -1,0 +1,4 @@
+$ cd /agnthub-e2e/home && agnthub add /agnthub-e2e/src/companion --agent companion --harness gemini --yes --global=false --json
+exit status: 1
+--- stderr
+error: refusing to install project-scope files into your home directory: it is no project, and harnesses would apply files there to projects below it or read them as user configuration. Run agnthub in the project's directory, or install for your user with --global
