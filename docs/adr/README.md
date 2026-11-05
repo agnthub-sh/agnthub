@@ -7,3 +7,4 @@ The decisions that shape the CLI. Numbers are shared with the registry service's
 - [0005 Count agent-scoped local CLI identities, with separate harness adoption](0005-agent-scoped-install-identities.md)
 - [0009 Convert native agents across harnesses through a shared semantics model](0009-cross-harness-conversion-through-shared-semantics.md)
 - [0011 Discover the agents of Claude Code plugins a repository packages](0011-claude-code-plugin-layouts.md)
+- [0012 Read portable cores as Claude Code agents and install reduced capability visibly](0012-portable-cores-as-claude-and-reduced-capability.md)

@@ -1,5 +1,7 @@
 # Convert native agents across harnesses through a shared semantics model
 
+Status: accepted; amended by [ADR 0012](0012-portable-cores-as-claude-and-reduced-capability.md) on 2026-11-05.
+
 Most published agents exist only as one harness's native file (typically `.claude/agents/*.md`). Converting only from the portable core left them installable on that one harness, even when every other harness can express what they declare. Conversion now goes through one harness-neutral **Semantics** model: identity, description, instructions, a model hint, a tool policy over capabilities (read, search, edit, shell, web fetch, web search, delegation, todo list, skills, plus MCP and unknown tool names), turn limit, background execution, harmless omissions and unsupported behaviors. Every adapter parses its native format into Semantics and renders Semantics into its native format.
 
 For a target harness without an authored Variant, sources are tried in a fixed order: the portable core, then every other authored Variant, Claude Code first and the rest in display order. The first source the target can represent wins; otherwise the first refusal is reported. An authored Variant for the target is still installed as is, and an invalid one still never falls back ([ADR 0002](0002-agent-variants-and-conservative-conversion.md)).
