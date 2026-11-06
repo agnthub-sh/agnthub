@@ -1,0 +1,44 @@
+=== install: legacy-stdio -> update
+{
+	// servers this machine uses
+	"mcpServers": {
+		/* the hosted registry */
+		"agnthub": {
+			"url": "https://mcp.agnthub.sh"
+		}, // old
+		"other": { "url": "https://example.com/mcp" }, // keep
+	},
+}
+=== install --force: legacy-stdio -> update
+{
+	// servers this machine uses
+	"mcpServers": {
+		/* the hosted registry */
+		"agnthub": {
+			"url": "https://mcp.agnthub.sh"
+		}, // old
+		"other": { "url": "https://example.com/mcp" }, // keep
+	},
+}
+=== install --api-key: legacy-stdio -> update
+{
+	// servers this machine uses
+	"mcpServers": {
+		/* the hosted registry */
+		"agnthub": {
+			"url": "https://mcp.agnthub.sh",
+			"headers": {
+				"Authorization": "Bearer agh_test0123"
+			}
+		}, // old
+		"other": { "url": "https://example.com/mcp" }, // keep
+	},
+}
+=== uninstall: legacy-stdio -> remove
+{
+	// servers this machine uses
+	"mcpServers": {
+		/* the hosted registry */
+		"other": { "url": "https://example.com/mcp" }, // keep
+	},
+}

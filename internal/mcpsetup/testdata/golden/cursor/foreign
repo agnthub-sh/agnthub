@@ -1,0 +1,17 @@
+=== install: foreign -> skip
+reason: its agnthub server was not set up by agnthub (https://example.com/not-agnthub); rerun with --force to replace it
+(unchanged)
+=== install --force: foreign -> update
+{
+  "mcpServers": {
+    "agnthub": {
+      "url": "https://mcp.agnthub.sh"
+    }
+  }
+}
+=== install --api-key: foreign -> skip
+reason: its agnthub server was not set up by agnthub (https://example.com/not-agnthub); rerun with --force to replace it
+(unchanged)
+=== uninstall: foreign -> skip
+reason: no agnthub server set up by agnthub
+(unchanged)

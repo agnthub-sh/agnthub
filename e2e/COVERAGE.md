@@ -291,6 +291,42 @@ Gemini (agent-scoped servers are refused on every target); it writes MCP tool re
 as `mcp_<server>_<tool>` / `mcp_<server>_*` entries of `tools`, which Gemini CLI loads
 (`tools-mcp-tool`, `tools-mcp-server`).
 
+## MCP setup (`agnthub mcp install` / `uninstall`)
+
+`TestHarness/mcp` ([mcp_test.go](mcp_test.go)) runs in every Harness image, offline and in an
+empty home whose user configuration holds a neighbor server (`other`, an `.invalid` URL)
+and agnthub's removed local server (`agnthub`: `npx -y agnthub-cli mcp`); omp also has a
+named profile `work` with only the neighbor. Each step asks the real Harness which MCP
+servers its configuration defines, without a model or a sign-in:
+
+| Harness | How agnthub changes it | Real CLI listing |
+|---|---|---|
+| claude | `claude mcp add` / `claude mcp remove` (`mechanism: command`) | `claude mcp list` (name and URL; the health check fails offline, after the listing) |
+| opencode | file edit of `~/.config/opencode/opencode.json` (OpenCode 2 `mcp.servers`) | `opencode mcp list` from its service (retried until it loaded, then stopped) and the URL from `opencode debug config` |
+| codex | file edit of `~/.codex/config.toml` | `codex mcp list --json` (name and URL) |
+| copilot | `copilot mcp add` / `copilot mcp remove` | `copilot mcp list` and `copilot mcp get agnthub` (URL) |
+| cursor | file edit of `~/.cursor/mcp.json` | `cursor-agent mcp list` (names) |
+| gemini | `gemini mcp add -s user` / `gemini mcp remove -s user` | `gemini mcp list` (name and URL) |
+| omp | file edit of each profile's `mcp.json` | omp's own loader, `loadAllMCPConfigs` from the installed package (what omp connects to at startup), with `OMP_PROFILE` unset and `=work` |
+
+Steps: bare `agnthub mcp` without a terminal exits 1 with the removal notice and the
+`mcp install` hint, and `mcp install` without `--harness` exits 1; `mcp install --harness <h>
+--yes --json` replaces the local server (`update`; omp: `update` in the default profile,
+`install` in `work`) with the hosted server, which the Harness then lists at
+`https://mcp.agnthub.sh` beside the neighbor; a second install is `unchanged`; `mcp uninstall
+--yes --json` removes it from every profile while the Harness still lists the neighbor; a
+fresh install is `install`; `--api-key` (with `AGNTHUB_API_KEY`) rewrites it with a bearer
+header the Harness still loads and warns that the key is stored in plain text; `mcp
+uninstall --harness <h> --yes` removes it again. The exact files each edit produces (every
+legacy form, a foreign entry, comments, an unparseable file, the API key header), backups,
+file modes, environment overrides, project scope and the prompts are proven by the unit
+tests in `internal/mcpsetup` and `internal/cli/mcp_test.go`, not here: the Harness commands
+add their own state (for example Claude Code's `~/.claude.json` bookkeeping), so these
+steps have no goldens.
+
+Not proven: signing in. The suite runs without a network and an account, so no Harness
+completes the OAuth flow against the hosted server.
+
 ## Not proven by this suite, and why
 
 - **Cursor user scope loading.** cursor-agent loads only workspace agents; agnthub installs

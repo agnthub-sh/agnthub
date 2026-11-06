@@ -15,6 +15,7 @@ agnthub update                                # preview and apply newer content
 agnthub restore                               # recreate exactly what agnthub-lock.json records
 agnthub remove reviewer
 agnthub auth login                            # optional: an agnthub.sh API key for higher rate limits
+agnthub mcp install                           # add the hosted MCP server to your harnesses
 ```
 
 Every install is previewed before anything is written, the project lock
@@ -174,6 +175,30 @@ In this repository:
   [architecture decisions](docs/adr/)
 - [Native Harness agent formats and conversion limits](docs/research/harness-agent-formats.md)
 - [Claude Code plugins and marketplaces as agent sources](docs/research/claude-code-plugins.md)
+
+## AI agents (MCP)
+
+AI agents use agnthub through its hosted MCP server, `https://mcp.agnthub.sh`: they search the
+registry and, after you confirm, install agents with `npx -y agnthub-cli@latest add … --yes`.
+`agnthub mcp install` sets the server up in every harness on this machine:
+
+```sh
+npx agnthub-cli mcp install                              # pick harnesses (and omp profiles) from a list
+npx agnthub-cli mcp install --harness claude,codex --yes
+npx agnthub-cli mcp install --harness omp --profile work --yes
+npx agnthub-cli mcp uninstall                            # remove it again
+```
+
+It adds an `agnthub` server (Streamable HTTP) to each harness's user configuration (or the
+project's, with `--scope project`), with Claude Code's, Copilot CLI's and Gemini CLI's own
+`mcp add` when they are on `PATH` and otherwise by editing the file: only the `agnthub` entry
+changes, the previous file is backed up under `~/.local/state/agnthub/mcp-backups` and the new
+one is written atomically with the old mode. Older agnthub entries (the `/mcp` URLs and the local
+server removed in v0.5.0) are replaced; an `agnthub` entry agnthub did not write is kept unless
+you confirm or pass `--force`. You then sign in with GitHub in each harness (it prints how), or
+pass `--api-key` to store your API key as a header instead. See
+[AI agents (MCP)](docs/cli.md#ai-agents-mcp) for every flag, the per-harness details and the
+exit statuses.
 
 ## API key and rate limits
 

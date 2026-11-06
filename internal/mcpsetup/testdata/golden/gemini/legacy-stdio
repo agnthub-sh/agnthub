@@ -1,0 +1,34 @@
+=== install: legacy-stdio -> update
+{
+  "mcpServers": {
+    "agnthub": {
+      "url": "https://mcp.agnthub.sh",
+      "type": "http"
+    }
+  }
+}
+=== install --force: legacy-stdio -> update
+{
+  "mcpServers": {
+    "agnthub": {
+      "url": "https://mcp.agnthub.sh",
+      "type": "http"
+    }
+  }
+}
+=== install --api-key: legacy-stdio -> update
+{
+  "mcpServers": {
+    "agnthub": {
+      "url": "https://mcp.agnthub.sh",
+      "type": "http",
+      "headers": {
+        "Authorization": "Bearer agh_test0123"
+      }
+    }
+  }
+}
+=== uninstall: legacy-stdio -> remove
+{
+  "mcpServers": {}
+}

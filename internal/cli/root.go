@@ -21,6 +21,7 @@ import (
 	"github.com/agnthub-sh/agnthub/adoption"
 	"github.com/agnthub-sh/agnthub/harness"
 	"github.com/agnthub-sh/agnthub/internal/apiclient"
+	"github.com/agnthub-sh/agnthub/internal/mcpsetup"
 	"github.com/agnthub-sh/agnthub/platform/env"
 	"github.com/agnthub-sh/agnthub/skills"
 	"github.com/agnthub-sh/agnthub/source"
@@ -58,6 +59,9 @@ type App struct {
 	Registry *harness.Registry
 	Opener   source.Opener
 	LookPath func(string) (string, error)
+	// RunHarness runs a harness's own command (e.g. `claude mcp add`); nil runs it as
+	// a child process.
+	RunHarness mcpsetup.Runner
 	// Adoption reports successful public GitHub installs; nil selects the production
 	// reporter configured by AGNTHUB_API_URL / AGNTHUB_API_KEY or the user
 	// configuration's apiURL / apiKey.
@@ -220,7 +224,9 @@ overwrites files it does not own.`,
 	restore := a.restoreCommand(ctx)
 	restore.GroupID = groupProject
 	root.AddCommand(restore)
-	root.AddCommand(a.mcpCommand())
+	mcp := a.mcpCommand(ctx)
+	mcp.GroupID = groupAgents
+	root.AddCommand(mcp)
 	authCmd := a.authCommand(ctx)
 	authCmd.GroupID = groupAccount
 	root.AddCommand(authCmd)

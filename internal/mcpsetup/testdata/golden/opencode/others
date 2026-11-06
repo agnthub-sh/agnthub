@@ -1,0 +1,46 @@
+=== install: absent -> install
+{
+  "theme": "dark",
+  "mcp": {
+    "other": {
+      "url": "https://example.com/mcp"
+    },
+    "agnthub": {
+      "type": "remote",
+      "url": "https://mcp.agnthub.sh"
+    }
+  }
+}
+=== install --force: absent -> install
+{
+  "theme": "dark",
+  "mcp": {
+    "other": {
+      "url": "https://example.com/mcp"
+    },
+    "agnthub": {
+      "type": "remote",
+      "url": "https://mcp.agnthub.sh"
+    }
+  }
+}
+=== install --api-key: absent -> install
+{
+  "theme": "dark",
+  "mcp": {
+    "other": {
+      "url": "https://example.com/mcp"
+    },
+    "agnthub": {
+      "type": "remote",
+      "url": "https://mcp.agnthub.sh",
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer agh_test0123"
+      }
+    }
+  }
+}
+=== uninstall: absent -> skip
+reason: no agnthub server set up by agnthub
+(unchanged)

@@ -1,0 +1,12 @@
+=== install:  -> fail
+reason: $HOME/.gemini/settings.json cannot be parsed, so agnthub leaves it unchanged (fix it and run this again): hujson: line 1, column 28: parsing value: unexpected EOF
+(unchanged)
+=== install --force:  -> fail
+reason: $HOME/.gemini/settings.json cannot be parsed, so agnthub leaves it unchanged (fix it and run this again): hujson: line 1, column 28: parsing value: unexpected EOF
+(unchanged)
+=== install --api-key:  -> fail
+reason: $HOME/.gemini/settings.json cannot be parsed, so agnthub leaves it unchanged (fix it and run this again): hujson: line 1, column 28: parsing value: unexpected EOF
+(unchanged)
+=== uninstall:  -> fail
+reason: $HOME/.gemini/settings.json cannot be parsed, so agnthub leaves it unchanged (fix it and run this again): hujson: line 1, column 28: parsing value: unexpected EOF
+(unchanged)

@@ -1,0 +1,22 @@
+=== install: legacy -> update
+[mcp_servers.other]
+command = "x"
+
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+=== install --force: legacy -> update
+[mcp_servers.other]
+command = "x"
+
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+=== install --api-key: legacy -> update
+[mcp_servers.other]
+command = "x"
+
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+http_headers = { Authorization = "Bearer agh_test0123" }
+=== uninstall: legacy -> remove
+[mcp_servers.other]
+command = "x"

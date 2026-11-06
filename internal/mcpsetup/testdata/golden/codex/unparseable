@@ -1,0 +1,12 @@
+=== install:  -> fail
+reason: $HOME/.codex/config.toml cannot be parsed, so agnthub leaves it unchanged (fix it and run this again): toml: expected ']' to close table name
+(unchanged)
+=== install --force:  -> fail
+reason: $HOME/.codex/config.toml cannot be parsed, so agnthub leaves it unchanged (fix it and run this again): toml: expected ']' to close table name
+(unchanged)
+=== install --api-key:  -> fail
+reason: $HOME/.codex/config.toml cannot be parsed, so agnthub leaves it unchanged (fix it and run this again): toml: expected ']' to close table name
+(unchanged)
+=== uninstall:  -> fail
+reason: $HOME/.codex/config.toml cannot be parsed, so agnthub leaves it unchanged (fix it and run this again): toml: expected ']' to close table name
+(unchanged)

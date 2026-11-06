@@ -1,0 +1,35 @@
+=== install: legacy-stdio -> update
+{
+  "mcp": {
+    "agnthub": {
+      "type": "remote",
+      "url": "https://mcp.agnthub.sh"
+    }
+  }
+}
+=== install --force: legacy-stdio -> update
+{
+  "mcp": {
+    "agnthub": {
+      "type": "remote",
+      "url": "https://mcp.agnthub.sh"
+    }
+  }
+}
+=== install --api-key: legacy-stdio -> update
+{
+  "mcp": {
+    "agnthub": {
+      "type": "remote",
+      "url": "https://mcp.agnthub.sh",
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer agh_test0123"
+      }
+    }
+  }
+}
+=== uninstall: legacy-stdio -> remove
+{
+  "mcp": {}
+}

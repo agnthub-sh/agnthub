@@ -32,6 +32,7 @@ The command surface follows [skills.sh](https://skills.sh) (`npx skills`) where 
 | `update [agent...]` | `upgrade` | Preview and apply newer content |
 | `restore` | | Recreate exactly what `agnthub-lock.json` records |
 | `auth login` / `auth status` / `auth logout` | | Save, inspect or remove the agnthub.sh API key that raises the registry API's rate limits (see [API key and rate limits](#api-key-and-rate-limits)) |
+| `mcp install` / `mcp uninstall` | | Add agnthub's hosted MCP server to your harnesses, or remove it (see [AI agents (MCP)](#ai-agents-mcp)) |
 | `completion <shell>` | | Print a bash, zsh, fish or PowerShell completion script |
 
 Shared flags: `-g/--global` (user scope instead of the project), `-y/--yes` (no prompts), `--json` (machine-readable output, never prompts), `-a/--agent` (agent definitions), `-H/--harness` (harnesses; skills.sh target names such as `claude-code`, `github-copilot` and `gemini-cli` are accepted), `--extra <harness>.<key>=<value>`, `add -l/--list` and `add --all`. `--agent '*'` selects every agent of the source and `--harness all` (or `--harness '*'`) every supported harness; either cannot be combined with other values of the same flag. `--agent` has no `all` alias because an agent can be named `all`. `--all` is shorthand for `--agent '*' --harness all --yes`. `--allow-without-shell` (`add`, `update`, `restore` and `check`) installs agents that would lose the shell access they use where a harness cannot grant it (see Reduced capability under [Behavior](#behavior)). `agnthub --help` and `agnthub <command> --help` show grouped commands, flags and examples; `agnthub --version` (or `-v`) prints the version.
@@ -138,6 +139,71 @@ agnthub auth logout                        # remove the saved key
 
 ## AI agents (MCP)
 
-The CLI has no MCP server: `agnthub mcp`, the local stdio server, was removed in v0.5.0 and now only exits non-zero, pointing to the hosted one. AI agents connect to the hosted MCP server at [`https://mcp.agnthub.sh`](https://app.agnthub.sh/mcp) (sign-in with GitHub, or an API key). Its `install_agents` tool checks agents against the registry and returns the exact `npx -y agnthub-cli@latest add … --yes` command, which the agent runs with its shell tool after the user confirms, so installs keep every protection of `agnthub add`. Setup for every harness: [app.agnthub.sh/mcp](https://app.agnthub.sh/mcp).
+AI agents use agnthub through the hosted MCP server at [`https://mcp.agnthub.sh`](https://app.agnthub.sh/mcp) (sign-in with GitHub, or an API key). Its `install_agents` tool checks agents against the registry and returns the exact `npx -y agnthub-cli@latest add … --yes` command, which the agent runs with its shell tool after the user confirms, so installs keep every protection of `agnthub add`. The CLI itself has no MCP server: the local stdio server (`agnthub mcp`) was removed in v0.5.0. `agnthub mcp install` and `agnthub mcp uninstall` set the hosted server up in your harnesses, or remove it; manual setup for every harness is at [app.agnthub.sh/mcp](https://app.agnthub.sh/mcp).
+
+```sh
+agnthub mcp install                                   # pick harnesses and omp profiles from a list
+agnthub mcp install --harness claude,codex --yes      # (or -H claude -H codex)
+agnthub mcp install --harness all --yes --json        # every detected harness
+agnthub mcp install --harness omp --profile default --profile work --yes
+agnthub mcp install --harness cursor --scope project --yes
+agnthub mcp install --harness claude --api-key --yes # a bearer header instead of signing in
+agnthub mcp uninstall                                 # pick from the installs found
+agnthub mcp uninstall --yes                           # remove every one found
+```
+
+### `mcp install`
+
+1. **Detect.** install looks at the harnesses detected on this machine (the same detection as `add`: the harness's command on `PATH` or its configuration directory, honoring `CLAUDE_CONFIG_DIR`, `OPENCODE_CONFIG_DIR`/`XDG_CONFIG_HOME`, `CODEX_HOME`, `COPILOT_HOME`, `GEMINI_CLI_HOME` and omp's `PI_CONFIG_DIR`/`PI_CODING_AGENT_DIR`) and, for omp, at every profile: the default one and each directory under `~/.omp/profiles/`. For each it reads the configuration and finds what the `agnthub` entry is now: none; the hosted server (**already installed**); an older agnthub setup (the former `https://api.agnthub.sh/mcp` or `https://mcp.agnthub.sh/mcp` URL, the local server `npx … agnthub-cli mcp` or `agnthub mcp`, or the hosted URL in a shape the harness does not read as such); or an `agnthub` entry agnthub did not write (another URL or command).
+2. **Choose.** In a terminal, a list of the detected harnesses and omp profiles (space toggles, ctrl+a toggles all, enter confirms): the ones without agnthub are preselected, installed ones are marked `already installed`, older setups `select to update` and foreign entries `select to replace` (replacing asks once more). Undetected harnesses are named on one dimmed line. Without a terminal, or with `--yes` or `--json`, choose with `--harness` (comma-separated or repeated; `all` for every detected harness; a named harness is set up even when it is not detected) and `--profile <omp profile>` (repeatable, `default` for the default profile; implies `--harness omp`; a named profile must exist, agnthub never creates one). Without `--harness` and a terminal, install fails and writes nothing.
+3. **Configure.** Each selected harness gets an `agnthub` server, Streamable HTTP, at `https://mcp.agnthub.sh`, in its user configuration, or with `--scope project` in the current project's (refused in the home directory, which is no project, as with `add`). Older agnthub entries are replaced; a foreign `agnthub` entry is skipped unless you confirmed it in the list or passed `--force`.
+4. **Sign in.** No secret is written: each harness signs in with GitHub through the MCP authorization flow (OAuth), and install prints the exact step for each harness it configured. `--api-key` writes your agnthub API key (`AGNTHUB_API_KEY`, else the key `agnthub auth login` saved: the one `agnthub auth status` shows) as an `Authorization: Bearer` header instead, so no sign-in is needed. It warns on stderr that the key is then stored in plain text in each harness's configuration file, and again for a file other users can read; files agnthub creates are mode 0600. Every supported harness accepts that header. `--api-key` is refused with `--scope project`, whose files are often committed.
+
+| Harness | How | User configuration | `--scope project` | Sign in afterwards |
+| --- | --- | --- | --- | --- |
+| Claude Code | `claude mcp add --transport http --scope user agnthub https://mcp.agnthub.sh` (`claude mcp remove` first to replace an older entry) | `~/.claude.json` (`$CLAUDE_CONFIG_DIR/.claude.json`) | `claude mcp add --scope project` → `.mcp.json` | `claude mcp login agnthub`, or `/mcp` → agnthub → Authenticate |
+| OpenCode | file edit (`opencode mcp` has no remove) | `~/.config/opencode/opencode.json` or `.jsonc` (`$OPENCODE_CONFIG_DIR`, `$XDG_CONFIG_HOME/opencode`): `mcp.servers.agnthub` for OpenCode 2, `mcp.agnthub` for OpenCode 1, an unknown version, or a file that already uses that shape (OpenCode 2 reads it too) | `opencode.json` / `opencode.jsonc` | `opencode mcp auth agnthub`, or `/mcps` → agnthub → sign in |
+| Codex | file edit (`codex mcp add` drops other entries' comments) | `~/.codex/config.toml` (`$CODEX_HOME`), `[mcp_servers.agnthub]` | `.codex/config.toml` | `codex mcp login agnthub` |
+| Copilot CLI | `copilot mcp add --transport http agnthub https://mcp.agnthub.sh` (`copilot mcp remove` first) | `~/.copilot/mcp-config.json` (`$COPILOT_HOME`) | file edit: `.github/mcp.json` | `/mcp auth agnthub` in Copilot CLI |
+| Cursor | file edit (no add command) | `~/.cursor/mcp.json` | `.cursor/mcp.json` | `cursor-agent mcp login agnthub`, or `/mcp list` → agnthub → login |
+| Gemini CLI | `gemini mcp add --scope user --transport http agnthub https://mcp.agnthub.sh` (`gemini mcp remove --scope user` first) | `~/.gemini/settings.json` (`$GEMINI_CLI_HOME/.gemini`) | file edit: `.gemini/settings.json` (the command refuses untrusted folders) | `/mcp auth agnthub` in Gemini CLI |
+| omp | file edit, one per profile | `~/.omp/agent/mcp.json`, `~/.omp/profiles/<name>/agent/mcp.json` | `.omp/mcp.json` (every profile reads it) | `/mcp reauth agnthub` in omp (`omp --profile <name>` for a profile) |
+
+A harness's own command is used only when it is on `PATH`, and never with `--api-key` (the key would show on its command line); otherwise agnthub edits the file.
+
+**Safety of file edits.** The file is parsed first (JSON with comments and trailing commas, TOML for Codex) and a file that does not parse is never changed: that harness fails with the parse error and the others are still done. Only the `agnthub` entry is added, replaced or removed; every other byte, comments and formatting included, stays, new entries follow the file's indentation, and the result is parsed again and compared with the original, so nothing but the `agnthub` entry can differ. The previous file is copied, with its mode, to `~/.local/state/agnthub/mcp-backups/<time>-<harness>[-<profile>]-<file>` (under `$XDG_STATE_HOME` when set), and the new one is written to a temporary file beside it and renamed over it, through symbolic links, keeping the file's mode (0600 for a new file). When a harness's own command is used, its file is backed up the same way and read back afterwards; if the command fails or the file does not then hold the expected entry, the backup is restored.
+
+Output: a status line, then a `HARNESS  PROFILE  ACTION  CONFIG FILE` table (`+ install` green, `~ update` yellow, `= already installed` dimmed, `! skipped` and `! failed` red with the reason under the table), where the backups went, the undetected harnesses, and how to sign in to each harness that was configured:
+
+```text
+$ agnthub mcp install --harness all --yes
+✅ agnthub MCP server installed · user scope · https://mcp.agnthub.sh
+
+   HARNESS  PROFILE  ACTION               CONFIG FILE
+   claude            + install            ~/.claude.json
+   codex             ~ update             ~/.codex/config.toml
+   omp      default  = already installed  ~/.omp/agent/mcp.json
+   omp      work     + install            ~/.omp/profiles/work/agent/mcp.json
+
+   Previous files are backed up in ~/.local/state/agnthub/mcp-backups.
+   Not detected: opencode, copilot, cursor, gemini (name one with --harness to set it up anyway).
+
+🔑 Next, sign in with GitHub in each harness
+   claude    run `claude mcp login agnthub`, or `/mcp` in Claude Code, select agnthub and authenticate
+   codex     run `codex mcp login agnthub`
+   omp work  run `/mcp reauth agnthub` in omp (start it with `omp --profile work`)
+```
+
+`--json` prints `{"command", "status", "scope", "url", "results": [{"harness", "profile", "scope", "configFile", "before", "action", "mechanism", "command", "backup", "reason", "signIn"}], "notDetected"}`: `status` is `done`, `skipped`, `failed` or `none`; `before` is the entry's state (`absent`, `installed`, `outdated`, `legacy`, `legacy-stdio`, `foreign`); `action` is `install`, `update`, `unchanged`, `skip`, `fail` or `remove`; `mechanism` is `command` or `file`.
+
+Exit status of `mcp install`: `0` when every selected harness is set up (or already was); `1` on an error (invalid flags, a cancelled prompt, no `--harness` without a terminal, or a harness whose configuration could not be changed; the others are still done); `2` when a harness was skipped because its `agnthub` entry was not set up by agnthub (rerun with `--force` to replace it).
+
+### `mcp uninstall`
+
+uninstall reads every supported harness's user configuration (every omp profile included, whether or not the harness is still detected) and, with `--scope project`, also the current project's, and lists only the agnthub entries agnthub set up, in any of the forms above, all selected. With none it prints `No agnthub MCP installs detected.` and exits 0. `--yes` removes every one found without asking; `--harness` and `--profile` narrow the search; without a terminal it needs `--yes` or `--harness`. Removal uses the harness's own `mcp remove` where install uses its `mcp add`, otherwise the same file edit and backup. Other servers, and an `agnthub` entry agnthub did not write, are never removed; a configuration that cannot be read is reported on stderr and left alone. Same table (`- remove` in red) and `--json`. Exit status: `0` when every selected entry was removed or none was found, `1` on an error.
+
+### Bare `agnthub mcp`
+
+MCP client configurations from before v0.5.0 still start `npx agnthub-cli mcp` as a stdio server. Without a terminal on stdin and without a subcommand, `agnthub mcp` (whatever flags such a configuration passes) prints `The local MCP server was removed in v0.5.0. Use the hosted server instead: https://mcp.agnthub.sh (setup: https://app.agnthub.sh/mcp).` and ``Run `npx agnthub-cli mcp install` to configure the hosted server.`` on stderr and exits 1, so the client reports the server as failed; `mcp install` replaces that entry. In a terminal it shows the help of the `mcp` commands.
 
 Development: see [CONTRIBUTING](../CONTRIBUTING.md).

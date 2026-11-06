@@ -1,0 +1,22 @@
+=== install: legacy-stdio -> update
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+
+[profiles.fast]
+model = "o4-mini"
+=== install --force: legacy-stdio -> update
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+
+[profiles.fast]
+model = "o4-mini"
+=== install --api-key: legacy-stdio -> update
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+http_headers = { Authorization = "Bearer agh_test0123" }
+
+[profiles.fast]
+model = "o4-mini"
+=== uninstall: legacy-stdio -> remove
+[profiles.fast]
+model = "o4-mini"

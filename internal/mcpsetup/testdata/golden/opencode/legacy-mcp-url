@@ -1,0 +1,48 @@
+=== install: legacy -> update
+{
+  "mcp": {
+    "other": {
+      "url": "https://example.com/mcp"
+    },
+    "agnthub": {
+      "type": "remote",
+      "url": "https://mcp.agnthub.sh"
+    }
+  }
+}
+=== install --force: legacy -> update
+{
+  "mcp": {
+    "other": {
+      "url": "https://example.com/mcp"
+    },
+    "agnthub": {
+      "type": "remote",
+      "url": "https://mcp.agnthub.sh"
+    }
+  }
+}
+=== install --api-key: legacy -> update
+{
+  "mcp": {
+    "other": {
+      "url": "https://example.com/mcp"
+    },
+    "agnthub": {
+      "type": "remote",
+      "url": "https://mcp.agnthub.sh",
+      "oauth": false,
+      "headers": {
+        "Authorization": "Bearer agh_test0123"
+      }
+    }
+  }
+}
+=== uninstall: legacy -> remove
+{
+  "mcp": {
+    "other": {
+      "url": "https://example.com/mcp"
+    }
+  }
+}

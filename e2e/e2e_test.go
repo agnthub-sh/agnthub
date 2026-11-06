@@ -103,6 +103,7 @@ func TestHarness(t *testing.T) {
 	s.selection(t)
 	s.lifecycle(t)
 	s.home(t)
+	s.mcp(t)
 
 	s.finishGoldens(t)
 }

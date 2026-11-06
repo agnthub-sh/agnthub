@@ -1,0 +1,13 @@
+=== install: absent -> install
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+=== install --force: absent -> install
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+=== install --api-key: absent -> install
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+http_headers = { Authorization = "Bearer agh_test0123" }
+=== uninstall: absent -> skip
+reason: no agnthub server set up by agnthub
+(unchanged)

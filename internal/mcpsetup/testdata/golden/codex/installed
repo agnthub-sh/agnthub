@@ -1,0 +1,9 @@
+=== install: installed -> unchanged
+(unchanged)
+=== install --force: installed -> unchanged
+(unchanged)
+=== install --api-key: outdated -> update
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+http_headers = { Authorization = "Bearer agh_test0123" }
+=== uninstall: installed -> remove

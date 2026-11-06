@@ -1,0 +1,31 @@
+=== install: absent -> install
+# my settings
+model = "o3"
+
+[mcp_servers.other]
+command = "x" # keep this comment
+
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+=== install --force: absent -> install
+# my settings
+model = "o3"
+
+[mcp_servers.other]
+command = "x" # keep this comment
+
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+=== install --api-key: absent -> install
+# my settings
+model = "o3"
+
+[mcp_servers.other]
+command = "x" # keep this comment
+
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+http_headers = { Authorization = "Bearer agh_test0123" }
+=== uninstall: absent -> skip
+reason: no agnthub server set up by agnthub
+(unchanged)

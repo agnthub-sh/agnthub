@@ -1,0 +1,37 @@
+=== install: absent -> install
+# top
+[mcp_servers.other]
+command = "x"
+args = ["""
+[mcp_servers.agnthub]
+not a table, a string
+"""]
+
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+=== install --force: absent -> install
+# top
+[mcp_servers.other]
+command = "x"
+args = ["""
+[mcp_servers.agnthub]
+not a table, a string
+"""]
+
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+=== install --api-key: absent -> install
+# top
+[mcp_servers.other]
+command = "x"
+args = ["""
+[mcp_servers.agnthub]
+not a table, a string
+"""]
+
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+http_headers = { Authorization = "Bearer agh_test0123" }
+=== uninstall: absent -> skip
+reason: no agnthub server set up by agnthub
+(unchanged)

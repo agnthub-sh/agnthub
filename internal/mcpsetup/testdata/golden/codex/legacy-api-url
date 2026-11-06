@@ -1,0 +1,34 @@
+=== install: legacy -> update
+model = "o3"
+
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+
+# the other server
+[mcp_servers.other]
+command = "x"
+=== install --force: legacy -> update
+model = "o3"
+
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+
+# the other server
+[mcp_servers.other]
+command = "x"
+=== install --api-key: legacy -> update
+model = "o3"
+
+[mcp_servers.agnthub]
+url = "https://mcp.agnthub.sh"
+http_headers = { Authorization = "Bearer agh_test0123" }
+
+# the other server
+[mcp_servers.other]
+command = "x"
+=== uninstall: legacy -> remove
+model = "o3"
+
+# the other server
+[mcp_servers.other]
+command = "x"
