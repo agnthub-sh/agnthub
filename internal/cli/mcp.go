@@ -16,7 +16,7 @@ import (
 	"github.com/spf13/cobra"
 
 	"github.com/agnthub-sh/agnthub/internal/apiclient"
-	"github.com/agnthub-sh/agnthub/internal/mcpserver"
+	"github.com/agnthub-sh/agnthub/mcpserver"
 	"github.com/agnthub-sh/agnthub/skills"
 )
 

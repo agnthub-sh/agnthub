@@ -1,6 +1,8 @@
 // Package mcpserver is agnthub's Model Context Protocol server: read-only tools over the
-// public registry API (search, agent and repository details, install commands). The CLI adds
-// its local install tool on top and serves it over stdio (`agnthub mcp`).
+// registry (search, agent and repository details, install commands). The CLI backs them with
+// the public registry API (Client), adds its local install tool and serves them over stdio
+// (`agnthub mcp`); the hosted service backs the same tools with its own registry and serves
+// them over Streamable HTTP.
 package mcpserver
 
 import (
@@ -64,8 +66,19 @@ type Options struct {
 	Instructions string
 }
 
-// New returns a server with the read-only registry tools backed by client.
-func New(client *Client, opts Options) *mcp.Server {
+// Backend reads the registry for the tools. Results are the public registry API's response
+// shapes; an error is reported to the agent as a tool error, so its text must be fit to show.
+type Backend interface {
+	// Search runs a full-text search over eligible Agents.
+	Search(ctx context.Context, q *SearchQuery) (*SearchPage, error)
+	// Repository reads a listed repository with its Agents.
+	Repository(ctx context.Context, owner, repo string) (*Repository, error)
+	// Agent reads one Agent of a listed repository.
+	Agent(ctx context.Context, owner, repo, id string) (*AgentDetail, error)
+}
+
+// New returns a server with the read-only registry tools backed by backend.
+func New(backend Backend, opts Options) *mcp.Server {
 	text := instructions
 	if opts.Instructions != "" {
 		text += "\n\n" + opts.Instructions
@@ -74,7 +87,7 @@ func New(client *Client, opts Options) *mcp.Server {
 		&mcp.Implementation{Name: "agnthub", Title: "agnthub", Version: opts.Version},
 		&mcp.ServerOptions{Instructions: text},
 	)
-	t := &tools{client: client}
+	t := &tools{client: backend}
 	readOnly := &mcp.ToolAnnotations{ReadOnlyHint: true, IdempotentHint: true}
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "search_agents",
@@ -146,7 +159,7 @@ func harnessList(s *jsonschema.Schema) {
 }
 
 type tools struct {
-	client *Client
+	client Backend
 }
 
 type searchInput struct {

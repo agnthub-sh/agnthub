@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/agnthub-sh/agnthub/agent"
-	"github.com/agnthub-sh/agnthub/internal/mcpserver"
+	"github.com/agnthub-sh/agnthub/mcpserver"
 )
 
 // The cases mirror the site's install builder tests (web/src/lib/command.test.ts).
