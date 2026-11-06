@@ -163,7 +163,7 @@ The user documentation lives on the site, at [app.agnthub.sh/docs](https://app.a
 [cross-harness conversion](https://app.agnthub.sh/docs/conversion),
 [dependencies](https://app.agnthub.sh/docs/dependencies), [the lockfile](https://app.agnthub.sh/docs/lockfile),
 [authoring agents](https://app.agnthub.sh/docs/authoring) and
-[privacy and install reports](https://app.agnthub.sh/docs/privacy).
+[privacy and install reports](https://app.agnthub.sh/privacy).
 
 In this repository:
 
@@ -201,7 +201,8 @@ After installing agents from a public GitHub repository, the CLI tells the regis
 harnesses, so installs of listed repositories are counted. A report never adds a repository to
 the registry. No paths, profiles, harness settings, or private and local sources are sent; the
 report is anonymous unless you configured an API key, which it then carries. Set
-`DO_NOT_TRACK` or `DISABLE_TELEMETRY` to any non-empty value to send nothing.
+`DO_NOT_TRACK` or `DISABLE_TELEMETRY` to any non-empty value to send nothing. Details:
+[install reports](https://app.agnthub.sh/privacy#install-reports).
 
 ## Contributing
 
