@@ -59,7 +59,7 @@ func ConfigPath(e env.Env) string {
 
 type configFile struct {
 	SkillInstaller *Installer `yaml:"skillInstaller"`
-	// APIURL is the registry API origin the CLI, its MCP server and install reports use.
+	// APIURL is the registry API origin the CLI and install reports use.
 	APIURL string `yaml:"apiURL"`
 	// APIKey is the user's agnthub API key; AGNTHUB_API_KEY wins over it.
 	APIKey string `yaml:"apiKey"`

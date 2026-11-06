@@ -31,7 +31,6 @@ The command surface follows [skills.sh](https://skills.sh) (`npx skills`) where 
 | `check [agent...]` | | Show available updates and local drift without writing |
 | `update [agent...]` | `upgrade` | Preview and apply newer content |
 | `restore` | | Recreate exactly what `agnthub-lock.json` records |
-| `mcp` | | Serve agnthub to AI agents over the Model Context Protocol (stdio) |
 | `auth login` / `auth status` / `auth logout` | | Save, inspect or remove the agnthub.sh API key that raises the registry API's rate limits (see [API key and rate limits](#api-key-and-rate-limits)) |
 | `completion <shell>` | | Print a bash, zsh, fish or PowerShell completion script |
 
@@ -131,54 +130,14 @@ agnthub auth logout                        # remove the saved key
 - **Getting a key:** on [app.agnthub.sh/api-key](https://app.agnthub.sh/api-key) (also *API key* in the account menu), sign in with GitHub and create a key. The site shows it once, right after you create or rotate it, and afterwards only as `agh_…7f3a`. Rotate or revoke it there.
 - **`auth login`** opens that page in the browser (in a terminal, unless `--no-browser`; the URL is always printed), reads the key at a hidden prompt (or from standard input with `--with-key-stdin`), checks it with `GET /v1/me` and saves it as `apiKey:` in `~/.config/agnthub/config.yaml` (`$XDG_CONFIG_HOME/agnthub/config.yaml`), rewritten atomically with mode `0600` and the rest of the file kept. It prints `Signed in as <github login>`. Without a terminal it needs `--with-key-stdin`.
 - **`AGNTHUB_API_KEY`** wins over the saved key, for CI and scripts. `auth logout` removes only the saved key; it cannot unset the variable and says so while it is set.
-- **Where it goes:** the CLI, install reports and `agnthub mcp` send `Authorization: Bearer <key>` only to the configured registry API origin (`AGNTHUB_API_URL`, `apiURL:` or `https://api.agnthub.sh`; scheme, host and port must match), never to GitHub or any other host, and never in a redirect to another host. A key that does not start with `agh_` is refused locally before any request; it never falls back to anonymous requests.
+- **Where it goes:** the CLI and install reports send `Authorization: Bearer <key>` only to the configured registry API origin (`AGNTHUB_API_URL`, `apiURL:` or `https://api.agnthub.sh`; scheme, host and port must match), never to GitHub or any other host, and never in a redirect to another host. A key that does not start with `agh_` is refused locally before any request; it never falls back to anonymous requests.
 - **Scope:** a key reads the registry and reports installs. Every other operation (stars, submissions, administration) answers 403 to a key.
 - **Rejected key:** a revoked, rotated or malformed key gets `401` from the API, and the command fails with `Your agnthub API key was rejected (revoked or rotated?). Run agnthub auth login or unset AGNTHUB_API_KEY.` It is never retried anonymously.
-- **Rate limited:** on a `429`, a `Retry-After` of 10 seconds or less is waited out once and the request retried; a longer one fails with `agnthub.sh rate limit reached; try again in N s`, plus `(sign in with agnthub auth login for higher limits)` when no key was sent. MCP tools return the same message. Install reports are never retried or waited for.
+- **Rate limited:** on a `429`, a `Retry-After` of 10 seconds or less is waited out once and the request retried; a longer one fails with `agnthub.sh rate limit reached; try again in N s`, plus `(sign in with agnthub auth login for higher limits)` when no key was sent. Install reports are never retried or waited for.
 - **Headers:** every rate-limited API response carries `RateLimit-Policy: "<tier>";q=<limit>;w=<window seconds>` and `RateLimit: "<tier>";r=<remaining>;t=<seconds to reset>` (IETF draft), plus `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset` (Unix seconds) and `X-RateLimit-Resource`; a `429` also carries `Retry-After`. `auth status` shows the limit from these headers.
 
-## MCP server
+## AI agents (MCP)
 
-`agnthub mcp` runs a [Model Context Protocol](https://modelcontextprotocol.io) server on stdin/stdout so AI agents can find, inspect and install agents. MCP clients start it themselves; it is the same binary as the CLI (`npx -y agnthub-cli mcp`, or the installed `agnthub mcp`).
-
-Read-only tools query the public registry API (`https://api.agnthub.sh`; override with `--api-url`, `AGNTHUB_API_URL` or `apiURL:` in `~/.config/agnthub/config.yaml`) and see exactly what the site shows: only currently listed repositories, instructions only under the licensed policy. Outputs are bounded (at most 20 search results per page, 50 agents per repository, instructions only on request and capped at 32 KiB each). The server uses the same [API key](#api-key-and-rate-limits) as the CLI (`AGNTHUB_API_KEY` or the saved key) for higher rate limits; rate limits and a rejected key come back as tool errors with the CLI's messages.
-
-| Tool | What it does |
-| --- | --- |
-| `search_agents` | Full-text search with harness filters and `relevance`, `recent`, `installs`, `installs_30d`, `installs_7d`, `harness_installs` or `stars` (GitHub + agnthub.sh) order; each result's harnesses carry `reduced` and `opt_in` as `get_agent` does |
-| `get_agent` | One agent: description, installable harnesses or why not (per harness, the capabilities it goes without as `reduced` and `opt_in: allow-without-shell` when it installs only with that flag), dependencies, reported installs, stars (GitHub + agnthub.sh), license; instructions with `include_instructions` |
-| `get_repository` | A listed repository with its agents, license, GitHub stats and scan problems |
-| `install_command` | The `npx agnthub-cli add …` command for agents, harnesses, scope and omp profile, built and quoted exactly as the site's install builder does (every supported harness selected becomes `--harness all`), after checking the agents are listed; warns about harnesses an agent cannot be installed into. When an explicitly selected harness (or `all`) needs the shell opt-in for a selected agent, it adds `--allow-without-shell` and a warning naming what the agent goes without; without explicit harnesses the CLI asks and the opt-in is left to the user |
-| `install_agents` | Installs on this machine through the same code as `agnthub add --json`: harness selection, scope, `--extra` settings such as `omp.profile`, dependencies, required skills, the lock and ownership records. Without `confirm` it only returns the plan (items carry `reduced` and `optIn` as in `--json`); with `confirm: true` it applies the plan only when every item is valid, so files agnthub does not own or that were changed locally are never overwritten. `allow_without_shell: true` is `--allow-without-shell`, for items marked `optIn: allow-without-shell` once the user agrees. Project installs go to `project_dir` (default: the directory the client started the server in). Install reports honor `DO_NOT_TRACK` / `DISABLE_TELEMETRY` |
-| `auth_status` | What `agnthub auth status --json` shows: whether the server sends an API key and where it comes from (`env` or `config`), the key as `agh_…last4`, its GitHub account and the rate limit the API reports |
-
-Client configuration (use `agnthub mcp` instead of `npx -y agnthub-cli mcp` with an installed binary):
-
-- Claude Code: `claude mcp add agnthub -- npx -y agnthub-cli mcp`
-- Codex: `codex mcp add agnthub -- npx -y agnthub-cli mcp`, or in `~/.codex/config.toml`:
-
-  ```toml
-  [mcp_servers.agnthub]
-  command = "npx"
-  args = ["-y", "agnthub-cli", "mcp"]
-  ```
-
-- OpenCode (`opencode.json`):
-
-  ```json
-  { "mcp": { "agnthub": { "type": "local", "command": ["npx", "-y", "agnthub-cli", "mcp"] } } }
-  ```
-
-- Cursor (`.cursor/mcp.json` or `~/.cursor/mcp.json`), Gemini CLI (`.gemini/settings.json` or `~/.gemini/settings.json`) and omp (`.omp/mcp.json` or `~/.omp/agent/mcp.json`):
-
-  ```json
-  { "mcpServers": { "agnthub": { "command": "npx", "args": ["-y", "agnthub-cli", "mcp"] } } }
-  ```
-
-- GitHub Copilot CLI (`~/.copilot/mcp-config.json`):
-
-  ```json
-  { "mcpServers": { "agnthub": { "type": "local", "command": "npx", "args": ["-y", "agnthub-cli", "mcp"], "tools": ["*"] } } }
-  ```
+The CLI has no MCP server: `agnthub mcp`, the local stdio server, was removed in v0.5.0 and now only exits non-zero, pointing to the hosted one. AI agents connect to the hosted MCP server at [`https://mcp.agnthub.sh`](https://app.agnthub.sh/mcp) (sign-in with GitHub, or an API key). Its `install_agents` tool checks agents against the registry and returns the exact `npx -y agnthub-cli@latest add … --yes` command, which the agent runs with its shell tool after the user confirms, so installs keep every protection of `agnthub add`. Setup for every harness: [app.agnthub.sh/mcp](https://app.agnthub.sh/mcp).
 
 Development: see [CONTRIBUTING](../CONTRIBUTING.md).

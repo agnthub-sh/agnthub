@@ -220,9 +220,7 @@ overwrites files it does not own.`,
 	restore := a.restoreCommand(ctx)
 	restore.GroupID = groupProject
 	root.AddCommand(restore)
-	mcpCmd := a.mcpCommand(ctx)
-	mcpCmd.GroupID = groupAgents
-	root.AddCommand(mcpCmd)
+	root.AddCommand(a.mcpCommand())
 	authCmd := a.authCommand(ctx)
 	authCmd.GroupID = groupAccount
 	root.AddCommand(authCmd)

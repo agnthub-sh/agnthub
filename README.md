@@ -14,7 +14,6 @@ agnthub check                                 # newer source content and local d
 agnthub update                                # preview and apply newer content
 agnthub restore                               # recreate exactly what agnthub-lock.json records
 agnthub remove reviewer
-agnthub mcp                                   # MCP server (stdio) for AI agents
 agnthub auth login                            # optional: an agnthub.sh API key for higher rate limits
 ```
 
@@ -169,7 +168,7 @@ The user documentation lives on the site, at [app.agnthub.sh/docs](https://app.a
 In this repository:
 
 - [Using the CLI](docs/cli.md): sources, selection, scopes, Harness settings, dependencies,
-  skills, check/update/restore/remove, the [MCP server](docs/cli.md#mcp-server) and the
+  skills, check/update/restore/remove, [AI agents (MCP)](docs/cli.md#ai-agents-mcp) and the
   [API key and rate limits](docs/cli.md#api-key-and-rate-limits)
 - [CLI contract](docs/cli-contract.md), [glossary](GLOSSARY.md) and
   [architecture decisions](docs/adr/)
@@ -189,7 +188,7 @@ agnthub auth logout
 ```
 
 `AGNTHUB_API_KEY` wins over the saved key (`apiKey:` in `~/.config/agnthub/config.yaml`,
-mode 0600). The CLI, install reports and `agnthub mcp` send it as `Authorization: Bearer` to
+mode 0600). The CLI and install reports send it as `Authorization: Bearer` to
 the registry API only, never to GitHub or any other host. A short `429` (`Retry-After` of 10 s
 or less) is waited out once; a longer one fails with the time to wait. See
 [API key and rate limits](docs/cli.md#api-key-and-rate-limits) for the limits, headers and

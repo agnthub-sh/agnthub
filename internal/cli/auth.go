@@ -11,7 +11,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/spf13/cobra"
 
 	"github.com/agnthub-sh/agnthub/internal/apiclient"
@@ -25,7 +24,7 @@ func (a *App) authCommand(ctx context.Context) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "auth",
 		Short: "Sign in to agnthub.sh with an API key for higher rate limits",
-		Long: `Manage the agnthub.sh API key the CLI and agnthub mcp send to the registry API.
+		Long: `Manage the agnthub.sh API key the CLI sends to the registry API.
 
 Everything works without an account. Signed in, searches and registry reads get
 higher rate limits, charged to your account instead of your network address:
@@ -242,7 +241,7 @@ func openBrowser(ctx context.Context, lookPath func(string) (string, error), tar
 	return nil
 }
 
-// authStatus is agnthub auth status --json and the auth_status MCP tool's result.
+// authStatus is agnthub auth status --json.
 type authStatus struct {
 	// SignedIn reports a key the API accepted.
 	SignedIn bool `json:"signed_in"`
@@ -412,21 +411,4 @@ func (p *printer) fields(rows [][2]string) {
 		label := row[0] + strings.Repeat(" ", width-len(row[0]))
 		fmt.Fprintln(p.w, pad+p.styles.dim.Render(label)+"  "+row[1])
 	}
-}
-
-func (a *App) addAuthStatusTool(server *mcp.Server, api *apiclient.Config) {
-	mcp.AddTool(server, &mcp.Tool{
-		Name:  "auth_status",
-		Title: "agnthub API key and rate limit (agnthub auth status)",
-		Description: "Shows whether this server sends an agnthub.sh API key (and from where), " +
-			"the GitHub account it belongs to and the rate limit the registry API reports, " +
-			"like `agnthub auth status --json`. Without a key, anonymous limits apply; the " +
-			"user can sign in with `agnthub auth login` for higher ones.",
-		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true, IdempotentHint: true},
-	}, func(ctx context.Context, _ *mcp.CallToolRequest, _ struct{}) (
-		*mcp.CallToolResult, *authStatus, error,
-	) {
-		status, err := a.authStatus(ctx, api)
-		return nil, status, err
-	})
 }

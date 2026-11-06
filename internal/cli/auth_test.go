@@ -13,7 +13,6 @@ import (
 	"time"
 
 	"github.com/bytedance/sonic"
-	"github.com/modelcontextprotocol/go-sdk/mcp"
 
 	"github.com/agnthub-sh/agnthub/internal/apiclient"
 	"github.com/agnthub-sh/agnthub/internal/cli"
@@ -22,17 +21,15 @@ import (
 )
 
 // authAPI fakes GET /v1/me: testKey signs in as octocat, no key is anonymous and any
-// other key is refused like the registry API refuses it. /v1/search answers 429 with
-// Retry-After when searchRetryAfter is set.
+// other key is refused like the registry API refuses it.
 type authAPI struct {
 	*httptest.Server
-	requests         atomic.Int64
-	searchRetryAfter string
+	requests atomic.Int64
 }
 
-func newAuthAPI(t *testing.T, searchRetryAfter string) *authAPI {
+func newAuthAPI(t *testing.T) *authAPI {
 	t.Helper()
-	a := &authAPI{searchRetryAfter: searchRetryAfter}
+	a := &authAPI{}
 	a.Server = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		a.requests.Add(1)
 		auth := r.Header.Get("Authorization")
@@ -46,12 +43,6 @@ func newAuthAPI(t *testing.T, searchRetryAfter string) *authAPI {
 		limit, remaining := "300", "299"
 		if auth != "" {
 			limit, remaining = "3000", "2999"
-		}
-		if r.URL.Path == "/v1/search" && a.searchRetryAfter != "" {
-			w.Header().Set("Retry-After", a.searchRetryAfter)
-			w.WriteHeader(http.StatusTooManyRequests)
-			_, _ = w.Write([]byte(`{"status":429,"detail":"rate limit exceeded"}`))
-			return
 		}
 		w.Header().Set("RateLimit-Policy", `"detail";q=`+limit+`;w=60`)
 		w.Header().Set("RateLimit", `"detail";r=`+remaining+`;t=1`)
@@ -94,7 +85,7 @@ func (h *harnessT) runAuth(values map[string]string, stdin string, args ...strin
 
 func TestAuthLoginWithStdinSavesTheKey0600AndLogoutRemovesIt(t *testing.T) {
 	h := newHarness(t)
-	api := newAuthAPI(t, "")
+	api := newAuthAPI(t)
 	writeFile(t, h.configPath(), "# my settings\napiURL: "+api.URL+"\n")
 
 	code, out := h.runAuth(nil, testKey+"\n", "auth", "login", "--with-key-stdin")
@@ -136,7 +127,7 @@ func TestAuthLoginWithStdinSavesTheKey0600AndLogoutRemovesIt(t *testing.T) {
 
 func TestAuthLoginRefusesKeysWithoutSaving(t *testing.T) {
 	h := newHarness(t)
-	api := newAuthAPI(t, "")
+	api := newAuthAPI(t)
 	values := map[string]string{apiclient.URLVariable: api.URL}
 
 	// Not an agnthub key: refused before any request.
@@ -174,7 +165,7 @@ type statusJSON struct {
 
 func TestAuthStatusJSON(t *testing.T) {
 	h := newHarness(t)
-	api := newAuthAPI(t, "")
+	api := newAuthAPI(t)
 	values := map[string]string{apiclient.URLVariable: api.URL}
 
 	status := func(values map[string]string) statusJSON {
@@ -212,72 +203,5 @@ func TestAuthStatusJSON(t *testing.T) {
 	}, "", "auth", "status", "--json")
 	if code == 0 || !strings.Contains(out, "API key was rejected") {
 		t.Fatalf("exit %d: %s", code, out)
-	}
-}
-
-func TestMCPToolsReportRateLimitsAndRejectedKeys(t *testing.T) {
-	api := newAuthAPI(t, "30")
-	search := func(values map[string]string) string {
-		t.Helper()
-		h := newHarness(t)
-		cs := h.mcpSessionEnv(values)
-		res, err := cs.CallTool(context.Background(),
-			&mcp.CallToolParams{Name: "search_agents", Arguments: map[string]any{}})
-		if err != nil {
-			t.Fatal(err)
-		}
-		if !res.IsError {
-			t.Fatal("want a tool error")
-		}
-		var b strings.Builder
-		for _, c := range res.Content {
-			if tc, ok := c.(*mcp.TextContent); ok {
-				b.WriteString(tc.Text)
-			}
-		}
-		return b.String()
-	}
-
-	anonymous := search(map[string]string{apiclient.URLVariable: api.URL})
-	if !strings.Contains(anonymous, "try again in 30 s") ||
-		!strings.Contains(anonymous, "agnthub auth login") {
-		t.Fatalf("anonymous rate limit: %s", anonymous)
-	}
-	withKey := search(map[string]string{
-		apiclient.URLVariable: api.URL, apiclient.KeyVariable: testKey,
-	})
-	if !strings.Contains(withKey, "try again in 30 s") ||
-		strings.Contains(withKey, "agnthub auth login") {
-		t.Fatalf("rate limit with a key: %s", withKey)
-	}
-	rejected := search(map[string]string{
-		apiclient.URLVariable: api.URL, apiclient.KeyVariable: "agh_revoked",
-	})
-	if !strings.Contains(rejected, "API key was rejected") {
-		t.Fatalf("rejected key: %s", rejected)
-	}
-}
-
-func TestMCPAuthStatusTool(t *testing.T) {
-	api := newAuthAPI(t, "")
-	h := newHarness(t)
-	cs := h.mcpSessionEnv(map[string]string{
-		apiclient.URLVariable: api.URL, apiclient.KeyVariable: testKey,
-	})
-	res, err := cs.CallTool(context.Background(),
-		&mcp.CallToolParams{Name: "auth_status", Arguments: map[string]any{}})
-	if err != nil || res.IsError {
-		t.Fatalf("auth_status: %v %+v", err, res)
-	}
-	raw, err := sonic.Marshal(res.StructuredContent)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var s statusJSON
-	if err := sonic.Unmarshal(raw, &s); err != nil {
-		t.Fatal(err)
-	}
-	if !s.SignedIn || s.Source != "env" || s.GitHubLogin != "octocat" {
-		t.Fatalf("auth_status %+v", s)
 	}
 }
