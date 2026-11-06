@@ -18,6 +18,7 @@ import (
 
 	"github.com/agnthub-sh/agnthub/harness"
 	"github.com/agnthub-sh/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/state"
 )
 
 // Placeholders substituted into installer arguments.
@@ -58,8 +59,10 @@ func ConfigPath(e env.Env) string {
 
 type configFile struct {
 	SkillInstaller *Installer `yaml:"skillInstaller"`
-	// APIURL is the registry API origin automatic install reports go to.
+	// APIURL is the registry API origin the CLI, its MCP server and install reports use.
 	APIURL string `yaml:"apiURL"`
+	// APIKey is the user's agnthub API key; AGNTHUB_API_KEY wins over it.
+	APIKey string `yaml:"apiKey"`
 }
 
 // ErrConfig reports an invalid user configuration; nothing has run.
@@ -102,10 +105,85 @@ func LoadInstaller(path string) (Installer, error) {
 	return installer, nil
 }
 
-// LoadAPIURL reads the configured registry API origin, "" when unset.
-func LoadAPIURL(path string) (string, error) {
+// API is the configuration's registry API settings; empty fields are unset.
+type API struct {
+	URL string
+	Key string
+}
+
+// LoadAPI reads the configured registry API origin and API key.
+func LoadAPI(path string) (API, error) {
 	file, err := readConfig(path)
-	return file.APIURL, err
+	return API{URL: file.APIURL, Key: file.APIKey}, err
+}
+
+// SetAPIKey stores key as the configuration's apiKey, or removes it when key is "". It
+// reports false when there was no key to remove. The rest of the file, comments included,
+// stays; the file is rewritten atomically with mode 0600 (through a symlink, at its
+// target). An invalid configuration is left untouched.
+func SetAPIKey(path, key string) (bool, error) {
+	file, err := readConfig(path)
+	if err != nil {
+		return false, err
+	}
+	if key == "" && file.APIKey == "" {
+		return false, nil
+	}
+	if target, err := filepath.EvalSymlinks(path); err == nil {
+		path = target
+	}
+	raw, err := os.ReadFile(path)
+	if err != nil && !errors.Is(err, os.ErrNotExist) {
+		return false, fmt.Errorf("read %s: %w", path, err)
+	}
+	var doc yaml.Node
+	if err := yaml.Unmarshal(raw, &doc); err != nil {
+		return false, fmt.Errorf("%w: %s: %w", ErrConfig, path, err)
+	}
+	if doc.Kind == 0 {
+		doc.Kind = yaml.DocumentNode
+	}
+	if len(doc.Content) == 0 {
+		doc.Content = []*yaml.Node{{Kind: yaml.MappingNode, Tag: "!!map"}}
+	}
+	root := doc.Content[0]
+	if root.Kind != yaml.MappingNode {
+		return false, fmt.Errorf("%w: %s: want a mapping at the top level", ErrConfig, path)
+	}
+	setMapping(root, "apiKey", key)
+	var out bytes.Buffer
+	encoder := yaml.NewEncoder(&out)
+	encoder.SetIndent(2)
+	if err := encoder.Encode(&doc); err != nil {
+		return false, fmt.Errorf("encode %s: %w", path, err)
+	}
+	if err := encoder.Close(); err != nil {
+		return false, fmt.Errorf("encode %s: %w", path, err)
+	}
+	if err := state.WriteFileAtomic(path, out.Bytes(), 0o600); err != nil {
+		return false, fmt.Errorf("write %s: %w", path, err)
+	}
+	return true, nil
+}
+
+// setMapping sets name to a plain string value in mapping m, or removes it when value is "".
+func setMapping(m *yaml.Node, name, value string) {
+	for i := 0; i+1 < len(m.Content); i += 2 {
+		if m.Content[i].Value != name {
+			continue
+		}
+		if value == "" {
+			m.Content = append(m.Content[:i], m.Content[i+2:]...)
+			return
+		}
+		m.Content[i+1] = &yaml.Node{Kind: yaml.ScalarNode, Tag: "!!str", Value: value}
+		return
+	}
+	if value != "" {
+		m.Content = append(m.Content,
+			&yaml.Node{Kind: yaml.ScalarNode, Tag: "!!str", Value: name},
+			&yaml.Node{Kind: yaml.ScalarNode, Tag: "!!str", Value: value})
+	}
 }
 
 // placeholderPattern finds "{name}" tokens; any other brace use stays literal.

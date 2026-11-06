@@ -4,7 +4,8 @@
 // was installed or the command's result, it honors the combined DO_NOT_TRACK/DISABLE_TELEMETRY
 // opt-out before anything else, and it sends only a public owner/repo, the installed
 // revision and, per Agent, its id, origin, the Harness ids that received artifacts and an
-// agent-scoped random identity.
+// agent-scoped random identity. A configured API key goes along in the Authorization header,
+// to the registry API only; a rate-limited report is dropped, never retried.
 package adoption
 
 import (
@@ -18,16 +19,13 @@ import (
 	"time"
 
 	"github.com/bytedance/sonic"
-	"golang.org/x/net/http/httpproxy"
 
 	"github.com/agnthub-sh/agnthub/agent"
+	"github.com/agnthub-sh/agnthub/internal/apiclient"
 	"github.com/agnthub-sh/agnthub/platform/env"
 	"github.com/agnthub-sh/agnthub/source"
 	"github.com/agnthub-sh/agnthub/state"
 )
-
-// DefaultAPIURL is the production registry API.
-const DefaultAPIURL = "https://api.agnthub.sh"
 
 // DefaultGitHubURL is where anonymous public-visibility checks go.
 const DefaultGitHubURL = "https://" + source.GitHubHost
@@ -77,57 +75,23 @@ type Reporter struct {
 	APIURL string
 	// GitHubURL is the origin of anonymous public-visibility checks.
 	GitHubURL string
+	// Client carries the user's API key to APIURL only (see apiclient.HTTPClient); the
+	// GitHub checks go through it without one.
 	Client    *http.Client
 	UserAgent string
 	Timeout   time.Duration
 }
 
-// New returns a reporter for e that sends to APIURL(e, configured). Requests honor the proxy
-// variables of e.
-func New(e env.Env, version, configured string) *Reporter {
+// New returns a reporter for e that sends to api.URL with api's credential. Requests
+// honor the proxy variables of e.
+func New(e env.Env, version string, api *apiclient.Config) *Reporter {
 	return &Reporter{
 		Env:       e,
-		APIURL:    APIURL(e, configured),
+		APIURL:    api.URL,
 		GitHubURL: DefaultGitHubURL,
-		Client:    HTTPClient(e),
+		Client:    apiclient.HTTPClient(e, api),
 		UserAgent: "agnthub/" + version,
 		Timeout:   Timeout,
-	}
-}
-
-// APIURL is the registry API origin: AGNTHUB_API_URL, else configured (the user
-// configuration's apiURL), else DefaultAPIURL.
-func APIURL(e env.Env, configured string) string {
-	if override := e.Get("AGNTHUB_API_URL"); override != "" {
-		return override
-	}
-	if configured != "" {
-		return configured
-	}
-	return DefaultAPIURL
-}
-
-// HTTPClient returns a client whose requests honor the proxy variables of e.
-func HTTPClient(e env.Env) *http.Client {
-	transport := http.DefaultTransport.(*http.Transport).Clone()
-	proxy := proxyConfig(e).ProxyFunc()
-	transport.Proxy = func(req *http.Request) (*url.URL, error) { return proxy(req.URL) }
-	return &http.Client{Transport: transport}
-}
-
-func proxyConfig(e env.Env) *httpproxy.Config {
-	get := func(names ...string) string {
-		for _, name := range names {
-			if v := e.Get(name); v != "" {
-				return v
-			}
-		}
-		return ""
-	}
-	return &httpproxy.Config{
-		HTTPProxy:  get("HTTP_PROXY", "http_proxy"),
-		HTTPSProxy: get("HTTPS_PROXY", "https_proxy"),
-		NoProxy:    get("NO_PROXY", "no_proxy"),
 	}
 }
 

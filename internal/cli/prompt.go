@@ -93,6 +93,20 @@ func (p *formPrompter) Confirm(ctx context.Context, title, description string) (
 	return confirmed, nil
 }
 
+// Secret asks for one value without echoing it.
+func (p *formPrompter) Secret(ctx context.Context, title, description string) (string, error) {
+	var value string
+	field := huh.NewInput().
+		Title(title).
+		Description(description).
+		EchoMode(huh.EchoModePassword).
+		Value(&value)
+	if err := p.run(ctx, field); err != nil {
+		return "", err
+	}
+	return value, nil
+}
+
 func (p *formPrompter) run(ctx context.Context, field huh.Field) error {
 	theme := huh.ThemeFunc(func(isDark bool) *huh.Styles {
 		styles := huh.ThemeBase16(isDark)

@@ -23,12 +23,21 @@ import (
 
 // mcpSession runs `agnthub mcp` over pipes and connects a real MCP client to it.
 func (h *harnessT) mcpSession(apiURL string) *mcp.ClientSession {
+	return h.mcpSessionEnv(map[string]string{"AGNTHUB_API_URL": apiURL})
+}
+
+// mcpSessionEnv is mcpSession with more environment variables.
+func (h *harnessT) mcpSessionEnv(values map[string]string) *mcp.ClientSession {
 	h.t.Helper()
 	stdinR, stdinW := io.Pipe()
 	stdoutR, stdoutW := io.Pipe()
 	var stderr bytes.Buffer
+	e := env.FromMap(map[string]string{"HOME": h.home})
+	for key, value := range values {
+		e = e.With(key, value)
+	}
 	app := cli.NewApp(cli.App{
-		Env:      env.FromMap(map[string]string{"HOME": h.home, "AGNTHUB_API_URL": apiURL}),
+		Env:      e,
 		WorkDir:  h.project,
 		Stdin:    stdinR,
 		Stdout:   stdoutW,
@@ -105,7 +114,7 @@ func TestMCPServesRegistryAndInstallTools(t *testing.T) {
 	}
 	slices.Sort(names)
 	want := []string{
-		"get_agent", "get_repository", "install_agents", "install_command",
+		"auth_status", "get_agent", "get_repository", "install_agents", "install_command",
 		"search_agents",
 	}
 	if !slices.Equal(names, want) {

@@ -20,6 +20,7 @@ import (
 
 	"github.com/agnthub-sh/agnthub/adoption"
 	"github.com/agnthub-sh/agnthub/harness"
+	"github.com/agnthub-sh/agnthub/internal/apiclient"
 	"github.com/agnthub-sh/agnthub/platform/env"
 	"github.com/agnthub-sh/agnthub/skills"
 	"github.com/agnthub-sh/agnthub/source"
@@ -58,7 +59,8 @@ type App struct {
 	Opener   source.Opener
 	LookPath func(string) (string, error)
 	// Adoption reports successful public GitHub installs; nil selects the production
-	// reporter configured by AGNTHUB_API_URL or the user configuration's apiURL.
+	// reporter configured by AGNTHUB_API_URL / AGNTHUB_API_KEY or the user
+	// configuration's apiURL / apiKey.
 	Adoption *adoption.Reporter
 
 	// styledStderr reports a terminal stderr that can show styled errors and a
@@ -95,11 +97,12 @@ func NewApp(app App) *App {
 	if app.Adoption == nil {
 		// An unreadable configuration leaves the destination unknown: report nothing
 		// rather than guess.
-		configured, err := skills.LoadAPIURL(skills.ConfigPath(app.Env))
+		configured, err := skills.LoadAPI(skills.ConfigPath(app.Env))
 		if err != nil {
 			app.Adoption = &adoption.Reporter{Env: app.Env}
 		} else {
-			app.Adoption = adoption.New(app.Env, Version, configured)
+			api := apiclient.Load(app.Env, configured.URL, configured.Key)
+			app.Adoption = adoption.New(app.Env, Version, &api)
 		}
 	}
 	app.styledStderr = isTerminal(app.Stderr) && app.Env.Get("TERM") != "dumb"
@@ -170,6 +173,7 @@ const (
 	groupUpdates = "updates"
 	groupProject = "project"
 	groupAgents  = "agents"
+	groupAccount = "account"
 )
 
 func (a *App) rootCommand(ctx context.Context) *cobra.Command {
@@ -203,6 +207,7 @@ overwrites files it does not own.`,
 		&cobra.Group{ID: groupUpdates, Title: "Updates"},
 		&cobra.Group{ID: groupProject, Title: "Project"},
 		&cobra.Group{ID: groupAgents, Title: "AI agents"},
+		&cobra.Group{ID: groupAccount, Title: "Account"},
 	)
 	for _, cmd := range []*cobra.Command{a.addCommand(ctx), a.listCommand(), a.removeCommand(ctx)} {
 		cmd.GroupID = groupManage
@@ -218,6 +223,9 @@ overwrites files it does not own.`,
 	mcpCmd := a.mcpCommand(ctx)
 	mcpCmd.GroupID = groupAgents
 	root.AddCommand(mcpCmd)
+	authCmd := a.authCommand(ctx)
+	authCmd.GroupID = groupAccount
+	root.AddCommand(authCmd)
 	return root
 }
 

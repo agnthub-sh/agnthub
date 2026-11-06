@@ -15,7 +15,7 @@ import (
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 	"github.com/spf13/cobra"
 
-	"github.com/agnthub-sh/agnthub/adoption"
+	"github.com/agnthub-sh/agnthub/internal/apiclient"
 	"github.com/agnthub-sh/agnthub/internal/mcpserver"
 	"github.com/agnthub-sh/agnthub/skills"
 )
@@ -32,7 +32,11 @@ Read-only tools search the agnthub registry (search_agents, get_agent,
 get_repository) and build install commands (install_command) through the public
 API. install_agents installs agents locally with the same plan, conflict and
 ownership protections as agnthub add: it only previews unless called with
-confirm, and honors DO_NOT_TRACK / DISABLE_TELEMETRY.`,
+confirm, and honors DO_NOT_TRACK / DISABLE_TELEMETRY. auth_status shows whether
+the server uses an API key and its current rate limit.
+
+The server sends the API key of agnthub auth login (or $AGNTHUB_API_KEY) to the
+registry API for higher rate limits, and to no other host.`,
 		Example: `  claude mcp add agnthub -- npx -y agnthub-cli mcp
   agnthub mcp --api-url http://localhost:8080`,
 		Args: cobra.NoArgs,
@@ -42,36 +46,38 @@ confirm, and honors DO_NOT_TRACK / DISABLE_TELEMETRY.`,
 	}
 	cmd.Flags().StringVar(&apiURL, "api-url", "",
 		"registry API origin (default: $AGNTHUB_API_URL, the configuration's apiURL, "+
-			"or "+adoption.DefaultAPIURL+")")
+			"or "+apiclient.DefaultURL+")")
 	return cmd
 }
 
 func (a *App) runMCP(ctx context.Context, apiURL string) error {
+	configured, err := skills.LoadAPI(skills.ConfigPath(a.Env))
+	if err != nil {
+		return err
+	}
+	api := apiclient.Load(a.Env, configured.URL, configured.Key)
 	reporter := a.Adoption
-	if apiURL == "" {
-		configured, err := skills.LoadAPIURL(skills.ConfigPath(a.Env))
-		if err != nil {
-			return err
-		}
-		apiURL = adoption.APIURL(a.Env, configured)
-	} else {
-		// Installs made through MCP report to the registry the tools read.
+	if apiURL != "" {
+		// Installs made through MCP report to the registry the tools read, with its key.
+		api.URL = apiURL
 		withURL := *a.Adoption
 		withURL.APIURL = apiURL
+		withURL.Client = apiclient.HTTPClient(a.Env, &api)
 		reporter = &withURL
 	}
-	if u, err := url.Parse(apiURL); err != nil || (u.Scheme != "https" && u.Scheme != "http") ||
+	if u, err := url.Parse(api.URL); err != nil || (u.Scheme != "https" && u.Scheme != "http") ||
 		u.Host == "" {
-		return fmt.Errorf("invalid API URL %q: want an http(s) origin", apiURL)
+		return fmt.Errorf("invalid API URL %q: want an http(s) origin", api.URL)
 	}
 	server := mcpserver.New(&mcpserver.Client{
-		BaseURL:   apiURL,
-		HTTP:      adoption.HTTPClient(a.Env),
+		BaseURL:   api.URL,
+		HTTP:      apiclient.HTTPClient(a.Env, &api),
 		UserAgent: "agnthub/" + Version,
 	}, mcpserver.Options{Version: Version, Instructions: installInstructions})
 	local := *a
 	local.Adoption = reporter
 	local.addInstallTool(server)
+	local.addAuthStatusTool(server, &api)
 	return server.Run(ctx, &mcp.IOTransport{
 		Reader: io.NopCloser(a.Stdin),
 		Writer: nopWriteCloser{a.Stdout},

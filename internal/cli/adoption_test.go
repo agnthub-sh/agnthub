@@ -17,8 +17,10 @@ import (
 	"github.com/bytedance/sonic"
 
 	"github.com/agnthub-sh/agnthub/adoption"
+	"github.com/agnthub-sh/agnthub/internal/apiclient"
 	"github.com/agnthub-sh/agnthub/internal/cli"
 	"github.com/agnthub-sh/agnthub/platform/env"
+	"github.com/agnthub-sh/agnthub/skills"
 	"github.com/agnthub-sh/agnthub/source"
 	"github.com/agnthub-sh/agnthub/state"
 )
@@ -30,6 +32,7 @@ const (
 	apiAccept int32 = iota
 	apiFail
 	apiHang
+	apiRateLimited
 )
 
 // registryFake stands in for the registry API and GitHub's anonymous clone endpoint.
@@ -37,14 +40,19 @@ type registryFake struct {
 	api     *httptest.Server
 	github  *httptest.Server
 	reports chan string
-	checks  atomic.Int64
-	mode    atomic.Int32
-	public  map[string]bool
+	// authorizations receives each report's Authorization header.
+	authorizations chan string
+	checks         atomic.Int64
+	mode           atomic.Int32
+	public         map[string]bool
 }
 
 func newRegistryFake(t *testing.T, public ...string) *registryFake {
 	t.Helper()
-	f := &registryFake{reports: make(chan string, 32), public: map[string]bool{}}
+	f := &registryFake{
+		reports: make(chan string, 32), authorizations: make(chan string, 32),
+		public: map[string]bool{},
+	}
 	for _, repo := range public {
 		f.public[repo] = true
 	}
@@ -54,11 +62,15 @@ func newRegistryFake(t *testing.T, public ...string) *registryFake {
 			t.Errorf("unexpected registry request %s %s", r.Method, r.URL.Path)
 		}
 		f.reports <- string(body)
+		f.authorizations <- r.Header.Get("Authorization")
 		switch f.mode.Load() {
 		case apiFail:
 			w.WriteHeader(http.StatusInternalServerError)
 		case apiHang:
 			<-r.Context().Done()
+		case apiRateLimited:
+			w.Header().Set("Retry-After", "1")
+			w.WriteHeader(http.StatusTooManyRequests)
 		default:
 			w.WriteHeader(http.StatusAccepted)
 		}
@@ -105,7 +117,12 @@ func (h *harnessT) runReporting(
 		values[key] = value
 	}
 	e := env.FromMap(values)
-	reporter := adoption.New(e, "test", "")
+	configured, err := skills.LoadAPI(skills.ConfigPath(e))
+	if err != nil {
+		h.t.Fatal(err)
+	}
+	api := apiclient.Load(e, configured.URL, configured.Key)
+	reporter := adoption.New(e, "test", &api)
 	reporter.GitHubURL = f.github.URL
 	if timeout, ok := extraEnv["TEST_REPORT_TIMEOUT"]; ok {
 		d, err := time.ParseDuration(timeout)
@@ -378,6 +395,70 @@ func TestRegistryOutageNeverAffectsTheInstall(t *testing.T) {
 	f.api.Close() // unreachable registry
 	h.mustSucceed(h.runReporting(f, fakeGit{"acme/tools": toolsRepo(toolsRevision)}, nil,
 		"add", "acme/tools", "--agent", "linter", "--harness", "claude", "--yes"))
+}
+
+// testKey has the shape of an agnthub API key; the CLI treats keys as opaque.
+const testKey = "agh_0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLM"
+
+func TestInstallReportsCarryTheKeyToTheAPIOnlyAndEnvBeatsConfig(t *testing.T) {
+	const configKey = "agh_configKey0000000000000000000000000000000000000"
+	for name, tc := range map[string]struct {
+		env    map[string]string
+		config string
+		want   string
+	}{
+		"anonymous":        {want: ""},
+		"env":              {env: map[string]string{apiclient.KeyVariable: testKey}, want: testKey},
+		"config":           {config: configKey, want: configKey},
+		"env beats config": {env: map[string]string{apiclient.KeyVariable: testKey}, config: configKey, want: testKey},
+	} {
+		t.Run(name, func(t *testing.T) {
+			h := newHarness(t)
+			if tc.config != "" {
+				writeFile(t, filepath.Join(h.home, ".config", "agnthub", "config.yaml"),
+					"apiKey: "+tc.config+"\n")
+			}
+			f := newRegistryFake(t, "acme/tools")
+			h.mustSucceed(h.runReporting(f, fakeGit{"acme/tools": toolsRepo(toolsRevision)}, tc.env,
+				"add", "acme/tools", "--agent", "linter", "--harness", "claude", "--yes"))
+			if f.checks.Load() == 0 || len(f.taken()) != 1 {
+				t.Fatal("want one visibility check and one report")
+			}
+			got := <-f.authorizations
+			want := ""
+			if tc.want != "" {
+				want = "Bearer " + tc.want
+			}
+			if got != want {
+				t.Fatalf("report Authorization %q, want %q", got, want)
+			}
+		})
+	}
+}
+
+func TestInstallReportsSkipRateLimitsAndUnusableKeys(t *testing.T) {
+	h := newHarness(t)
+	f := newRegistryFake(t, "acme/tools")
+	f.mode.Store(apiRateLimited)
+	git := fakeGit{"acme/tools": toolsRepo(toolsRevision)}
+	start := time.Now()
+	h.mustSucceed(h.runReporting(f, git, nil,
+		"add", "acme/tools", "--agent", "linter", "--harness", "claude", "--yes"))
+	if n := len(f.taken()); n != 1 {
+		t.Fatalf("a rate-limited report must not be retried: %d requests", n)
+	}
+	if elapsed := time.Since(start); elapsed > 900*time.Millisecond {
+		t.Fatalf("a rate-limited report held the install for %s", elapsed)
+	}
+
+	// A key that cannot be an agnthub key sends nothing, not even anonymously.
+	h = newHarness(t)
+	f = newRegistryFake(t, "acme/tools")
+	h.mustSucceed(h.runReporting(f, git, map[string]string{apiclient.KeyVariable: "ghp_nope"},
+		"add", "acme/tools", "--agent", "linter", "--harness", "claude", "--yes"))
+	if bodies := f.taken(); len(bodies) != 0 {
+		t.Fatalf("an unusable key must not fall back to an anonymous report: %q", bodies)
+	}
 }
 
 func TestSharingOptOutReachesTheSkillInstaller(t *testing.T) {

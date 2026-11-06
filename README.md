@@ -15,6 +15,7 @@ agnthub update                                # preview and apply newer content
 agnthub restore                               # recreate exactly what agnthub-lock.json records
 agnthub remove reviewer
 agnthub mcp                                   # MCP server (stdio) for AI agents
+agnthub auth login                            # optional: an agnthub.sh API key for higher rate limits
 ```
 
 Every install is previewed before anything is written, the project lock
@@ -168,19 +169,40 @@ The user documentation lives on the site, at [app.agnthub.sh/docs](https://app.a
 In this repository:
 
 - [Using the CLI](docs/cli.md): sources, selection, scopes, Harness settings, dependencies,
-  skills, check/update/restore/remove and the [MCP server](docs/cli.md#mcp-server)
+  skills, check/update/restore/remove, the [MCP server](docs/cli.md#mcp-server) and the
+  [API key and rate limits](docs/cli.md#api-key-and-rate-limits)
 - [CLI contract](docs/cli-contract.md), [glossary](GLOSSARY.md) and
   [architecture decisions](docs/adr/)
 - [Native Harness agent formats and conversion limits](docs/research/harness-agent-formats.md)
 - [Claude Code plugins and marketplaces as agent sources](docs/research/claude-code-plugins.md)
+
+## API key and rate limits
+
+Everything works without an account; the registry API limits anonymous callers per network
+address (search: 60/min and 2,000/hour). With an agnthub.sh API key the limits are ten times
+higher and charged to your account:
+
+```sh
+agnthub auth login     # opens https://app.agnthub.sh/api-key; paste the key at the hidden prompt
+agnthub auth status    # key source, agh_…last4, GitHub account, current limit (--json too)
+agnthub auth logout
+```
+
+`AGNTHUB_API_KEY` wins over the saved key (`apiKey:` in `~/.config/agnthub/config.yaml`,
+mode 0600). The CLI, install reports and `agnthub mcp` send it as `Authorization: Bearer` to
+the registry API only, never to GitHub or any other host. A short `429` (`Retry-After` of 10 s
+or less) is waited out once; a longer one fails with the time to wait. See
+[API key and rate limits](docs/cli.md#api-key-and-rate-limits) for the limits, headers and
+errors.
 
 ## Usage reports
 
 After installing agents from a public GitHub repository, the CLI tells the registry
 (`https://api.agnthub.sh`) which repository, commit and agents were installed and into which
 harnesses, so installs of listed repositories are counted. A report never adds a repository to
-the registry. No paths, profiles, harness settings, credentials, or private and local sources
-are sent. Set `DO_NOT_TRACK` or `DISABLE_TELEMETRY` to any non-empty value to send nothing.
+the registry. No paths, profiles, harness settings, or private and local sources are sent; the
+report is anonymous unless you configured an API key, which it then carries. Set
+`DO_NOT_TRACK` or `DISABLE_TELEMETRY` to any non-empty value to send nothing.
 
 ## Contributing
 
