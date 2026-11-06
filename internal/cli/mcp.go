@@ -354,12 +354,12 @@ func (a *App) runMCPInstall(ctx context.Context, opts *mcpOptions) error {
 		URL:     mcpsetup.URL,
 		apiKey:  apiKey != "",
 	}
-	for _, t := range selected {
-		res := setup.Install(ctx, t, force)
-		report.add(t, res)
-	}
+	// Rows follow the list; installed ones left unselected are shown as they are.
 	for _, t := range targets {
-		if !slices.Contains(selected, t) && t.State == mcpsetup.Installed {
+		switch {
+		case slices.Contains(selected, t):
+			report.add(t, setup.Install(ctx, t, force))
+		case t.State == mcpsetup.Installed:
 			report.add(t, mcpsetup.Result{Action: mcpsetup.ActionUnchanged})
 		}
 	}
