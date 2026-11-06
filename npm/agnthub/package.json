@@ -1,6 +1,6 @@
 {
   "name": "agnthub-cli",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Install coding agents from source repositories into your coding harnesses (Claude Code, Codex, OpenCode, Copilot CLI, Cursor, Gemini CLI, omp)",
   "homepage": "https://app.agnthub.sh",
   "repository": {
