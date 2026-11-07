@@ -524,8 +524,11 @@ func opencodeNormal(action string) string {
 }
 
 // Convert writes an explicit subagent: OpenCode's default mode would otherwise
-// also register a registry role as a primary agent. Tool policies become a V1
-// permission map, which OpenCode V2 still reads: an allowlist denies "*" first
+// register a registry role as a primary agent only. A manual-only Agent is
+// written as a primary agent, which the user selects and the model never
+// delegates to (OpenCode 2.1.3 leaves primary agents out of its subagent
+// tool). Tool policies become a V1 permission map, which OpenCode V2 still
+// reads: an allowlist denies "*" first
 // (OpenCode applies the last matching rule, so this also hides MCP tools and
 // files outside the project) and then allows each granted action, MCP tools
 // included, plus the folder of emulated user-scope memory. A shell limited to
@@ -536,9 +539,15 @@ func (a opencodeAdapter) Convert(sem *Semantics) (Artifact, error) {
 		return Artifact{}, err
 	}
 	sem = check.sem
+	mode := "subagent"
+	if sem.ManualOnly {
+		mode = "primary"
+		check.note("written as a primary agent: you select it, and OpenCode never " +
+			"delegates to it")
+	}
 	fields := []agent.Field{
 		{Key: "description", Value: sem.Description},
-		{Key: "mode", Value: "subagent"},
+		{Key: "mode", Value: mode},
 	}
 	tools := check.skillTools()
 	instructions := check.carry(additiveSupport{

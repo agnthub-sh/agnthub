@@ -65,7 +65,6 @@ func TestClaudeRestrictingFieldsStayRefused(t *testing.T) {
 		"hooks: []\n",
 		"hooks:\n  Stop:\n    - command: echo\n",
 		"mcpServers:\n  - github\n",
-		"isolation: worktree\n",
 		"isolation: remote\n",
 		"initialPrompt: go\n",
 		"maxTurns: 0\n",

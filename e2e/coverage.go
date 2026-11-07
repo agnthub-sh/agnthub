@@ -388,10 +388,22 @@ var scenarios = []scenario{
 		"Claude Code fields at their default or empty (`permissionMode: default`, "+
 			"`disallowedTools: []`, `hooks: {}`, `mcpServers: []`): native on Claude Code, "+
 			"omitted with a note elsewhere", "defaulted"),
+	conversion("Variants and conversion", "claude-isolation-worktree",
+		"`isolation: worktree` with a shell: native on Claude Code, elsewhere told to work only "+
+			"in a git worktree it creates (`reduced`: isolation)", "isolated"),
+	conversion("Variants and conversion", "claude-isolation-without-shell",
+		"`isolation: worktree` with edits but no shell: native on Claude Code, refused "+
+			"elsewhere (it cannot create a worktree)", "isolated-editor"),
+	conversion("Variants and conversion", "copilot-manual-only",
+		"Copilot CLI `disable-model-invocation: true`: native on Copilot CLI, OpenCode "+
+			"`mode: primary`, elsewhere a description asking delegating models not to pick it "+
+			"(`reduced`: manual-only invocation)", "gh-manual"),
 
 	conversion("Tool restrictions", "tools-read-search-shell",
 		"allowlist Read/Grep/Glob/Bash (Cursor: `readonly`, without the shell, with "+
 			"`--allow-without-shell`)", "reviewer"),
+	conversion("Tool restrictions", "tools-whole-tool-wildcard",
+		"whole-tool rules `WebFetch(*)`, `Bash(*)`: read as `WebFetch`, `Bash`", "wildcard"),
 	conversion("Tool restrictions", "tools-full", "allowlist with edit and shell", "fixer"),
 	conversion("Tool restrictions", "tools-read-only-claude",
 		"read-only allowlist (Read, Grep)", "colon-native"),

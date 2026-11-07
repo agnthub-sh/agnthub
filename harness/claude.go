@@ -523,6 +523,8 @@ func readClaudeBehavior(sem *Semantics, key string, value any) {
 	switch {
 	case key == "permissionMode" && (claudeRelaxingModes[mode] || mode == "plan"):
 		sem.PermissionMode = mode
+	case key == "isolation" && mode == "worktree":
+		sem.Isolation = true
 	case key == "mcpServers":
 		servers, reason := claudeMCPServers(value)
 		if reason != "" {
@@ -663,10 +665,15 @@ func claudeToolEntries(sem *Semantics, field string, value any) []string {
 // Agent(...) lists only apply to a main-session agent, so a subagent's entry
 // allows delegation. Bash(...) entries limit the shell to those commands
 // (ShellScope); any other allowed specifier, such as Read(./src/**), scopes a
-// tool in a way other harnesses cannot express.
+// tool in a way other harnesses cannot express. A specifier of exactly "*",
+// as in WebFetch(*), scopes nothing: Claude Code reads Tool(*) as Tool
+// (https://code.claude.com/docs/en/permissions#match-all-uses-of-a-tool).
 func claudeToolPolicy(sem *Semantics, hasAllowlist bool, allowed, disallowed []string) {
 	bare := func(name string) (string, bool) {
-		base, _, scoped := strings.Cut(name, "(")
+		base, specifier, scoped := strings.Cut(name, "(")
+		if specifier == "*)" {
+			return base, false
+		}
 		return base, scoped
 	}
 	denyNames := make([]string, 0, len(disallowed))
@@ -797,6 +804,9 @@ func (a claudeAdapter) Convert(sem *Semantics) (Artifact, error) {
 	}
 	if sem.Background {
 		fields = append(fields, agent.Field{Key: "background", Value: true})
+	}
+	if sem.Isolation {
+		fields = append(fields, agent.Field{Key: "isolation", Value: "worktree"})
 	}
 	if sem.Memory != "" {
 		fields = append(fields, agent.Field{Key: "memory", Value: string(sem.Memory)})

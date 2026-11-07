@@ -8,3 +8,4 @@ The decisions that shape the CLI. Numbers are shared with the registry service's
 - [0009 Convert native agents across harnesses through a shared semantics model](0009-cross-harness-conversion-through-shared-semantics.md)
 - [0011 Discover the agents of Claude Code plugins a repository packages](0011-claude-code-plugin-layouts.md)
 - [0012 Read portable cores as Claude Code agents and install reduced capability visibly](0012-portable-cores-as-claude-and-reduced-capability.md)
+- [0014 Emulate worktree isolation and manual-only invocation where a harness lacks them](0014-emulate-worktree-isolation-and-manual-only-invocation.md)

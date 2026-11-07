@@ -12,6 +12,8 @@
 0644 project/.codex/agents/defaulted.toml
 0644 project/.codex/agents/dual.toml
 0644 project/.codex/agents/fixer.toml
+0644 project/.codex/agents/gh-manual.toml
+0644 project/.codex/agents/isolated.toml
 0644 project/.codex/agents/journaler.toml
 0644 project/.codex/agents/literal.toml
 0644 project/.codex/agents/local-notes.toml
@@ -28,4 +30,5 @@
 0644 project/.codex/agents/skilled.toml
 0644 project/.codex/agents/studio-qa.toml
 0644 project/.codex/agents/tagged.toml
+0644 project/.codex/agents/wildcard.toml
 0644 project/agnthub-lock.json

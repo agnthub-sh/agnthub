@@ -1,5 +1,31 @@
 # Changelog
 
+## v0.7.0
+
+### New
+
+- **Worktree isolation installs everywhere it can be emulated.** A Claude Code agent with
+  `isolation: worktree` keeps it on Claude Code. On the other harnesses, which cannot isolate
+  one agent in its own worktree, an agent that can run any shell command now installs with
+  an instruction at the top of its instructions to create a git worktree, make every edit,
+  command and commit there, and report the worktree path and branch. The plan shows
+  `! reduced: <agent> on <harness> goes without isolation` with the note "<harness> can't
+  isolate it; the agent is instructed to work only in a git worktree", and `--json` lists
+  `isolation` under `reduced`. An agent that edits without such a shell stays refused there
+  (it cannot create a worktree); one that neither edits nor runs commands installs unchanged.
+- **Manual-only agents convert.** A Copilot CLI agent with `disable-model-invocation: true`
+  (or the retired `infer: false`) is written as a primary agent (`mode: primary`) on
+  OpenCode, which never delegates to it. On Claude Code, Codex, Cursor, Gemini CLI and omp,
+  which have no such field, it installs with its tools unchanged and a description starting
+  "Use only when the user explicitly asks for this agent.", shown as `! reduced: … goes
+  without manual-only invocation`.
+- **`Tool(*)` is the tool.** A Claude Code rule whose specifier is exactly `*`
+  (`WebFetch(*)`, `Bash(*)`, `Read(*)`) converts as the plain tool, as Claude Code reads it;
+  other specifiers (`Bash(git *)`, `WebFetch(domain:…)`) keep their handling.
+
+See [ADR 0014](docs/adr/0014-emulate-worktree-isolation-and-manual-only-invocation.md) and
+[harness-agent-formats.md](docs/research/harness-agent-formats.md#manual-only-invocation-and-worktree-isolation-verified-2026-11-06).
+
 ## v0.6.0
 
 ### New

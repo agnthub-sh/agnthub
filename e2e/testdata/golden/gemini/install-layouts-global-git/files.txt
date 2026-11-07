@@ -22,10 +22,12 @@
 0644 home/.gemini/agents/dual.md
 0644 home/.gemini/agents/fixer.md
 0644 home/.gemini/agents/gh-colored.md
+0644 home/.gemini/agents/gh-manual.md
 0644 home/.gemini/agents/gh-native.md
 0644 home/.gemini/agents/gh-plain.md
 0644 home/.gemini/agents/gm-mcp.md
 0644 home/.gemini/agents/gm-native.md
+0644 home/.gemini/agents/isolated.md
 0644 home/.gemini/agents/issue-reader.md
 0644 home/.gemini/agents/journaler.md
 0644 home/.gemini/agents/literal.md
@@ -50,4 +52,5 @@
 0644 home/.gemini/agents/studio-qa.md
 0644 home/.gemini/agents/tagged.md
 0644 home/.gemini/agents/web-searcher.md
+0644 home/.gemini/agents/wildcard.md
 0600 home/.local/state/agnthub/installations.json

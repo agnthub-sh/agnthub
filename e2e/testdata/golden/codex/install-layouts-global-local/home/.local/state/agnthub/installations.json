@@ -134,6 +134,28 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.codex/agents/gh-manual.toml",
+      "digest": "sha256:999e09495c96965fe1a6ce6c22ea447d27b03822846e4cc8b5264fbe9bcc5685",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "gh-manual",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/isolated.toml",
+      "digest": "sha256:e3e6d1abddbd520322d629969966bea974305dfee1b3341b0ee47c7f78e79509",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "isolated",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.codex/agents/journaler.toml",
       "digest": "sha256:62f774aceb85826968093270258b37c37eba3b72416e1c0950eabd113b125996",
       "harness": "codex",
@@ -306,6 +328,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.codex/agents/wildcard.toml",
+      "digest": "sha256:cd0acd39a6918ffdbb6120271978b9bbf61b57059403d0236c9f2f7265086826",
+      "harness": "codex",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "wildcard",
       "origin": "direct",
       "installedAt": "<time>"
     }

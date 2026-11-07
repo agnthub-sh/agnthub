@@ -22,9 +22,11 @@
 0644 project/.omp/agents/dual.md
 0644 project/.omp/agents/fixer.md
 0644 project/.omp/agents/gh-colored.md
+0644 project/.omp/agents/gh-manual.md
 0644 project/.omp/agents/gh-native.md
 0644 project/.omp/agents/gh-plain.md
 0644 project/.omp/agents/gm-native.md
+0644 project/.omp/agents/isolated.md
 0644 project/.omp/agents/issue-reader.md
 0644 project/.omp/agents/journaler.md
 0644 project/.omp/agents/literal.md
@@ -48,4 +50,5 @@
 0644 project/.omp/agents/studio-qa.md
 0644 project/.omp/agents/tagged.md
 0644 project/.omp/agents/web-searcher.md
+0644 project/.omp/agents/wildcard.md
 0644 project/agnthub-lock.json

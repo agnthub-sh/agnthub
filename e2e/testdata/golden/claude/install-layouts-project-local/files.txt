@@ -23,10 +23,13 @@
 0644 project/.claude/agents/dual.md
 0644 project/.claude/agents/fixer.md
 0644 project/.claude/agents/gh-colored.md
+0644 project/.claude/agents/gh-manual.md
 0644 project/.claude/agents/gh-native.md
 0644 project/.claude/agents/gh-plain.md
 0644 project/.claude/agents/gm-native.md
 0644 project/.claude/agents/guarded.md
+0644 project/.claude/agents/isolated-editor.md
+0644 project/.claude/agents/isolated.md
 0644 project/.claude/agents/issue-reader.md
 0644 project/.claude/agents/journaler.md
 0644 project/.claude/agents/literal.md
@@ -51,4 +54,5 @@
 0644 project/.claude/agents/studio-qa.md
 0644 project/.claude/agents/tagged.md
 0644 project/.claude/agents/web-searcher.md
+0644 project/.claude/agents/wildcard.md
 0644 project/agnthub-lock.json

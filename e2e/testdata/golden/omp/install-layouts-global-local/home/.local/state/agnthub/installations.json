@@ -310,6 +310,20 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/gh-manual.md",
+      "digest": "sha256:2df8c7d6289b858e5b379b4489437323b64fec8801248b7b183f339638e539c7",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "gh-manual",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.omp/agent/agents/gh-native.md",
       "digest": "sha256:3219d129d30a833f0229d3ad443fe63dda5585c93d02646b008adb18d2bbee00",
       "harness": "omp",
@@ -348,6 +362,20 @@
       "destination": "default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "gm-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/isolated.md",
+      "digest": "sha256:94b99455436fa092a7dc56f77da635a2038609ce332922a0efc8934e415d7c1a",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "isolated",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -670,6 +698,20 @@
       "destination": "default profile",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "web-searcher",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/wildcard.md",
+      "digest": "sha256:fc401b659c3c5f8daf1a0069c05c9249a16c388990b8aa39a8119713f607dfce",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "wildcard",
       "origin": "direct",
       "installedAt": "<time>"
     }

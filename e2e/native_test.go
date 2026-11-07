@@ -236,6 +236,9 @@ func requireClaudeIgnores(t *testing.T, n nativeContext) {
 				line = candidate
 			}
 		}
+		if bytes.Contains(debugLog, []byte("Agent file "+path+" has invalid isolation value")) {
+			t.Errorf("%s: Claude Code rejects its isolation value", id)
+		}
 		for key := range doc.Frontmatter {
 			if harness.ClaudeIgnores(key) && !strings.Contains(line, `"`+key+`"`) {
 				t.Errorf("%s: Claude Code no longer reports %q as a key it ignores, but "+
@@ -278,20 +281,25 @@ func checkCodex(t *testing.T, n nativeContext) {
 // checkOpenCode: `opencode debug agents` asks OpenCode's background service for
 // its resolved agents. The service loads them lazily, so the first answers can
 // be incomplete; the service is stopped afterwards so the next step starts
-// clean.
+// clean. Each agent must also resolve to the mode its file declares: a
+// manual-only agent is written as primary, which keeps it out of the model's
+// subagent tool.
 func checkOpenCode(t *testing.T, n nativeContext) {
 	t.Cleanup(func() { harnessOutput(t, n, nil, "opencode", "service", "stop") })
 	var out []byte
 	var loaded []string
+	modes := map[string]string{}
 	for range 30 {
 		out = opencodeAgents(t, n)
 		var agents []struct {
-			ID string `json:"id"`
+			ID   string `json:"id"`
+			Mode string `json:"mode"`
 		}
 		loaded = nil
 		if jsonArray(out, &agents) {
 			for _, a := range agents {
 				loaded = append(loaded, a.ID)
+				modes[a.ID] = a.Mode
 			}
 		}
 		if allLoaded(n, loaded) {
@@ -300,6 +308,19 @@ func checkOpenCode(t *testing.T, n nativeContext) {
 		<-time.After(time.Second)
 	}
 	requireLoaded(t, n, loaded, out)
+	for id, path := range n.agents {
+		raw, err := os.ReadFile(path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		doc, err := agent.ParseMarkdownLenient(path, raw)
+		if err != nil {
+			t.Fatalf("installed %s: %v", path, err)
+		}
+		if want := doc.String("mode"); want != "" && modes[id] != "" && modes[id] != want {
+			t.Errorf("%s: OpenCode resolved mode %s, the file declares %s", id, modes[id], want)
+		}
+	}
 }
 
 // opencodeAgents runs `opencode debug agents` with stdout in a file: OpenCode

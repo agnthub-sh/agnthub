@@ -155,6 +155,19 @@
       "optIn": "allow-without-shell"
     },
     {
+      "agent": "isolated-editor",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares isolation (runs the agent in an isolated worktree), which cursor cannot express, and without a shell the agent cannot create a git worktree to work in"
+    },
+    {
       "agent": "issue-reader",
       "harness": "cursor",
       "settings": {},
@@ -245,7 +258,7 @@
     }
   ],
   "summary": {
-    "incompatible": 14,
+    "incompatible": 15,
     "invalid": 1
   }
 }

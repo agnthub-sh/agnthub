@@ -460,6 +460,22 @@
       ]
     },
     {
+      "agent": "gh-manual",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.copilot/agents/gh-manual.agent.md",
+      "variant": "native",
+      "sourcePath": ".github/agents/gh-manual.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "gh-native",
       "harness": "copilot",
       "settings": {},
@@ -508,6 +524,29 @@
       "action": "create",
       "notes": [
         "converted from the gemini variant"
+      ]
+    },
+    {
+      "agent": "isolated",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.copilot/agents/isolated.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/isolated.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "goes without isolation: copilot can't isolate it; the agent is instructed to work only in a git worktree"
+      ],
+      "reduced": [
+        "isolation"
       ]
     },
     {
@@ -937,9 +976,28 @@
       "reduced": [
         "web search"
       ]
+    },
+    {
+      "agent": "wildcard",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.copilot/agents/wildcard.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/wildcard.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
     }
   ],
   "summary": {
-    "create": 47
+    "create": 50
   }
 }

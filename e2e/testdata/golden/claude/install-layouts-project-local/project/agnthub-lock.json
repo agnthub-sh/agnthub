@@ -455,6 +455,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "gh-manual",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": ".github/agents/gh-manual.agent.md",
+          "sourceDigest": "sha256:36c4e0f4476f6ddbe8e49920350a8d05f305ecff9df72c40c170612173445218",
+          "converter": "claude/v5",
+          "path": ".claude/agents/gh-manual.md",
+          "digest": "sha256:17b51c34953d0e700c9e6d17e31fc5b3e43bc13e630de919fbd6a76a2b149213",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "gh-native",
       "origin": "direct",
       "artifacts": [
@@ -525,6 +545,44 @@
           "sourceDigest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
           "path": ".claude/agents/guarded.md",
           "digest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "isolated",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/isolated.md",
+          "sourceDigest": "sha256:213ccb5e38aa066c15bfee1536e7e91930bb54fc01fdaba30d0befe07666fb8b",
+          "path": ".claude/agents/isolated.md",
+          "digest": "sha256:213ccb5e38aa066c15bfee1536e7e91930bb54fc01fdaba30d0befe07666fb8b",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "isolated-editor",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/isolated-editor.md",
+          "sourceDigest": "sha256:7f7ea86776f7a9253c8e264fb101b575f07cb5cdc7bdd88692b01cd60c9443fb",
+          "path": ".claude/agents/isolated-editor.md",
+          "digest": "sha256:7f7ea86776f7a9253c8e264fb101b575f07cb5cdc7bdd88692b01cd60c9443fb",
           "requires": []
         }
       ]
@@ -989,6 +1047,25 @@
           "sourceDigest": "sha256:445f4b734cae55d1068397452bb0a8ae3cdb891d2f5c18ce8014b6f2ff54ecde",
           "path": ".claude/agents/web-searcher.md",
           "digest": "sha256:445f4b734cae55d1068397452bb0a8ae3cdb891d2f5c18ce8014b6f2ff54ecde",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "wildcard",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "native",
+          "sourcePath": ".claude/agents/wildcard.md",
+          "sourceDigest": "sha256:6619fd1e1a173c38342c4ad36dbb057d4829db134be89767f903b7c5523afef3",
+          "path": ".claude/agents/wildcard.md",
+          "digest": "sha256:6619fd1e1a173c38342c4ad36dbb057d4829db134be89767f903b7c5523afef3",
           "requires": []
         }
       ]

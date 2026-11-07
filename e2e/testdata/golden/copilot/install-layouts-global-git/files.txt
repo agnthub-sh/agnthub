@@ -22,9 +22,11 @@
 0644 home/.copilot/agents/dual.agent.md
 0644 home/.copilot/agents/fixer.agent.md
 0644 home/.copilot/agents/gh-colored.agent.md
+0644 home/.copilot/agents/gh-manual.agent.md
 0644 home/.copilot/agents/gh-native.agent.md
 0644 home/.copilot/agents/gh-plain.agent.md
 0644 home/.copilot/agents/gm-native.agent.md
+0644 home/.copilot/agents/isolated.agent.md
 0644 home/.copilot/agents/issue-reader.agent.md
 0644 home/.copilot/agents/journaler.agent.md
 0644 home/.copilot/agents/literal.agent.md
@@ -47,4 +49,5 @@
 0644 home/.copilot/agents/studio-qa.agent.md
 0644 home/.copilot/agents/tagged.agent.md
 0644 home/.copilot/agents/web-searcher.agent.md
+0644 home/.copilot/agents/wildcard.agent.md
 0600 home/.local/state/agnthub/installations.json

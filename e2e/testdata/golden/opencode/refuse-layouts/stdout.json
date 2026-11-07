@@ -80,6 +80,19 @@
       "optIn": "allow-without-shell"
     },
     {
+      "agent": "isolated-editor",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares isolation (runs the agent in an isolated worktree), which opencode cannot express, and without a shell the agent cannot create a git worktree to work in"
+    },
+    {
       "agent": "mcp-owner",
       "harness": "opencode",
       "settings": {},
@@ -94,7 +107,7 @@
     }
   ],
   "summary": {
-    "incompatible": 4,
+    "incompatible": 5,
     "invalid": 1
   }
 }

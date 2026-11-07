@@ -242,6 +242,56 @@
       ]
     },
     {
+      "agent": "gh-manual",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/gh-manual.toml",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-manual.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "goes without manual-only invocation: codex may delegate to it automatically; the description asks it not to",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ],
+      "reduced": [
+        "manual-only invocation"
+      ]
+    },
+    {
+      "agent": "isolated",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/isolated.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/isolated.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "goes without isolation: codex can't isolate it; the agent is instructed to work only in a git worktree",
+        "excludes web fetch, web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ],
+      "reduced": [
+        "isolation"
+      ]
+    },
+    {
       "agent": "journaler",
       "harness": "codex",
       "settings": {},
@@ -560,9 +610,30 @@
         "omitted tags: descriptive metadata",
         "omitted version: descriptive metadata"
       ]
+    },
+    {
+      "agent": "wildcard",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.codex/agents/wildcard.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/wildcard.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "excludes web search, delegation, but Codex agents use the session's web search and subagent settings",
+        "Codex agents keep the session's MCP servers; an agent file cannot withhold them"
+      ]
     }
   ],
   "summary": {
-    "create": 28
+    "create": 31
   }
 }

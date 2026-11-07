@@ -465,6 +465,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "gh-manual",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".github/agents/gh-manual.agent.md",
+          "sourceDigest": "sha256:36c4e0f4476f6ddbe8e49920350a8d05f305ecff9df72c40c170612173445218",
+          "converter": "opencode/v5",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/gh-manual.md",
+          "digest": "sha256:4a1f0d742914a7f4d2262745360bd1c1a6573aae81c49da00c9c3fa217ed733d",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "gh-native",
       "origin": "direct",
       "artifacts": [
@@ -516,6 +536,26 @@
           "converter": "opencode/v5",
           "path": "/agnthub-e2e/home/.config/opencode/agents/gm-native.md",
           "digest": "sha256:77f5014064540bdb636ff3f1c18d0a1404f6800414fbad683175fac842f089e9",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "isolated",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/isolated.md",
+          "sourceDigest": "sha256:213ccb5e38aa066c15bfee1536e7e91930bb54fc01fdaba30d0befe07666fb8b",
+          "converter": "opencode/v5",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/isolated.md",
+          "digest": "sha256:872b2a230ec681fcbff9f193db501603fd9afb8b047c0dd99fd8cf8a11491c10",
           "requires": []
         }
       ]
@@ -975,6 +1015,26 @@
           "converter": "opencode/v5",
           "path": "/agnthub-e2e/home/.config/opencode/agents/web-searcher.md",
           "digest": "sha256:9ea49a14f63c36f7edf42fb90122f6f8aae62211e8171a557cd1eea4255f9d13",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "wildcard",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/wildcard.md",
+          "sourceDigest": "sha256:6619fd1e1a173c38342c4ad36dbb057d4829db134be89767f903b7c5523afef3",
+          "converter": "opencode/v5",
+          "path": "/agnthub-e2e/home/.config/opencode/agents/wildcard.md",
+          "digest": "sha256:906f627e3cd9cf1381990e5a063f1281ed0af76e8578e2aee7fe9dd39ee04714",
           "requires": []
         }
       ]

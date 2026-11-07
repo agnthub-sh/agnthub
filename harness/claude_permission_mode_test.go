@@ -112,7 +112,7 @@ func TestClaudeRestrictingPermissionModesStayRefused(t *testing.T) {
 		withField("permissionMode: dontAsk\n"),
 		withField("permissionMode: AcceptEdits\n"),
 		withField("permissionMode: [acceptEdits]\n"),
-		withField("permissionMode: bypassPermissions\nisolation: worktree\n"),
+		withField("permissionMode: bypassPermissions\ninitialPrompt: go\n"),
 		withField("permissionMode: acceptEdits\nhooks:\n  PreToolUse:\n    - matcher: Bash\n" +
 			"      hooks:\n        - type: command\n          command: ./guard.sh\n"),
 	}

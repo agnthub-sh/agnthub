@@ -119,6 +119,21 @@
       "optIn": "allow-without-shell"
     },
     {
+      "agent": "isolated-editor",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares isolation (runs the agent in an isolated worktree), which omp cannot express, and without a shell the agent cannot create a git worktree to work in"
+    },
+    {
       "agent": "mcp-owner",
       "harness": "omp",
       "settings": {},
@@ -135,7 +150,7 @@
     }
   ],
   "summary": {
-    "incompatible": 5,
+    "incompatible": 6,
     "invalid": 1
   }
 }

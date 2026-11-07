@@ -465,6 +465,26 @@
       ]
     },
     {
+      "agent": "gh-manual",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.config/opencode/agents/gh-manual.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-manual.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "written as a primary agent: you select it, and OpenCode never delegates to it"
+      ]
+    },
+    {
       "agent": "gh-native",
       "harness": "opencode",
       "settings": {},
@@ -519,6 +539,29 @@
       "action": "create",
       "notes": [
         "converted from the gemini variant"
+      ]
+    },
+    {
+      "agent": "isolated",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.config/opencode/agents/isolated.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/isolated.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "goes without isolation: opencode can't isolate it; the agent is instructed to work only in a git worktree"
+      ],
+      "reduced": [
+        "isolation"
       ]
     },
     {
@@ -960,9 +1003,28 @@
       "notes": [
         "converted from the claude variant"
       ]
+    },
+    {
+      "agent": "wildcard",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.config/opencode/agents/wildcard.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/wildcard.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
     }
   ],
   "summary": {
-    "create": 49
+    "create": 52
   }
 }

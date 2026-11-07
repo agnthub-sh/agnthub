@@ -23,9 +23,11 @@
 0644 home/.config/opencode/agents/dual.md
 0644 home/.config/opencode/agents/fixer.md
 0644 home/.config/opencode/agents/gh-colored.md
+0644 home/.config/opencode/agents/gh-manual.md
 0644 home/.config/opencode/agents/gh-native.md
 0644 home/.config/opencode/agents/gh-plain.md
 0644 home/.config/opencode/agents/gm-native.md
+0644 home/.config/opencode/agents/isolated.md
 0644 home/.config/opencode/agents/issue-reader.md
 0644 home/.config/opencode/agents/journaler.md
 0644 home/.config/opencode/agents/literal.md
@@ -49,4 +51,5 @@
 0644 home/.config/opencode/agents/studio-qa.md
 0644 home/.config/opencode/agents/tagged.md
 0644 home/.config/opencode/agents/web-searcher.md
+0644 home/.config/opencode/agents/wildcard.md
 0600 home/.local/state/agnthub/installations.json

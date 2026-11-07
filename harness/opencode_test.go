@@ -46,7 +46,7 @@ func TestOpenCodeConversionRefusesBehavioralFields(t *testing.T) {
 	_, err := convert(
 		installer(t, agent.OpenCode),
 		"reviewer",
-		portable(t, "---\nname: reviewer\ndescription: Reviews\nisolation: worktree\n---\nbody\n"),
+		portable(t, "---\nname: reviewer\ndescription: Reviews\ninitialPrompt: go\n---\nbody\n"),
 	)
 	requireIncompatible(t, err)
 }

@@ -483,6 +483,29 @@
       ]
     },
     {
+      "agent": "gh-manual",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/gh-manual.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-manual.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "goes without manual-only invocation: gemini may delegate to it automatically; the description asks it not to"
+      ],
+      "reduced": [
+        "manual-only invocation"
+      ]
+    },
+    {
       "agent": "gh-native",
       "harness": "gemini",
       "settings": {},
@@ -593,6 +616,42 @@
         "MCP tools"
       ],
       "optIn": "allow-without-shell"
+    },
+    {
+      "agent": "isolated",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/isolated.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/isolated.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "goes without isolation: gemini can't isolate it; the agent is instructed to work only in a git worktree"
+      ],
+      "reduced": [
+        "isolation"
+      ]
+    },
+    {
+      "agent": "isolated-editor",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares isolation (runs the agent in an isolated worktree), which gemini cannot express, and without a shell the agent cannot create a git worktree to work in"
     },
     {
       "agent": "issue-reader",
@@ -1054,11 +1113,30 @@
       "notes": [
         "converted from the claude variant"
       ]
+    },
+    {
+      "agent": "wildcard",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/wildcard.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/wildcard.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
     }
   ],
   "summary": {
-    "create": 50,
-    "incompatible": 2,
+    "create": 53,
+    "incompatible": 3,
     "invalid": 2
   }
 }

@@ -244,6 +244,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.copilot/agents/gh-manual.agent.md",
+      "digest": "sha256:36c4e0f4476f6ddbe8e49920350a8d05f305ecff9df72c40c170612173445218",
+      "harness": "copilot",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "gh-manual",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.copilot/agents/gh-native.agent.md",
       "digest": "sha256:864618375986b42a604b63514ac52ca854ba652da1b19574df74aac49db3acc3",
       "harness": "copilot",
@@ -273,6 +284,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "gm-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.copilot/agents/isolated.agent.md",
+      "digest": "sha256:b3ece5c3c02abd596f05d5ea68442cd00e8f8971c0dff69421992b674cf75880",
+      "harness": "copilot",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "isolated",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -515,6 +537,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "web-searcher",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.copilot/agents/wildcard.agent.md",
+      "digest": "sha256:0cc8ccffcd9875b90081d7600c06d3446a3244e05db4f27b1c279d4d2bab1f7b",
+      "harness": "copilot",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "wildcard",
       "origin": "direct",
       "installedAt": "<time>"
     }

@@ -50,6 +50,16 @@ type Semantics struct {
 	// Skills are the skills preloaded into the Agent's context, in authored
 	// order. agnthub never installs skills from this list.
 	Skills []string
+	// ManualOnly runs the Agent only when the user selects it: the model never
+	// delegates to it on its own (Copilot CLI disable-model-invocation). It is
+	// an invocation preference, not a permission: targets without a native
+	// equivalent ask for it in the description (lowerInvocation).
+	ManualOnly bool
+	// Isolation runs the Agent in its own git worktree (Claude Code
+	// isolation: worktree). It is containment: targets without a native
+	// equivalent install it with an instruction to work only in a worktree it
+	// creates, which needs a shell (lowerIsolation).
+	Isolation bool
 	// Notes are harmless omissions made while parsing (cosmetic metadata,
 	// model tuning, session-only helpers).
 	Notes []string
@@ -390,6 +400,10 @@ func begin(target agent.HarnessID, sem *Semantics) (*renderCheck, error) {
 	}
 	native := sem.claudeNative(target)
 	check.lower(native)
+	if err := check.lowerIsolation(); err != nil {
+		return nil, err
+	}
+	check.lowerInvocation()
 	sem = check.sem
 	if mode := sem.PermissionMode; mode != "" && !native {
 		check.note("permissionMode %s isn't available in %s; the harness asks for approval "+

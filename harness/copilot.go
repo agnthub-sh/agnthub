@@ -287,6 +287,11 @@ func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Seman
 	}
 	var skillAllowlist []string
 	hasSkillAllowlist := false
+	// disable-model-invocation takes precedence over the retired infer
+	// (https://docs.github.com/en/copilot/reference/custom-agents-configuration).
+	modelInvocation, hasModelInvocation := doc.Frontmatter["disable-model-invocation"].(bool)
+	sem.ManualOnly = modelInvocation ||
+		(!hasModelInvocation && doc.Frontmatter["infer"] == false)
 	for _, key := range sortedKeys(doc.Frontmatter) {
 		value := doc.Frontmatter[key]
 		switch key {
@@ -311,14 +316,7 @@ func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Seman
 		case "maxTurns":
 			sem.MaxTurns, _ = positiveInt(value)
 			sem.relaxed = true
-		case "infer":
-			if value == false {
-				sem.unsupported(key, "Copilot never delegates to it automatically")
-			}
-		case "disable-model-invocation":
-			if value == true {
-				sem.unsupported(key, "Copilot never delegates to it automatically")
-			}
+		case "infer", "disable-model-invocation":
 		case "user-invocable":
 			if value == false {
 				sem.note("omitted user-invocable: false: other harnesses let users select it")
@@ -434,6 +432,9 @@ func (a copilotAdapter) Convert(sem *Semantics) (Artifact, error) {
 	fields := []agent.Field{
 		{Key: "name", Value: sem.ID},
 		{Key: "description", Value: sem.Description},
+	}
+	if sem.ManualOnly {
+		fields = append(fields, agent.Field{Key: "disable-model-invocation", Value: true})
 	}
 	if sem.Tools.Limited() {
 		if !sem.Tools.Restricted {

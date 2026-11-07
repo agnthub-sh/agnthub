@@ -446,6 +446,26 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "gh-manual",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": ".github/agents/gh-manual.agent.md",
+          "sourceDigest": "sha256:36c4e0f4476f6ddbe8e49920350a8d05f305ecff9df72c40c170612173445218",
+          "converter": "gemini/v5",
+          "path": "/agnthub-e2e/home/.gemini/agents/gh-manual.md",
+          "digest": "sha256:566e7ca0c895b5058df520a78985c4e24bb3135d5129d6069a17fd2254895773",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "gh-native",
       "origin": "direct",
       "artifacts": [
@@ -515,6 +535,26 @@
           "sourceDigest": "sha256:ab77641ac4f6666fa0d80ee36d4fdf2332dbd2f1bc5d0106cd69fb9446f670e9",
           "path": "/agnthub-e2e/home/.gemini/agents/gm-native.md",
           "digest": "sha256:ab77641ac4f6666fa0d80ee36d4fdf2332dbd2f1bc5d0106cd69fb9446f670e9",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "isolated",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/isolated.md",
+          "sourceDigest": "sha256:213ccb5e38aa066c15bfee1536e7e91930bb54fc01fdaba30d0befe07666fb8b",
+          "converter": "gemini/v5",
+          "path": "/agnthub-e2e/home/.gemini/agents/isolated.md",
+          "digest": "sha256:6493b638dd74f682480eb439129cf77ebf347a356e43d04880d1c19fa4bfa87b",
           "requires": []
         }
       ]
@@ -995,6 +1035,26 @@
           "converter": "gemini/v5",
           "path": "/agnthub-e2e/home/.gemini/agents/web-searcher.md",
           "digest": "sha256:27f9541a7a304f12f23184edfb12f5c3cfeae86922e039ab3376091f876d0101",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "wildcard",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/wildcard.md",
+          "sourceDigest": "sha256:6619fd1e1a173c38342c4ad36dbb057d4829db134be89767f903b7c5523afef3",
+          "converter": "gemini/v5",
+          "path": "/agnthub-e2e/home/.gemini/agents/wildcard.md",
+          "digest": "sha256:7bbabfa91a92b605becad540333f46dac2ac051b47785d8d42af67ced2a628ab",
           "requires": []
         }
       ]

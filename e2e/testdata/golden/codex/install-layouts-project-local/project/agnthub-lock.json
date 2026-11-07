@@ -242,6 +242,46 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "gh-manual",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".github/agents/gh-manual.agent.md",
+          "sourceDigest": "sha256:36c4e0f4476f6ddbe8e49920350a8d05f305ecff9df72c40c170612173445218",
+          "converter": "codex/v5",
+          "path": ".codex/agents/gh-manual.toml",
+          "digest": "sha256:999e09495c96965fe1a6ce6c22ea447d27b03822846e4cc8b5264fbe9bcc5685",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "isolated",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/isolated.md",
+          "sourceDigest": "sha256:213ccb5e38aa066c15bfee1536e7e91930bb54fc01fdaba30d0befe07666fb8b",
+          "converter": "codex/v5",
+          "path": ".codex/agents/isolated.toml",
+          "digest": "sha256:e3e6d1abddbd520322d629969966bea974305dfee1b3341b0ee47c7f78e79509",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "journaler",
       "origin": "direct",
       "artifacts": [
@@ -553,6 +593,26 @@
           "converter": "codex/v5",
           "path": ".codex/agents/tagged.toml",
           "digest": "sha256:f403eafd5a3861502263a0d51f84ba43692b128a9e0fec9d0b4ab0b1400cc733",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "wildcard",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "codex",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/wildcard.md",
+          "sourceDigest": "sha256:6619fd1e1a173c38342c4ad36dbb057d4829db134be89767f903b7c5523afef3",
+          "converter": "codex/v5",
+          "path": ".codex/agents/wildcard.toml",
+          "digest": "sha256:cd0acd39a6918ffdbb6120271978b9bbf61b57059403d0236c9f2f7265086826",
           "requires": []
         }
       ]

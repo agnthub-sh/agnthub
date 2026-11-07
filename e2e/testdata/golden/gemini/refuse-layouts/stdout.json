@@ -87,10 +87,23 @@
         "MCP tools"
       ],
       "optIn": "allow-without-shell"
+    },
+    {
+      "agent": "isolated-editor",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares isolation (runs the agent in an isolated worktree), which gemini cannot express, and without a shell the agent cannot create a git worktree to work in"
     }
   ],
   "summary": {
-    "incompatible": 2,
+    "incompatible": 3,
     "invalid": 2
   }
 }

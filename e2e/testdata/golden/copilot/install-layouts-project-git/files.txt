@@ -22,9 +22,11 @@
 0644 project/.github/agents/dual.agent.md
 0644 project/.github/agents/fixer.agent.md
 0644 project/.github/agents/gh-colored.agent.md
+0644 project/.github/agents/gh-manual.agent.md
 0644 project/.github/agents/gh-native.agent.md
 0644 project/.github/agents/gh-plain.agent.md
 0644 project/.github/agents/gm-native.agent.md
+0644 project/.github/agents/isolated.agent.md
 0644 project/.github/agents/issue-reader.agent.md
 0644 project/.github/agents/journaler.agent.md
 0644 project/.github/agents/literal.agent.md
@@ -47,4 +49,5 @@
 0644 project/.github/agents/studio-qa.agent.md
 0644 project/.github/agents/tagged.agent.md
 0644 project/.github/agents/web-searcher.agent.md
+0644 project/.github/agents/wildcard.agent.md
 0644 project/agnthub-lock.json

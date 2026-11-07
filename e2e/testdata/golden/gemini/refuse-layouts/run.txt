@@ -1,2 +1,2 @@
-$ agnthub add /agnthub-e2e/src/layouts --agent broken --agent differ --agent gm-camel --agent guarded --harness gemini --yes --json
+$ agnthub add /agnthub-e2e/src/layouts --agent broken --agent differ --agent gm-camel --agent guarded --agent isolated-editor --harness gemini --yes --json
 exit status: 1

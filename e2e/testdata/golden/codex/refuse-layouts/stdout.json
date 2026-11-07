@@ -260,6 +260,19 @@
       "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
+      "agent": "isolated-editor",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares isolation (runs the agent in an isolated worktree), which codex cannot express, and without a shell the agent cannot create a git worktree to work in"
+    },
+    {
       "agent": "issue-reader",
       "harness": "codex",
       "settings": {},
@@ -365,7 +378,7 @@
     }
   ],
   "summary": {
-    "incompatible": 25,
+    "incompatible": 26,
     "invalid": 1
   }
 }

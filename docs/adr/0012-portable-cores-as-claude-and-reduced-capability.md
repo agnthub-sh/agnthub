@@ -1,6 +1,6 @@
 # Read portable cores as Claude Code agents and install reduced capability visibly
 
-Status: accepted (decided by the user on 2026-11-05). Amends [ADR 0002](0002-agent-variants-and-conservative-conversion.md).
+Status: accepted (decided by the user on 2026-11-05). Amends [ADR 0002](0002-agent-variants-and-conservative-conversion.md). Amended by [ADR 0014](0014-emulate-worktree-isolation-and-manual-only-invocation.md) (worktree isolation and manual-only invocation).
 
 ADR 0002 limited the portable core to `name`, `description` and the body, with harmless metadata omitted: any other key refused conversion for every harness. A registry census (2026-11-05, 144,705 agents) found that 96% of portable cores are `agents/*.md` files written for Claude Code (`model: sonnet`, `tools: Read, Grep`, `color`…), and that about 14,000 of them were hidden because of those keys. It also found agents refused only because a harness cannot grant a capability they use, while the conversion would never have widened what they may do.
 
@@ -14,6 +14,6 @@ ADR 0002 limited the portable core to `name`, `description` and the body, with h
 
 **Sources that convert as before keep winning.** When an agent has several sources, conversion takes the first that converts exactly under the earlier rules; only when none does, the first that needs one of these readings (a portable core with Claude Code fields, a field its own harness ignores, a lowered behavior, agent-scoped MCP servers), then the first with reduced capability, then the first without the shell. So no install changes source, or gains or loses capabilities, because another of the agent's files became convertible, and locks of earlier converter versions still restore.
 
-**Still refused:** restrictions a target can only express in prose or by loosening: Codex agents that withhold edits, Cursor agents that withhold reads, `isolation: worktree`, hooks with real events, and agents whose instructions need `${CLAUDE_PLUGIN_ROOT}` (Claude Code users are pointed to installing the plugin itself).
+**Still refused:** restrictions a target can only express in prose or by loosening: Codex agents that withhold edits, Cursor agents that withhold reads, hooks with real events, and agents whose instructions need `${CLAUDE_PLUGIN_ROOT}` (Claude Code users are pointed to installing the plugin itself). `isolation: worktree` was refused here too until [ADR 0014](0014-emulate-worktree-isolation-and-manual-only-invocation.md).
 
 Consequences: a restriction still never becomes looser silently, and every change to what an agent can do is visible in the plan. Authors of portable cores written for another harness (OpenCode `mode`/`permission`, Gemini `kind`) get Claude Code's reading: restriction-like keys keep refusing, so nothing is loosened, but such an author should add a native Variant. The opt-in is per command and not recorded: `update` and `restore` need the flag again for such an agent.

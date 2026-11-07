@@ -177,6 +177,13 @@
       }
     },
     {
+      "id": "gh-manual",
+      "description": "Prepares a release when the user asks for it.",
+      "variants": {
+        "copilot": ".github/agents/gh-manual.agent.md"
+      }
+    },
+    {
       "id": "gh-native",
       "description": "Copilot CLI native agent that reads and searches.",
       "variants": {
@@ -216,6 +223,20 @@
       "description": "Runs with a Claude Code permission mode no other harness has.",
       "variants": {
         "claude": ".claude/agents/guarded.md"
+      }
+    },
+    {
+      "id": "isolated",
+      "description": "Implements a change in its own git worktree.",
+      "variants": {
+        "claude": ".claude/agents/isolated.md"
+      }
+    },
+    {
+      "id": "isolated-editor",
+      "description": "Edits files in its own git worktree, without a shell.",
+      "variants": {
+        "claude": ".claude/agents/isolated-editor.md"
       }
     },
     {
@@ -378,6 +399,13 @@
       "description": "Searches the web and fetches pages.",
       "variants": {
         "claude": ".claude/agents/web-searcher.md"
+      }
+    },
+    {
+      "id": "wildcard",
+      "description": "Fetches docs and fixes code; its tools use the whole-tool wildcard.",
+      "variants": {
+        "claude": ".claude/agents/wildcard.md"
       }
     }
   ],

@@ -278,6 +278,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.claude/agents/gh-manual.md",
+      "digest": "sha256:17b51c34953d0e700c9e6d17e31fc5b3e43bc13e630de919fbd6a76a2b149213",
+      "harness": "claude",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "gh-manual",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.claude/agents/gh-native.md",
       "digest": "sha256:fc1aba874b6c109afed219b571a45b8175f740d59da2651bfe2fcd531fe6bca8",
       "harness": "claude",
@@ -322,6 +334,30 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "guarded",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.claude/agents/isolated-editor.md",
+      "digest": "sha256:7f7ea86776f7a9253c8e264fb101b575f07cb5cdc7bdd88692b01cd60c9443fb",
+      "harness": "claude",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "isolated-editor",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.claude/agents/isolated.md",
+      "digest": "sha256:213ccb5e38aa066c15bfee1536e7e91930bb54fc01fdaba30d0befe07666fb8b",
+      "harness": "claude",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "isolated",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -610,6 +646,18 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "web-searcher",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.claude/agents/wildcard.md",
+      "digest": "sha256:6619fd1e1a173c38342c4ad36dbb057d4829db134be89767f903b7c5523afef3",
+      "harness": "claude",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "wildcard",
       "origin": "direct",
       "installedAt": "<time>"
     }

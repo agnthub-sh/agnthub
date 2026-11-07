@@ -23,9 +23,11 @@
 0644 home/.omp/agent/agents/dual.md
 0644 home/.omp/agent/agents/fixer.md
 0644 home/.omp/agent/agents/gh-colored.md
+0644 home/.omp/agent/agents/gh-manual.md
 0644 home/.omp/agent/agents/gh-native.md
 0644 home/.omp/agent/agents/gh-plain.md
 0644 home/.omp/agent/agents/gm-native.md
+0644 home/.omp/agent/agents/isolated.md
 0644 home/.omp/agent/agents/issue-reader.md
 0644 home/.omp/agent/agents/journaler.md
 0644 home/.omp/agent/agents/literal.md
@@ -49,3 +51,4 @@
 0644 home/.omp/agent/agents/studio-qa.md
 0644 home/.omp/agent/agents/tagged.md
 0644 home/.omp/agent/agents/web-searcher.md
+0644 home/.omp/agent/agents/wildcard.md

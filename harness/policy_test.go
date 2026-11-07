@@ -112,7 +112,7 @@ func TestPortableRestrictionsClaudeCodeIgnoresStillRefuse(t *testing.T) {
 		"agents: [helper]\n",
 		"spawns: [helper]\n",
 		"readonly: true\n",
-		"isolation: worktree\n",
+		"isolation: remote\n",
 		"hooks:\n  PreToolUse:\n    - matcher: Bash\n      hooks:\n        - type: command\n" +
 			"          command: ./guard.sh\n",
 	} {
@@ -530,13 +530,6 @@ func TestContainmentStaysRefused(t *testing.T) {
 				"  - web/fetch\n---\nReview.\n",
 			agent.Copilot,
 			[]agent.HarnessID{agent.Cursor},
-		},
-		{
-			// P18: https://github.com/davidgarciagordo/swarm/blob/3a30f8c6ee7c/agents/implementer.md
-			"P18 isolation", ".claude/agents/reviewer.md",
-			"---\nname: reviewer\ndescription: Writes a phase's code in a worktree.\n" +
-				"tools: Read, Grep, Glob, Write, Edit, Bash\nisolation: worktree\n---\nImplement.\n",
-			agent.Claude, nonClaude,
 		},
 		{
 			// P21: https://github.com/slabgorb/arcade/blob/81b8c5889f55/.claude/agents/sm-setup.md

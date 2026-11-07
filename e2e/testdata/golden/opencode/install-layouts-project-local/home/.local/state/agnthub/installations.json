@@ -278,6 +278,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.opencode/agents/gh-manual.md",
+      "digest": "sha256:4a1f0d742914a7f4d2262745360bd1c1a6573aae81c49da00c9c3fa217ed733d",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "gh-manual",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.opencode/agents/gh-native.md",
       "digest": "sha256:12d050a633a98f969b78f769b9ea09ebe8f7f2e4f5bbc0990c0fb5557ee51b25",
       "harness": "opencode",
@@ -310,6 +322,18 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "gm-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/isolated.md",
+      "digest": "sha256:872b2a230ec681fcbff9f193db501603fd9afb8b047c0dd99fd8cf8a11491c10",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "isolated",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -586,6 +610,18 @@
       "destination": "project",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "web-searcher",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/wildcard.md",
+      "digest": "sha256:906f627e3cd9cf1381990e5a063f1281ed0af76e8578e2aee7fe9dd39ee04714",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "wildcard",
       "origin": "direct",
       "installedAt": "<time>"
     }

@@ -247,7 +247,7 @@ func TestBehavioralFieldsRefuseConversion(t *testing.T) {
 	for _, field := range []string{
 		"hooks:\n  Stop:\n    - command: echo\n",
 		"mcpServers:\n  - github\n",
-		"isolation: worktree\n",
+		"initialPrompt: Start by reading the README.\n",
 	} {
 		source := strings.Replace(claudeAgent("Read", "Edit", "Write", "Bash"),
 			"color: blue\n", "color: blue\n"+field, 1)

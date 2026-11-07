@@ -200,6 +200,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.cursor/agents/gh-manual.md",
+      "digest": "sha256:9d409b21a75246e62bdd8acc7dba819bbf9d2b88ed5a5fbb8c56efc3144f41b0",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "gh-manual",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.cursor/agents/gh-native.md",
       "digest": "sha256:04090ee685ee41cfbdcdff329f05cdb4aef06f287cebb4ddd6ad57312d4b4892",
       "harness": "cursor",
@@ -229,6 +240,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "gm-native",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.cursor/agents/isolated.md",
+      "digest": "sha256:c6ba63fd86a32a1aafa574135c72131e8deeabe8cd741f1d0dd297aa6659732f",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "isolated",
       "origin": "direct",
       "installedAt": "<time>"
     },
@@ -427,6 +449,17 @@
       "destination": "user",
       "source": "local:/agnthub-e2e/src/layouts",
       "agent": "tagged",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/home/.cursor/agents/wildcard.md",
+      "digest": "sha256:d1129084d4e413c53d25047a349d2f2754803edb8c14ec2e3b3a0a8329103598",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "wildcard",
       "origin": "direct",
       "installedAt": "<time>"
     }

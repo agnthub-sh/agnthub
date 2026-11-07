@@ -478,6 +478,26 @@
       ]
     },
     {
+      "agent": "gh-manual",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/gh-manual.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-manual.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "written as a primary agent: you select it, and OpenCode never delegates to it"
+      ]
+    },
+    {
       "agent": "gh-native",
       "harness": "opencode",
       "settings": {},
@@ -585,6 +605,42 @@
         "MCP tools"
       ],
       "optIn": "allow-without-shell"
+    },
+    {
+      "agent": "isolated",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/isolated.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/isolated.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "goes without isolation: opencode can't isolate it; the agent is instructed to work only in a git worktree"
+      ],
+      "reduced": [
+        "isolation"
+      ]
+    },
+    {
+      "agent": "isolated-editor",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "its claude variant declares isolation (runs the agent in an isolated worktree), which opencode cannot express, and without a shell the agent cannot create a git worktree to work in"
     },
     {
       "agent": "issue-reader",
@@ -1038,11 +1094,30 @@
       "notes": [
         "converted from the claude variant"
       ]
+    },
+    {
+      "agent": "wildcard",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/wildcard.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/wildcard.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
     }
   ],
   "summary": {
-    "create": 49,
-    "incompatible": 4,
+    "create": 52,
+    "incompatible": 5,
     "invalid": 1
   }
 }

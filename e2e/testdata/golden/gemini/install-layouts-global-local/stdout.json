@@ -448,6 +448,29 @@
       ]
     },
     {
+      "agent": "gh-manual",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/gh-manual.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/gh-manual.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "goes without manual-only invocation: gemini may delegate to it automatically; the description asks it not to"
+      ],
+      "reduced": [
+        "manual-only invocation"
+      ]
+    },
+    {
       "agent": "gh-native",
       "harness": "gemini",
       "settings": {},
@@ -519,6 +542,29 @@
       },
       "origin": "direct",
       "action": "create"
+    },
+    {
+      "agent": "isolated",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/isolated.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/isolated.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "goes without isolation: gemini can't isolate it; the agent is instructed to work only in a git worktree"
+      ],
+      "reduced": [
+        "isolation"
+      ]
     },
     {
       "agent": "issue-reader",
@@ -980,9 +1026,28 @@
       "notes": [
         "converted from the claude variant"
       ]
+    },
+    {
+      "agent": "wildcard",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "user",
+      "path": "/agnthub-e2e/home/.gemini/agents/wildcard.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/wildcard.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
     }
   ],
   "summary": {
-    "create": 50
+    "create": 53
   }
 }

@@ -18,9 +18,11 @@
 0644 home/.cursor/agents/dual.md
 0644 home/.cursor/agents/fixer.md
 0644 home/.cursor/agents/gh-colored.md
+0644 home/.cursor/agents/gh-manual.md
 0644 home/.cursor/agents/gh-native.md
 0644 home/.cursor/agents/gh-plain.md
 0644 home/.cursor/agents/gm-native.md
+0644 home/.cursor/agents/isolated.md
 0644 home/.cursor/agents/journaler.md
 0644 home/.cursor/agents/literal.md
 0644 home/.cursor/agents/local-notes.md
@@ -39,4 +41,5 @@
 0644 home/.cursor/agents/skilled.md
 0644 home/.cursor/agents/studio-qa.md
 0644 home/.cursor/agents/tagged.md
+0644 home/.cursor/agents/wildcard.md
 0600 home/.local/state/agnthub/installations.json

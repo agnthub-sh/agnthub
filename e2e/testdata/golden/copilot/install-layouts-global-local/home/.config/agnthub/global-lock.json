@@ -445,6 +445,25 @@
         "kind": "local",
         "locator": "/agnthub-e2e/src/layouts"
       },
+      "agent": "gh-manual",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "native",
+          "sourcePath": ".github/agents/gh-manual.agent.md",
+          "sourceDigest": "sha256:36c4e0f4476f6ddbe8e49920350a8d05f305ecff9df72c40c170612173445218",
+          "path": "/agnthub-e2e/home/.copilot/agents/gh-manual.agent.md",
+          "digest": "sha256:36c4e0f4476f6ddbe8e49920350a8d05f305ecff9df72c40c170612173445218",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
       "agent": "gh-native",
       "origin": "direct",
       "artifacts": [
@@ -494,6 +513,26 @@
           "converter": "copilot/v5",
           "path": "/agnthub-e2e/home/.copilot/agents/gm-native.agent.md",
           "digest": "sha256:25749cf40f61bde1fbd3935f448e382c07271a4863fd943b2e5de841b2b5c5e0",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "isolated",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/isolated.md",
+          "sourceDigest": "sha256:213ccb5e38aa066c15bfee1536e7e91930bb54fc01fdaba30d0befe07666fb8b",
+          "converter": "copilot/v5",
+          "path": "/agnthub-e2e/home/.copilot/agents/isolated.agent.md",
+          "digest": "sha256:b3ece5c3c02abd596f05d5ea68442cd00e8f8971c0dff69421992b674cf75880",
           "requires": []
         }
       ]
@@ -934,6 +973,26 @@
           "converter": "copilot/v5",
           "path": "/agnthub-e2e/home/.copilot/agents/web-searcher.agent.md",
           "digest": "sha256:c8cb47379ae7d0e5f8cdc1fb96dbaf801776d593c8c637628cb9ae9bec477565",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "wildcard",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/wildcard.md",
+          "sourceDigest": "sha256:6619fd1e1a173c38342c4ad36dbb057d4829db134be89767f903b7c5523afef3",
+          "converter": "copilot/v5",
+          "path": "/agnthub-e2e/home/.copilot/agents/wildcard.agent.md",
+          "digest": "sha256:0cc8ccffcd9875b90081d7600c06d3446a3244e05db4f27b1c279d4d2bab1f7b",
           "requires": []
         }
       ]
