@@ -55,7 +55,7 @@ var taxonomy = [...]Category{
 	{"data-analysis", "Data Science & Analytics", "analysis, statistics, BI, notebooks"},
 	{
 		"machine-learning",
-		"Machine Learning & AI",
+		"AI & Machine Learning",
 		"ML/LLM engineering, prompt engineering, model training",
 	},
 	{"databases", "Databases", "SQL, schema design, query tuning, DBA"},

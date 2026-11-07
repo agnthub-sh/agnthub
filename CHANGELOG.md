@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.10.1
+
+### Changed
+
+- **The `machine-learning` category is named "AI & Machine Learning"** (was "Machine Learning &
+  AI"). Only the display name changes: the slug, and every `agnthub.yaml` that declares it,
+  stay valid, and the taxonomy version stays 1.
+
 ## v0.10.0
 
 ### Added
