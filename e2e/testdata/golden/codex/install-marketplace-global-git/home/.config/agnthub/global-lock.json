@@ -16,9 +16,9 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/more/mk-guarded.md",
           "sourceDigest": "sha256:8aa77306d8b0d60797e85a008e128ee544994ce1c6d2607ce4e0256ad3107476",
-          "converter": "codex/v5",
+          "converter": "codex/v6",
           "path": "/agnthub-e2e/home/.codex/agents/mk-guarded.toml",
-          "digest": "sha256:093aa569286cac05220361f5062d1175c297227ab0654d6508f31a02000855c6",
+          "digest": "sha256:469f15237ad72e28580f29cb219b34d44c2aec5d28b9f07ed8068651f40c3713",
           "requires": []
         }
       ]
@@ -38,9 +38,9 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/mk-lister.md",
           "sourceDigest": "sha256:42b4caf101f87d5da5feeb015372dbe5a70a7f809c819eef8f9113b10ee6b375",
-          "converter": "codex/v5",
+          "converter": "codex/v6",
           "path": "/agnthub-e2e/home/.codex/agents/mk-lister.toml",
-          "digest": "sha256:1a130ed600d5e2007d07ea1ef6b59017a2929bbe27eebbc38c86b0c4c6e4d651",
+          "digest": "sha256:6b51fe41535071e46b8f700be2d1dd54425104abb1a60ebf51f1ce1a7508de70",
           "requires": []
         }
       ]
@@ -60,9 +60,9 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/deep/mk-nested.md",
           "sourceDigest": "sha256:33799b1ca12e3ccb8449a66e4c19a09a37d09d14f69cd7dff0c7097f42dfcc0d",
-          "converter": "codex/v5",
+          "converter": "codex/v6",
           "path": "/agnthub-e2e/home/.codex/agents/mk-nested.toml",
-          "digest": "sha256:9fd5e265a79fd540c67a50d8f555a9fae0056f0171d7e50ff7878b9206bfccb5",
+          "digest": "sha256:e26b6729f7dbd58107c19c55f0450fe48301be07e94e6583676297a52fcb6366",
           "requires": []
         }
       ]
@@ -82,9 +82,9 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/mk-scanner.md",
           "sourceDigest": "sha256:5e6a2950be2c2e8fcfb2427622cc0ee6e963a4cbc730d26d8c830ffb3e7c6d7f",
-          "converter": "codex/v5",
+          "converter": "codex/v6",
           "path": "/agnthub-e2e/home/.codex/agents/mk-scanner.toml",
-          "digest": "sha256:d1225c999d3fbeb577b456f9acdede365dcfe303ec00ccb52778d6cc9b4d2c07",
+          "digest": "sha256:c4a7f32e8978e84daf652baa71119636a21f5e670bc5f0c9c402218c2a25fa26",
           "requires": []
         }
       ]

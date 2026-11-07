@@ -14,9 +14,9 @@
           "variant": "generated",
           "sourcePath": "agents/solo.md",
           "sourceDigest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
-          "converter": "opencode/v5",
+          "converter": "opencode/v6",
           "path": ".opencode/agents/solo.md",
-          "digest": "sha256:039453b748fcf72fb28bfc84ec0cd1ca708ae751478417ac3a55fb73f8031b22",
+          "digest": "sha256:7210244d814be936016ae3e91b28a2b60566abf678f70cb04d8b2f75ba4a4dcd",
           "requires": []
         }
       ]

@@ -1,4 +1,7 @@
 ---
+# Adapted from agents/large-probe.md in localhost:8443/large
+# Modified by agnthub: converted to the Claude Code agent format
+# No license file found in localhost:8443/large
 name: large-probe
 description: Answers from a repository too large to fetch whole
 ---

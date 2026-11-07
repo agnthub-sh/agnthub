@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/home/.claude/agents/companion.md",
-      "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+      "digest": "sha256:85a320c7b4b08537b1f8012125deda810dffd3cf0b0178922c1ae7039142dd58",
       "harness": "claude",
       "scope": "global",
       "destination": "user",

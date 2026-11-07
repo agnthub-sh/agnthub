@@ -14,9 +14,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/allowlisted.md",
           "sourceDigest": "sha256:f3ff55dcde035238f85d0fdae8958a9aff05a4776d32adde1c8d30fa96889af8",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/allowlisted.md",
-          "digest": "sha256:7c884b1dd05348b23d8cb3e0bc1ff78d7281e886f4eb0f80655ae8b5bcb40bfb",
+          "digest": "sha256:163ed75729001609f658b711b891bc2a27571fdf9422b344943432608e7a9958",
           "requires": []
         }
       ]
@@ -34,9 +34,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/annotated.md",
           "sourceDigest": "sha256:8cf577c3db790479f198a536eb7ad1011f84a0827e2bb2a07bfe5836a4254087",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/annotated.md",
-          "digest": "sha256:c93c4c71c813a9c59503394465e3eb499c3e8370183209c677f2ef4fc3da2b9d",
+          "digest": "sha256:f23f4de594d12eb18d7ab421c6fb0802d296ad21f1d1a1cd50d44ee299027212",
           "requires": []
         }
       ]
@@ -54,9 +54,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/backgrounder.md",
           "sourceDigest": "sha256:db764d016ee2d92946ed60cf836c8b3fc1f08052face2ee6fc019dbb27de0bc2",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/backgrounder.md",
-          "digest": "sha256:67a1bccf65815313fefb43c425f6e16de1dcd4fe4b5f51745651feaa073ac540",
+          "digest": "sha256:caa2ff15eb59babd8023ac03aefb774381a23b44d9216eb8d20123763c114abd",
           "requires": []
         }
       ]
@@ -74,9 +74,9 @@
           "variant": "generated",
           "sourcePath": "agents/bom.md",
           "sourceDigest": "sha256:4a06ac5e6bf431ff6070e79391195c1ff4e3c7e8f0b093dbfa06fb32e692f629",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/bom.md",
-          "digest": "sha256:153b3d74ed17217d3add75e5a05821e72eeda1b02b4edfbe91542b1fa2adcb62",
+          "digest": "sha256:e12cfa7859555535909e28f21a47ccd36fc9aa1ae36091e016af2666e02a8e19",
           "requires": []
         }
       ]
@@ -94,9 +94,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/bom-native.md",
           "sourceDigest": "sha256:4625951c9f6cb88f9476953c5a7dcb191bb1ccb2ff8ad6bbdd98a2c9baeb593c",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/bom-native.md",
-          "digest": "sha256:10712619e6b57bb8220547f83f831e12d82648a884fce68f53abdd19d8bfb1b2",
+          "digest": "sha256:28c01dea40cc1f8a240a8a6df046d4f5ef329901f0fd605aaebe2690b60c5996",
           "requires": []
         }
       ]
@@ -114,9 +114,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/bounded.md",
           "sourceDigest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/bounded.md",
-          "digest": "sha256:dbe17a641e6d0f24b1dae7225e703e45430b4cbee953497bb6e6a34cf7f8171b",
+          "digest": "sha256:d49273738cf23548f6d8abf693de37ead20258bd1b86c7d16d57f11e9e60b240",
           "requires": []
         }
       ]
@@ -134,9 +134,9 @@
           "variant": "generated",
           "sourcePath": "agents/claude-shaped.md",
           "sourceDigest": "sha256:fd5067a2a12f6e18f26f14d9a44bdf5e355fc65476c81afd0b70ce124c95c9ad",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/claude-shaped.md",
-          "digest": "sha256:0e33db1b69565f66feac273faa955feb97fb798c1d1bfcb378466a9a020ff156",
+          "digest": "sha256:05a37e160f348892f6c51a37a4f72b62e5edd1b63a0bf3a4cb4013ce9ae31ea7",
           "requires": []
         }
       ]
@@ -154,9 +154,9 @@
           "variant": "generated",
           "sourcePath": "agents/colon.md",
           "sourceDigest": "sha256:89cfd9750c6cd78419f7c04dc07bbc55508cbd9e43767be467bca82fefd1bd34",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/colon.md",
-          "digest": "sha256:ec277a9554a398e568c45ee3d061abd25e0e952506d01c5654be2e6c265f1c1f",
+          "digest": "sha256:13d9fb7e0a61d2480ddc74e3e84034c3a02a80f7f2892b72c0ccb5e5f83b2ea7",
           "requires": []
         }
       ]
@@ -174,9 +174,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/colon-native.md",
           "sourceDigest": "sha256:35d1f81dc452f8003feecba40b8e861f9bb90ba1dbba87c219cb1e540b5249d7",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/colon-native.md",
-          "digest": "sha256:053a1c386fa65ce49ce0e7a0860d7c21f6f25d2ea527890cc71fa76c2531437d",
+          "digest": "sha256:09c5d5bad7e4d8a21c7b9c080f1608cff8487070ecabe21a57d50f12e3f1ccbe",
           "requires": []
         }
       ]
@@ -194,9 +194,9 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-folded.md",
           "sourceDigest": "sha256:269f1c668e921158450159bc7643fb769ff5af270bc46ab39cdd8ccaa5ac764c",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/cu-folded.md",
-          "digest": "sha256:dce8c8a3eebc7093c6e54faff20d655783776e709b6899dffccff94a95aaae5b",
+          "digest": "sha256:09c470708f1f547cb74dabc10e8dc402de1d9b8c04547de735acf7c879124fb1",
           "requires": []
         }
       ]
@@ -214,9 +214,9 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-native.md",
           "sourceDigest": "sha256:90e2a7aaee545f416f39f918470e649abfde0a5d1d00e05c5f3eb07cd57778bd",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/cu-native.md",
-          "digest": "sha256:9fd70714a268b58c7665ccba39b6fbd24c0327c8fca7dcc748609b5cb9fe6922",
+          "digest": "sha256:fdb51d61c23ca114f27ee686d510fff6ae5f8eb83dc32f77f4d281fff15e34ee",
           "requires": []
         }
       ]
@@ -234,9 +234,9 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-tagged.md",
           "sourceDigest": "sha256:970c3f3b68d411a7b90dc24c2b42c1e5f3355966a2427f158fa3b42b3c726970",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/cu-tagged.md",
-          "digest": "sha256:8590cc4b071166eb15ac1ecd1241cc06ef13ec496ba9034742793bd11d366d39",
+          "digest": "sha256:56c7a1099b0aeb201e57a64ead619cf4598dfcb91afaf6c8ff84b5dd6fbd0500",
           "requires": []
         }
       ]
@@ -254,9 +254,9 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-native.toml",
           "sourceDigest": "sha256:a885e8934fcddf4cf363afdb2c3f69d15dec952f974f37fcfd39c1c7a66bc1a1",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/cx-native.md",
-          "digest": "sha256:9d92584b2a9cd98842addf79e63b12f675be2c7e07dd9d78848388eb18de63fe",
+          "digest": "sha256:bff85ccbbb126d597a37ae315dbe39400feb8667aa4149e8ff19b8f042e6b43d",
           "requires": []
         }
       ]
@@ -274,9 +274,9 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-nicknamed.toml",
           "sourceDigest": "sha256:afe1f7c1493cd1348a68552047006bd3c87c0ebb0e102a4200365a2a6fb42436",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/cx-nicknamed.md",
-          "digest": "sha256:3495cd4e6a016190fea231f059034ba7106b413fdd1037ef2cc9df7327e06606",
+          "digest": "sha256:fc045dccff92d4f1cbb94b4a79a5adf1505b7d7f20a70eae5eda2d42e472fad9",
           "requires": []
         }
       ]
@@ -294,9 +294,9 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-sandboxed.toml",
           "sourceDigest": "sha256:dcaa98695697729de4d531213e23fa532f915b87e3ec07b5e09cec4f3249ede2",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/cx-sandboxed.md",
-          "digest": "sha256:4b3ac57102245c8ab0970605a3af9d71bf2817add149738dce0c0b9586fbb7a0",
+          "digest": "sha256:72d7550f6c8c93e9fe142309f332de9f6bc504ef377bfade39a4d41f7e792fb5",
           "requires": []
         }
       ]
@@ -314,9 +314,9 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-solo.toml",
           "sourceDigest": "sha256:e782111961e86540d80e45850dbb038dfb01c39f7fc510ddf1f325a6071983f3",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/cx-solo.md",
-          "digest": "sha256:2dec5c00ef3b114ebfcc1ddf3583bd5b04c28f59f1a6e9577ad7429948dd88f4",
+          "digest": "sha256:8470c9075e69a9c05cb6e387bbfaa380617a9d48ae9212cbbdde1682bc6c6c66",
           "requires": []
         }
       ]
@@ -334,9 +334,9 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-workspace.toml",
           "sourceDigest": "sha256:24a94e115878b83ba14cac3d632c14bd1a98380f1ea48bdabebd076fb5293d87",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/cx-workspace.md",
-          "digest": "sha256:bdcf7be87aac3daf01c7b581ae86cd221155ab74eb79ca7f324370536e56a7d4",
+          "digest": "sha256:8d9844049c11f61b52a49dd9f873020d8f0092f9c87d0a3eab366ce0537710eb",
           "requires": []
         }
       ]
@@ -354,9 +354,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/defaulted.md",
           "sourceDigest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/defaulted.md",
-          "digest": "sha256:cc226a39efb81c3b34fdde43a6cb21980674266aaa667b3a853c2270b8a426e4",
+          "digest": "sha256:b8e578b0c122ba76c2c4b5a2908084d1c1fec1990f34e7aff9d7eb36e73c9714",
           "requires": []
         }
       ]
@@ -374,9 +374,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/delegator.md",
           "sourceDigest": "sha256:d55cbc4849ca6e3c63b9d2d51bd5489a1979c2f519369759a3dd2bd55b7d3bce",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/delegator.md",
-          "digest": "sha256:a34e86c6ae114dfc732c82dee32ced9e286e3fdfa889d4aa632a4f3d1bb45cf6",
+          "digest": "sha256:9705e2ccc44c145210a05110d5e553fac2cfdc4ceb5120e863c5aa07f1f86e69",
           "requires": []
         }
       ]
@@ -394,9 +394,9 @@
           "variant": "generated",
           "sourcePath": "agents/dual.md",
           "sourceDigest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/dual.md",
-          "digest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
+          "digest": "sha256:74a7d1183eafb177997da0e08b3e2a97f29ecb973150283118445a3335455f04",
           "requires": []
         }
       ]
@@ -414,9 +414,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/team/fixer.md",
           "sourceDigest": "sha256:11404f0e334d2b363d7bc45e6d952817a29d4568e08f2545c04cf83eaa5686e8",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/fixer.md",
-          "digest": "sha256:4d3acfe5bcdcb8e9dc19b44e3a265793aa87fb48426801da26b2f2190b39356e",
+          "digest": "sha256:0407b56d2a452949007878a29d694af7e8c021833c764830d12269b6329b2a92",
           "requires": []
         }
       ]
@@ -434,9 +434,9 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-colored.agent.md",
           "sourceDigest": "sha256:cf7c2dcc846ea6083bd4a55c95a8ef6105f2a6fd4587cbd090a078c3584c2d25",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/gh-colored.md",
-          "digest": "sha256:54b515d64c7b936e51ce29639ef249988f6b86ecfd2338ffdfd3f10b01d9d9ee",
+          "digest": "sha256:785a1084b3da429bf4931ac8cd2d8466dee3f533d39dc645aaf6720acade054a",
           "requires": []
         }
       ]
@@ -454,9 +454,9 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-manual.agent.md",
           "sourceDigest": "sha256:36c4e0f4476f6ddbe8e49920350a8d05f305ecff9df72c40c170612173445218",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/gh-manual.md",
-          "digest": "sha256:2df8c7d6289b858e5b379b4489437323b64fec8801248b7b183f339638e539c7",
+          "digest": "sha256:e7a631f78ec80be4c19624f63ae6e768bfb80e83e42d7da44a0fb7fd92521935",
           "requires": []
         }
       ]
@@ -474,9 +474,9 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-native.agent.md",
           "sourceDigest": "sha256:864618375986b42a604b63514ac52ca854ba652da1b19574df74aac49db3acc3",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/gh-native.md",
-          "digest": "sha256:3219d129d30a833f0229d3ad443fe63dda5585c93d02646b008adb18d2bbee00",
+          "digest": "sha256:4a15e80fef6306101db63b6cc2789e991b7d15c40a77f199f603aa22c6804b76",
           "requires": []
         }
       ]
@@ -494,9 +494,9 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-plain.md",
           "sourceDigest": "sha256:00d467065c9f6ab9e2344d19d1262dd45ed81922b8d89907de43b5bc8a9e8fea",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/gh-plain.md",
-          "digest": "sha256:4e30d98ac8fd30109286da4a99c501467105ff3a4e8deb3ba19714a70bdc3f78",
+          "digest": "sha256:a7aedaf77eecde6692d04f9f7e866c67e7aaac036f3a942834e3e3bb85757d34",
           "requires": []
         }
       ]
@@ -514,9 +514,9 @@
           "variant": "generated",
           "sourcePath": ".gemini/agents/gm-native.md",
           "sourceDigest": "sha256:ab77641ac4f6666fa0d80ee36d4fdf2332dbd2f1bc5d0106cd69fb9446f670e9",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/gm-native.md",
-          "digest": "sha256:beabd83f6ba4a9baa4a2c815607d7cf2399a0ecc326f1ca869cce53fa9837a62",
+          "digest": "sha256:3af57db3944ce95ad3fcdac7afd701a45615c609324fdfd88ea0b5cd1175ad82",
           "requires": []
         }
       ]
@@ -534,9 +534,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/isolated.md",
           "sourceDigest": "sha256:213ccb5e38aa066c15bfee1536e7e91930bb54fc01fdaba30d0befe07666fb8b",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/isolated.md",
-          "digest": "sha256:94b99455436fa092a7dc56f77da635a2038609ce332922a0efc8934e415d7c1a",
+          "digest": "sha256:cb911fd3ac820fee36dda0459f6e141284d10bae01562b4cccdad185a4205a6e",
           "requires": []
         }
       ]
@@ -554,9 +554,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/issue-reader.md",
           "sourceDigest": "sha256:c5cf513142027c5ce8dcbea7dfacadf3fd23fbd5e748c9fc999dd1fd00902358",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/issue-reader.md",
-          "digest": "sha256:57728afd08f5f4d0bb64a927deec613a70db6c9db17dcc1318180c043a000caa",
+          "digest": "sha256:e6d337f58c10be005dcc1e0d1c7799d4758e31c6cdc4dc4ad8a9a26a9141b8ef",
           "requires": []
         }
       ]
@@ -574,9 +574,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/journaler.md",
           "sourceDigest": "sha256:8054d0e04ddedf2eb8559ad2a2a6c9d1a60d4e0f0b41eebf631e6d03d1d0e361",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/journaler.md",
-          "digest": "sha256:048d2cfe593ac360495a5cd6c70e204379d33be5fd70f30bb55da1d9f10628c7",
+          "digest": "sha256:c8592ef0c4c278f06a1e31ca805cbb8d8ed7da2788c756402f4e310bef7c95cb",
           "requires": []
         }
       ]
@@ -594,9 +594,9 @@
           "variant": "generated",
           "sourcePath": "agents/literal.md",
           "sourceDigest": "sha256:b973b211d0f1640b3dec85aa413b974bd3a3bd92b362105f58b2044100ffdf23",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/literal.md",
-          "digest": "sha256:a378de546edf844a868e42125c07f521c84f9cd546e6b742c56b508905e5392a",
+          "digest": "sha256:19a419e69fc6ff210b4a50c0aac7e29aeeea62b29abd1ed677edf287b042c58a",
           "requires": []
         }
       ]
@@ -614,9 +614,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/local-notes.md",
           "sourceDigest": "sha256:4d831bcbb3fb7890336981e00b967572db3011ba4cf6404b531ab134ea9ad8f0",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/local-notes.md",
-          "digest": "sha256:da341fdda1b258814d81f9827b9b49e7167cc7e012071919dd29f739c7c068d6",
+          "digest": "sha256:4cece64a4e933fb1a668ca28059ffbd6a6dd105f91627a0273d1f54e156056e2",
           "requires": []
         }
       ]
@@ -634,9 +634,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/mcp-wide.md",
           "sourceDigest": "sha256:f364f5a6fbed5ae66025777291f65b8f33e48ec39a3d09f9119ac30f9e054fb1",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/mcp-wide.md",
-          "digest": "sha256:777a16ec9aca50dd0bac1e664d34a19f3de11ac320791be7a853d93557ad87c7",
+          "digest": "sha256:529067fd8b68c8803d39430ed372a3845d66e31f345e37856292dd04a3503de7",
           "requires": []
         }
       ]
@@ -654,9 +654,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/misnamed.md",
           "sourceDigest": "sha256:c5c73ca9bb6c15b435d0584078dd5bb855ca728acba4339cd9bdb0c8ac46ea4e",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/misnamed.md",
-          "digest": "sha256:b27164e0b1a2b31400a3d89833671719bd744cb801dc741feaeca75e68f2e220",
+          "digest": "sha256:0e47656a43076ac8bbc915eccb00e76c98a4e611b59692f3808dba5edf1a42f0",
           "requires": []
         }
       ]
@@ -674,9 +674,9 @@
           "variant": "generated",
           "sourcePath": "agents/modelled.md",
           "sourceDigest": "sha256:3d52a9d90250746cb40d20913b4d1bc01c4a5b313259f51dc8bc6bf92035666e",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/modelled.md",
-          "digest": "sha256:fdb1107e42dcdc3cbb93b88c19b559a970fd13e7c0d67b11895b4c0f71108231",
+          "digest": "sha256:5641d38c88052046ee01e742ad78789f559963c3ba82bdb82c37714c01f5a728",
           "requires": []
         }
       ]
@@ -694,9 +694,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/no-shell.md",
           "sourceDigest": "sha256:63a2ad194c53901523f07f8f3ec3303517e950b53a482f2f2e13b84902d155f3",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/no-shell.md",
-          "digest": "sha256:c896ffde57a374fbdbd54d8930cdb2efa566308f4d3204cb92a3f5c643606268",
+          "digest": "sha256:2dd1cacad280f7cc98495ff0cd61e57ce5ae207b12def3e81114f71bd45e61c9",
           "requires": []
         }
       ]
@@ -714,9 +714,9 @@
           "variant": "generated",
           "sourcePath": ".opencode/agents/oc-native.md",
           "sourceDigest": "sha256:5951d5e75a6de4429a8f579c654bb4589d12db75deba1844913b6c4b421cf5d0",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/oc-native.md",
-          "digest": "sha256:c01e1590c4ed79f79bc9623da53cc4ce0e098d17937ec057e5bfb6cd34b87c15",
+          "digest": "sha256:ed5cf5514e53f3e34181bfe669df5797fbb633043b690823ce6ce7e615dc44b5",
           "requires": []
         }
       ]
@@ -753,9 +753,9 @@
           "variant": "generated",
           "sourcePath": "agents/planner.md",
           "sourceDigest": "sha256:6e67f8119738e58371e61f662e332d971058192a6dc99791e7c19094691376f2",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/planner.md",
-          "digest": "sha256:54e13fd735b5360bc11d7c3ad899a9c0eada9db11dfaf204af45db749f1d8e58",
+          "digest": "sha256:aebb3ab6e3df60becc298ab408521c2904365c3594bf6bb8cb0db6e7e0c41817",
           "requires": []
         }
       ]
@@ -773,9 +773,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/quoted.md",
           "sourceDigest": "sha256:a92554a3420863b7acc442ea397337ac1bae541f07c7a50f8a3be291d02b0dd1",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/quoted.md",
-          "digest": "sha256:94d36c369eda42a7ba16986270504feebbad85793da905468179d857c74cacfb",
+          "digest": "sha256:42e408238f726bf41ec51775e4d4235b0fed6d4dce6152c65fe4191a0b8e9e15",
           "requires": []
         }
       ]
@@ -793,9 +793,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/recaller.md",
           "sourceDigest": "sha256:a30571bad4b7bff23bdacaaac67fb2667016a24a7c89682f52832bfda484b7d1",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/recaller.md",
-          "digest": "sha256:38fa0c21a0f6a4c22686bb55c0f95cf9cdbf2fbf80cbc4f3f75cd7cef5ea3166",
+          "digest": "sha256:07c51e39f9ceb73e24da89952fd856cc1bc55060f169301c3b0c9e30c63b9f02",
           "requires": []
         }
       ]
@@ -813,9 +813,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/relaxed.md",
           "sourceDigest": "sha256:88b6be1e2b64ae4bbfbab2c958f917bca08a5abedebecac673fa17ba8826ce95",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/relaxed.md",
-          "digest": "sha256:4f282324f66abbcb16b1f542f86d43d6ccdaa51b7b3183d7b23d512852d8bbee",
+          "digest": "sha256:ca9547c14071d98890ac7a7381f7920ffc5c2a9fdae5f76d350d2ec9991ea78a",
           "requires": []
         }
       ]
@@ -833,9 +833,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/rememberer.md",
           "sourceDigest": "sha256:e876bb3f846cda6620fed5b2d357e0a6997129a7a526e240789ed2e4b8e965ef",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/rememberer.md",
-          "digest": "sha256:df3c074e5dff1a833d479bfeaaa860f9a615c3020d158db13773ab7b6d41a5dc",
+          "digest": "sha256:a63a7d7bdd7e96d989a9eaf2b05009e46d3da8eca9a5bad77254c4b4d2f173be",
           "requires": []
         }
       ]
@@ -853,9 +853,9 @@
           "variant": "generated",
           "sourcePath": "agents/researcher/AGENT.md",
           "sourceDigest": "sha256:dd13ee557398466dd574705483ce5697cfb0b3352c2ef6e815509612dc32282b",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/researcher.md",
-          "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
+          "digest": "sha256:df6142246a647adf34e684b26a74c055074b36684136d315262c90a620043a85",
           "requires": []
         }
       ]
@@ -873,9 +873,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/reviewer.md",
           "sourceDigest": "sha256:a9c4c55855bdcff3eb2fa4bd246ff94f4de189219525d61086c93cac478e5070",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/reviewer.md",
-          "digest": "sha256:f028b6ee3e67e20672505d81299e3438dfdd2ecd6b55fe0e4c0aef0c08253990",
+          "digest": "sha256:06087bf4a30cf24b213bad33ad2fce2a1a9b08fe6c0129e5ee77ca857af70acc",
           "requires": []
         }
       ]
@@ -893,9 +893,9 @@
           "variant": "generated",
           "sourcePath": "AGENT.md",
           "sourceDigest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/root-helper.md",
-          "digest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+          "digest": "sha256:36c292aae9c596b019177683d3583b275887a66fa6e15ef00e1e10c11e47af83",
           "requires": []
         }
       ]
@@ -913,9 +913,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/scripted.md",
           "sourceDigest": "sha256:1527e595b5b95f417d832f97ccb0ef2cd0579cb27cdc6944de2071946ee4b82c",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/scripted.md",
-          "digest": "sha256:edb0548cc8ca6566869aa65e2d88f499801714565d298dd1e91ee09325f3ddc1",
+          "digest": "sha256:1c613d37edcf788aade1da9647b9a76cdae28d89bca6af1e28efd4b51c88d320",
           "requires": []
         }
       ]
@@ -933,9 +933,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/skilled.md",
           "sourceDigest": "sha256:e13388a2a0e7989773c6eced86e91871233b762fbe37b11597e0ebdd58e42d69",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/skilled.md",
-          "digest": "sha256:d0f37060fc3f9d4202baf405d83237201dc93b34cef6ae91a3d050865b5e4964",
+          "digest": "sha256:2d6067986c3076b16687b3729cbe20f7b390925b2f0a31f724fd2264fd839f43",
           "requires": []
         }
       ]
@@ -953,9 +953,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/studio-qa.md",
           "sourceDigest": "sha256:cfe15b9951529179d27ad3396fc10136bcf5a2455518aed3464720354c2fa3e8",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/studio-qa.md",
-          "digest": "sha256:ce3cb81991809e9be41b53f30f18d308f57599e8fb04096285930d8449e67a7b",
+          "digest": "sha256:6bd5598c07b0805375d0b2c8eca59515da0d5eb3c58855dd82f0773d23d9fa89",
           "requires": []
         }
       ]
@@ -972,10 +972,10 @@
           "harness": "omp",
           "variant": "generated",
           "sourcePath": "agents/tagged.md",
-          "sourceDigest": "sha256:c2e1fd2aa97993885900bee70813de29afe532bcc2833e7742ec2a604eceadf9",
-          "converter": "omp/v5",
+          "sourceDigest": "sha256:2e9a09a7b24a92f19ee04b1adad396cf4e9f100fa5cc4c882a59ca2e47b73f09",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/tagged.md",
-          "digest": "sha256:ae21c1e2605ac84b36d9a0c26c183998cac584ef45e006af52b7f9316d6f23a0",
+          "digest": "sha256:3ce9a44939704c83176cf3691ee0410ffebc49340064a60cfc730f09bf02aeeb",
           "requires": []
         }
       ]
@@ -993,9 +993,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/web-searcher.md",
           "sourceDigest": "sha256:445f4b734cae55d1068397452bb0a8ae3cdb891d2f5c18ce8014b6f2ff54ecde",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/web-searcher.md",
-          "digest": "sha256:59f7971e97c20ac86debecf8f158b453d9ae637437ff18b91a9a48b1d787616a",
+          "digest": "sha256:4fc136cc8dd2f15d4e80c363c1decea16dc1e69ce59d79eacb18f70057062564",
           "requires": []
         }
       ]
@@ -1013,9 +1013,9 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/wildcard.md",
           "sourceDigest": "sha256:6619fd1e1a173c38342c4ad36dbb057d4829db134be89767f903b7c5523afef3",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": "/agnthub-e2e/home/.omp/agent/agents/wildcard.md",
-          "digest": "sha256:fc401b659c3c5f8daf1a0069c05c9249a16c388990b8aa39a8119713f607dfce",
+          "digest": "sha256:264b44edb35f9e02f8a7e3d7a91eec051dd64537c10a2e92f974bb7ddc20ddc6",
           "requires": []
         }
       ]

@@ -3,11 +3,12 @@
 # Check: git -C /agnthub-e2e/project apply --check
 # Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
 diff --git a/.cursor/agents/drifter.md b/.cursor/agents/drifter.md
-index e3edc53cf2038cf3e8ef35b73824bd4ea295bf56..586fadb6292ccaf71c2e32f9e9935eebf0592c2c 100644
+index a45674ea04949f10d58a378df75416846bfdc477..88d3de14b90ae948268ad6bc622f1be5068f6d2b 100644
 --- a/.cursor/agents/drifter.md
 +++ b/.cursor/agents/drifter.md
-@@ -1,5 +1,5 @@
- ---
+@@ -3,6 +3,6 @@
+ # Modified by agnthub: converted to the Cursor agent format
+ # No license file found in localhost:8443/evolving
  name: drifter
 -description: Agent whose source moves on after it is installed.
 ----
@@ -16,7 +17,7 @@ index e3edc53cf2038cf3e8ef35b73824bd4ea295bf56..586fadb6292ccaf71c2e32f9e9935eeb
 +---
 +Revision two instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
-index 6a5e9d7a4772caa36b82419a8fce65042d3a6a1c..2f8ae59b1b68e6568bc636f5d5b5009b6bfdf353 100644
+index 6220bba857f9612d2c6b5ec912076ee7e8137d46..2b86fbb2e925997293b0203d4db4040e22f059c3 100644
 --- a/agnthub-lock.json
 +++ b/agnthub-lock.json
 @@ -6,7 +6,7 @@
@@ -34,10 +35,10 @@ index 6a5e9d7a4772caa36b82419a8fce65042d3a6a1c..2f8ae59b1b68e6568bc636f5d5b5009b
            "sourcePath": "agents/drifter.md",
 -          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
 +          "sourceDigest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
-           "converter": "cursor/v5",
+           "converter": "cursor/v6",
            "path": ".cursor/agents/drifter.md",
--          "digest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
-+          "digest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
+-          "digest": "sha256:ebc904767ef64b3ebe5680726134f1276ae2931b6fa0ac68ee87007473305b93",
++          "digest": "sha256:8f9c7b1eda80cea46525468975aeb738043eeb1f74ca942f451c4f62530b5c89",
            "requires": []
          }
        ]

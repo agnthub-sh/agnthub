@@ -281,6 +281,42 @@ func TestRestoreRecreatesExactLockedContent(t *testing.T) {
 	}
 }
 
+// A lock written before converters attributed their output (v5 and earlier)
+// still restores byte for byte; update then regenerates with the attribution.
+func TestRestoreReproducesLocksFromBeforeAttribution(t *testing.T) {
+	h := newHarness(t)
+	git := fakeGit{}
+	agentsRepo(git, "r1", reviewerFiles("Review v1."))
+	run := lifecycleRun{git: git}
+	h.mustRun(run, "add", "acme/agents", "--harness", "claude", "--yes")
+	attributed := h.installed(".claude/agents/reviewer.md")
+	var kept []string
+	for line := range strings.SplitSeq(attributed, "\n") {
+		if !strings.HasPrefix(line, "# ") {
+			kept = append(kept, line)
+		}
+	}
+	unattributed := strings.Join(kept, "\n")
+	if unattributed == attributed {
+		t.Fatalf("a generated artifact carries its attribution:\n%s", attributed)
+	}
+	lock := h.lock()
+	lock.Agents[0].Artifacts[0].Converter = "claude/v4"
+	lock.Agents[0].Artifacts[0].Digest = state.Digest([]byte(unattributed))
+	if err := lock.Save(state.Disk, filepath.Join(h.project, state.LockFileName)); err != nil {
+		t.Fatal(err)
+	}
+	h.resetMachine(".claude")
+	h.mustRun(run, "restore", "--yes")
+	if got := h.installed(".claude/agents/reviewer.md"); got != unattributed {
+		t.Fatalf("restore must reproduce the older lock's bytes, got:\n%s", got)
+	}
+	h.mustRun(run, "update", "--yes")
+	if got := h.installed(".claude/agents/reviewer.md"); got != attributed {
+		t.Fatalf("update must regenerate with the attribution, got:\n%s", got)
+	}
+}
+
 func TestRestoreRefusesUnavailableMismatchedOrUnsupportedEvidence(t *testing.T) {
 	setup := func(t *testing.T) (*harnessT, fakeGit) {
 		h := newHarness(t)

@@ -47,7 +47,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/bom.md",
-      "digest": "sha256:153b3d74ed17217d3add75e5a05821e72eeda1b02b4edfbe91542b1fa2adcb62",
+      "digest": "sha256:74c292d92dcf36eee1caabd7b0f42097d579f3b430f49719218414f091a5cde7",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -69,7 +69,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/claude-shaped.md",
-      "digest": "sha256:0495ec9a35499fc421c8d196b796ac127bccdd07b0d34c5b87c3e2b18888ed89",
+      "digest": "sha256:c285779ccd1144fe0a83188f9f6a17f4182aa212cfba9c6488c8bff0c481a10b",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -91,7 +91,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/colon.md",
-      "digest": "sha256:ec277a9554a398e568c45ee3d061abd25e0e952506d01c5654be2e6c265f1c1f",
+      "digest": "sha256:8dc041daed76d3da8750cdfba4cd0863b7ff1ee6419baf98e6ea291afe085c7c",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -102,7 +102,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/cu-folded.md",
-      "digest": "sha256:f12af2e4181198b9cf2748f65a2f6f343f074a8c878759123c0e4d3e5c6331fb",
+      "digest": "sha256:f9ae7a31384448242a93dbfd341c09a87f8a3abc20ee51551f1830f511edda8b",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -113,7 +113,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/cu-native.md",
-      "digest": "sha256:9b65cebbc3cfbe043f620ebf44dc1d1a5aa66d8c28b1c08f287c6499bc55e247",
+      "digest": "sha256:d756e0b9946e4ae7e586b3d151ec4bab2f09fc66f0242edc0d7f1c7294ac5498",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -124,7 +124,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/cu-tagged.md",
-      "digest": "sha256:e09d9c2e6a203b522ee6567523c488ee244bad47fad0236dec0a3897c59fb7f2",
+      "digest": "sha256:90ca9b721644acaa1b5d24e2d4f5f52aaf12f9663ceb10f5b1ed5801f86b819e",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -135,7 +135,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/cx-native.md",
-      "digest": "sha256:a9420ff7e4667ff482eb69e93ec11b1e78bc48f0a2607f59d47e81e3fa80980f",
+      "digest": "sha256:3b9c82de814f62d956affc3bf9840c2ad0b02544e82d947aeb9aab581b045531",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -146,7 +146,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/cx-nicknamed.md",
-      "digest": "sha256:f5264b62d26819bef95100c3a1165ac366705c97a41c11080174ebc406f6198e",
+      "digest": "sha256:eceff73255bd45f2871a10a3f6db017e2899013a6928f363e16a0bfea92d1765",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -157,7 +157,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/cx-sandboxed.md",
-      "digest": "sha256:f551a1e9896708b8f5c51edde5394e220fd04e3a49739859ab4e6215f88dcaff",
+      "digest": "sha256:5a5ced6f2d0f1e50c730b0488242e0a26e5d6ba4830b9ef453c13218aadbf0fb",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -168,7 +168,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/cx-solo.md",
-      "digest": "sha256:ade9857190f75b91a1d756fb0e976593155dede2dc8512194ba6cec512fc4349",
+      "digest": "sha256:df8f329f970a8c5916aafe8350b5a3e504396ab458148658de8afc2cb74bf5dc",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -179,7 +179,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/cx-workspace.md",
-      "digest": "sha256:bdcf7be87aac3daf01c7b581ae86cd221155ab74eb79ca7f324370536e56a7d4",
+      "digest": "sha256:fb717b9689fa5aec0d0f90a0b355b4e5c676ff5bd0e88fdc00f37567283f3bed",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -245,7 +245,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/gh-colored.md",
-      "digest": "sha256:a1f4f0f70dbbc676848bb2bbf9b6b3a8206adccc6a2263af3f45db69a93bbf3a",
+      "digest": "sha256:b41c6ca932cb1a6a8fb52b8786e4a8f7126c7380fb57c09a4c70226e5ee42be1",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -256,7 +256,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/gh-manual.md",
-      "digest": "sha256:17b51c34953d0e700c9e6d17e31fc5b3e43bc13e630de919fbd6a76a2b149213",
+      "digest": "sha256:6334ad1a9b755eacc16ee29bdf1c5cac7ab8f3b3e069e99c74af6bb7bc8ef0d9",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -267,7 +267,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/gh-native.md",
-      "digest": "sha256:fc1aba874b6c109afed219b571a45b8175f740d59da2651bfe2fcd531fe6bca8",
+      "digest": "sha256:221ed5c763918f9586242313192db5d9a8e53467aa9936f57f61f058dcd8b8e5",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -278,7 +278,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/gh-plain.md",
-      "digest": "sha256:77f4918d0c38d5e36897fcd53e215a65db5d37ae837677e7716d362824a673eb",
+      "digest": "sha256:ba93b4b8e230fc5ae46f0a18bf7ce91c9277a00e3b94df198b892a4837e7fb6b",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -289,7 +289,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/gm-native.md",
-      "digest": "sha256:923689d0bb52a1e1eeb14dada6f34d67c8a7d574630c71a73768650502d0017e",
+      "digest": "sha256:b5d57d04c0291542c0c316f8eed93860d52f3a8c882c8922027ab541fbb2957c",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -355,7 +355,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/literal.md",
-      "digest": "sha256:a378de546edf844a868e42125c07f521c84f9cd546e6b742c56b508905e5392a",
+      "digest": "sha256:4759fdefbcacb1258a7d92b22b388ce327360a562dd7401280b7f84071941ff1",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -410,7 +410,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/modelled.md",
-      "digest": "sha256:3d52a9d90250746cb40d20913b4d1bc01c4a5b313259f51dc8bc6bf92035666e",
+      "digest": "sha256:2bfb2442e40ba89408c775b1e24cf09e1b40fa09e8e3cf9bb7cddf8035b1c444",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -432,7 +432,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/oc-native.md",
-      "digest": "sha256:5ab835484767cf62ce5aff88c2a365aee8bcd52369908331dd72898b73bfcc00",
+      "digest": "sha256:a7620320e77690ea8070363f569bd01cf9c06a10adb05e23dadde45a7cbc24f1",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -443,7 +443,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/omp-native.md",
-      "digest": "sha256:dffea6d4379deb7453e22f3aa0d280234987e50cdf358d4b1cdd18b5ea3e61e7",
+      "digest": "sha256:190afe2be239ff0c836211ad9efb7647b0f8e6dd033ac377a13abfb973f48eb8",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -454,7 +454,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/planner.md",
-      "digest": "sha256:54e13fd735b5360bc11d7c3ad899a9c0eada9db11dfaf204af45db749f1d8e58",
+      "digest": "sha256:fea5f2543f5d0c480bd1c572feca3e001b4ab8d98f5c7cef5e7211273203a17d",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -509,7 +509,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/researcher.md",
-      "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
+      "digest": "sha256:9432daa8e2bfeee613757447d4b43315eaf45fc6e9a588963a4764a5cb96815f",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -531,7 +531,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/root-helper.md",
-      "digest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+      "digest": "sha256:6e1068789e22cdacc93e35dae82fadc021d3b78d7c59105bf2d5ad84f1004bc4",
       "harness": "claude",
       "scope": "global",
       "destination": "user",
@@ -575,7 +575,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.claude/agents/tagged.md",
-      "digest": "sha256:ae21c1e2605ac84b36d9a0c26c183998cac584ef45e006af52b7f9316d6f23a0",
+      "digest": "sha256:d2b6ab7fe32ea80324579a172f76e7886e3e4a5b5e061427cd35334d61014104",
       "harness": "claude",
       "scope": "global",
       "destination": "user",

@@ -14,9 +14,9 @@
           "variant": "generated",
           "sourcePath": "agents/solo.md",
           "sourceDigest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
-          "converter": "copilot/v5",
+          "converter": "copilot/v6",
           "path": ".github/agents/solo.agent.md",
-          "digest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
+          "digest": "sha256:20a4515bf1570fb850a858e2f20b9dccded8c28788f68fc928ddebd09dc45984",
           "requires": []
         }
       ]

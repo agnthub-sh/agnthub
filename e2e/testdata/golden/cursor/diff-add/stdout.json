@@ -4,18 +4,21 @@
 # Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
 diff --git a/.cursor/agents/drifter.md b/.cursor/agents/drifter.md
 new file mode 100644
-index 0000000000000000000000000000000000000000..e3edc53cf2038cf3e8ef35b73824bd4ea295bf56
+index 0000000000000000000000000000000000000000..a45674ea04949f10d58a378df75416846bfdc477
 --- /dev/null
 +++ b/.cursor/agents/drifter.md
-@@ -0,0 +1,5 @@
+@@ -0,0 +1,8 @@
 +---
++# Adapted from agents/drifter.md in localhost:8443/evolving
++# Modified by agnthub: converted to the Cursor agent format
++# No license file found in localhost:8443/evolving
 +name: drifter
 +description: Agent whose source moves on after it is installed.
 +---
 +Revision one instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
 new file mode 100644
-index 0000000000000000000000000000000000000000..6a5e9d7a4772caa36b82419a8fce65042d3a6a1c
+index 0000000000000000000000000000000000000000..6220bba857f9612d2c6b5ec912076ee7e8137d46
 --- /dev/null
 +++ b/agnthub-lock.json
 @@ -0,0 +1,27 @@
@@ -37,9 +40,9 @@ index 0000000000000000000000000000000000000000..6a5e9d7a4772caa36b82419a8fce6504
 +          "variant": "generated",
 +          "sourcePath": "agents/drifter.md",
 +          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
-+          "converter": "cursor/v5",
++          "converter": "cursor/v6",
 +          "path": ".cursor/agents/drifter.md",
-+          "digest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
++          "digest": "sha256:ebc904767ef64b3ebe5680726134f1276ae2931b6fa0ac68ee87007473305b93",
 +          "requires": []
 +        }
 +      ]

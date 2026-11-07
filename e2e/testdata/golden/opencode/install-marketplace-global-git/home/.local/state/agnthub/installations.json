@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/home/.config/opencode/agents/mk-guarded.md",
-      "digest": "sha256:a59e5796c9d860eb341f88063c994d51f2b74dea39a1fff20b2a273945c174d5",
+      "digest": "sha256:2bad3e136a7e41f3611ec7d62a4dad681a9e2f00b60c0f9b44d2debd12c162ab",
       "harness": "opencode",
       "scope": "global",
       "destination": "user",
@@ -14,7 +14,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.config/opencode/agents/mk-lister.md",
-      "digest": "sha256:cd336a41b3bc7b18bdada05678d3ecba7c6015833e98d039e3e3cf28255b539a",
+      "digest": "sha256:dd05eee922513ce546d7ac360e08cdd694d1e73d87bd1a02f23d9d1dce0dd91d",
       "harness": "opencode",
       "scope": "global",
       "destination": "user",
@@ -25,7 +25,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.config/opencode/agents/mk-nested.md",
-      "digest": "sha256:9454ea869e74d0cc88c65831bbd5995c0be8d9672d5cb2b057b4ba93776df100",
+      "digest": "sha256:06415a0348621e525f02a01b3210a4f5881c077b79a8b2f58eaca3436d150dbd",
       "harness": "opencode",
       "scope": "global",
       "destination": "user",
@@ -36,7 +36,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.config/opencode/agents/mk-scanner.md",
-      "digest": "sha256:424faf6990eabe5b6b6f6d4968a37398dee40a164a62ebcfcee7a2daefe0f123",
+      "digest": "sha256:90a18005de566be3ae7552d5bcc2337f03b3360f643e27c53c590f6d48d1d707",
       "harness": "opencode",
       "scope": "global",
       "destination": "user",

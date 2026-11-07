@@ -40,7 +40,7 @@ func TestCopilotConversionWritesNameDescriptionAndBody(t *testing.T) {
 	}
 	if artifact.FileName != "reviewer.agent.md" || doc.String("name") != "reviewer" ||
 		doc.String("description") != "Reviews" || doc.Body != "Review it.\n" ||
-		len(doc.Frontmatter) != 2 || artifact.Converter != "copilot/v5" || !artifact.Generated {
+		len(doc.Frontmatter) != 2 || artifact.Converter != "copilot/v6" || !artifact.Generated {
 		t.Fatalf("unexpected conversion: %+v\n%s", artifact, artifact.Content)
 	}
 }

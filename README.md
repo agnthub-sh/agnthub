@@ -77,6 +77,11 @@ Agents install into the project in the current directory, or into your user conf
 earlier made with the home directory as the project (for example `~/.omp/agents/<name>.md`) are
 removed with `agnthub remove <name>` run in the home directory.
 
+Files agnthub converts for a harness (rather than installing an authored file as is) start with
+comment lines naming the original file and repository, saying agnthub modified it, and repeating
+the source's copyright notice and license; harnesses ignore them. See
+[docs/cli.md](docs/cli.md) for the format.
+
 The full documentation is at
 [app.agnthub.sh/docs](https://app.agnthub.sh/docs).
 
@@ -210,9 +215,10 @@ changes, the previous file is backed up under `~/.local/state/agnthub/mcp-backup
 one is written atomically with the old mode. Older agnthub entries (the `/mcp` URLs and the local
 server removed in v0.5.0) count as missing and are updated; an `agnthub` entry agnthub did not
 write is kept unless you confirm or pass `--force`. You then sign in with GitHub in each harness
-(it prints how), or pass `--api-key` to store your API key as a header instead. See
-[AI agents (MCP)](docs/cli.md#ai-agents-mcp) for every flag, the per-harness details and the
-exit statuses.
+(it prints how), or pass `--api-key` to store your API key as a header instead: it is then kept
+in plain text in each harness's MCP configuration file, readable by those tools and anyone who
+can read the file (the CLI warns). See [AI agents (MCP)](docs/cli.md#ai-agents-mcp) for every
+flag, the per-harness details and the exit statuses.
 
 ## API key and rate limits
 
@@ -239,7 +245,8 @@ After installing agents from a public GitHub repository, the CLI tells the regis
 (`https://api.agnthub.sh`) which repository, commit and agents were installed and into which
 harnesses, so installs of listed repositories are counted. A report never adds a repository to
 the registry. No paths, profiles, harness settings, or private and local sources are sent; the
-report is anonymous unless you configured an API key, which it then carries. Set
+report is pseudonymous (a random id per agent, linked to no account) unless you configured an
+API key, which it then carries. Before the first report, the CLI says so once on stderr. Set
 `DO_NOT_TRACK` or `DISABLE_TELEMETRY` to any non-empty value to send nothing. Details:
 [install reports](https://app.agnthub.sh/privacy#install-reports).
 

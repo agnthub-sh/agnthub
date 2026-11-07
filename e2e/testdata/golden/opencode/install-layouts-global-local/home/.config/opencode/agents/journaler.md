@@ -1,4 +1,9 @@
 ---
+# Adapted from .claude/agents/journaler.md
+# Modified by agnthub: converted to the OpenCode agent format
+# Copyright (c) 2026 agnthub e2e fixtures: layouts
+# Copyright (c) 2026 Second Holder <holder@example.com>
+# License: see LICENSE
 description: Keeps personal notes across every project while it edits code.
 mode: subagent
 permission:

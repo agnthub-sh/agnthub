@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.codex/agents/differ.toml",
-      "digest": "sha256:33d359805ed8578b801201146cd62d4c460f0d180676e2cfbdb60fdd758de3da",
+      "digest": "sha256:6e062097318730b775a80d31bdc84d2cf4fb7383a5dd4e100330c9b4f51be364",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

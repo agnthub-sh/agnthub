@@ -34,7 +34,7 @@ func TestOpenCodeConversionRegistersAnExplicitSubagent(t *testing.T) {
 	}
 	if artifact.FileName != "reviewer.md" || doc.String("mode") != "subagent" ||
 		doc.String("description") != "Reviews" || doc.Body != "Review it.\n" ||
-		!artifact.Generated || artifact.Converter != "opencode/v5" {
+		!artifact.Generated || artifact.Converter != "opencode/v6" {
 		t.Fatalf("unexpected conversion: %+v\n%s", artifact, artifact.Content)
 	}
 	if _, named := doc.Frontmatter["name"]; named {

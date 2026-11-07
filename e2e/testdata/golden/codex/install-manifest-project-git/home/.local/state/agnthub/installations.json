@@ -16,7 +16,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/codex-helper.toml",
-      "digest": "sha256:9fbc05be9d76978bcd342dfb10c42138c5343fed0585b12f6dfe4ee13fedb096",
+      "digest": "sha256:7e7c99e67a7f80f057cb15a90788e15d77bb975ce206c67f1bb64a5b2bcf573e",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -28,7 +28,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/companion.toml",
-      "digest": "sha256:fca1ae6b7d4fdb1a7650b1772a792b8e6d4ec7ea187a6bca55106fe92706751a",
+      "digest": "sha256:cdf69b0a7685d0c9083dd9f80da57302c1117b0b88822ff7453f77f798a4bec2",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -40,7 +40,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/helper.toml",
-      "digest": "sha256:5645bf993fe1898678077834fc6b86d110fad89a8d01b31b0d831324e55c1e8f",
+      "digest": "sha256:d2f9efa8d69274692c2f188dcd98ec3619e76d58f64fed8acfc7d8bab4466bf5",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

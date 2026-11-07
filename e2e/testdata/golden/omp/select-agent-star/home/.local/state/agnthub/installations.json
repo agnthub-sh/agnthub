@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.omp/agents/companion.md",
-      "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+      "digest": "sha256:f7bc8ddac04640a418ea973cb79ff8078ec2e47444e6583b43be5bc0a5f08f0b",
       "harness": "omp",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -18,7 +18,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.omp/agents/sidekick.md",
-      "digest": "sha256:47843ea71bee050cacb41e460bb1b0f57fac11dc56b53318c5fd9273d2835506",
+      "digest": "sha256:ab8d023f4ce1c6c889d6fc43bb594b4577a10b8c9e67a5a1ed0c5a971a6ae5a1",
       "harness": "omp",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

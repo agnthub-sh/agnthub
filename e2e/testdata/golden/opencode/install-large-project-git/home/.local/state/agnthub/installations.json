@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.opencode/agents/large-probe.md",
-      "digest": "sha256:f6f588e3f7d1b1b293f3525a19f350dac280b2cc06aac2977e1a7e189cfb9a49",
+      "digest": "sha256:c6339934c027c9cbc6be5b60701553367701cf65ee5d11e241437c87ef8da68d",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

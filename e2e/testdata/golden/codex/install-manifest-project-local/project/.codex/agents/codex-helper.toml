@@ -1,3 +1,6 @@
+# Adapted from agents/codex-helper.md
+# Modified by agnthub: converted to the Codex agent format
+# No license file found
 name = 'codex-helper'
 description = 'Extra helper only the Codex variant of the lead requires.'
 developer_instructions = """

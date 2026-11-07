@@ -1,4 +1,9 @@
 ---
+# Adapted from .claude/agents/rememberer.md
+# Modified by agnthub: converted to the GitHub Copilot CLI agent format
+# Copyright (c) 2026 agnthub e2e fixtures: layouts
+# Copyright (c) 2026 Second Holder <holder@example.com>
+# License: see LICENSE
 name: rememberer
 description: Keeps project notes across sessions while it fixes code.
 tools:

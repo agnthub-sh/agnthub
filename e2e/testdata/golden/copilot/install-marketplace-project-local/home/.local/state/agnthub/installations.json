@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.github/agents/mk-guarded.agent.md",
-      "digest": "sha256:6b3cd96d0e896475b5e71c31684230b8fd99973b18cdafda6baf71c51bb44095",
+      "digest": "sha256:8a73d59a56acb888a4352eca7c5d91c315658f9f86a9a26010559757294a38ff",
       "harness": "copilot",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -15,7 +15,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.github/agents/mk-lister.agent.md",
-      "digest": "sha256:7bd5f18d4fba6068ac33c8e7ff734e06620c7cfeb4cd74505adc5bfcce24ee34",
+      "digest": "sha256:eb720989d6b6ee37fe43c65a0e9bd7606868308db51814d563c8d61d6832a3c7",
       "harness": "copilot",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -27,7 +27,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.github/agents/mk-nested.agent.md",
-      "digest": "sha256:33799b1ca12e3ccb8449a66e4c19a09a37d09d14f69cd7dff0c7097f42dfcc0d",
+      "digest": "sha256:23ea4109901190e7e58c4403a6219fdc81eafb621e18a3a3ab7cebeb9b87bbcf",
       "harness": "copilot",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -39,7 +39,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.github/agents/mk-scanner.agent.md",
-      "digest": "sha256:5e6a2950be2c2e8fcfb2427622cc0ee6e963a4cbc730d26d8c830ffb3e7c6d7f",
+      "digest": "sha256:d8758a642f547bfdf900413576c1dc68f53aba48970dd86ba82f4a1c2e707383",
       "harness": "copilot",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

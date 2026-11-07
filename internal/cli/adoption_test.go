@@ -112,6 +112,19 @@ func (h *harnessT) runReporting(
 	args ...string,
 ) (int, string) {
 	h.t.Helper()
+	code, stdout, stderr := h.runReportingSplit(f, git, extraEnv, args...)
+	return code, stdout + stderr
+}
+
+// runReportingSplit runs agnthub with the production reporter against f and returns
+// stdout and stderr apart.
+func (h *harnessT) runReportingSplit(
+	f *registryFake,
+	git fakeGit,
+	extraEnv map[string]string,
+	args ...string,
+) (int, string, string) {
+	h.t.Helper()
 	values := map[string]string{"HOME": h.home, "AGNTHUB_API_URL": f.api.URL}
 	for key, value := range extraEnv {
 		values[key] = value
@@ -121,9 +134,11 @@ func (h *harnessT) runReporting(
 	if err != nil {
 		h.t.Fatal(err)
 	}
+	var stdout, stderr bytes.Buffer
 	api := apiclient.Load(e, configured.URL, configured.Key)
 	reporter := adoption.New(e, "test", &api)
 	reporter.GitHubURL = f.github.URL
+	reporter.NoticeOut = &stderr
 	if timeout, ok := extraEnv["TEST_REPORT_TIMEOUT"]; ok {
 		d, err := time.ParseDuration(timeout)
 		if err != nil {
@@ -131,19 +146,19 @@ func (h *harnessT) runReporting(
 		}
 		reporter.Timeout = d
 	}
-	var out bytes.Buffer
 	app := cli.NewApp(cli.App{
 		Env:      e,
 		WorkDir:  h.project,
 		Stdin:    strings.NewReader(""),
-		Stdout:   &out,
-		Stderr:   &out,
+		Stdout:   &stdout,
+		Stderr:   &stderr,
 		Now:      func() time.Time { return time.Date(2026, 10, 29, 0, 0, 0, 0, time.UTC) },
 		LookPath: func(string) (string, error) { return "", os.ErrNotExist },
 		Opener:   source.Opener{Git: git},
 		Adoption: reporter,
 	})
-	return app.Run(context.Background(), args), out.String()
+	code := app.Run(context.Background(), args)
+	return code, stdout.String(), stderr.String()
 }
 
 type reportJSON struct {
@@ -305,6 +320,65 @@ func TestReinstallsProfilesAndUpdatesReuseTheAgentIdentity(t *testing.T) {
 		if a.Agent == "linter" && a.InstallationID != linter.InstallationID {
 			t.Fatalf("update changed the identity: %+v", a)
 		}
+	}
+}
+
+// The first report a machine sends is preceded by a one-time notice on stderr, also with
+// --json (stdout stays pure JSON). It is recorded in the state directory and never shown
+// again; opted-out and private runs send nothing and show nothing.
+func TestInstallReportNoticeShowsOnceBeforeTheFirstReport(t *testing.T) {
+	h := newHarness(t)
+	f := newRegistryFake(t, "acme/tools")
+	git := fakeGit{
+		"acme/tools":   toolsRepo(toolsRevision),
+		"acme/private": toolsRepo(toolsRevision),
+	}
+	notice := filepath.Join(h.home, ".local", "state", "agnthub", "install-report-notice")
+	install := func(extra map[string]string, repo, harnessID string) (string, string) {
+		t.Helper()
+		code, stdout, stderr := h.runReportingSplit(f, git, extra, "add", repo,
+			"--agent", "linter", "--harness", harnessID, "--yes", "--json")
+		h.mustSucceed(code, stdout+stderr)
+		return stdout, stderr
+	}
+
+	for _, run := range []struct {
+		extra map[string]string
+		repo  string
+	}{
+		{map[string]string{"DO_NOT_TRACK": "1"}, "acme/tools"},
+		{nil, "acme/private"},
+	} {
+		if _, stderr := install(run.extra, run.repo, "claude"); strings.Contains(
+			stderr, adoption.Notice,
+		) {
+			t.Fatalf("%s: nothing is sent, so no notice: %s", run.repo, stderr)
+		}
+		if _, err := os.Stat(notice); !os.IsNotExist(err) {
+			t.Fatalf("%s: no notice may be recorded: %v", run.repo, err)
+		}
+	}
+	f.taken()
+
+	stdout, stderr := install(nil, "acme/tools", "claude")
+	if strings.Count(stderr, adoption.Notice) != 1 || strings.Contains(stdout, adoption.Notice) {
+		t.Fatalf("the first report shows the notice once on stderr:\nstdout %s\nstderr %s",
+			stdout, stderr)
+	}
+	if !sonic.ValidString(stdout) {
+		t.Fatalf("stdout must stay JSON: %s", stdout)
+	}
+	if len(f.taken()) != 1 {
+		t.Fatal("the report goes out after the notice")
+	}
+	if _, err := os.Stat(notice); err != nil {
+		t.Fatalf("the notice must be recorded: %v", err)
+	}
+	if _, stderr := install(nil, "acme/tools", "omp"); strings.Contains(stderr, adoption.Notice) {
+		t.Fatalf("the notice shows only once per machine: %s", stderr)
+	}
+	if len(f.taken()) != 1 {
+		t.Fatal("later reports go out without the notice")
 	}
 }
 

@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.github/agents/large-probe.agent.md",
-      "digest": "sha256:96ba3da630d537cfbc09c4a35980eb414a83113049cb2f7f5d333e47eea5d4cc",
+      "digest": "sha256:e220170a25ae5f764f71cae5376d529dcef66ee5b20f11c3e718a8762660efd1",
       "harness": "copilot",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

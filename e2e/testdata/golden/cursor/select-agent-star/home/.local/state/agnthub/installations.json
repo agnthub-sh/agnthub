@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.cursor/agents/companion.md",
-      "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+      "digest": "sha256:2eff54fc1d9582ddc646d8c943c38ecd62bf4235a751f9ff3695bcc04797151e",
       "harness": "cursor",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -15,7 +15,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.cursor/agents/sidekick.md",
-      "digest": "sha256:47843ea71bee050cacb41e460bb1b0f57fac11dc56b53318c5fd9273d2835506",
+      "digest": "sha256:a81f2b892d033b2b52b3a0a06234440e338d1a212a3ecc9d2e93669fd420a90c",
       "harness": "cursor",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

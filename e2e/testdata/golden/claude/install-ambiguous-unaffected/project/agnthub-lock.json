@@ -14,9 +14,9 @@
           "variant": "generated",
           "sourcePath": "agents/solo.md",
           "sourceDigest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
-          "converter": "claude/v5",
+          "converter": "claude/v6",
           "path": ".claude/agents/solo.md",
-          "digest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
+          "digest": "sha256:fe3c65800ddfe76461d9f5470fafa9c20184f0961ef26d5568f01abbebceff2f",
           "requires": []
         }
       ]

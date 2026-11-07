@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.gemini/agents/drifter.md",
-      "digest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
+      "digest": "sha256:d777d57b3af58dcf607b0cf2470dac35de4937a2ef80e7dccae0d0bb4bb31371",
       "harness": "gemini",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

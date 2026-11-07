@@ -4,16 +4,20 @@
 // was installed or the command's result, it honors the combined DO_NOT_TRACK/DISABLE_TELEMETRY
 // opt-out before anything else, and it sends only a public owner/repo, the installed
 // revision and, per Agent, its id, origin, the Harness ids that received artifacts and an
-// agent-scoped random identity. A configured API key goes along in the Authorization header,
-// to the registry API only; a rate-limited report is dropped, never retried.
+// agent-scoped random identity. Before the first report a machine sends, it shows Notice
+// once (recorded at NoticePath). A configured API key goes along in the Authorization
+// header, to the registry API only; a rate-limited report is dropped, never retried.
 package adoption
 
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"io"
 	"net/http"
 	"net/url"
+	"os"
+	"path/filepath"
 	"slices"
 	"strings"
 	"time"
@@ -35,6 +39,17 @@ const Timeout = 3 * time.Second
 
 // OptOutVariables disable install reporting when any is non-empty.
 var OptOutVariables = []string{"DO_NOT_TRACK", "DISABLE_TELEMETRY"}
+
+// Notice tells the user, once per machine before the first report is sent, what install
+// reports are and how to opt out.
+const Notice = "agnthub sends anonymous-by-design install counts with a random installation " +
+	"id; set DO_NOT_TRACK=1 to opt out. See https://app.agnthub.sh/privacy#install-reports"
+
+// NoticePath records that Notice was shown on this machine; it lives beside the
+// installation identities.
+func NoticePath(stateHome string) string {
+	return filepath.Join(stateHome, "agnthub", "install-report-notice")
+}
 
 // OptedOut reports the combined sharing opt-out.
 func OptedOut(e env.Env) bool {
@@ -80,6 +95,9 @@ type Reporter struct {
 	Client    *http.Client
 	UserAgent string
 	Timeout   time.Duration
+	// NoticeOut receives Notice before the first report this machine sends (stderr); nil
+	// sends no report until the notice was shown.
+	NoticeOut io.Writer
 }
 
 // New returns a reporter for e that sends to api.URL with api's credential. Requests
@@ -156,6 +174,9 @@ func (r *Reporter) Report(ctx context.Context, installs []Install) {
 	if err := ids.Save(); err != nil {
 		return
 	}
+	if !r.noticed() {
+		return
+	}
 	for _, g := range public {
 		r.post(ctx, report{Owner: g.owner, Repo: g.repo, Revision: g.revision, Agents: g.agents})
 	}
@@ -216,6 +237,23 @@ func (r *Reporter) public(ctx context.Context, owner, repo string) bool {
 	}
 	defer drain(resp)
 	return resp.StatusCode == http.StatusOK
+}
+
+// noticed reports whether this machine was told about install reports: Notice was shown
+// before, or is shown now and recorded so it never shows again. Without a recorded
+// notice no report is sent.
+func (r *Reporter) noticed() bool {
+	path := NoticePath(r.Env.StateHome())
+	if _, err := os.Stat(path); err == nil {
+		return true
+	}
+	if r.NoticeOut == nil {
+		return false
+	}
+	if _, err := fmt.Fprintln(r.NoticeOut, Notice); err != nil {
+		return false
+	}
+	return state.Disk.WriteFile(path, []byte(Notice+"\n"), 0o600) == nil
 }
 
 func (r *Reporter) post(ctx context.Context, body report) {

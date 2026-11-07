@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.opencode/agents/allowlisted.md",
-      "digest": "sha256:6fc81211ac942ed98e14f89abfb436fae3d6b2aabcee9527e47d8f3e35dcfe8e",
+      "digest": "sha256:fb7417448cafd4c65eacb29398a451ddb38dc445ff3e58c5854d430705eff8ca",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -15,7 +15,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/annotated.md",
-      "digest": "sha256:30d78385cc95eb05a5c3d3a5215800ebd0f1f8406157998e3646373895f3fd83",
+      "digest": "sha256:356b0ca4a77a75ce27a9136db507178cf4994d777b944b6413476befa61146d1",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -27,7 +27,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/backgrounder.md",
-      "digest": "sha256:0605adb56a5bfaac229df44cf1fa49954df47a61038d8a9d59947516ab6bf72a",
+      "digest": "sha256:a1dc699931658d35fafd9dd5b15597bc0c90fc292fb86104cef41679f6615655",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -39,7 +39,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/bom-native.md",
-      "digest": "sha256:b0f84396deeb5de5e7c3684307c03c9f5d38e7aa6d0f2eb2f2f8e2617424435e",
+      "digest": "sha256:b105ccd2d1400697cb8d6ef732800c792baad97ad3cfa0e8d6996ec819756115",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -51,7 +51,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/bom.md",
-      "digest": "sha256:cd74f9e3e63db4abd7603cf089c749003924267863e1f3bb45c8295792d54f2c",
+      "digest": "sha256:3dde132b7d443180a11d099faf138014002bc3a277aa9ef135364cc151ae9ee5",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -63,7 +63,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/bounded.md",
-      "digest": "sha256:4da5ee1b237e29e3f24e6ad2ec49ecb9df6cf04fd434ed99ba2718a76f3a7239",
+      "digest": "sha256:0ee654469fd0f2a7e000085fd7c9e17636abe932ea4e7ee609e5f9a4288d9553",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -75,7 +75,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/claude-shaped.md",
-      "digest": "sha256:c379c1e43a942a076bfa4314665244fc8a4cb8527c8366f406220681d8ba578b",
+      "digest": "sha256:2c14db8f12083c43ae2de14aee505044de1607454fe1e2125d4c7c8629236098",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -87,7 +87,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/colon-native.md",
-      "digest": "sha256:3ee9936e34d741f026cb5e036a3622fb9f8368bc5c21a59c13b6487d3e232e0a",
+      "digest": "sha256:f18828faaa0f47d83aa6b7a1c28405fd7c9658626c0c91725331cd37ff1d4bbd",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -99,7 +99,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/colon.md",
-      "digest": "sha256:c94dd7fedc12be1a06cf19aab88f1cf4941d295899c627c7f74b4ff0da104794",
+      "digest": "sha256:7592bd9c362cb2ab6fbcace4e7d41ce736b1733fd03fe1ab3aad98cd127ccb5e",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -111,7 +111,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/cu-folded.md",
-      "digest": "sha256:82bbe66cb8f2c199e0cd0b6aebddcc4d9bc5e9f6faad72f461c7c834a3916984",
+      "digest": "sha256:1b66a658e360590f853e2e6698807eb098e93e978dd6d1eb7dc85b3edf3b4dcd",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -123,7 +123,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/cu-native.md",
-      "digest": "sha256:13cbfe463cc8e78c41f7443b4a9e8e8acee8fd47a939300d8647d64a4e091809",
+      "digest": "sha256:9f5bbd9d6fbd30914dfbc953b059a0739bf562f1ee74275bc853d8d998b794cc",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -135,7 +135,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/cu-tagged.md",
-      "digest": "sha256:3ae63b25dbd14d7e7a98cffa3e11b14dc498574c72647714091189b61eb75aed",
+      "digest": "sha256:96a3e56915cae28fd5909d17aacf3688e7af3d44d5c960e76aada64a862b0d63",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -147,7 +147,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/cx-native.md",
-      "digest": "sha256:9ab72ec15b12b37bc7ab8c99cffd31ad4dfd49f65c9881d06f898593a00f4bdc",
+      "digest": "sha256:ff78c62f6e295755b648e901488593a866969123760d32bc6344ac9cf8d2002b",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -159,7 +159,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/cx-nicknamed.md",
-      "digest": "sha256:a2ef8ab5119da484cf86b156a41eadb87e68782154eb46e4f63167a9a4036471",
+      "digest": "sha256:82b8a90e72d87f6ed5741bcc82abcbd2937342fcfaa854a14e0d696fd27f4b53",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -171,7 +171,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/cx-sandboxed.md",
-      "digest": "sha256:a0d60ef7d67550aa486f39796655ec8ad1a9f5c8c03c8e3ab467c01de04d1259",
+      "digest": "sha256:6278b1dd9287b48c541023b5f90f8194121cf00f2bdb497a600e93241e6d1578",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -183,7 +183,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/cx-solo.md",
-      "digest": "sha256:160d3be840913a1b4a03b366f986a66cba75b4f87a26ad24c1f954a8cd8abd5c",
+      "digest": "sha256:1d315ab8617067dbbb0bae4f574bb541ac13a5e979d84e83e9506e33a777e420",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -195,7 +195,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/cx-workspace.md",
-      "digest": "sha256:d8d807e68d4198ab230e80661803032661b28876150b9d84bc473744344ac804",
+      "digest": "sha256:7fc13aaec795077d3614b22f7a76bdca61395dcf223955f670a01c348c4a6dee",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -207,7 +207,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/defaulted.md",
-      "digest": "sha256:2f2f27bb3ac6ef884e115e18686ff99a24a0993a13af373c071e7c127e0f26e5",
+      "digest": "sha256:49546b1a2f434810fba6ab60b71aa02d8f7d1bdbb7a91c406b394d01a1f66cad",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -219,7 +219,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/delegator.md",
-      "digest": "sha256:0386679b684d067907687784d9cb94b35f4f9d6de966a64385edfa089a240511",
+      "digest": "sha256:41b0fe0baad9e3f09a547b224a9c15f30ea7a838753fff8275f72e1fac7b5088",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -231,7 +231,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/differ.md",
-      "digest": "sha256:cf67f9fdeb6da914944ead5e7853d1dad6bce43d6ab08fd785d5459b37608deb",
+      "digest": "sha256:2ffd6317eb5ff86f763ed73112ecf556236c2aa495e5eea42f880b9b14ca32f7",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -255,7 +255,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/fixer.md",
-      "digest": "sha256:371fc99c4fcfa1f2644f8182fa2fd15f3e81d42e66a0bdd1c338254b1d98716d",
+      "digest": "sha256:95db263bc2d46b3fc10c6a97cbc065ebe96899f01bc80f486b42dd4aa9baaa23",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -267,7 +267,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/gh-colored.md",
-      "digest": "sha256:7da78cd475bc8b35e1d846a8d583d1cc7225d850a618e1faafced520bdfabb2c",
+      "digest": "sha256:d12a132f42851562b542d60bc4eb0d7b29299d067e51cafeb3439dfe242d0631",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -279,7 +279,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/gh-manual.md",
-      "digest": "sha256:4a1f0d742914a7f4d2262745360bd1c1a6573aae81c49da00c9c3fa217ed733d",
+      "digest": "sha256:7cf0e798ff6921a6bfbf80203f7a3d208a6f8a2a3d24e2fe97690f5ff5b0dbe8",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -291,7 +291,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/gh-native.md",
-      "digest": "sha256:12d050a633a98f969b78f769b9ea09ebe8f7f2e4f5bbc0990c0fb5557ee51b25",
+      "digest": "sha256:751feba1e4ee7755cc72106838c9d3b1b38321af7c01d768d7aa499758ad2429",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -303,7 +303,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/gh-plain.md",
-      "digest": "sha256:61897df0355e3f08a5ff72eb28151e74e4036191fe2ef96e864eb4bb08ac37ca",
+      "digest": "sha256:1adcc1f556462fecffe09811c72f6c3a563fc6ae5f020e443abcec419b0c8ea0",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -315,7 +315,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/gm-native.md",
-      "digest": "sha256:77f5014064540bdb636ff3f1c18d0a1404f6800414fbad683175fac842f089e9",
+      "digest": "sha256:1ffcf06d78c38dc733aa4f70d09e952b61278b6955662daeef24e422f0b367dc",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -327,7 +327,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/isolated.md",
-      "digest": "sha256:872b2a230ec681fcbff9f193db501603fd9afb8b047c0dd99fd8cf8a11491c10",
+      "digest": "sha256:f03fca6f9028f55627e8484ac314792e8048f552fa035a690d145dee6a68ceae",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -339,7 +339,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/issue-reader.md",
-      "digest": "sha256:174556f7405ed2b14233f965f7387f63ca38b9e557a6662c5771032de338c061",
+      "digest": "sha256:0dd7e026ef99a38e6ad2cf4595b0b1a1019142f724f924a372e0a2832c0ce683",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -351,7 +351,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/journaler.md",
-      "digest": "sha256:ec012dbafd9feb5c4db8162ae00902cefc87a89c089a3565d8a235f44f7d0883",
+      "digest": "sha256:a76c530d9001e86df6ca75ba4863f4a2141752fbf85012731b61d936c10686a1",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -363,7 +363,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/literal.md",
-      "digest": "sha256:28b8d7a0e5ad94158144be7da53cc4a77221bc62f82c37f84122f41e0d23743d",
+      "digest": "sha256:70bc1ba47778f574d054f90f0a9713b6f3af1f5a44ed7384ee0c92e71a96a15a",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -375,7 +375,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/local-notes.md",
-      "digest": "sha256:2c19906a3c1f3425b798ed60d2e5240a52f625d808e8c818d2e90ec16120f8f6",
+      "digest": "sha256:80a57877d73f4a05b9e8384cbd32271de8b6d5210dd6a63ccc9f2445597cea9c",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -387,7 +387,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/mcp-wide.md",
-      "digest": "sha256:5a61db0c986b368f8865eaf771b314c418442af0f811db860f877eedee49fe4e",
+      "digest": "sha256:526fcb17a597c8eb16cebf9654a38306fe33127c3c8009cca2f40352c3fc6df4",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -399,7 +399,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/misnamed.md",
-      "digest": "sha256:d6104fd13136ec7927369d830cee3cdca1df6941138948f6eca0ce120d9350f9",
+      "digest": "sha256:857753bb2c0d66c8f6bb8498998ab5f4b67e7ce2bcf7936a1b75ae06289da63e",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -411,7 +411,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/modelled.md",
-      "digest": "sha256:adfa53838c2682ae1cf93c13e8d4639548d88860cf57de212a9f791413d4459d",
+      "digest": "sha256:00f54a79ecfade083211bb4f7ff1eeb6a5712f6f3197c1f11c1f864344c92319",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -423,7 +423,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/no-shell.md",
-      "digest": "sha256:668b6a941babae2672e7ad60cd840aa14deeb45d1f6a29a13e49519cc59bc358",
+      "digest": "sha256:04453c035d5db2b2a430b3cf62b3f344fdef52bb4a922bc9ebe5f1d38acf5073",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -447,7 +447,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/omp-native.md",
-      "digest": "sha256:c60c0ce441f7b79c27062028e59f10f8172e8b55458744d8257a190808ddd331",
+      "digest": "sha256:c4eeccd1c80539ce47015791b20e9e8873e399d24687ee90fefc56d507a1e585",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -459,7 +459,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/planner.md",
-      "digest": "sha256:ab1b0cdd6f27e0f1e45c169d0ee8f219385d57ee9e53aee7962edaf959de7b23",
+      "digest": "sha256:6836a8166d1fccf90b160b97bf7ca2f11c879dc0f2d35ae0c94d7e5796cf512f",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -471,7 +471,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/quoted.md",
-      "digest": "sha256:ec37fd47c5a17d474015a7d1f520132cef37fa6d95579dcc6ab1a2b96d8b3c95",
+      "digest": "sha256:8abe0cc480b34a2ec4b95f9b0447181cede9f4691780b0c9d452452082eba617",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -483,7 +483,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/recaller.md",
-      "digest": "sha256:817d7005a0277a74c491f332d94f3108dbf8abc92cfcbfb47579526f5ef94b5f",
+      "digest": "sha256:757c9d9286bc9602f169565369e5438bb82426d6979a1798f4b3a9e2bd06e37f",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -495,7 +495,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/relaxed.md",
-      "digest": "sha256:5adca010c3a7c215665035d89752ab9b7553dbb23af5c934d2c82656070e21b1",
+      "digest": "sha256:9dfdb57d255c5abcf8251328fa86cc0f1439e47ea073834855f86b87a5eb7e7a",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -507,7 +507,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/rememberer.md",
-      "digest": "sha256:00c06fce96b85830218a87812da296e10ded743ba43b2a748dcf85769ae00cbf",
+      "digest": "sha256:3098b0c6a955be5e62f2732ee50fd375a02df45f0dd5a89d475f7a56a24223e6",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -519,7 +519,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/researcher.md",
-      "digest": "sha256:dc0efd3e8c1d9d2ba25920384aa0717785dc606950562c972aac8f062b80bf76",
+      "digest": "sha256:74317fd18d9eb21c6fc1e9fa77f6ffe6f42a96448c3d8cb0c546112e3982480d",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -531,7 +531,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/reviewer.md",
-      "digest": "sha256:acae1eea87efd5f2a1973c5a6f92ea7720631cfdd451d6183dcf329e3d2db9ab",
+      "digest": "sha256:0a2dfb4a40ecf1e4c0dca15226a26e4a292f87535469f64432a3374dc44871b0",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -543,7 +543,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/root-helper.md",
-      "digest": "sha256:7ae604646386426c1e7ff3226345d0a5b9d54be37429882173072b975ddfee78",
+      "digest": "sha256:4e294bb78519f2162565401386da4ed0f8d0497e7cbda2590ff4eec03e83879b",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -555,7 +555,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/scripted.md",
-      "digest": "sha256:63a968583278cdedbf14b90b00a8148e710f9510342913923d95f19a3b352b4a",
+      "digest": "sha256:1dbbb273064bd80be7c4901599e136a36f0cfb9ee4996d304dbb742c9084ffb2",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -567,7 +567,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/skilled.md",
-      "digest": "sha256:46b4d26c2debfe3c40644cd4a526cc1b8643734a0c67ff1856c82a77b369bd5b",
+      "digest": "sha256:d39dd27bc84aa302a2c6f93d2c2109a3deb759e02437407629fde0ac896e20e1",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -579,7 +579,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/studio-qa.md",
-      "digest": "sha256:e0a924784095a03c02cb35a6cb2c3437312ecdbec2b86ca4c8e2465e0b1fb892",
+      "digest": "sha256:da8dbe990369509ecd11934dc579a91a7cdb4ebe1de6fb9ae73c335d62604d2f",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -591,7 +591,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/tagged.md",
-      "digest": "sha256:27e72323fba5fb6dba91c90c3916378ba682739ff9b42f706a180d25103f8654",
+      "digest": "sha256:5fb466255158b89c90db9d135fbcc5958be8e124e349bc9bc83c8fbd3f8b6247",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -603,7 +603,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/web-searcher.md",
-      "digest": "sha256:9ea49a14f63c36f7edf42fb90122f6f8aae62211e8171a557cd1eea4255f9d13",
+      "digest": "sha256:65cbe117fca7f522e4b8e1714a8b5ac8684c00568158ac96d128de048c9bf523",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -615,7 +615,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.opencode/agents/wildcard.md",
-      "digest": "sha256:906f627e3cd9cf1381990e5a063f1281ed0af76e8578e2aee7fe9dd39ee04714",
+      "digest": "sha256:bbc652d9ab93f1f1b2149e3a99d86069a17f64d6c7666197631499e7b7183470",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

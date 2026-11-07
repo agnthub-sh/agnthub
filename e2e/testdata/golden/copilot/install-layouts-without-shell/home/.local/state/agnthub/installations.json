@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.github/agents/differ.agent.md",
-      "digest": "sha256:3213d0aa44bf07b2d2686168be0f8b3111a2eee6116068a207ed79c43e13e829",
+      "digest": "sha256:27d9839fff28133af3f5d79a01bd22d77da1af99f152387715c97130f2fd2c5f",
       "harness": "copilot",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -15,7 +15,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.github/agents/guarded.agent.md",
-      "digest": "sha256:d0c6db40bca3c4385c529bdfc32c7fae8930d91b72eed07f2cc890d683dd6817",
+      "digest": "sha256:32c13415ac36f27c7b4aff2386c18c06edbbaa5be379df84fe93ea3a8f3d0ad1",
       "harness": "copilot",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

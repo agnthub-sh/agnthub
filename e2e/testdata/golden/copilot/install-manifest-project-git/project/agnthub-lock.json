@@ -16,9 +16,9 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "copilot/v5",
+          "converter": "copilot/v6",
           "path": ".github/agents/companion.agent.md",
-          "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+          "digest": "sha256:c80b1e40eda10a4fe682162d823c842ba2c31223e4fd72d8dcaf84b964eae956",
           "requires": []
         }
       ]
@@ -37,9 +37,9 @@
           "variant": "generated",
           "sourcePath": "agents/helper.md",
           "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
-          "converter": "copilot/v5",
+          "converter": "copilot/v6",
           "path": ".github/agents/helper.agent.md",
-          "digest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
+          "digest": "sha256:83f85b3cf021c54dba8cc2b93c5ce4a511f0f2d42b3a9cc14033010c5e6e1b76",
           "requires": []
         }
       ]
@@ -58,9 +58,9 @@
           "variant": "generated",
           "sourcePath": "agents/lead/AGENT.md",
           "sourceDigest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
-          "converter": "copilot/v5",
+          "converter": "copilot/v6",
           "path": ".github/agents/lead.agent.md",
-          "digest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
+          "digest": "sha256:dbb5474acdc4b498d079236575114557c45eb6903059f2acae5a4529548ac264",
           "requires": [
             "agent:git:localhost:8443/companion.git::companion",
             "agent:git:localhost:8443/manifest.git::helper",
@@ -83,9 +83,9 @@
           "variant": "generated",
           "sourcePath": "native/claude/native-only.md",
           "sourceDigest": "sha256:0ed4be951d129f063ef866308d751ceb8a44f77dce1f570061a1baca2581cd99",
-          "converter": "copilot/v5",
+          "converter": "copilot/v6",
           "path": ".github/agents/native-only.agent.md",
-          "digest": "sha256:bae8c514339bc1aace514ab3aeca0c33092084f8ea007973a98c048f3a0c7c21",
+          "digest": "sha256:b20caafcad4e2611aad79a0050ea9420f830fd00dccec2626c20ae187f0f0ff7",
           "requires": []
         }
       ]

@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.gemini/agents/differ.md",
-      "digest": "sha256:638617917bf18638511ced48a299bf5a6843eb354ae93df9ff381cd957124a40",
+      "digest": "sha256:9301fbd01f3b2e9e1f1f850be7eec96d1de600a9f2d5e12553305fe072c53f9e",
       "harness": "gemini",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -15,7 +15,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.gemini/agents/guarded.md",
-      "digest": "sha256:42b5b84e8dd5adde435a091a0b02a76ea854209f6736b28c5c6ed8d51cdfeeb8",
+      "digest": "sha256:aceb2d46811a11d3fd17bfb0a8d60c5799f31afe51c6abee9009fb96e2ecc200",
       "harness": "gemini",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

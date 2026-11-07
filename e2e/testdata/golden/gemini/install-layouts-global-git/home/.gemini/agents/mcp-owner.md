@@ -1,4 +1,9 @@
 ---
+# Adapted from .claude/agents/mcp-owner.md in localhost:8443/layouts
+# Modified by agnthub: converted to the Gemini CLI agent format
+# Copyright (c) 2026 agnthub e2e fixtures: layouts
+# Copyright (c) 2026 Second Holder <holder@example.com>
+# License: see LICENSE in localhost:8443/layouts
 name: mcp-owner
 description: Reads issues through its own GitHub MCP server.
 tools:

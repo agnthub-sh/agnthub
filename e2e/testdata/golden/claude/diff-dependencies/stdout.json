@@ -5,33 +5,42 @@
 # Skill files (e2e-skill) are placed by the skill installer (e.g. skills add https://localhost:8443/skills.git#21f36aec981afd5f3a2141ea1d52b9ca2f691f48 --skill e2e-skill --agent claude-code --yes), which may also write its own bookkeeping (lock files, links) not shown here.
 diff --git a/.claude/agents/companion.md b/.claude/agents/companion.md
 new file mode 100644
-index 0000000000000000000000000000000000000000..0b75b9883319a9470de9c518302f84c7e25cb24c
+index 0000000000000000000000000000000000000000..07fe272dc7bfc9a79964a5339c18c560a8913aaa
 --- /dev/null
 +++ b/.claude/agents/companion.md
-@@ -0,0 +1,5 @@
+@@ -0,0 +1,8 @@
 +---
++# Adapted from agents/companion.md in localhost:8443/companion
++# Modified by agnthub: converted to the Claude Code agent format
++# No license file found in localhost:8443/companion
 +name: companion
 +description: Companion agent fetched from another Git source.
 +---
 +Assist the lead from another repository.
 diff --git a/.claude/agents/helper.md b/.claude/agents/helper.md
 new file mode 100644
-index 0000000000000000000000000000000000000000..ddf7a79996cd027eeead04f99ade0e3a89b0a0c8
+index 0000000000000000000000000000000000000000..a114eb4aa78653192a6fd6e1f023f304852ba801
 --- /dev/null
 +++ b/.claude/agents/helper.md
-@@ -0,0 +1,5 @@
+@@ -0,0 +1,8 @@
 +---
++# Adapted from agents/helper.md in localhost:8443/manifest
++# Modified by agnthub: converted to the Claude Code agent format
++# No license file found in localhost:8443/manifest
 +name: helper
 +description: Helps the lead agent.
 +---
 +Help the lead.
 diff --git a/.claude/agents/lead.md b/.claude/agents/lead.md
 new file mode 100644
-index 0000000000000000000000000000000000000000..187ccde134a6297e75ab302742974c647f7c839c
+index 0000000000000000000000000000000000000000..69d5581f59785d5d59dba9a59d2bfb3c1c31628f
 --- /dev/null
 +++ b/.claude/agents/lead.md
-@@ -0,0 +1,5 @@
+@@ -0,0 +1,8 @@
 +---
++# Adapted from agents/lead/AGENT.md in localhost:8443/manifest
++# Modified by agnthub: converted to the Claude Code agent format
++# No license file found in localhost:8443/manifest
 +name: lead
 +description: Leads a change end to end and delegates to its companions.
 +---
@@ -51,7 +60,7 @@ index 0000000000000000000000000000000000000000..f7e2bdfd97b5aeba4a8d7e40a53b605d
 +Use this skill when the lead asks for it.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
 new file mode 100644
-index 0000000000000000000000000000000000000000..f18a7d3c3740ede4b1f78b2e17298fb6b61482e4
+index 0000000000000000000000000000000000000000..6558cf93f2fd5b8c6431df9731fc322809e29412
 --- /dev/null
 +++ b/agnthub-lock.json
 @@ -0,0 +1,92 @@
@@ -73,9 +82,9 @@ index 0000000000000000000000000000000000000000..f18a7d3c3740ede4b1f78b2e17298fb6
 +          "variant": "generated",
 +          "sourcePath": "agents/companion.md",
 +          "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-+          "converter": "claude/v5",
++          "converter": "claude/v6",
 +          "path": ".claude/agents/companion.md",
-+          "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
++          "digest": "sha256:4284dcbf2b6fda1e4314c7d8ace11c4cc2fc93b5f96ad762c1f78946ace76ca5",
 +          "requires": []
 +        }
 +      ]
@@ -94,9 +103,9 @@ index 0000000000000000000000000000000000000000..f18a7d3c3740ede4b1f78b2e17298fb6
 +          "variant": "generated",
 +          "sourcePath": "agents/helper.md",
 +          "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
-+          "converter": "claude/v5",
++          "converter": "claude/v6",
 +          "path": ".claude/agents/helper.md",
-+          "digest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
++          "digest": "sha256:4acd4b1eb2ac8623c5fe5b28ccf5b32a0bb13fda40c70fd0f8d29cc10c675717",
 +          "requires": []
 +        }
 +      ]
@@ -115,9 +124,9 @@ index 0000000000000000000000000000000000000000..f18a7d3c3740ede4b1f78b2e17298fb6
 +          "variant": "generated",
 +          "sourcePath": "agents/lead/AGENT.md",
 +          "sourceDigest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
-+          "converter": "claude/v5",
++          "converter": "claude/v6",
 +          "path": ".claude/agents/lead.md",
-+          "digest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
++          "digest": "sha256:e5a7cda7e54cc8055947cb0c5419a5484723db0c1c707aa61f79ad649f6d6bee",
 +          "requires": [
 +            "agent:git:localhost:8443/companion.git::companion",
 +            "agent:git:localhost:8443/manifest.git::helper",

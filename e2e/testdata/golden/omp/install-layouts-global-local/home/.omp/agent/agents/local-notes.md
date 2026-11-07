@@ -1,4 +1,9 @@
 ---
+# Adapted from .claude/agents/local-notes.md
+# Modified by agnthub: converted to the omp agent format
+# Copyright (c) 2026 agnthub e2e fixtures: layouts
+# Copyright (c) 2026 Second Holder <holder@example.com>
+# License: see LICENSE
 name: local-notes
 description: Keeps machine-local notes for this project with every tool.
 ---

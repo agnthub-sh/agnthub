@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.github/agents/drifter.agent.md",
-      "digest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
+      "digest": "sha256:033d7c0862cce32a46d64eaa54887fd697a90b2e8d364f81897442547e78f69f",
       "harness": "copilot",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

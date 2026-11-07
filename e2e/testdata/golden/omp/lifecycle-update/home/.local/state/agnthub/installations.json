@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.omp/agents/drifter.md",
-      "digest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
+      "digest": "sha256:e2c4f136e7650e7e0603f91f122a85ed7e46f0a451c5788d63996d4cb424ca99",
       "harness": "omp",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

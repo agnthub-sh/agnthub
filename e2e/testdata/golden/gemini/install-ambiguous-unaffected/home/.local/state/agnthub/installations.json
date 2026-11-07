@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.gemini/agents/solo.md",
-      "digest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
+      "digest": "sha256:487ba454abd65e34bc1a47288ff9f2ab646d7b75de3d77325655ab1231f55655",
       "harness": "gemini",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

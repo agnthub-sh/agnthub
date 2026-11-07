@@ -1,5 +1,35 @@
 # Changelog
 
+## v0.9.1
+
+### Changed
+
+- **Converted agent files carry their source's attribution and are marked as modified.**
+  Every generated (converted) file starts with comment lines that every harness ignores and
+  that stay outside the agent's instructions: YAML comments right after the frontmatter's
+  opening `---` (Claude Code, OpenCode, Copilot CLI, Cursor, Gemini CLI, omp) or `#` comments
+  at the top of a Codex `.toml` file. They name the original file and repository
+  (`# Adapted from agents/reviewer.md in github.com/acme/agents`), say agnthub converted it
+  (`# Modified by agnthub: converted to the Codex agent format`), repeat the copyright lines of
+  the repository's root `LICENSE`/`LICENCE`/`COPYING` file and point to the license (or say
+  `# No license file found`). Authored Variants still install byte for byte. This is converter
+  `v6`: `check` shows converted files from earlier versions as a converter change and `update`
+  rewrites them; `restore` of a lock written by `v5` or earlier still reproduces it byte for
+  byte, without the header.
+- **One-time install-report notice.** Right before the first install report a machine sends,
+  the CLI prints on stderr (also with `--json`): `agnthub sends anonymous-by-design install
+  counts with a random installation id; set DO_NOT_TRACK=1 to opt out. See
+  https://app.agnthub.sh/privacy#install-reports`. It is recorded in
+  `$XDG_STATE_HOME/agnthub/install-report-notice` and never shown again; opted-out runs and
+  runs that send nothing show nothing. The docs now call the reports pseudonymous.
+
+### Library
+
+- `discovery.Inventory.License` and `agent.Definition.License` (`*agent.License{Path,
+  Copyright, More}`) expose the source's root license file and its copyright lines;
+  discovery reads it without ever failing a scan. `install.Target.Converter` lets a restore
+  reproduce a lock's converter, and `harness.Attribute` writes the attribution header.
+
 ## v0.9.0
 
 ### Changed

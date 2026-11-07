@@ -254,7 +254,7 @@ func (t MCPTool) String() string {
 }
 
 // converterVersion is the conversion contract of every generated artifact.
-const converterVersion = "v5"
+const converterVersion = "v6"
 
 // converterID names the conversion contract for h.
 func converterID(h agent.HarnessID) string {
@@ -266,15 +266,19 @@ func converterID(h agent.HarnessID) string {
 // what its predecessors converted byte for byte (v2 added native Variant
 // sources, v3 MCP tool references, v4 persistent memory and preloaded
 // skills, v5 portable cores read as Claude Code agents and reduced
-// capability), so a lock written by an earlier version restores when its
-// recorded digest still matches.
+// capability; v6 adds the attribution header, which a restore of an earlier
+// lock leaves out, see Unattributed), so a lock written by an earlier version
+// restores when its recorded digest still matches.
 func ConverterReproduces(recorded, current string) bool {
 	if recorded == current {
 		return true
 	}
-	harnessID, version, ok := strings.Cut(recorded, "/")
-	return ok && slices.Contains([]string{"v1", "v2", "v3", "v4"}, version) &&
-		current == converterID(agent.HarnessID(harnessID))
+	harnessID, _, ok := strings.Cut(recorded, "/")
+	if !ok || !Unattributed(recorded) {
+		return false
+	}
+	h := agent.HarnessID(harnessID)
+	return current == converterID(h) || current == WithoutAttribution(h, Artifact{}).Converter
 }
 
 // portableDelegationKeys limit which agents an Agent delegates to in other

@@ -79,6 +79,9 @@ type Inventory struct {
 	// declares, deduplicated in declaration order. Slugs are slug-shaped but
 	// may be newer than this module's taxonomy (see package category).
 	Categories []string
+	// License is the source's root license file, or nil when it has none or
+	// it could not be read; every Agent's Definition.License points to it.
+	License *agent.License
 }
 
 // CategoriesFor returns the categories that describe def: its own declared
@@ -207,6 +210,10 @@ func (s *scanner) scan() (*Inventory, error) {
 	}
 	if err != nil {
 		return nil, err
+	}
+	inv.License = s.license()
+	for _, def := range inv.Agents {
+		def.License = inv.License
 	}
 	inv.Problems = append(inv.Problems, s.problems...)
 	sort.SliceStable(inv.Problems, func(i, j int) bool {

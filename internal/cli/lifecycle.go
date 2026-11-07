@@ -517,6 +517,8 @@ type frozenTarget struct {
 	loc    source.Locator
 	def    *agent.Definition
 	label  string
+	// converter is the converter id the lock records for the Agent's artifact.
+	converter string
 }
 
 // planFrozen rebuilds every binding exactly from the lock: each locked Agent from
@@ -602,7 +604,9 @@ func (l *lifecycle) frozenTargets(ctx context.Context, c *bindingContext) ([]fro
 		if locked.Origin != state.OriginDirect {
 			label += " (" + loc.Display() + ")"
 		}
-		targets = append(targets, frozenTarget{locked: locked, loc: loc, def: def, label: label})
+		targets = append(targets, frozenTarget{
+			locked: locked, loc: loc, def: def, label: label, converter: bound.artifact.Converter,
+		})
 	}
 	return targets, nil
 }
@@ -621,6 +625,7 @@ func frozenRequirements(
 			Source:     target.locked.Source,
 			Harnesses:  []agent.HarnessID{harnessID},
 			Requires:   map[agent.HarnessID][]string{harnessID: {}},
+			Converter:  map[agent.HarnessID]string{harnessID: target.converter},
 		}
 	}
 	var requirements []skills.Requirement

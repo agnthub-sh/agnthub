@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.cursor/agents/cx-sandboxed.md",
-      "digest": "sha256:8d96dbf9442bee2ee37a7fec23d46ccf5c4b93348673490cc5b50c19d2e01137",
+      "digest": "sha256:fbcc8ba5d3e2d485a77efe75150b297f6f994de5ff1f06735a0ca54c6db05499",
       "harness": "cursor",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -15,7 +15,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.cursor/agents/guarded.md",
-      "digest": "sha256:df19e8dcdd75bc1146eecdc7c3c8a334d0aac9152917101ebb90a68a3647e881",
+      "digest": "sha256:d2b3ddba050d113ac572cbb4c03319eb29e52beddded305003ba12bde2a38575",
       "harness": "cursor",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -27,7 +27,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.cursor/agents/reviewer.md",
-      "digest": "sha256:82542448146ab61cfdfc5f2fa7ed1729366b0bb763e90a71369dad14199126f6",
+      "digest": "sha256:06fdb0c9a72cfe6ac5169449105809188770204cded195656d3f136ea881969f",
       "harness": "cursor",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

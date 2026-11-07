@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.claude/agents/drifter.md",
-      "digest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
+      "digest": "sha256:d4c72a5c0dec7d890a397b14ff37603882c66b6c82079767514fd78a302eea59",
       "harness": "claude",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

@@ -3,11 +3,12 @@
 # Check: git -C /agnthub-e2e/project apply --check
 # Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
 diff --git a/.gemini/agents/drifter.md b/.gemini/agents/drifter.md
-index e3edc53cf2038cf3e8ef35b73824bd4ea295bf56..586fadb6292ccaf71c2e32f9e9935eebf0592c2c 100644
+index 22746c1c04ebfa50b3f380db30f6f63f6a08308a..3dd8036f0922c6c2e64cad029db7e65925ea642a 100644
 --- a/.gemini/agents/drifter.md
 +++ b/.gemini/agents/drifter.md
-@@ -1,5 +1,5 @@
- ---
+@@ -3,6 +3,6 @@
+ # Modified by agnthub: converted to the Gemini CLI agent format
+ # No license file found in localhost:8443/evolving
  name: drifter
 -description: Agent whose source moves on after it is installed.
 ----
@@ -16,7 +17,7 @@ index e3edc53cf2038cf3e8ef35b73824bd4ea295bf56..586fadb6292ccaf71c2e32f9e9935eeb
 +---
 +Revision two instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
-index afb9ace1eb736423671acef5aa2c2a10a39f1ece..3ab07574912fe42000c494d91191cbcd417caffb 100644
+index 352f14f21dc9f2a3661376cecaba43d536b03fb2..92eb7ed803a7054cd2c798b35a70f981eeb6a40a 100644
 --- a/agnthub-lock.json
 +++ b/agnthub-lock.json
 @@ -6,7 +6,7 @@
@@ -34,10 +35,10 @@ index afb9ace1eb736423671acef5aa2c2a10a39f1ece..3ab07574912fe42000c494d91191cbcd
            "sourcePath": "agents/drifter.md",
 -          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
 +          "sourceDigest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
-           "converter": "gemini/v5",
+           "converter": "gemini/v6",
            "path": ".gemini/agents/drifter.md",
--          "digest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
-+          "digest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
+-          "digest": "sha256:d777d57b3af58dcf607b0cf2470dac35de4937a2ef80e7dccae0d0bb4bb31371",
++          "digest": "sha256:a3f6dc2e7215ba06b8bb96d11692f87618d8b5d54afc6147230c353dee69ac3a",
            "requires": []
          }
        ]

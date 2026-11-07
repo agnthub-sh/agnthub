@@ -133,6 +133,9 @@ type Definition struct {
 	Categories []string
 	// FromManifest reports whether agnthub.yaml declared this Agent.
 	FromManifest bool
+	// License is the source repository's root license file, or nil when it
+	// has none; generated artifacts carry its copyright notice.
+	License *License
 }
 
 // Variant returns the authored Variant for h, or nil.

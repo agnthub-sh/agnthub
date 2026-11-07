@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/home/.cursor/agents/allowlisted.md",
-      "digest": "sha256:67e1c2072980558f2d88d3c57f28b71d2825bd1a1f270d042725e317b025d649",
+      "digest": "sha256:29ec864ae2edcdb6d579451e5c3a7cb089269c99e02222b0d988804bfa7ca3ab",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -14,7 +14,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/annotated.md",
-      "digest": "sha256:f209fda51ee8bb1c84d700f227c7ec399c217417ea178d7b9b5bd395d002a30e",
+      "digest": "sha256:6cd55eefe6782ac20d6c75dc6701abeb21079b7842da267f71099eed25680e08",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -25,7 +25,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/backgrounder.md",
-      "digest": "sha256:94ea9da035fc2e67434b44d4f9e40bd96c6c981cbe39c09256c81efb801211b0",
+      "digest": "sha256:73d851c4427363d11e467b3c1eb4f151a47f48bafa2b0027bb0492f98e32ca92",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -36,7 +36,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/bom.md",
-      "digest": "sha256:153b3d74ed17217d3add75e5a05821e72eeda1b02b4edfbe91542b1fa2adcb62",
+      "digest": "sha256:ed6806a6b23b059889ca9b8961e1e57b09419b3fdd83cde75a18a9db046c9e28",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -47,7 +47,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/bounded.md",
-      "digest": "sha256:dbe17a641e6d0f24b1dae7225e703e45430b4cbee953497bb6e6a34cf7f8171b",
+      "digest": "sha256:876be3ef35a21abaed37d1c77a4a0eba06e8f3a326a1f1439c255714c8f60723",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -58,7 +58,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/claude-shaped.md",
-      "digest": "sha256:72facd389b84dfe60602b2eba0cfb96b5ed661cad830b0a6436690071b8d7893",
+      "digest": "sha256:665dd389ee568cf645dc10038235acc2586a3058a7538f10689a6d3aa86125ba",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -69,7 +69,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/colon-native.md",
-      "digest": "sha256:6511f876f01ff336984d8d3ea71f7af028b6253b061ea320c2c34aaf309d58ed",
+      "digest": "sha256:6da5684ed24b4e0d240c0901f337e121cc752fad9b82ab4cede3467db3aca240",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -80,7 +80,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/colon.md",
-      "digest": "sha256:ec277a9554a398e568c45ee3d061abd25e0e952506d01c5654be2e6c265f1c1f",
+      "digest": "sha256:bc1740d7f0ff039e576853fc54304bcb0401b2e528341240a4665eaa620fb7f5",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -124,7 +124,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/cx-solo.md",
-      "digest": "sha256:77f61a361def23ad58c19068fad7d4034802429ef480fe27e18a4f50426b3490",
+      "digest": "sha256:bdc7ad526b391699041e735b7172232b6214137cc5390fba1883987066921362",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -135,7 +135,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/cx-workspace.md",
-      "digest": "sha256:bdcf7be87aac3daf01c7b581ae86cd221155ab74eb79ca7f324370536e56a7d4",
+      "digest": "sha256:e84dc3f6423cc65b2ab4dac1bf4f47a2b1036a751271e3a814fe4c438e892e10",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -146,7 +146,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/defaulted.md",
-      "digest": "sha256:99516281cbbe6f572b5e87199961280c4571d9e3428de359b0f50e073f111163",
+      "digest": "sha256:cec1d0d6f400b23046452981ddb9306aef7834d742cb2194ff0f5ec3d57a970c",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -157,7 +157,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/delegator.md",
-      "digest": "sha256:26a27721a627c7e71562ff5eab80d876f56bafb78fa6ba52e37aef63f88ae8e6",
+      "digest": "sha256:0ebc1bb2e2e45c119738b0c52c962d62c8b37dbcb4e36750bd3619f652f860af",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -168,7 +168,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/dual.md",
-      "digest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
+      "digest": "sha256:088ea977b02498630ee8ae598e8a5f8a087172da3726bfcb31848a112cb4e97f",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -179,7 +179,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/fixer.md",
-      "digest": "sha256:1488598c0c0be10015f7c9c98ab97c32f59610f38bf975f5b0b3d55799c3feea",
+      "digest": "sha256:68103b60d4b10d0dd5a1bab567d5e47974b80db15c6d57134e505eb94e60ae6c",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -190,7 +190,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/gh-colored.md",
-      "digest": "sha256:b8525b800ab4eac4e68e9684f22ea1fd10ec17ae533ba8e6fcb323531ebb1091",
+      "digest": "sha256:c7397516bc65693d1d1a51bf7ad8bbbf61a427e14731cb0fad2afe73f23d6744",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -201,7 +201,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/gh-manual.md",
-      "digest": "sha256:9d409b21a75246e62bdd8acc7dba819bbf9d2b88ed5a5fbb8c56efc3144f41b0",
+      "digest": "sha256:6f53ba76daa036838f1827ee683f0fe9446c0287d21bf433cb716abd915a5fe7",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -212,7 +212,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/gh-native.md",
-      "digest": "sha256:04090ee685ee41cfbdcdff329f05cdb4aef06f287cebb4ddd6ad57312d4b4892",
+      "digest": "sha256:e8925cf360ce8465be48e3dcf9f043e3a19c206b442d5f23ce73862558031ef0",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -223,7 +223,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/gh-plain.md",
-      "digest": "sha256:17d7344756da06d24fef4c684eac72b9451261bf15fd699f7ffef170394a4756",
+      "digest": "sha256:9e7b4a675dfcec327ffc0762a9b77bdf8e51fac896174ddb161151e7c0b9965b",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -234,7 +234,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/gm-native.md",
-      "digest": "sha256:ea4afdddd6cae97b4f462c705afc27b84247c0d4cb11720da47c3949d12fa47b",
+      "digest": "sha256:4fb6c36582e2dd24f1f7e88a9109156482cc1af44ac685dcb62aee460a713da6",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -245,7 +245,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/isolated.md",
-      "digest": "sha256:c6ba63fd86a32a1aafa574135c72131e8deeabe8cd741f1d0dd297aa6659732f",
+      "digest": "sha256:21ffe930013c91049d5078bca407544642e30bb8cf339a4f86f00045b68a77b8",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -256,7 +256,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/journaler.md",
-      "digest": "sha256:6f051da0152516d1421f063e8cb7ae9915faf5d90a944cd54177af16058e8b58",
+      "digest": "sha256:eed13e9b2bfa9396cc01cbe6587f2c140d834e0c9774b8207250a0ff8cc69876",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -267,7 +267,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/literal.md",
-      "digest": "sha256:a378de546edf844a868e42125c07f521c84f9cd546e6b742c56b508905e5392a",
+      "digest": "sha256:00f40dbf81276e9abeefd29b073776aecec83bd0068d1d5411e891f648bac9f8",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -278,7 +278,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/local-notes.md",
-      "digest": "sha256:da341fdda1b258814d81f9827b9b49e7167cc7e012071919dd29f739c7c068d6",
+      "digest": "sha256:d565f1fd0dd5655362f0fb1687ff0162de497e739bd5fcb082fdea44aecdc66d",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -289,7 +289,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/misnamed.md",
-      "digest": "sha256:8f03f6536f5efb61284270b2863c516b23ce67c99d88c634d56a362effd34bc4",
+      "digest": "sha256:8c86148dea971c68894bc5113b93726c234e2f85a48620a395f356e7f40f42e0",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -300,7 +300,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/modelled.md",
-      "digest": "sha256:fdb1107e42dcdc3cbb93b88c19b559a970fd13e7c0d67b11895b4c0f71108231",
+      "digest": "sha256:21ba6cbdd3e03251c179aa94c1974befd267aa2fcf6ddfff3aef4592a675194a",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -311,7 +311,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/oc-native.md",
-      "digest": "sha256:5183dab09264535e2a21ffe386abe49a7cd20ffd42cf2642b8aa2cc9e99a0c68",
+      "digest": "sha256:f7e20d9c1f1f91c6a74b49892d8ef40079b94573f968a8681f91568336792b98",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -322,7 +322,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/omp-native.md",
-      "digest": "sha256:5ed9c1807421c4df9473653fcc279acf330a049e064165e7013a2a0db73f50c7",
+      "digest": "sha256:56b38c9fc81183b15926d5c7f650399695b3696dd6f650a5bdd972d4b956d73b",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -333,7 +333,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/planner.md",
-      "digest": "sha256:54e13fd735b5360bc11d7c3ad899a9c0eada9db11dfaf204af45db749f1d8e58",
+      "digest": "sha256:330c908f0f910472f30940adf90412d09490e33f7a082a08d5bc2079777ec6f3",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -344,7 +344,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/quoted.md",
-      "digest": "sha256:1e3e4046536111f023763afcef29134cdd1b67b975ed8e6eaf3751c2b42fd2d6",
+      "digest": "sha256:1b169399c93a0d734b73cc6cf168807401f568533173712bf04e2bf02cb24a65",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -355,7 +355,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/recaller.md",
-      "digest": "sha256:a42b30498ec5df54a6cfd0859345728052bb5ae1853c465d27cec4a0c1f17de8",
+      "digest": "sha256:4f6a8628e5d784aaf5747f87482565bdbe6364177e1abf2fbd21d803dac4393f",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -366,7 +366,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/relaxed.md",
-      "digest": "sha256:bd67a7ad58ac9f7b1342f171c9e8e1fe6dccab31366fbba511bcc6c0b4fb14a4",
+      "digest": "sha256:9abba629530bc8818007cc189bba0055fbed9d517638ca4183598c5ff0345f48",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -377,7 +377,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/rememberer.md",
-      "digest": "sha256:d352ca3d5c323d1e4f271ee0d5c95ec69b187d53b614da72c298d2e435751839",
+      "digest": "sha256:899ee844a768a9f6205539e11d82195dacad2997cd3216e7909a3bdc5449457d",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -388,7 +388,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/researcher.md",
-      "digest": "sha256:e20499f695101ae32526b3f7b13d7d96591759bf62f357d21a9d6b787ecf740c",
+      "digest": "sha256:a3b24be30ec48064421a9465099d0501b6d0e572d1fcb9e95700198e336f6e74",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -399,7 +399,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/root-helper.md",
-      "digest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
+      "digest": "sha256:d6bb360a5fd11fa12d3b1bcb02a8130daea49d3659070762d4a464063fe53488",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -410,7 +410,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/scripted.md",
-      "digest": "sha256:61085b56af41b6b861d512d76a91c342b1cd10955a7161b08591c8ee0658fd7b",
+      "digest": "sha256:17d135999a25de4b807910c9d98c95b904573d3720c7912c61da7aa86cbcc769",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -421,7 +421,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/skilled.md",
-      "digest": "sha256:8c86af8022728cfdb5effbeaa8e56695af4580c7961617e927452f2746f9ea25",
+      "digest": "sha256:1efd455f34ab946e72cda4f93d675375aaee144317794ab9c3cc8a9fead79e44",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -432,7 +432,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/studio-qa.md",
-      "digest": "sha256:7307b89a9637f99f85b8317a8707bb9135dce2d2ae064e41955f42b5a66f3943",
+      "digest": "sha256:dfda37cdd0525690a1a1cfc40c3aa7b4c8b5d9aec1012ab67804d03127fae11a",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -443,7 +443,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/tagged.md",
-      "digest": "sha256:ae21c1e2605ac84b36d9a0c26c183998cac584ef45e006af52b7f9316d6f23a0",
+      "digest": "sha256:5479c0145822572ae2e8752f0134a57cf6162417be66a0e3dbb95032ea07072a",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",
@@ -454,7 +454,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.cursor/agents/wildcard.md",
-      "digest": "sha256:d1129084d4e413c53d25047a349d2f2754803edb8c14ec2e3b3a0a8329103598",
+      "digest": "sha256:92c669665b21f7f5b3a18961c763df6c6a685b5e058873aaf63334b74633384e",
       "harness": "cursor",
       "scope": "global",
       "destination": "user",

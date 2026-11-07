@@ -14,9 +14,9 @@
           "variant": "generated",
           "sourcePath": "agents/solo.md",
           "sourceDigest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
-          "converter": "omp/v5",
+          "converter": "omp/v6",
           "path": ".omp/agents/solo.md",
-          "digest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
+          "digest": "sha256:105292370ffa42b82883802b05ae6b84020596ba79d35518580257d96d5faddc",
           "requires": []
         }
       ]

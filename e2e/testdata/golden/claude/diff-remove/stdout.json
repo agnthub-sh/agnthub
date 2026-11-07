@@ -4,17 +4,20 @@
 # Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
 diff --git a/.claude/agents/drifter.md b/.claude/agents/drifter.md
 deleted file mode 100644
-index e3edc53cf2038cf3e8ef35b73824bd4ea295bf56..0000000000000000000000000000000000000000
+index 07042c8336c9241480cb4fdd543c8aac4a4ead29..0000000000000000000000000000000000000000
 --- a/.claude/agents/drifter.md
 +++ /dev/null
-@@ -1,5 +0,0 @@
+@@ -1,8 +0,0 @@
 ----
+-# Adapted from agents/drifter.md in localhost:8443/evolving
+-# Modified by agnthub: converted to the Claude Code agent format
+-# No license file found in localhost:8443/evolving
 -name: drifter
 -description: Agent whose source moves on after it is installed.
 ----
 -Revision one instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
-index 6e606745d53e8a3ca1e1050b4972de6ad0ec3da9..da4331bb52cc0d5423d56847d53c9a35b4fcf9fb 100644
+index 4be3f65fc7408759112b24aed395ae32623d2616..da4331bb52cc0d5423d56847d53c9a35b4fcf9fb 100644
 --- a/agnthub-lock.json
 +++ b/agnthub-lock.json
 @@ -1,27 +1,4 @@
@@ -36,9 +39,9 @@ index 6e606745d53e8a3ca1e1050b4972de6ad0ec3da9..da4331bb52cc0d5423d56847d53c9a35
 -          "variant": "generated",
 -          "sourcePath": "agents/drifter.md",
 -          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
--          "converter": "claude/v5",
+-          "converter": "claude/v6",
 -          "path": ".claude/agents/drifter.md",
--          "digest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
+-          "digest": "sha256:484f5b0840504611a00c6e6c302154c959a669e415e502f380a16b01ef563ec8",
 -          "requires": []
 -        }
 -      ]

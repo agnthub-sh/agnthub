@@ -16,9 +16,9 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "gemini/v5",
+          "converter": "gemini/v6",
           "path": "/agnthub-e2e/home/.gemini/agents/companion.md",
-          "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+          "digest": "sha256:689f9c35b2763adf9f79550c6b11005c89450380008eac7cdd78ecfc5e95602d",
           "requires": []
         }
       ]
@@ -37,9 +37,9 @@
           "variant": "generated",
           "sourcePath": "agents/helper.md",
           "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
-          "converter": "gemini/v5",
+          "converter": "gemini/v6",
           "path": "/agnthub-e2e/home/.gemini/agents/helper.md",
-          "digest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
+          "digest": "sha256:394271a4c7bece2f4f9e82956d82fddedcee0e270cf1e3483521b10853acc83f",
           "requires": []
         }
       ]
@@ -58,9 +58,9 @@
           "variant": "generated",
           "sourcePath": "agents/lead/AGENT.md",
           "sourceDigest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
-          "converter": "gemini/v5",
+          "converter": "gemini/v6",
           "path": "/agnthub-e2e/home/.gemini/agents/lead.md",
-          "digest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
+          "digest": "sha256:93e46b48f10b18d6d8dc3022c513b6fb62180d98b38902ef8ffc653b3c1c9cb3",
           "requires": [
             "agent:git:localhost:8443/companion.git::companion",
             "agent:git:localhost:8443/manifest.git::helper",
@@ -83,9 +83,9 @@
           "variant": "generated",
           "sourcePath": "native/claude/native-only.md",
           "sourceDigest": "sha256:0ed4be951d129f063ef866308d751ceb8a44f77dce1f570061a1baca2581cd99",
-          "converter": "gemini/v5",
+          "converter": "gemini/v6",
           "path": "/agnthub-e2e/home/.gemini/agents/native-only.md",
-          "digest": "sha256:702bef6e9ed1d331a9b2b86e013655fc5cc8816efa6efdede7ac56e8da72d2b9",
+          "digest": "sha256:bba979c75021cbc4837f9292b2220271395a33d4082f6a69ba9cd3b7d357096d",
           "requires": []
         }
       ]

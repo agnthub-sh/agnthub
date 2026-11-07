@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.codex/agents/annotated.toml",
-      "digest": "sha256:3f63ee53b2316c5970d685671bc06a2b225ab5cb0f8ed9c4563fcb1b590e50d7",
+      "digest": "sha256:f8ce76b60274235ddd434086ba3270deb2be18ddb0112c92c089e3eec321b5d6",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -15,7 +15,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/backgrounder.toml",
-      "digest": "sha256:9d0cb7f82af43d03bae73634766843051f50c9d23d4eb72436930762f5a4693c",
+      "digest": "sha256:dbe30d23ce92f9a010dbd3d72e4f412d933528b5db28fa9d8de1f3abdcf33738",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -27,7 +27,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/bom.toml",
-      "digest": "sha256:4d60e3ba4834998e527766c7c8173b828b4083a5ffa40f458e32df67688d2770",
+      "digest": "sha256:e1c667bcccbc6488c2628b4abec4bc884d5aa70027ac34df2aab0a1e7e838b1e",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -39,7 +39,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/bounded.toml",
-      "digest": "sha256:bc2eba7ceb8e1c1a9c921dc6d3f5c5269f6ec2cc79121c56b652eb120a85d968",
+      "digest": "sha256:f7c2e6525357b71aae7ce3f3c55ce89cbbece92b8a721ae5f2d6663313057d8f",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -51,7 +51,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/colon.toml",
-      "digest": "sha256:019ce62a02bd0e4f72ee3c2a5363f90bf920d3877b7fd417f01b4b7fe6d994a4",
+      "digest": "sha256:26999ecc83b384bd2e8be4e9469e79d20249f074a696935a0912f1659f80f95d",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -111,7 +111,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/defaulted.toml",
-      "digest": "sha256:9898669b6699304e241dfb194618353faa73e790dbc3a4235672cf02ed87196d",
+      "digest": "sha256:896160df8b6e9f6db15afeaf3d893a4b9f22b06ca46289301970ee81f3cc59b3",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -123,7 +123,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/dual.toml",
-      "digest": "sha256:71caaca253f108db60d5b6fb7777baedfb1a2fbdc62cb2b834a20fa8ffc2002a",
+      "digest": "sha256:b38c57bbec59a8ddcbe21d0c9794412ec4db73106d3a463729bc0bcfb2913f19",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -135,7 +135,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/fixer.toml",
-      "digest": "sha256:7af97c32c4f2d1777d6042198ed803c05dc8ad6a415739c3dd6474d0df63dd3b",
+      "digest": "sha256:41c5597f7687655b9ee153f183ef37571fe9f4212ce53aafe556e225af93c66c",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -147,7 +147,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/gh-manual.toml",
-      "digest": "sha256:999e09495c96965fe1a6ce6c22ea447d27b03822846e4cc8b5264fbe9bcc5685",
+      "digest": "sha256:478b5a994cd5287f6adb8ee318d4c7ddbede355d7680ffc208bfe261f6a31330",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -159,7 +159,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/isolated.toml",
-      "digest": "sha256:e3e6d1abddbd520322d629969966bea974305dfee1b3341b0ee47c7f78e79509",
+      "digest": "sha256:7831936f314c21f98a131e21ec7b324c342dfeb08f81bc1eb5946c6042103597",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -171,7 +171,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/journaler.toml",
-      "digest": "sha256:62f774aceb85826968093270258b37c37eba3b72416e1c0950eabd113b125996",
+      "digest": "sha256:c9d250758df36caec1167aaafe1832094ff5384d6265bbd690c340dd45c91499",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -183,7 +183,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/literal.toml",
-      "digest": "sha256:8e35fdde028d1c7b6f54a078c6349ef3d259c1a098df02d0e7e464230e74abce",
+      "digest": "sha256:1790660844c6a51bf54f1c210e69216c4fdc949f5438092089b1fb3fb6b9f1d2",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -195,7 +195,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/local-notes.toml",
-      "digest": "sha256:bc04eff335e1b23c7ef47d662087e155869bc5d2761a8d0f788e869391f585d5",
+      "digest": "sha256:04bf374fdb9bb119de42fdf4bd2aa71e4aa8edba84df13033d71093c60053b2c",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -207,7 +207,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/misnamed.toml",
-      "digest": "sha256:b90ad43281d6643aeb0caaed139d32e15885aff6b34f496c28f1192afc2a2b4e",
+      "digest": "sha256:0ee47ada24343352b9c9a15d992c946664a417fc5eb4247fcd3250e3b11268d5",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -219,7 +219,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/modelled.toml",
-      "digest": "sha256:c138b09c0c6c17203e157bc8154968d396cf5984529c5720de72f7af8ff74420",
+      "digest": "sha256:ba8b9b7efdbcba24a7e9f93d7c8f6d7ef4246c1a5423af50bcb056f9056348dc",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -231,7 +231,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/no-shell.toml",
-      "digest": "sha256:d7c2805ed389f320e74f7f987997e434eda8518a7dd524ac9a8b8cc16b4b0899",
+      "digest": "sha256:800ef34ff6b5120a74b39b9688c940f1dee708ba34d5f45608a7c7c199098c99",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -243,7 +243,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/planner.toml",
-      "digest": "sha256:8deba390f39ab25d9c83dcac3ecfda0a2f9296abced19191234230805cc043d1",
+      "digest": "sha256:310c32d3a58e34c56b553babfb985e7fa2bdee604d393fd1eac4b9b3708b0c3d",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -255,7 +255,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/quoted.toml",
-      "digest": "sha256:c3c9adf6288b0912e213b61a1391e78a45321880d0baa4a1d33df27fbf41f395",
+      "digest": "sha256:14f407c73c56b5d50b63291a7f29c5190fe00a450f5782e8766a3a37315329c8",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -267,7 +267,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/relaxed.toml",
-      "digest": "sha256:9735bc67afe02633b3d7127f60b6499c1e45e0154ca495063e820cc8687b5fb0",
+      "digest": "sha256:3b4376555a09d1e288898afa9dc9a3307ed85f110ff4e4291f969934b9ec3f88",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -279,7 +279,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/rememberer.toml",
-      "digest": "sha256:9a17b71c9004d12df7837212c2a485b20e17022dad663e585844e345c2cd5397",
+      "digest": "sha256:7d0129cf3be7206b56df617bbf28aed5a06b487674602bff0faa7f9db4f22af4",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -291,7 +291,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/researcher.toml",
-      "digest": "sha256:965f989679b4b96f53cc49da9969320ece8ba8ef2de68cd52afc808a6ccea1e3",
+      "digest": "sha256:cfc54a228490b1d39400bf4ac901297fc0da94841d01466b1d101d231b1dc46b",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -303,7 +303,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/root-helper.toml",
-      "digest": "sha256:719a6d4ab1dcf138b888656a78027e5d2ceaab015e818620b40d07cda0a84394",
+      "digest": "sha256:1b8978db0fd3922cfdb4144b59243d0dc8ccc6691206cdd0dc03dbbb5997e97b",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -315,7 +315,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/scripted.toml",
-      "digest": "sha256:5a3afed97586b9ca72bb240ee33bbd3996f0dfad368fa356ac3d1268d5d2ef4a",
+      "digest": "sha256:64ca99abfd7df37d86ec8303e8340d56f160ca388d7376175d2fe29446dcee69",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -327,7 +327,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/skilled.toml",
-      "digest": "sha256:9b2e43fe17e55eb77652f5f44c772ea94f363cd8f359ead1882b6502b9b5034f",
+      "digest": "sha256:34e7a29124952b4e471a53378c7c14ca61be637e3327ffb8d7c4c2264e00e8bb",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -339,7 +339,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/studio-qa.toml",
-      "digest": "sha256:b660af38edef86b9954bdd019fd894913a16086346541a0b026c8b2b64e9be92",
+      "digest": "sha256:75fd61cbd75bf6bb0a6a4a22331741fea1c5786253320f5a8efe5edd0c5497cb",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -351,7 +351,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/tagged.toml",
-      "digest": "sha256:f403eafd5a3861502263a0d51f84ba43692b128a9e0fec9d0b4ab0b1400cc733",
+      "digest": "sha256:6d868069dea6dfe46966ed94c058513f5bd2b9abfead5fba0dfabb0fa55319cd",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -363,7 +363,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.codex/agents/wildcard.toml",
-      "digest": "sha256:cd0acd39a6918ffdbb6120271978b9bbf61b57059403d0236c9f2f7265086826",
+      "digest": "sha256:bb0972b1264ebf00600e73273267052c91be4db130c57139050a70f8f846ea86",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

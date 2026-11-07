@@ -3,11 +3,13 @@
 # Check: git -C /agnthub-e2e/project apply --check
 # Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
 diff --git a/.opencode/agents/drifter.md b/.opencode/agents/drifter.md
-index 9fb741fa2d79bdba2d2ae5a6ada5437266ed8f32..d31a7dc0c80503a1d1c4ca3c346d275345a4ff72 100644
+index dbf1c18ecc271d52870483cbc4984351779a7d9c..7b8b4a105e515d5dc6860ef6f98f6e34ee2bd641 100644
 --- a/.opencode/agents/drifter.md
 +++ b/.opencode/agents/drifter.md
-@@ -1,5 +1,5 @@
- ---
+@@ -2,7 +2,7 @@
+ # Adapted from agents/drifter.md in localhost:8443/evolving
+ # Modified by agnthub: converted to the OpenCode agent format
+ # No license file found in localhost:8443/evolving
 -description: Agent whose source moves on after it is installed.
 +description: Agent whose source moved on after it was installed.
  mode: subagent
@@ -15,7 +17,7 @@ index 9fb741fa2d79bdba2d2ae5a6ada5437266ed8f32..d31a7dc0c80503a1d1c4ca3c346d2753
 -Revision one instructions.
 +Revision two instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
-index 01a8c48a1facc80f66da677e95295b7c4935ad65..5e096806c1674d3c7af25854d41e2d68fc58c4bf 100644
+index e2b51759e5b69f1bc007bd8e2ed59e6709bb0acb..54f69b9e633301f5118bd0862975d381ae47256f 100644
 --- a/agnthub-lock.json
 +++ b/agnthub-lock.json
 @@ -6,7 +6,7 @@
@@ -33,10 +35,10 @@ index 01a8c48a1facc80f66da677e95295b7c4935ad65..5e096806c1674d3c7af25854d41e2d68
            "sourcePath": "agents/drifter.md",
 -          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
 +          "sourceDigest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
-           "converter": "opencode/v5",
+           "converter": "opencode/v6",
            "path": ".opencode/agents/drifter.md",
--          "digest": "sha256:01ba7b1c547b2e5f2bcd7b36198905e6aab5634893233019ce95c672e68d3ee9",
-+          "digest": "sha256:ef9ed46d176110c970ab51429621fbe2d7dbe8dd1135887ba85ad6f82382ae0d",
+-          "digest": "sha256:2ce0f58388ae893bf4ac265f88412cbae7c73e77a89d67e2ab31afabafbaec45",
++          "digest": "sha256:8bd1b76d1cdddd80ae6a58da27e2f551f5dc5703240b1671ec2f6021cfa0fee7",
            "requires": []
          }
        ]

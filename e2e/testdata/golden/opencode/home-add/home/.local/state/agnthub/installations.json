@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/home/.config/opencode/agents/companion.md",
-      "digest": "sha256:7d3f9a795bad13166e76e115d6e8f9e5aaf4ebdad9ab62ebb62bc9cb57dcf987",
+      "digest": "sha256:9d080e5d625ec6b92e5b8a042c05ec7e38966090d68fc3dbfe5c63e90982a785",
       "harness": "opencode",
       "scope": "global",
       "destination": "user",

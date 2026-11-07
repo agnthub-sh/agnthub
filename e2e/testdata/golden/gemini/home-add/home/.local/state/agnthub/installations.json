@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/home/.gemini/agents/companion.md",
-      "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+      "digest": "sha256:52192a0064f7a14fbb55187c6f3fdd46ff1c05d6218e18e8c50389be4e2078ae",
       "harness": "gemini",
       "scope": "global",
       "destination": "user",

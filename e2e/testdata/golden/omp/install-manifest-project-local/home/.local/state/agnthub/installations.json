@@ -16,7 +16,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.omp/agents/companion.md",
-      "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
+      "digest": "sha256:3e2cb8b34a8b7c9f7739223b57fe9c61dd199a4706c781408d4e510a9d0253f9",
       "harness": "omp",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -31,7 +31,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.omp/agents/helper.md",
-      "digest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
+      "digest": "sha256:da3d740d00152e72716530b0d4dece6680dcfad569d778a4bef7817df5cb4818",
       "harness": "omp",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -46,7 +46,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.omp/agents/lead.md",
-      "digest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
+      "digest": "sha256:d8c21b66d69f264cc9674f92131164400f48f781a468f400cc3b95b35a1989ed",
       "harness": "omp",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",
@@ -61,7 +61,7 @@
     },
     {
       "path": "/agnthub-e2e/project/.omp/agents/native-only.md",
-      "digest": "sha256:d273eef97a06265258279cc37c5997a83e51b51ed07c852fa9c9214c6a148598",
+      "digest": "sha256:6be8ee406198144b3ec7b23d8675752be15e9ffd67ad42875770932700c11cf7",
       "harness": "omp",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

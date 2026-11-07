@@ -3,11 +3,12 @@
 # Check: git -C /agnthub-e2e/project apply --check
 # Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
 diff --git a/.omp/agents/drifter.md b/.omp/agents/drifter.md
-index e3edc53cf2038cf3e8ef35b73824bd4ea295bf56..586fadb6292ccaf71c2e32f9e9935eebf0592c2c 100644
+index 3f361af2ebd76c65f93ca1a8dad609d396d92cae..de0234d4d137e1ddf3a9c8ec8adef34101512f84 100644
 --- a/.omp/agents/drifter.md
 +++ b/.omp/agents/drifter.md
-@@ -1,5 +1,5 @@
- ---
+@@ -3,6 +3,6 @@
+ # Modified by agnthub: converted to the omp agent format
+ # No license file found in localhost:8443/evolving
  name: drifter
 -description: Agent whose source moves on after it is installed.
 ----
@@ -16,7 +17,7 @@ index e3edc53cf2038cf3e8ef35b73824bd4ea295bf56..586fadb6292ccaf71c2e32f9e9935eeb
 +---
 +Revision two instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
-index 28c0ddba3c7e062d62570d6fb0d587385bfa6200..c4ed3dce2d7da66a7c31c067dc76eb851a1d8922 100644
+index 40be6a7e67ad35f30b14d8d796080f9040057bc7..f44ce2c894423d551d7899768227c4a2504e440c 100644
 --- a/agnthub-lock.json
 +++ b/agnthub-lock.json
 @@ -6,7 +6,7 @@
@@ -34,10 +35,10 @@ index 28c0ddba3c7e062d62570d6fb0d587385bfa6200..c4ed3dce2d7da66a7c31c067dc76eb85
            "sourcePath": "agents/drifter.md",
 -          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
 +          "sourceDigest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
-           "converter": "omp/v5",
+           "converter": "omp/v6",
            "path": ".omp/agents/drifter.md",
--          "digest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
-+          "digest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
+-          "digest": "sha256:057e515f00d1b692dad8292ca4984ff92d1cc50073b2721a12119675a36494b0",
++          "digest": "sha256:e2c4f136e7650e7e0603f91f122a85ed7e46f0a451c5788d63996d4cb424ca99",
            "requires": []
          }
        ]

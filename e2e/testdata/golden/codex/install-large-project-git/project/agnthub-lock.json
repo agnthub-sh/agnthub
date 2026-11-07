@@ -15,9 +15,9 @@
           "variant": "generated",
           "sourcePath": "agents/large-probe.md",
           "sourceDigest": "sha256:96ba3da630d537cfbc09c4a35980eb414a83113049cb2f7f5d333e47eea5d4cc",
-          "converter": "codex/v5",
+          "converter": "codex/v6",
           "path": ".codex/agents/large-probe.toml",
-          "digest": "sha256:6ee7b053bbce6b0fcf9cfae6aee946de5a2376cc7d163b8d7349bc0a31bf4c9b",
+          "digest": "sha256:b0663cda7350c32fcf1320645e46be019bdb696265569adfbe6e36c07c40135d",
           "requires": []
         }
       ]

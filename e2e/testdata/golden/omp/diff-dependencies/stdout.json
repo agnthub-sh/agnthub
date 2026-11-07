@@ -18,40 +18,49 @@ index 0000000000000000000000000000000000000000..f7e2bdfd97b5aeba4a8d7e40a53b605d
 +Use this skill when the lead asks for it.
 diff --git a/.omp/agents/companion.md b/.omp/agents/companion.md
 new file mode 100644
-index 0000000000000000000000000000000000000000..0b75b9883319a9470de9c518302f84c7e25cb24c
+index 0000000000000000000000000000000000000000..8866a9c44d56489fd316eb727cebda855df16ed2
 --- /dev/null
 +++ b/.omp/agents/companion.md
-@@ -0,0 +1,5 @@
+@@ -0,0 +1,8 @@
 +---
++# Adapted from agents/companion.md in localhost:8443/companion
++# Modified by agnthub: converted to the omp agent format
++# No license file found in localhost:8443/companion
 +name: companion
 +description: Companion agent fetched from another Git source.
 +---
 +Assist the lead from another repository.
 diff --git a/.omp/agents/helper.md b/.omp/agents/helper.md
 new file mode 100644
-index 0000000000000000000000000000000000000000..ddf7a79996cd027eeead04f99ade0e3a89b0a0c8
+index 0000000000000000000000000000000000000000..aef6550633bfb114fad863119dd37f3d7a4cb5aa
 --- /dev/null
 +++ b/.omp/agents/helper.md
-@@ -0,0 +1,5 @@
+@@ -0,0 +1,8 @@
 +---
++# Adapted from agents/helper.md in localhost:8443/manifest
++# Modified by agnthub: converted to the omp agent format
++# No license file found in localhost:8443/manifest
 +name: helper
 +description: Helps the lead agent.
 +---
 +Help the lead.
 diff --git a/.omp/agents/lead.md b/.omp/agents/lead.md
 new file mode 100644
-index 0000000000000000000000000000000000000000..187ccde134a6297e75ab302742974c647f7c839c
+index 0000000000000000000000000000000000000000..9d61d187cd19d7ba7c72b55299b6434a42378c54
 --- /dev/null
 +++ b/.omp/agents/lead.md
-@@ -0,0 +1,5 @@
+@@ -0,0 +1,8 @@
 +---
++# Adapted from agents/lead/AGENT.md in localhost:8443/manifest
++# Modified by agnthub: converted to the omp agent format
++# No license file found in localhost:8443/manifest
 +name: lead
 +description: Leads a change end to end and delegates to its companions.
 +---
 +Coordinate the helper and the companion to finish the change.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
 new file mode 100644
-index 0000000000000000000000000000000000000000..d2903dac1d82c49a0b30443bb2eaa790c5e84ae3
+index 0000000000000000000000000000000000000000..0001a3fe819f556b2fbd15323ace8b6104b78b27
 --- /dev/null
 +++ b/agnthub-lock.json
 @@ -0,0 +1,92 @@
@@ -73,9 +82,9 @@ index 0000000000000000000000000000000000000000..d2903dac1d82c49a0b30443bb2eaa790
 +          "variant": "generated",
 +          "sourcePath": "agents/companion.md",
 +          "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-+          "converter": "omp/v5",
++          "converter": "omp/v6",
 +          "path": ".omp/agents/companion.md",
-+          "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
++          "digest": "sha256:3e2cb8b34a8b7c9f7739223b57fe9c61dd199a4706c781408d4e510a9d0253f9",
 +          "requires": []
 +        }
 +      ]
@@ -94,9 +103,9 @@ index 0000000000000000000000000000000000000000..d2903dac1d82c49a0b30443bb2eaa790
 +          "variant": "generated",
 +          "sourcePath": "agents/helper.md",
 +          "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
-+          "converter": "omp/v5",
++          "converter": "omp/v6",
 +          "path": ".omp/agents/helper.md",
-+          "digest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
++          "digest": "sha256:bf23e84eedc2a34f091da467d165ac21ff3b4a4a6c61b890fdf84545cf4fe74f",
 +          "requires": []
 +        }
 +      ]
@@ -115,9 +124,9 @@ index 0000000000000000000000000000000000000000..d2903dac1d82c49a0b30443bb2eaa790
 +          "variant": "generated",
 +          "sourcePath": "agents/lead/AGENT.md",
 +          "sourceDigest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
-+          "converter": "omp/v5",
++          "converter": "omp/v6",
 +          "path": ".omp/agents/lead.md",
-+          "digest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
++          "digest": "sha256:9d54593d4ea054811976cbbfc90edaba6224b30531622a2e47ee650e9ca0f13e",
 +          "requires": [
 +            "agent:git:localhost:8443/companion.git::companion",
 +            "agent:git:localhost:8443/manifest.git::helper",

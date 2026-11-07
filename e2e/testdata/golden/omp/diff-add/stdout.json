@@ -4,18 +4,21 @@
 # Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
 diff --git a/.omp/agents/drifter.md b/.omp/agents/drifter.md
 new file mode 100644
-index 0000000000000000000000000000000000000000..e3edc53cf2038cf3e8ef35b73824bd4ea295bf56
+index 0000000000000000000000000000000000000000..3f361af2ebd76c65f93ca1a8dad609d396d92cae
 --- /dev/null
 +++ b/.omp/agents/drifter.md
-@@ -0,0 +1,5 @@
+@@ -0,0 +1,8 @@
 +---
++# Adapted from agents/drifter.md in localhost:8443/evolving
++# Modified by agnthub: converted to the omp agent format
++# No license file found in localhost:8443/evolving
 +name: drifter
 +description: Agent whose source moves on after it is installed.
 +---
 +Revision one instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
 new file mode 100644
-index 0000000000000000000000000000000000000000..28c0ddba3c7e062d62570d6fb0d587385bfa6200
+index 0000000000000000000000000000000000000000..40be6a7e67ad35f30b14d8d796080f9040057bc7
 --- /dev/null
 +++ b/agnthub-lock.json
 @@ -0,0 +1,27 @@
@@ -37,9 +40,9 @@ index 0000000000000000000000000000000000000000..28c0ddba3c7e062d62570d6fb0d58738
 +          "variant": "generated",
 +          "sourcePath": "agents/drifter.md",
 +          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
-+          "converter": "omp/v5",
++          "converter": "omp/v6",
 +          "path": ".omp/agents/drifter.md",
-+          "digest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
++          "digest": "sha256:057e515f00d1b692dad8292ca4984ff92d1cc50073b2721a12119675a36494b0",
 +          "requires": []
 +        }
 +      ]

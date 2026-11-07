@@ -15,7 +15,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.config/opencode/agents/companion.md",
-      "digest": "sha256:7d3f9a795bad13166e76e115d6e8f9e5aaf4ebdad9ab62ebb62bc9cb57dcf987",
+      "digest": "sha256:f46d9cc1ac5a8c9aedf1d9906ed1503c4fc56fa585670fd2524c3090c4e06cce",
       "harness": "opencode",
       "scope": "global",
       "destination": "user",
@@ -26,7 +26,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.config/opencode/agents/helper.md",
-      "digest": "sha256:ba079e88403d4925a38e044106317520303d8b37e4039278ef7165ac99863e88",
+      "digest": "sha256:bd1cac20bbec376dc16269252de6b5547477b1ddc35d99416d2eca230df732b9",
       "harness": "opencode",
       "scope": "global",
       "destination": "user",
@@ -48,7 +48,7 @@
     },
     {
       "path": "/agnthub-e2e/home/.config/opencode/agents/native-only.md",
-      "digest": "sha256:5a23d5fc7bdd156dba00c32439d5f6550ebdc86003513dd7e0e18d548dab79dc",
+      "digest": "sha256:83062e78c164b86a629797b77c139863bf220e8033254c5b1f1136cc370d8cad",
       "harness": "opencode",
       "scope": "global",
       "destination": "user",

@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.opencode/agents/drifter.md",
-      "digest": "sha256:01ba7b1c547b2e5f2bcd7b36198905e6aab5634893233019ce95c672e68d3ee9",
+      "digest": "sha256:2ce0f58388ae893bf4ac265f88412cbae7c73e77a89d67e2ab31afabafbaec45",
       "harness": "opencode",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

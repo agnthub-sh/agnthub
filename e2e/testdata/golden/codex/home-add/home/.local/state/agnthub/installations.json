@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/home/.codex/agents/companion.toml",
-      "digest": "sha256:fca1ae6b7d4fdb1a7650b1772a792b8e6d4ec7ea187a6bca55106fe92706751a",
+      "digest": "sha256:94f6f65202eff03df6f4974961ea74e160b9bd518a6899b2f0283f009905e8ec",
       "harness": "codex",
       "scope": "global",
       "destination": "user",

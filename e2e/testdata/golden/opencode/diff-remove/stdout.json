@@ -4,17 +4,20 @@
 # Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
 diff --git a/.opencode/agents/drifter.md b/.opencode/agents/drifter.md
 deleted file mode 100644
-index 9fb741fa2d79bdba2d2ae5a6ada5437266ed8f32..0000000000000000000000000000000000000000
+index dbf1c18ecc271d52870483cbc4984351779a7d9c..0000000000000000000000000000000000000000
 --- a/.opencode/agents/drifter.md
 +++ /dev/null
-@@ -1,5 +0,0 @@
+@@ -1,8 +0,0 @@
 ----
+-# Adapted from agents/drifter.md in localhost:8443/evolving
+-# Modified by agnthub: converted to the OpenCode agent format
+-# No license file found in localhost:8443/evolving
 -description: Agent whose source moves on after it is installed.
 -mode: subagent
 ----
 -Revision one instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
-index 01a8c48a1facc80f66da677e95295b7c4935ad65..da4331bb52cc0d5423d56847d53c9a35b4fcf9fb 100644
+index e2b51759e5b69f1bc007bd8e2ed59e6709bb0acb..da4331bb52cc0d5423d56847d53c9a35b4fcf9fb 100644
 --- a/agnthub-lock.json
 +++ b/agnthub-lock.json
 @@ -1,27 +1,4 @@
@@ -36,9 +39,9 @@ index 01a8c48a1facc80f66da677e95295b7c4935ad65..da4331bb52cc0d5423d56847d53c9a35
 -          "variant": "generated",
 -          "sourcePath": "agents/drifter.md",
 -          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
--          "converter": "opencode/v5",
+-          "converter": "opencode/v6",
 -          "path": ".opencode/agents/drifter.md",
--          "digest": "sha256:01ba7b1c547b2e5f2bcd7b36198905e6aab5634893233019ce95c672e68d3ee9",
+-          "digest": "sha256:2ce0f58388ae893bf4ac265f88412cbae7c73e77a89d67e2ab31afabafbaec45",
 -          "requires": []
 -        }
 -      ]

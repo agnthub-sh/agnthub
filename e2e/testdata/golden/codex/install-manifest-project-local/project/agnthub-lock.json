@@ -16,9 +16,9 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "codex/v5",
+          "converter": "codex/v6",
           "path": ".codex/agents/companion.toml",
-          "digest": "sha256:fca1ae6b7d4fdb1a7650b1772a792b8e6d4ec7ea187a6bca55106fe92706751a",
+          "digest": "sha256:cdf69b0a7685d0c9083dd9f80da57302c1117b0b88822ff7453f77f798a4bec2",
           "requires": []
         }
       ]
@@ -36,9 +36,9 @@
           "variant": "generated",
           "sourcePath": "agents/codex-helper.md",
           "sourceDigest": "sha256:cc9e4a2f0fa702786f557b65d4873335bccec56f434a4db14408ca4e8538a750",
-          "converter": "codex/v5",
+          "converter": "codex/v6",
           "path": ".codex/agents/codex-helper.toml",
-          "digest": "sha256:9fbc05be9d76978bcd342dfb10c42138c5343fed0585b12f6dfe4ee13fedb096",
+          "digest": "sha256:3d60a2d6f1d0e89ad907a8f03b900b27fcc8da5e1e64fbc6a355013d9c34ee37",
           "requires": []
         }
       ]
@@ -56,9 +56,9 @@
           "variant": "generated",
           "sourcePath": "agents/helper.md",
           "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
-          "converter": "codex/v5",
+          "converter": "codex/v6",
           "path": ".codex/agents/helper.toml",
-          "digest": "sha256:5645bf993fe1898678077834fc6b86d110fad89a8d01b31b0d831324e55c1e8f",
+          "digest": "sha256:6c3ef34af952131d6079eb83b6daafe73786661ce335a83384df2778c5381662",
           "requires": []
         }
       ]

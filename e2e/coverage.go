@@ -358,6 +358,10 @@ var scenarios = []scenario{
 		"invalid native Variant for the target: refused, never converted instead", "broken"),
 	conversion("Variants and conversion", "convert-portable-metadata",
 		"portable core with descriptive metadata (noted, omitted)", "tagged"),
+	conversion("Variants and conversion", "convert-attribution",
+		"converted file starts with comments naming its source file and repository, the "+
+			"modification, the root `LICENSE`'s copyright lines and the license it declares; "+
+			"the Harness loads it as before", "tagged"),
 	conversion("Variants and conversion", "portable-as-claude",
 		"portable core written for Claude Code (`model`, `tools`, `color`): read as a Claude "+
 			"Code agent", "claude-shaped"),

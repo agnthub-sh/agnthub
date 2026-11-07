@@ -1091,6 +1091,7 @@
       "action": "create",
       "notes": [
         "omitted author: descriptive metadata",
+        "omitted license: descriptive metadata",
         "omitted tags: descriptive metadata",
         "omitted version: descriptive metadata"
       ]

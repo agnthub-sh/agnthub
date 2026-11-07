@@ -107,6 +107,8 @@ func NewApp(app App) *App {
 		} else {
 			api := apiclient.Load(app.Env, configured.URL, configured.Key)
 			app.Adoption = adoption.New(app.Env, Version, &api)
+			// The one-time notice goes to stderr, also with --json, so stdout stays data.
+			app.Adoption.NoticeOut = app.Stderr
 		}
 	}
 	app.styledStderr = isTerminal(app.Stderr) && app.Env.Get("TERM") != "dumb"

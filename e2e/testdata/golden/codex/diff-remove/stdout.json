@@ -4,17 +4,20 @@
 # Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
 diff --git a/.codex/agents/drifter.toml b/.codex/agents/drifter.toml
 deleted file mode 100644
-index ce34f572d6eb33b10fdc0a50cf80b011aae97b52..0000000000000000000000000000000000000000
+index 53f0e4bc18fcc831eb467f7bf9a1881c38a731cb..0000000000000000000000000000000000000000
 --- a/.codex/agents/drifter.toml
 +++ /dev/null
-@@ -1,5 +0,0 @@
+@@ -1,8 +0,0 @@
+-# Adapted from agents/drifter.md in localhost:8443/evolving
+-# Modified by agnthub: converted to the Codex agent format
+-# No license file found in localhost:8443/evolving
 -name = 'drifter'
 -description = 'Agent whose source moves on after it is installed.'
 -developer_instructions = """
 -Revision one instructions.
 -"""
 diff --git a/agnthub-lock.json b/agnthub-lock.json
-index 91a5c23901254eba47a8e591df14ada99a9bb9d4..da4331bb52cc0d5423d56847d53c9a35b4fcf9fb 100644
+index 2def9140fa7a5d9fcf92c32071f5087b249cc82c..da4331bb52cc0d5423d56847d53c9a35b4fcf9fb 100644
 --- a/agnthub-lock.json
 +++ b/agnthub-lock.json
 @@ -1,27 +1,4 @@
@@ -36,9 +39,9 @@ index 91a5c23901254eba47a8e591df14ada99a9bb9d4..da4331bb52cc0d5423d56847d53c9a35
 -          "variant": "generated",
 -          "sourcePath": "agents/drifter.md",
 -          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
--          "converter": "codex/v5",
+-          "converter": "codex/v6",
 -          "path": ".codex/agents/drifter.toml",
--          "digest": "sha256:47588c996808366eb3048504562a73f8d77c1e0202b032767bbe59d464f664d6",
+-          "digest": "sha256:835df3e7d2e0d77600f74edff7fe22c159e7dbc79d25517967d8de5a72b63ec1",
 -          "requires": []
 -        }
 -      ]

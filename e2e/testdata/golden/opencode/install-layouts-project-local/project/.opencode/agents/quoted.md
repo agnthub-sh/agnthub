@@ -1,4 +1,9 @@
 ---
+# Adapted from .claude/agents/quoted.md
+# Modified by agnthub: converted to the OpenCode agent format
+# Copyright (c) 2026 agnthub e2e fixtures: layouts
+# Copyright (c) 2026 Second Holder <holder@example.com>
+# License: see LICENSE
 description: 'Reviews: the "risky" parts of a change, and it''s careful.'
 mode: subagent
 permission:

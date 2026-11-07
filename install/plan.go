@@ -12,6 +12,7 @@ import (
 	"github.com/agnthub-sh/agnthub/agent"
 	"github.com/agnthub-sh/agnthub/harness"
 	"github.com/agnthub-sh/agnthub/skills"
+	"github.com/agnthub-sh/agnthub/source"
 	"github.com/agnthub-sh/agnthub/state"
 )
 
@@ -240,6 +241,11 @@ type Target struct {
 	// Requires lists, per Harness, the state.RequireAgent/RequireSkill entries of
 	// what this Target needs. A nil map records unknown requirements.
 	Requires map[agent.HarnessID][]string
+	// Converter is the converter id a restore reproduces, per Harness: the lock's
+	// record of each generated artifact. A lock recorded before converters
+	// attributed their output (harness.Unattributed) restores without the
+	// attribution header; nil or "" plans with the current converter.
+	Converter map[agent.HarnessID]string
 }
 
 // Request describes what to plan.
@@ -332,6 +338,14 @@ func (p *Planner) item(req Request, target Target, harnessID agent.HarnessID) (I
 			return item, nil
 		}
 	}
+	if artifact.Generated {
+		artifact, err = attribute(installer, def, target, item.Source, sourcePath, sourceRaw,
+			artifact)
+		if err != nil {
+			item.Action, item.Reason = ActionInvalid, err.Error()
+			return item, nil
+		}
+	}
 	if advisor, ok := installer.(harness.DependencyAdvisor); ok {
 		artifact.Notes = append(
 			artifact.Notes,
@@ -390,6 +404,56 @@ func render(
 		return artifact, variant.Path, variant.Raw, err
 	}
 	return registry.Generate(installer, def)
+}
+
+// attribute marks a generated artifact as adapted from its source file, with
+// the source's copyright notice and license (harness.Attribute), except when a
+// restore reproduces a lock recorded before converters attributed.
+func attribute(
+	installer harness.Installer,
+	def *agent.Definition,
+	target Target,
+	src state.LockedSource,
+	sourcePath string,
+	sourceRaw []byte,
+	artifact harness.Artifact,
+) (harness.Artifact, error) {
+	if harness.Unattributed(target.Converter[installer.ID()]) {
+		return harness.WithoutAttribution(installer.ID(), artifact), nil
+	}
+	return harness.Attribute(installer, def.ID, artifact, harness.Attribution{
+		Source:   sourceName(src),
+		Path:     sourcePath,
+		Declared: declaredLicense(sourcePath, sourceRaw),
+		License:  def.License,
+	})
+}
+
+// sourceName names a source repository in an attribution: GitHub and Git
+// sources by host and path; "" for a local directory, whose path is the
+// user's own.
+func sourceName(src state.LockedSource) string {
+	switch source.Kind(src.Kind) {
+	case source.KindGitHub:
+		return source.GitHubHost + "/" + src.Locator
+	case source.KindGit:
+		return strings.TrimSuffix(src.Locator, ".git")
+	default:
+		return ""
+	}
+}
+
+// declaredLicense is the license field of a Markdown source file's
+// frontmatter, or "".
+func declaredLicense(sourcePath string, raw []byte) string {
+	if !strings.HasSuffix(sourcePath, ".md") {
+		return ""
+	}
+	doc, err := agent.ParseMarkdownLenient(sourcePath, raw)
+	if err != nil {
+		return ""
+	}
+	return doc.String("license")
 }
 
 // withoutShellReason refuses an Agent that would lose the shell access it uses

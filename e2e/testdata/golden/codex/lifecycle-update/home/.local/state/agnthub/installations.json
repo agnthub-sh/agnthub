@@ -3,7 +3,7 @@
   "records": [
     {
       "path": "/agnthub-e2e/project/.codex/agents/drifter.toml",
-      "digest": "sha256:b4745946769bcaef3e25194d572f851d2e1df969a64ae631eab49d2174188c71",
+      "digest": "sha256:91623db2259f15b75ca36616b180e5c7b6a4af01c59c91e2af42289aef60aa26",
       "harness": "codex",
       "scope": "project",
       "projectRoot": "/agnthub-e2e/project",

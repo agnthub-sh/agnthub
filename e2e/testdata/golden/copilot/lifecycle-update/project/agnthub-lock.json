@@ -16,9 +16,9 @@
           "variant": "generated",
           "sourcePath": "agents/drifter.md",
           "sourceDigest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
-          "converter": "copilot/v5",
+          "converter": "copilot/v6",
           "path": ".github/agents/drifter.agent.md",
-          "digest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
+          "digest": "sha256:1f867c0ebba51d69ccc057ea8596186a45579023bf43a1a0dca9f71940e6a030",
           "requires": []
         }
       ]

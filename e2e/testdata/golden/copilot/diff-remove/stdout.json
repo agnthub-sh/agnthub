@@ -4,17 +4,20 @@
 # Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
 diff --git a/.github/agents/drifter.agent.md b/.github/agents/drifter.agent.md
 deleted file mode 100644
-index e3edc53cf2038cf3e8ef35b73824bd4ea295bf56..0000000000000000000000000000000000000000
+index 3f2113dfe38008cad4efea2a35c32249556f3845..0000000000000000000000000000000000000000
 --- a/.github/agents/drifter.agent.md
 +++ /dev/null
-@@ -1,5 +0,0 @@
+@@ -1,8 +0,0 @@
 ----
+-# Adapted from agents/drifter.md in localhost:8443/evolving
+-# Modified by agnthub: converted to the GitHub Copilot CLI agent format
+-# No license file found in localhost:8443/evolving
 -name: drifter
 -description: Agent whose source moves on after it is installed.
 ----
 -Revision one instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
-index 5635411f181e25eebf6493b6683e5dcabff9a3da..da4331bb52cc0d5423d56847d53c9a35b4fcf9fb 100644
+index 67348b6693ff6b55b9e44c591ce71107e01f3d20..da4331bb52cc0d5423d56847d53c9a35b4fcf9fb 100644
 --- a/agnthub-lock.json
 +++ b/agnthub-lock.json
 @@ -1,27 +1,4 @@
@@ -36,9 +39,9 @@ index 5635411f181e25eebf6493b6683e5dcabff9a3da..da4331bb52cc0d5423d56847d53c9a35
 -          "variant": "generated",
 -          "sourcePath": "agents/drifter.md",
 -          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
--          "converter": "copilot/v5",
+-          "converter": "copilot/v6",
 -          "path": ".github/agents/drifter.agent.md",
--          "digest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
+-          "digest": "sha256:033d7c0862cce32a46d64eaa54887fd697a90b2e8d364f81897442547e78f69f",
 -          "requires": []
 -        }
 -      ]
