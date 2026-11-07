@@ -75,11 +75,15 @@ func (ompAdapter) Identify(filePath string, raw []byte) (NativeAgent, error) {
 	if err != nil {
 		return identity, err
 	}
-	if ompReservedNames[strings.ToLower(strings.TrimSpace(identity.ID))] {
+	declared := identity.ID
+	if identity.DisplayName != "" {
+		declared = identity.DisplayName // the name omp reads
+	}
+	if ompReservedNames[strings.ToLower(strings.TrimSpace(declared))] {
 		return identity, fmt.Errorf(
 			"%s: name %q is reserved by omp for session rules",
 			filePath,
-			identity.ID,
+			declared,
 		)
 	}
 	return identity, nil
@@ -285,7 +289,7 @@ func (a ompAdapter) Native(id string, variant *agent.VariantFile) (Artifact, err
 			Reason:  err.Error(),
 		}
 	}
-	if identity.ID != id {
+	if identity.ID != id && identity.DisplayName == "" {
 		return Artifact{}, &InvalidVariantError{
 			Harness: agent.OMP, Path: variant.Path,
 			Reason: fmt.Sprintf("name %q does not match agent %q", identity.ID, id),
@@ -354,6 +358,7 @@ func (a ompAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics
 		ID:           id,
 		Description:  doc.String("description"),
 		Instructions: doc.Body,
+		DisplayName:  displayName(id, doc.String("name")),
 		Source:       agent.OMP,
 	}
 	spawnsAll := false

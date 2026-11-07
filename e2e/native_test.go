@@ -27,11 +27,13 @@ const missingAgent = "agnthub-e2e-no-such-agent"
 
 // nativeContext is what a native check needs: where the Harness runs (the
 // project, or a directory outside it for user scope), which agents agnthub
-// reports installed where, and the omp profile to run in.
+// reports installed where, the name the Harness lists each under, and the
+// omp profile to run in.
 type nativeContext struct {
 	scope   scope
 	dir     string
 	agents  map[string]string
+	names   map[string]string
 	profile string
 }
 
@@ -54,7 +56,8 @@ var nativeChecks = map[string]nativeCheck{
 func (s *suite) nativeContext(t *testing.T, st step) nativeContext {
 	t.Helper()
 	n := nativeContext{
-		scope: st.native, dir: projectDir, agents: map[string]string{}, profile: st.ompProfile,
+		scope: st.native, dir: projectDir, agents: map[string]string{},
+		names: map[string]string{}, profile: st.ompProfile,
 	}
 	if st.native == scopeGlobal {
 		n.dir = elsewhereDir
@@ -62,9 +65,40 @@ func (s *suite) nativeContext(t *testing.T, st step) nativeContext {
 	for _, a := range s.installed(t, st.native == scopeGlobal) {
 		if st.ompProfile == "" || a.profile == st.ompProfile {
 			n.agents[a.agent] = a.path
+			n.names[a.agent] = listedName(t, s.harness, a.agent, a.path)
 		}
 	}
 	return n
+}
+
+// listedName is the name the Harness lists an installed agent under: its
+// identifier in a file agnthub generates, the display name an authored file
+// keeps (ADR 0017). Copilot CLI lists its label, OpenCode its file name.
+func listedName(t *testing.T, harnessName, id, path string) string {
+	t.Helper()
+	raw, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	switch agent.HarnessID(harnessName) {
+	case agent.OpenCode:
+		return id
+	case agent.Copilot:
+		if doc, err := agent.ParseMarkdown(path, raw); err == nil {
+			if name := strings.TrimSpace(doc.String("name")); name != "" {
+				return name
+			}
+		}
+		return id
+	}
+	adapter, ok := harness.Default().Get(agent.HarnessID(harnessName))
+	if !ok {
+		t.Fatalf("unknown harness %s", harnessName)
+	}
+	if name := harness.InvocationName(adapter, path, raw); name != "" {
+		return name
+	}
+	return id
 }
 
 // harnessEnv is a minimal environment: the temporary home and nothing of the
@@ -111,7 +145,7 @@ func requireLoaded(t *testing.T, n nativeContext, loaded []string, output []byte
 	}
 	var missing []string
 	for id := range n.agents {
-		if !slices.Contains(loaded, id) {
+		if !slices.Contains(loaded, n.names[id]) {
 			missing = append(missing, id)
 		}
 	}
@@ -132,7 +166,7 @@ func describedAgents(t *testing.T, n nativeContext, listed map[string]string) []
 	t.Helper()
 	var loaded []string
 	for id, path := range n.agents {
-		description, ok := listed[id]
+		description, ok := listed[n.names[id]]
 		if !ok {
 			continue
 		}
@@ -256,7 +290,9 @@ func requireClaudeIgnores(t *testing.T, n nativeContext) {
 	}
 }
 
-var codexRole = regexp.MustCompile(`(?:Available roles:|\\n)([A-Za-z0-9_.-]+): \{\\n`)
+var codexRole = regexp.MustCompile(
+	`(?:Available roles:|\\n)([A-Za-z0-9_.-][A-Za-z0-9_. -]*): \{\\n`,
+)
 
 // checkCodex: `codex debug prompt-input` renders the model input without calling
 // a model; custom agents appear as roles of the spawn_agent tool. Project agents
@@ -354,7 +390,7 @@ func opencodeAgents(t *testing.T, n nativeContext) []byte {
 
 func allLoaded(n nativeContext, loaded []string) bool {
 	for id := range n.agents {
-		if !slices.Contains(loaded, id) {
+		if !slices.Contains(loaded, n.names[id]) {
 			return false
 		}
 	}
@@ -462,7 +498,7 @@ func checkOMP(t *testing.T, n nativeContext) {
 }
 
 // cursorSubagent is how Cursor's Task tool lists subagents: "- <name>: <description>".
-var cursorSubagent = regexp.MustCompile(`(?m)^- ([A-Za-z0-9_.-]+): (.*)$`)
+var cursorSubagent = regexp.MustCompile(`(?m)^- ([A-Za-z0-9_.-][A-Za-z0-9_. -]*): (.*)$`)
 
 // checkCursor runs Cursor's agent CLI headless against the model stub. Every
 // cursor-agent command needs a signed-in account, so the check runs the same

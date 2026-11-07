@@ -202,7 +202,8 @@ func (s *scanner) manifestAgent(id string, spec manifestAgent) (*agent.Definitio
 		if err != nil {
 			return nil, manifestErr("agent %s: %v", id, err)
 		}
-		if declared := doc.String("name"); declared != "" && declared != id {
+		if declared := doc.String("name"); declared != "" && !agent.DisplayName(declared) &&
+			declared != id {
 			return nil, manifestErr(
 				"agent %s: portable definition declares name %q",
 				id,

@@ -142,6 +142,36 @@ func Index(slug string) int {
 	return i
 }
 
+// divisionAliases maps catalog division folder names whose category is
+// obvious but not their own slug.
+var divisionAliases = map[string]string{
+	"engineering": "software-engineering", "development": "software-engineering",
+	"testing": "testing-qa", "qa": "testing-qa", "quality": "testing-qa",
+	"design": "ui-design", "product": "product-management", "support": "customer-support",
+	"academic": "research", "devops": "devops-ci-cd", "infrastructure": "cloud-infrastructure",
+	"data": "data-analysis", "data-science": "data-analysis", "ai": "machine-learning",
+	"ml": "machine-learning", "paid-media": "marketing", "advertising": "marketing",
+	"strategy": "business-strategy", "business": "business-strategy", "hr": "hr-recruiting",
+	"recruiting": "hr-recruiting", "writing": "writing-creative", "docs": "documentation",
+	"health": "healthcare", "web3": "blockchain-web3", "blockchain": "blockchain-web3",
+	"mobile": "mobile-development", "frontend": "frontend-development",
+	"backend": "backend-development", "architecture": "software-architecture",
+	"databases": "databases", "database": "databases", "localization": "translation-localization",
+}
+
+// FromDivision returns the category a catalog layout's division folder
+// obviously names (ADR 0017): its own slug when the taxonomy knows it
+// ("security", "marketing"), a few aliases ("engineering" →
+// "software-engineering", "testing" → "testing-qa"), else "". It is a hint,
+// not a declared category.
+func FromDivision(folder string) string {
+	name := strings.ToLower(strings.TrimSpace(folder))
+	if Known(name) {
+		return name
+	}
+	return divisionAliases[name]
+}
+
 // ValidSlug reports whether s is slug-shaped: lowercase ASCII letters and
 // digits in hyphen-separated words, at most MaxSlugLen bytes. Known and
 // not-yet-known categories share this shape.

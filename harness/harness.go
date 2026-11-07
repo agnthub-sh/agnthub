@@ -44,6 +44,20 @@ type NativeLayout struct {
 type NativeAgent struct {
 	ID          string
 	Description string
+	// DisplayName is a declared name that is not an identifier ("Search
+	// Relevance Engineer"); ID then comes from the file name (ADR 0017).
+	DisplayName string
+}
+
+// namedIdentity is the agent a declared name identifies in the file at
+// filePath: the name itself when it is an identifier, else the identifier the
+// file name implies, with the name kept as the display name. The id is ""
+// when neither yields one.
+func namedIdentity(filePath, name string) (id, display string) {
+	if !agent.DisplayName(name) {
+		return name, ""
+	}
+	return agent.IDFromPath(filePath), name
 }
 
 // SettingSpec declares one supported Harness Setting.

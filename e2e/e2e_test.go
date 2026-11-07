@@ -99,6 +99,7 @@ func TestHarness(t *testing.T) {
 	s.layouts(t)
 	s.manifest(t)
 	s.marketplace(t)
+	s.catalog(t)
 	s.large(t)
 	s.selection(t)
 	s.lifecycle(t)
@@ -270,6 +271,26 @@ func (s *suite) marketplace(t *testing.T) {
 	s.run(t, step{
 		name: stepRefuseMkt, refused: true,
 		args: argv("add", local, agentFlags(refused), h, "--yes", "--json"),
+	})
+}
+
+// catalog: a catalog layout (agents in top-level division folders, display
+// names, cosmetic keys, file names with spaces, unicode and parentheses)
+// lists and installs from git; display names in every other layout install
+// with each harness's own naming rules, authored files byte-identical.
+func (s *suite) catalog(t *testing.T) {
+	git, h := gitBase+"catalog.git", s.harnessFlag()
+	s.run(t, step{
+		name: "list-catalog", planOnly: true,
+		args: argv("add", git, "--list", "--json"),
+	})
+	s.run(t, step{
+		name: "install-catalog-project-git", native: scopeProject,
+		args: argv("add", git, "--agent", "*", h, "--yes", "--json"),
+	})
+	s.run(t, step{
+		name: "install-display-names-project-git", native: scopeProject,
+		args: argv("add", gitBase+"display-names.git", "--agent", "*", h, "--yes", "--json"),
 	})
 }
 

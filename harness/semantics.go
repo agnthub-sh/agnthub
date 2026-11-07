@@ -8,6 +8,18 @@ import (
 	"github.com/agnthub-sh/agnthub/agent"
 )
 
+// displayName is a source's declared name when it is a label rather than an
+// identifier ("Search Relevance Engineer" for
+// engineering-search-relevance-engineer), or "". An identifier-shaped name
+// that differs from id (a catalog file's) is no label and is dropped.
+func displayName(id, name string) string {
+	name = strings.TrimSpace(name)
+	if name == id || !agent.DisplayName(name) {
+		return ""
+	}
+	return name
+}
+
 // Semantics is the harness-neutral meaning of one Agent: what every Installer
 // renders into its native format. Parsers fill it from the portable core or from
 // an authored native Variant; renderers carry what their Harness can express and
@@ -16,6 +28,11 @@ type Semantics struct {
 	ID           string
 	Description  string
 	Instructions string
+	// DisplayName is the source's declared name when it is a label, not the
+	// identifier (ADR 0017). Renderers write ID wherever a harness invokes the
+	// agent by name and keep the label only in a display field, else in the
+	// description (withDisplayName).
+	DisplayName string
 	// Source is the Harness whose native Variant was parsed, or "" for the
 	// portable core.
 	Source agent.HarnessID
@@ -318,6 +335,7 @@ func PortableSemantics(target agent.HarnessID, id string, doc *agent.Document) (
 		ID:           id,
 		Description:  description,
 		Instructions: doc.Body,
+		DisplayName:  displayName(id, doc.String("name")),
 		Dialect:      agent.Claude,
 	}
 	for key := range doc.Frontmatter {
@@ -407,6 +425,7 @@ func begin(target agent.HarnessID, sem *Semantics) (*renderCheck, error) {
 	if err := check.lowerIsolation(); err != nil {
 		return nil, err
 	}
+	check.lowerDisplayName()
 	check.lowerInvocation()
 	sem = check.sem
 	if mode := sem.PermissionMode; mode != "" && !native {

@@ -125,6 +125,28 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | `permissionMode` and `hooks`, which Claude Code ignores in plugins: omitted with a note | `mk-guarded` | global · git<br>project · local | W N | W N | W N | W N | W N N0 | W N | W N |
 | instructions that use `${CLAUDE_PLUGIN_ROOT}` need their plugin: refused | `mk-rooted` | global · git<br>project · local | R | R | R | R | R | R | R |
 
+### Catalog layouts
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| division folders are the inventory (with each agent's division); scripts, examples and documents are not agents | — | inventory · git |  |  |  |  |  |  |  |
+| agent in a division folder, display name and cosmetic keys | `engineering-search-relevance-engineer` | project · git |  |  |  |  |  |  |  |
+| agent one folder down in a division (`game-development/unity/`) | `unity-architect` | project · git |  |  |  |  |  |  |  |
+| file name with spaces, unicode and parentheses (`Café Copywriter (v2).md` → `cafe-copywriter-v2`) | `cafe-copywriter-v2` | project · git |  |  |  |  |  |  |  |
+
+### Display names
+
+| Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
+|---|---|---|---|---|---|---|---|---|---|
+| `agents/Code Reviewer.md` with `name: Code Reviewer` | `code-reviewer` | project · git |  |  |  |  |  |  |  |
+| Claude Code file with `name: Search Relevance Engineer` | `search-relevance-engineer` | project · git |  |  |  |  |  |  |  |
+| omp file with `name: Release Manager` | `release-manager` | project · git |  |  |  |  |  |  |  |
+| Cursor file `Doc Writer.md` with `name: Doc Writer` | `doc-writer` | project · git |  |  |  |  |  |  |  |
+| Codex file with `name = "Issue Triager"` | `issue-triager` | project · git |  |  |  |  |  |  |  |
+| Copilot CLI file `Pair Programmer.agent.md` | `pair-programmer` | project · git |  |  |  |  |  |  |  |
+| OpenCode file `Bug Hunter.md` | `bug-hunter` | project · git |  |  |  |  |  |  |  |
+| Gemini CLI file with `display_name: Test Planner` | `test-planner` | project · git |  |  |  |  |  |  |  |
+
 ### Sources
 
 | Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |

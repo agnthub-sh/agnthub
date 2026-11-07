@@ -64,16 +64,16 @@ func TestDiscoverRejectsAmbiguousIdentitiesInsteadOfPickingFirst(t *testing.T) {
 		".claude/agents/nested/b.md":  portable("planner", "B"),
 		".claude/agents/solo.md":      portable("solo", "Fine"),
 		"agents/mismatch.md":          portable("other-name", "Mismatch"),
-		".claude/agents/Bad Name.md":  portable("Bad Name", "Invalid id"),
+		".claude/agents/Bad Name.md":  portable("Bad Name", "Display name"),
 		".claude/agents/no-header.md": "just text\n",
 	}))
 	if inv.Find("reviewer") != nil || inv.Find("planner") != nil {
 		t.Fatal("ambiguous agents must not be installable")
 	}
-	if inv.Find("solo") == nil {
-		t.Fatal("unambiguous agent should remain available")
+	if inv.Find("solo") == nil || inv.Find("bad-name") == nil {
+		t.Fatal("unambiguous agents, display names included, should remain available")
 	}
-	for _, id := range []string{"reviewer", "planner", "mismatch", "Bad Name"} {
+	for _, id := range []string{"reviewer", "planner", "mismatch"} {
 		if len(inv.ProblemsFor(id)) == 0 {
 			t.Errorf("expected a problem for %s, got %v", id, inv.Problems)
 		}

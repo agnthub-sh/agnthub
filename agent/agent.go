@@ -133,6 +133,9 @@ type Definition struct {
 	Categories []string
 	// FromManifest reports whether agnthub.yaml declared this Agent.
 	FromManifest bool
+	// Division is the top-level folder of a catalog layout the Agent's
+	// portable core comes from (engineering/…), or "" (ADR 0017).
+	Division string
 	// License is the source repository's root license file, or nil when it
 	// has none; generated artifacts carry its copyright notice.
 	License *License

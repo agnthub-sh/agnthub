@@ -3,7 +3,6 @@ package harness
 import (
 	"fmt"
 	"maps"
-	"path"
 	"path/filepath"
 	"slices"
 	"strings"
@@ -32,9 +31,9 @@ func (opencodeAdapter) Identify(filePath string, raw []byte) (NativeAgent, error
 	if err != nil {
 		return NativeAgent{}, err
 	}
-	identity := NativeAgent{
-		ID:          strings.TrimSuffix(path.Base(filePath), ".md"),
-		Description: doc.String("description"),
+	identity := NativeAgent{ID: agent.IDFromPath(filePath), Description: doc.String("description")}
+	if identity.ID == "" {
+		return NativeAgent{}, fmt.Errorf("%s: the file name implies no identifier", filePath)
 	}
 	if err := validateOpenCode(doc); err != nil {
 		return identity, fmt.Errorf("%s: %w", filePath, err)

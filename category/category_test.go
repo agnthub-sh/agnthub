@@ -30,6 +30,27 @@ func TestTaxonomyEntriesAreUniqueValidAndNamed(t *testing.T) {
 	}
 }
 
+func TestFromDivisionNamesOnlyKnownCategories(t *testing.T) {
+	for folder, want := range map[string]string{
+		"engineering": "software-engineering", "Security": "security", "testing": "testing-qa",
+		"marketing": "marketing", "game-development": "game-development",
+		"specialized": "", "spatial-computing": "", "gis": "",
+	} {
+		if got := category.FromDivision(folder); got != want {
+			t.Errorf("FromDivision(%q) = %q, want %q", folder, got, want)
+		}
+	}
+	for _, folder := range []string{
+		"engineering", "design", "product", "support", "academic",
+		"devops", "data", "ai", "paid-media", "strategy", "hr", "writing", "docs", "health",
+		"web3", "mobile", "frontend", "backend", "architecture", "database", "localization",
+	} {
+		if slug := category.FromDivision(folder); !category.Known(slug) {
+			t.Errorf("division %q maps to unknown category %q", folder, slug)
+		}
+	}
+}
+
 func TestAllReturnsACopy(t *testing.T) {
 	first := category.All()
 	first[0].Name = "changed"

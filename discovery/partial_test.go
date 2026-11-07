@@ -202,6 +202,7 @@ func TestPartialTreeFetchesExactlyWhatDiscoveryReads(t *testing.T) {
 		"plugins":      {pluginRepository(), 3},
 		"manifest":     {manifestRepository(), 2},
 		"root plugin":  {rootPluginRepository(), 2},
+		"catalog":      {catalogRepository(), 2},
 	}
 	for name, tc := range cases {
 		for _, knownSizes := range []bool{false, true} {

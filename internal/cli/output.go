@@ -6,6 +6,7 @@ import (
 	"maps"
 	"slices"
 	"strings"
+	"unicode/utf8"
 
 	"github.com/bytedance/sonic"
 
@@ -61,6 +62,8 @@ type inventoryAgent struct {
 	// Plugin is the Claude Code plugin that provides the agent's Claude Code
 	// Variant, when the repository packages it as a plugin.
 	Plugin string `json:"plugin,omitempty"`
+	// Division is the catalog-layout folder the agent comes from.
+	Division string `json:"division,omitempty"`
 }
 
 type inventoryProblem struct {
@@ -81,7 +84,7 @@ func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory)
 	for _, def := range inv.Agents {
 		item := inventoryAgent{
 			ID: def.ID, Description: def.Description, Categories: inv.CategoriesFor(def),
-			Variants: map[string]string{},
+			Variants: map[string]string{}, Division: def.Division,
 		}
 		if def.Portable != nil {
 			item.Portable = def.Portable.Path
@@ -126,6 +129,9 @@ func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory)
 		if item.Plugin != "" {
 			forms = append(forms, "plugin "+item.Plugin)
 		}
+		if item.Division != "" {
+			forms = append(forms, "division "+item.Division)
+		}
 		fmt.Fprintf(p.w, "      %s\n", s.dim.Render(strings.Join(forms, "; ")))
 	}
 	if len(payload.Problems) > 0 {
@@ -160,8 +166,12 @@ func shortRevision(revision string) string {
 
 func oneLine(text string) string {
 	text = strings.Join(strings.Fields(text), " ")
-	if len(text) > 100 {
-		return text[:97] + "..."
+	if len(text) <= 100 {
+		return text
 	}
-	return text
+	cut := 97
+	for cut > 0 && !utf8.RuneStart(text[cut]) {
+		cut-- // never split a multi-byte character ("—", "é", emoji)
+	}
+	return text[:cut] + "..."
 }

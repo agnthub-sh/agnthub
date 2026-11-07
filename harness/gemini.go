@@ -370,18 +370,17 @@ func (a geminiAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 		ID:           id,
 		Description:  doc.String("description"),
 		Instructions: doc.Body,
+		DisplayName:  displayName(id, doc.String("display_name")),
 		Source:       agent.Gemini,
 	}
 	for _, key := range sortedKeys(doc.Frontmatter) {
 		value := doc.Frontmatter[key]
 		switch key {
-		case "name", "description":
+		case "name", "description", "display_name":
 		case "kind":
 			if value == "remote" {
 				sem.unsupported(key, "a remote A2A agent")
 			}
-		case "display_name":
-			sem.note("omitted display_name: cosmetic")
 		case "model":
 			sem.Model, _ = value.(string)
 		case "temperature":
@@ -421,6 +420,9 @@ func (a geminiAdapter) Convert(sem *Semantics) (Artifact, error) {
 	fields := []agent.Field{
 		{Key: "name", Value: sem.ID},
 		{Key: "description", Value: sem.Description},
+	}
+	if sem.DisplayName != "" {
+		fields = append(fields, agent.Field{Key: "display_name", Value: sem.DisplayName})
 	}
 	policy := check.skillTools()
 	instructions := check.carry(additiveSupport{

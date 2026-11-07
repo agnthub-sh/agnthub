@@ -486,6 +486,8 @@ func (a *App) promptAgents(
 		label := def.ID
 		if variant := def.Variant(agent.Claude); variant != nil && variant.Plugin != "" {
 			label += " (" + variant.Plugin + ")"
+		} else if def.Division != "" {
+			label += " (" + def.Division + ")"
 		}
 		if description := oneLine(def.Description); description != "" {
 			label += " — " + description

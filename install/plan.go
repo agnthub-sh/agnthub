@@ -295,6 +295,7 @@ func (p *Planner) Build(req Request) (*Plan, error) {
 			plan.Items = append(plan.Items, item)
 		}
 	}
+	p.flagSameNames(plan)
 	return plan, nil
 }
 

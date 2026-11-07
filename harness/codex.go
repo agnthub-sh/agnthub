@@ -51,10 +51,18 @@ func codexIdentity(filePath string, fields map[string]any) (NativeAgent, error) 
 	name, _ := fields["name"].(string)
 	description, _ := fields["description"].(string)
 	instructions, _ := fields["developer_instructions"].(string)
-	identity := NativeAgent{ID: name, Description: description}
-	switch {
-	case name == "":
+	if strings.TrimSpace(name) == "" {
 		return NativeAgent{}, fmt.Errorf("%s: requires a string name", filePath)
+	}
+	id, display := namedIdentity(filePath, name)
+	if id == "" {
+		return NativeAgent{}, fmt.Errorf(
+			"%s: the name %q is a display name and the file name implies no identifier",
+			filePath, name,
+		)
+	}
+	identity := NativeAgent{ID: id, Description: description, DisplayName: display}
+	switch {
 	case strings.TrimSpace(description) == "":
 		return identity, fmt.Errorf("%s: requires a description", filePath)
 	case strings.TrimSpace(instructions) == "":
@@ -126,7 +134,7 @@ func codexVariant(id string, variant *agent.VariantFile) (map[string]any, []stri
 	if err != nil {
 		return nil, nil, invalid(err.Error())
 	}
-	if identity.ID != id {
+	if identity.ID != id && identity.DisplayName == "" {
 		return nil, nil, invalid(fmt.Sprintf("name %q does not match agent %q", identity.ID, id))
 	}
 	notes, reason := codexUnsupported(fields)
@@ -358,8 +366,9 @@ func (a codexAdapter) Semantics(id string, variant *agent.VariantFile) (*Semanti
 	if err != nil {
 		return nil, err
 	}
-	sem := &Semantics{Source: agent.Codex}
-	sem.ID, _ = fields["name"].(string)
+	sem := &Semantics{Source: agent.Codex, ID: id}
+	name, _ := fields["name"].(string)
+	sem.DisplayName = displayName(id, name)
 	sem.Description, _ = fields["description"].(string)
 	sem.Instructions, _ = fields["developer_instructions"].(string)
 	for _, key := range sortedKeys(fields) {

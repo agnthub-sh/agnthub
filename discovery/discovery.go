@@ -138,8 +138,9 @@ type scanner struct {
 var errDeferred = errors.New("file not fetched yet")
 
 // maxPlanRounds bounds planning: agnthub.yaml or the marketplace, the plugin
-// manifests it lists, their agent files, and a final check.
-const maxPlanRounds = 5
+// manifests it lists, their agent files, a catalog layout's probe files and
+// the rest of its divisions (ADR 0017), and a final check.
+const maxPlanRounds = 7
 
 // Discover scans tree and returns its Agent inventory.
 func Discover(
@@ -342,6 +343,8 @@ type candidate struct {
 	// marketplace the marketplace listing it.
 	plugin      string
 	marketplace string
+	// division is the catalog folder a portable core comes from (ADR 0017).
+	division string
 }
 
 func (s *scanner) fromLayouts() (*Inventory, error) {
@@ -371,7 +374,17 @@ func (s *scanner) fromLayouts() (*Inventory, error) {
 			candidates = append(candidates, c)
 		}
 	}
-	return s.group(candidates), nil
+	inv := s.group(candidates)
+	if len(inv.Agents) > 0 || len(s.pending) > 0 {
+		// Agents of other layouts, or files a planning round still needs
+		// before it can tell, leave catalog folders unread.
+		return inv, nil
+	}
+	catalog, err := s.catalogCandidates()
+	if err != nil || len(catalog) == 0 {
+		return inv, err
+	}
+	return s.group(catalog), nil
 }
 
 func (s *scanner) portableCandidates() ([]candidate, error) {
@@ -391,11 +404,11 @@ func (s *scanner) portableCandidates() ([]candidate, error) {
 		full := path.Join("agents", entry.Name)
 		switch {
 		case entry.Kind == source.EntryFile && strings.HasSuffix(entry.Name, ".md"):
-			found, err = s.appendPortable(found, full, strings.TrimSuffix(entry.Name, ".md"))
+			found, err = s.appendPortable(found, full, agent.IDFromPath(entry.Name))
 		case entry.Kind == source.EntryDir:
 			nested := path.Join(full, "AGENT.md")
 			if _, statErr := s.tree.Stat(nested); statErr == nil {
-				found, err = s.appendPortable(found, nested, entry.Name)
+				found, err = s.appendPortable(found, nested, agent.NormalizeID(entry.Name))
 			}
 		case entry.Kind == source.EntrySymlink || entry.Kind == source.EntrySubmodule:
 			s.skip(full, entry.Kind)
@@ -415,7 +428,8 @@ func (s *scanner) appendPortable(found []candidate, name, id string) ([]candidat
 	return append(found, *c), nil
 }
 
-// portableFile parses a portable definition; impliedID is empty for root AGENT.md.
+// portableFile parses a portable definition; impliedID is the identifier its
+// location implies, normalized (ADR 0017), and empty for root AGENT.md.
 func (s *scanner) portableFile(name, impliedID string) (*candidate, error) {
 	if s.claimed[name] {
 		return nil, nil // a plugin's Claude Code agent, not a portable definition
@@ -448,18 +462,27 @@ func (s *scanner) portableFile(name, impliedID string) (*candidate, error) {
 	}
 	declared := doc.String("name")
 	id := impliedID
+	root := name == "AGENT.md"
 	switch {
-	case impliedID == "" && declared == "":
+	case root && strings.TrimSpace(declared) == "":
 		s.problems = append(
 			s.problems,
 			Problem{Path: name, Message: "root AGENT.md requires a name"},
 		)
 		return nil, nil
-	case impliedID == "":
-		id = declared
-	case declared != "" && declared != impliedID:
+	case root:
+		// A display name ("Code Reviewer") names the agent code-reviewer.
+		id = agent.NormalizeID(declared)
+	case id == "":
 		s.problems = append(s.problems, Problem{
-			Agent: impliedID, Path: name,
+			Path: name, Message: "the file name implies no agent identifier",
+		})
+		return nil, nil
+	case declared != "" && !agent.DisplayName(declared) && declared != id:
+		// An identifier-shaped name must agree with the location; a display
+		// name is a label and never decides the identity.
+		s.problems = append(s.problems, Problem{
+			Agent: id, Path: name,
 			Message: fmt.Sprintf("declared name %q does not match its location", declared),
 		})
 		return nil, nil
@@ -590,6 +613,7 @@ func (s *scanner) merge(id string, group []candidate) *agent.Definition {
 			}
 			portablePath = c.path
 			def.Portable = c.doc
+			def.Division = c.division
 			def.Description = c.desc
 			continue
 		}

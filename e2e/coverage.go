@@ -128,6 +128,10 @@ var stepSpecs = map[string]stepSpec{
 	"install-marketplace-global-git":    {scope: scopeUser, source: sourceGit, native: true},
 	stepRefuseMkt:                       {scope: scopeProj, source: sourceLocal},
 
+	"list-catalog":                      {scope: scopeNone, source: sourceGit},
+	"install-catalog-project-git":       {scope: scopeProj, source: sourceGit, native: true},
+	"install-display-names-project-git": {scope: scopeProj, source: sourceGit, native: true},
+
 	"list-large":                {scope: scopeNone, source: sourceGit},
 	"install-large-project-git": {scope: scopeProj, source: sourceGit, native: true},
 
@@ -254,6 +258,20 @@ func conversion(group, id, title, agentID string) scenario {
 	return scenario{id: id, group: group, title: title, agent: agentID, all: layoutEvidence}
 }
 
+func catalog(id, title, agentID string) scenario {
+	return scenario{
+		id: id, group: "Catalog layouts", title: title, agent: agentID,
+		all: evidence{install: []string{"install-catalog-project-git"}},
+	}
+}
+
+func displayName(id, title, agentID string) scenario {
+	return scenario{
+		id: id, group: "Display names", title: title, agent: agentID,
+		all: evidence{install: []string{"install-display-names-project-git"}},
+	}
+}
+
 // scenarios is the coverage matrix: every agent type and behavior agnthub
 // supports, by Harness.
 var scenarios = []scenario{
@@ -341,6 +359,32 @@ var scenarios = []scenario{
 		"mk-guarded"),
 	plugin("plugin-root-variable",
 		"instructions that use `${CLAUDE_PLUGIN_ROOT}` need their plugin: refused", "mk-rooted"),
+
+	{
+		id: "catalog-inventory", group: "Catalog layouts",
+		title: "division folders are the inventory (with each agent's division); scripts, " +
+			"examples and documents are not agents",
+		all: evidence{steps: []string{"list-catalog"}},
+	},
+	catalog("catalog-division", "agent in a division folder, display name and cosmetic keys",
+		"engineering-search-relevance-engineer"),
+	catalog("catalog-nested", "agent one folder down in a division (`game-development/unity/`)",
+		"unity-architect"),
+	catalog("catalog-file-name", "file name with spaces, unicode and parentheses "+
+		"(`Café Copywriter (v2).md` → `cafe-copywriter-v2`)", "cafe-copywriter-v2"),
+	displayName("display-portable", "`agents/Code Reviewer.md` with `name: Code Reviewer`",
+		"code-reviewer"),
+	displayName("display-claude", "Claude Code file with `name: Search Relevance Engineer`",
+		"search-relevance-engineer"),
+	displayName("display-omp", "omp file with `name: Release Manager`", "release-manager"),
+	displayName("display-cursor", "Cursor file `Doc Writer.md` with `name: Doc Writer`",
+		"doc-writer"),
+	displayName("display-codex", "Codex file with `name = \"Issue Triager\"`", "issue-triager"),
+	displayName("display-copilot", "Copilot CLI file `Pair Programmer.agent.md`",
+		"pair-programmer"),
+	displayName("display-opencode", "OpenCode file `Bug Hunter.md`", "bug-hunter"),
+	displayName("display-gemini", "Gemini CLI file with `display_name: Test Planner`",
+		"test-planner"),
 
 	{
 		id: "source-large", group: "Sources",

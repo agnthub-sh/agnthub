@@ -214,6 +214,22 @@ Where there is none, delegating models choose agents by their description, so ag
 
 Where there is none, an agent with an unrestricted shell is told at the top of its instructions to create a git worktree (`git worktree add …`), make every edit, command and commit there and report the worktree path and branch, and the loss shows as reduced (`isolation`). An agent that edits without such a shell cannot create one and stays refused there; one that neither edits nor runs commands needs no isolation.
 
+## Agent names (verified 2026-11-07)
+
+Read from the installed CLIs' bundles and first-party docs (Claude Code 2.1.309, OpenCode 2.1.3 source, Codex 0.164.0 source, Copilot CLI 1.0.105, cursor-agent 2026.10.22-27dcf5f, Gemini CLI 0.66.0, omp 18.18.0); the Claude Code row was also run offline (`claude -p --agent does-not-exist x` with a temporary `CLAUDE_CONFIG_DIR` lists an agent named `Search Relevance Engineer`). agnthub's mapping is [ADR 0017](../adr/0017-catalog-layouts-and-display-names.md).
+
+| Harness | What identifies an agent | Rule on that identifier | Display field | `name: Search Relevance Engineer` |
+|---|---|---|---|---|
+| Claude Code | frontmatter `name` (`--agent`, `subagent_type`, `@agent-…`) | no lowercase rule; a name that starts with `-`, contains `:` or exceeds 256 characters makes Claude Code skip the file ([docs](https://code.claude.com/docs/en/sub-agents#subagent-files-claude-code-skips)) | none | loads, invoked as `claude --agent "Search Relevance Engineer"` |
+| OpenCode | the file path under `agents/` minus `.md` | none | none; `name` is ignored, and any key outside its schema (`name`, `emoji`, `vibe`) switches the file to the V1 format, whose unknown keys go to the model provider | ignored |
+| Codex | TOML `name`, trimmed (the spawn tool's `agent_type`) | non-empty ([docs](https://developers.openai.com/codex/subagents)) | `nickname_candidates` (ASCII letters, digits, space, `-`, `_` only, or Codex skips the file) | loads |
+| Copilot CLI | the file name minus `.agent.md`/`.md` (subfolders joined with `--`) | none observed | `name` ("Display name for the custom agent", [reference](https://docs.github.com/en/copilot/reference/custom-agents-configuration)); `--agent` and `/agent` match it too | loads, as the label |
+| Cursor | frontmatter `name` read verbatim by a line reader (quotes kept), else the file name with whitespace and `_` runs turned into `-` | none in code; the [docs](https://cursor.com/docs/subagents) ask for lowercase and hyphens | none (`name` is "Display name and identifier") | loads; `/name` invocation of a spaced name is unverified |
+| Gemini CLI | frontmatter `name` (also the tool name) | `^[a-z0-9-_]+$`; otherwise the file fails to load with "Name must be a valid slug" | `display_name` (schema-accepted, not in the docs table) | **rejected** |
+| omp | frontmatter `name`, exact and case-sensitive (task tool `agent`) | non-empty; `main` and `sub` (case-insensitive) are reserved ([docs](https://omp.sh/docs/subagent-authoring)) | none | loads |
+
+Only Gemini CLI rejects a display name. Everywhere except OpenCode and Copilot CLI, `name` is still what the harness invokes the agent by, so two files with one label shadow each other: one of them wins by read order or precedence (Codex and Gemini CLI warn about the duplicate).
+
 ## Decisions and remaining unknowns
 
 1. **Exact product support target:** CLI-only, IDE, or cloud per harness? Copilot especially needs separate surface labels. Should initial support include all seven, or only a tested subset? Skill support is not agent support.

@@ -46,15 +46,24 @@ func (cursorAdapter) Identify(filePath string, raw []byte) (NativeAgent, error) 
 	if err != nil {
 		return NativeAgent{}, err
 	}
-	id, _ := doc.Frontmatter["name"].(string)
-	if id == "" {
-		id = cursorFileName(filePath)
+	name, _ := doc.Frontmatter["name"].(string)
+	if strings.TrimSpace(name) == "" {
+		name = cursorFileName(filePath)
 	}
+	id, display := namedIdentity(filePath, name)
+	if id == "" {
+		return NativeAgent{}, fmt.Errorf(
+			"%s: the name %q is a display name and the file name implies no identifier",
+			filePath, name,
+		)
+	}
+	identity := NativeAgent{ID: id, DisplayName: display}
 	description, ok := doc.Frontmatter["description"].(string)
 	if !ok || strings.TrimSpace(description) == "" {
-		return NativeAgent{ID: id}, fmt.Errorf("%s: frontmatter requires a description", filePath)
+		return identity, fmt.Errorf("%s: frontmatter requires a description", filePath)
 	}
-	return NativeAgent{ID: id, Description: description}, nil
+	identity.Description = description
+	return identity, nil
 }
 
 // cursorFileName is the name Cursor derives from a file without a declared name.
@@ -185,14 +194,16 @@ func cursorFoldDescription(filePath string, raw []byte) ([]byte, bool) {
 func cursorReadsAs(id string, doc *agent.Document) string {
 	seen := cursorFrontmatter(doc.Raw)
 	name, declared := doc.Frontmatter["name"]
+	label, _ := name.(string)
+	display := declared && agent.DisplayName(label)
 	switch {
-	case declared && name != id:
+	case declared && !display && name != id:
 		return fmt.Sprintf("name %v does not match agent %q", name, id)
-	case declared && seen["name"] != id:
+	case declared && seen["name"] != strings.TrimSpace(label):
 		return fmt.Sprintf(
 			"Cursor reads the name as %q; write name: %s on one line",
 			seen["name"],
-			id,
+			strings.TrimSpace(label),
 		)
 	case !declared && cursorFileName(id) != id:
 		return fmt.Sprintf(
@@ -318,6 +329,7 @@ func (a cursorAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 		ID:           id,
 		Description:  doc.String("description"),
 		Instructions: doc.Body,
+		DisplayName:  displayName(id, doc.String("name")),
 		Source:       agent.Cursor,
 	}
 	for _, key := range sortedKeys(doc.Frontmatter) {

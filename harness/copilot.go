@@ -2,7 +2,6 @@ package harness
 
 import (
 	"fmt"
-	"path"
 	"path/filepath"
 	"slices"
 	"sort"
@@ -31,10 +30,10 @@ func (copilotAdapter) Identify(filePath string, raw []byte) (NativeAgent, error)
 	if err != nil {
 		return NativeAgent{}, err
 	}
-	base := path.Base(filePath)
-	identity := NativeAgent{
-		ID:          strings.TrimSuffix(strings.TrimSuffix(base, ".md"), ".agent"),
-		Description: doc.String("description"),
+	identity := NativeAgent{ID: agent.IDFromPath(filePath), Description: doc.String("description")}
+	identity.DisplayName = displayName(identity.ID, doc.String("name"))
+	if identity.ID == "" {
+		return NativeAgent{}, fmt.Errorf("%s: the file name implies no identifier", filePath)
 	}
 	if _, err := validateCopilot(doc); err != nil {
 		return identity, fmt.Errorf("%s: %w", filePath, err)
@@ -283,6 +282,7 @@ func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Seman
 		ID:           id,
 		Description:  doc.String("description"),
 		Instructions: doc.Body,
+		DisplayName:  displayName(id, doc.String("name")),
 		Source:       agent.Copilot,
 	}
 	var skillAllowlist []string
@@ -429,8 +429,13 @@ func (a copilotAdapter) Convert(sem *Semantics) (Artifact, error) {
 	}
 	sem = check.sem
 	check.reduceGrant(CapWebSearch, copilotNoWebSearch)
+	// Copilot CLI identifies the agent by its file name; name is its label.
+	name := sem.ID
+	if sem.DisplayName != "" {
+		name = sem.DisplayName
+	}
 	fields := []agent.Field{
-		{Key: "name", Value: sem.ID},
+		{Key: "name", Value: name},
 		{Key: "description", Value: sem.Description},
 	}
 	if sem.ManualOnly {

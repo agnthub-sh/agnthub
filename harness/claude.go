@@ -33,17 +33,27 @@ func (claudeAdapter) Identify(path string, raw []byte) (NativeAgent, error) {
 	return requireNamed(doc)
 }
 
-// requireNamed enforces the required name/description pair shared by several Harnesses.
+// requireNamed enforces the required name/description pair shared by several
+// Harnesses. A display name identifies the agent by its file name.
 func requireNamed(doc *agent.Document) (NativeAgent, error) {
 	name, ok := doc.Frontmatter["name"].(string)
-	if !ok || name == "" {
+	if !ok || strings.TrimSpace(name) == "" {
 		return NativeAgent{}, fmt.Errorf("%s: frontmatter requires a string name", doc.Path)
 	}
+	id, display := namedIdentity(doc.Path, name)
+	if id == "" {
+		return NativeAgent{}, fmt.Errorf(
+			"%s: the name %q is a display name and the file name implies no identifier",
+			doc.Path, name,
+		)
+	}
+	identity := NativeAgent{ID: id, DisplayName: display}
 	description, ok := doc.Frontmatter["description"].(string)
 	if !ok || strings.TrimSpace(description) == "" {
-		return NativeAgent{ID: name}, fmt.Errorf("%s: frontmatter requires a description", doc.Path)
+		return identity, fmt.Errorf("%s: frontmatter requires a description", doc.Path)
 	}
-	return NativeAgent{ID: name, Description: description}, nil
+	identity.Description = description
+	return identity, nil
 }
 
 func (claudeAdapter) Destination(ctx Context, scope Scope, _ Settings) (Destination, error) {
@@ -72,6 +82,9 @@ func claudeConfigDir(ctx Context) string {
 	return filepath.Join(ctx.Env.Home(), ".claude")
 }
 
+// claudeMaxName is the longest name Claude Code loads an agent under.
+const claudeMaxName = 256
+
 func (a claudeAdapter) Native(id string, variant *agent.VariantFile) (Artifact, error) {
 	identity, err := a.Identify(variant.Path, variant.Raw)
 	if err != nil {
@@ -81,10 +94,19 @@ func (a claudeAdapter) Native(id string, variant *agent.VariantFile) (Artifact, 
 			Reason:  err.Error(),
 		}
 	}
-	if identity.ID != id {
+	if identity.ID != id && identity.DisplayName == "" {
 		return Artifact{}, &InvalidVariantError{
 			Harness: agent.Claude, Path: variant.Path,
 			Reason: fmt.Sprintf("name %q does not match agent %q", identity.ID, id),
+		}
+	}
+	if name := identity.DisplayName; strings.HasPrefix(name, "-") ||
+		strings.Contains(name, ":") || len(name) > claudeMaxName {
+		// https://code.claude.com/docs/en/sub-agents#subagent-files-claude-code-skips
+		return Artifact{}, &InvalidVariantError{
+			Harness: agent.Claude, Path: variant.Path,
+			Reason: fmt.Sprintf("Claude Code skips an agent named %q: a name must not start "+
+				"with '-', contain ':' or exceed %d characters", name, claudeMaxName),
 		}
 	}
 	content, notes, err := claudePluginAgent(variant)
@@ -430,6 +452,7 @@ func (a claudeAdapter) Semantics(id string, variant *agent.VariantFile) (*Semant
 		ID:           id,
 		Description:  doc.String("description"),
 		Instructions: doc.Body,
+		DisplayName:  displayName(id, doc.String("name")),
 		Source:       agent.Claude,
 		Notes:        notes,
 	}
