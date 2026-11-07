@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"path/filepath"
-	"slices"
 	"strings"
 	"time"
 
@@ -28,6 +27,47 @@ type Result struct {
 // fails, receipts are still recorded for the artifacts already written so state
 // matches disk.
 func (p *Planner) Apply(plan *Plan, projectRoot string, now time.Time) (*Result, error) {
+	return p.apply(plan, projectRoot, now, state.Disk)
+}
+
+// Preview returns exactly the changes Apply would make for plan: the artifacts,
+// the lock and the ownership records, plus the files the Skill installer places
+// for each Skill install (the validated source revision's files at the item's
+// Path; the installer's own bookkeeping is unknown to agnthub). It runs Apply's
+// code against a state.Recorder, so nothing on disk changes, and the planner's
+// lock and ownership records stay as they were.
+func (p *Planner) Preview(plan *Plan, projectRoot string, now time.Time) ([]state.Change, error) {
+	lock, ownership := p.Lock, p.Ownership
+	defer func() { p.Lock, p.Ownership = lock, ownership }()
+	lockCopy, err := lock.Clone()
+	if err != nil {
+		return nil, err
+	}
+	p.Lock, p.Ownership = lockCopy, ownership.Clone()
+	recorder := &state.Recorder{}
+	for _, skill := range plan.Skills {
+		if skill.Decision != skills.DecisionInstall {
+			continue
+		}
+		for _, file := range skill.Files {
+			path := filepath.Join(skill.Path, filepath.FromSlash(file.Path))
+			if err := recorder.WriteFile(path, file.Content, 0o644); err != nil {
+				return nil, err
+			}
+		}
+	}
+	if _, err := p.apply(plan, projectRoot, now, recorder); err != nil {
+		return nil, err
+	}
+	return recorder.Changes(), nil
+}
+
+func (p *Planner) apply(
+	plan *Plan,
+	projectRoot string,
+	now time.Time,
+	files state.Files,
+) (*Result, error) {
 	if err := plan.Validate(); err != nil {
 		return nil, err
 	}
@@ -36,7 +76,7 @@ func (p *Planner) Apply(plan *Plan, projectRoot string, now time.Time) (*Result,
 	for i := range plan.Items {
 		item := plan.Items[i]
 		if item.Action == ActionCreate || item.Action == ActionReplace {
-			if err := state.WriteFileAtomic(item.Path, item.Artifact.Content, 0o644); err != nil {
+			if err := files.WriteFile(item.Path, item.Artifact.Content, 0o644); err != nil {
 				result.Failed = &plan.Items[i]
 				writeErr = fmt.Errorf("write %s: %w", item.Path, err)
 				break
@@ -50,10 +90,10 @@ func (p *Planner) Apply(plan *Plan, projectRoot string, now time.Time) (*Result,
 	for _, item := range result.Applied {
 		p.record(plan, item, projectRoot, now)
 	}
-	if err := p.Lock.Save(p.LockPath); err != nil {
+	if err := p.Lock.Save(files, p.LockPath); err != nil {
 		return result, fmt.Errorf("save lock: %w", err)
 	}
-	if err := p.Ownership.Save(); err != nil {
+	if err := p.Ownership.Save(files); err != nil {
 		return result, fmt.Errorf("save ownership records: %w", err)
 	}
 	return result, writeErr
@@ -83,13 +123,11 @@ func (p *Planner) Pending(plan *Plan, projectRoot string) bool {
 	if err != nil {
 		return true
 	}
-	lockCopy := &state.Lock{}
-	if err := sonic.Unmarshal(beforeLock, lockCopy); err != nil {
+	lockCopy, err := lock.Clone()
+	if err != nil {
 		return true
 	}
-	ownershipCopy := *ownership
-	ownershipCopy.Records = slices.Clone(ownership.Records)
-	p.Lock, p.Ownership = lockCopy, &ownershipCopy
+	p.Lock, p.Ownership = lockCopy, ownership.Clone()
 	// A receipt that only gains a timestamp is a new receipt, so any time will do.
 	var now time.Time
 	for _, skill := range plan.Skills {

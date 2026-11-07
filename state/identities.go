@@ -68,7 +68,7 @@ func (i *Identities) Save() error {
 		return nil
 	}
 	i.Version = IdentitiesVersion
-	if err := writeJSON(i.path, i, 0o600); err != nil {
+	if err := writeJSON(Disk, i.path, i, 0o600); err != nil {
 		return err
 	}
 	i.changed = false

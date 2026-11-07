@@ -20,6 +20,8 @@ const statusUpToDate = "up-to-date"
 type lifecycleOptions struct {
 	global bool
 	yes    bool
+	// diff prints the exact changes as a git diff instead of prompting.
+	diff   bool
 	json   bool
 	extras []string
 	// allowWithoutShell plans agents that lose the shell access they use.
@@ -41,6 +43,7 @@ func (o *lifecycleOptions) flags(cmd *cobra.Command, mutating bool) {
 		return
 	}
 	flags.BoolVarP(&o.yes, "yes", "y", false, "apply without prompting")
+	flags.BoolVarP(&o.diff, "diff", "d", false, diffUsage)
 	flags.StringArrayVar(&o.extras, "extra", nil,
 		"binding <harness>.<key>=<value> (repeatable) when the recorded one is ambiguous or absent")
 }
@@ -76,9 +79,13 @@ func (a *App) updateCommand(ctx context.Context) *cobra.Command {
 recorded ref, with its current dependencies, and preview content, variant,
 dependency and skill changes before writing. Locally modified or unmanaged files
 are never overwritten. Each artifact keeps its recorded harness binding (e.g. its
-omp profile); an ambiguous or missing binding needs --extra or a prompt.`,
+omp profile); an ambiguous or missing binding needs --extra or a prompt.
+
+--diff (-d) prints the exact changes as a git diff on stdout (the plan goes to
+stderr), never prompts and writes nothing; with --yes it then applies them.`,
 		Example: `  agnthub update
   agnthub update reviewer --yes
+  agnthub update --diff
   agnthub upgrade -g --extra omp.profile=work`,
 		RunE: func(_ *cobra.Command, args []string) error {
 			return a.runUpdate(ctx, args, opts)
@@ -98,9 +105,11 @@ regenerate each artifact with the recorded converter, and write only when every
 artifact and skill matches the locked digests. Unavailable revisions, changed
 bytes or unsupported converters refuse the restore; fresh content is never
 substituted. On a machine without recorded bindings, harnesses with settings need
---extra (e.g. --extra omp.profile=default) or a prompt.`,
+--extra (e.g. --extra omp.profile=default) or a prompt. --diff (-d) prints the
+exact changes as a git diff and writes nothing; with --yes it then applies them.`,
 		Example: `  # Recreate the locked agents in a fresh clone
   agnthub restore
+  agnthub restore --diff
   agnthub restore --yes --extra omp.profile=work`,
 		Args: cobra.NoArgs,
 		RunE: func(_ *cobra.Command, _ []string) error {
@@ -155,7 +164,7 @@ func (a *App) runUpdate(ctx context.Context, ids []string, opts *lifecycleOption
 	if err != nil {
 		return err
 	}
-	interactive := a.Interactive && !opts.yes && !opts.json
+	interactive := a.Interactive && !opts.yes && !opts.json && !opts.diff
 	contexts, err := a.lifecycleContexts(ctx, l, include, opts, bindingPolicy{
 		mutating: true, interactive: interactive,
 	})
@@ -176,7 +185,10 @@ func (a *App) runUpdate(ctx context.Context, ids []string, opts *lifecycleOption
 	}
 	report := l.buildReport("update", lp, include, len(ids) == 0)
 	view := &planView{Plan: lp.plan, Harnesses: lp.views, Report: report}
-	out := a.printer(opts.json)
+	out := a.planPrinter(opts.json, opts.diff)
+	if opts.diff {
+		return a.applyDiff(ctx, l.planner, view, out, opts.yes, report.pending(lp.plan))
+	}
 	if !report.pending(lp.plan) {
 		out.plan(view, statusUpToDate)
 		return nil
@@ -195,7 +207,7 @@ func (a *App) runRestore(ctx context.Context, opts *lifecycleOptions) error {
 	l.allowWithoutShell = opts.allowWithoutShell
 	defer func() { _ = l.Close() }()
 	include := func(*state.LockedAgent) bool { return true }
-	interactive := a.Interactive && !opts.yes && !opts.json
+	interactive := a.Interactive && !opts.yes && !opts.json && !opts.diff
 	contexts, err := a.lifecycleContexts(ctx, l, include, opts, bindingPolicy{
 		mutating: true, interactive: interactive, fresh: true,
 	})
@@ -217,7 +229,10 @@ func (a *App) runRestore(ctx context.Context, opts *lifecycleOptions) error {
 	}
 	report := l.buildReport("restore", lp, include, true)
 	view := &planView{Plan: lp.plan, Harnesses: lp.views, Report: report}
-	out := a.printer(opts.json)
+	out := a.planPrinter(opts.json, opts.diff)
+	if opts.diff {
+		return a.applyDiff(ctx, l.planner, view, out, opts.yes, report.pending(lp.plan))
+	}
 	if !report.pending(lp.plan) {
 		out.plan(view, statusUpToDate)
 		return nil

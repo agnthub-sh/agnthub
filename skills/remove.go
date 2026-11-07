@@ -6,6 +6,8 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+
+	"github.com/agnthub-sh/agnthub/state"
 )
 
 // ErrModified reports an installed Skill whose content no longer matches the
@@ -31,10 +33,10 @@ func InstalledState(dir, digest string) (exists bool, err error) {
 	return true, nil
 }
 
-// RemoveInstalled deletes the Skill at dir only when its content still matches
-// digest. A symbolic link is removed by itself; the directory it points to is
-// left in place and returned as kept.
-func RemoveInstalled(dir, digest string) (kept string, err error) {
+// RemoveInstalled deletes the Skill at dir through files only when its content
+// still matches digest. A symbolic link is removed by itself; the directory it
+// points to is left in place and returned as kept.
+func RemoveInstalled(files state.Files, dir, digest string) (kept string, err error) {
 	exists, err := InstalledState(dir, digest)
 	if err != nil || !exists {
 		return "", err
@@ -48,9 +50,9 @@ func RemoveInstalled(dir, digest string) (kept string, err error) {
 		if err != nil {
 			return "", err
 		}
-		return target, os.Remove(dir)
+		return target, files.Remove(dir)
 	}
-	return "", os.RemoveAll(dir)
+	return "", files.RemoveAll(dir)
 }
 
 // hasUntracked reports a .git directory inside dir: digests ignore it, and a

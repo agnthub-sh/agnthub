@@ -300,14 +300,20 @@ func TestRestoreRefusesUnavailableMismatchedOrUnsupportedEvidence(t *testing.T) 
 		"unsupported converter": func(h *harnessT, _ fakeGit) {
 			lock := h.lock()
 			lock.Agents[0].Artifacts[0].Converter = "claude/v0"
-			if err := lock.Save(filepath.Join(h.project, state.LockFileName)); err != nil {
+			if err := lock.Save(
+				state.Disk,
+				filepath.Join(h.project, state.LockFileName),
+			); err != nil {
 				h.t.Fatal(err)
 			}
 		},
 		"mismatched artifact digest": func(h *harnessT, _ fakeGit) {
 			lock := h.lock()
 			lock.Agents[0].Artifacts[0].Digest = state.Digest([]byte("other"))
-			if err := lock.Save(filepath.Join(h.project, state.LockFileName)); err != nil {
+			if err := lock.Save(
+				state.Disk,
+				filepath.Join(h.project, state.LockFileName),
+			); err != nil {
 				h.t.Fatal(err)
 			}
 		},
@@ -580,7 +586,7 @@ func TestSSHSourcesAreRefetchedOverTheirRecordedTransport(t *testing.T) {
 	lockPath := filepath.Join(h.project, state.LockFileName)
 	lock := h.lock()
 	lock.Agents[0].Source.URL = "ssh://git@git.example.com:2222/team/other.git"
-	if err := lock.Save(lockPath); err != nil {
+	if err := lock.Save(state.Disk, lockPath); err != nil {
 		t.Fatal(err)
 	}
 	h.resetMachine(".claude")
@@ -591,7 +597,7 @@ func TestSSHSourcesAreRefetchedOverTheirRecordedTransport(t *testing.T) {
 
 	// Locks written before transports were recorded keep refetching over https.
 	lock.Agents[0].Source.Transport, lock.Agents[0].Source.URL = "", ""
-	if err := lock.Save(lockPath); err != nil {
+	if err := lock.Save(state.Disk, lockPath); err != nil {
 		t.Fatal(err)
 	}
 	h.runRecording(git, "restore", "--yes")

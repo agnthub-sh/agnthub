@@ -102,6 +102,7 @@ func TestHarness(t *testing.T) {
 	s.large(t)
 	s.selection(t)
 	s.lifecycle(t)
+	s.diffs(t)
 	s.home(t)
 	s.mcp(t)
 

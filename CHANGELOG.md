@@ -1,5 +1,38 @@
 # Changelog
 
+## v0.8.0
+
+### New
+
+- **`--diff` (`-d`)** on `add`, `update`, `restore` and `remove` (including
+  `--clean-dependencies`) prints every file the command would create, update or delete as a
+  unified diff in git's format, with the exact bytes it would write, and writes nothing. The
+  diff runs the same apply code as the real write against an in-memory recorder, so it cannot
+  drift from what `--yes` writes. Created files are `new file mode` from `/dev/null`, updated
+  files a real diff against the file on disk, deleted files `deleted file mode` (a removed skill
+  directory lists each file, a removed link is a link deletion), binary content a
+  `GIT binary patch`. Paths are relative to the project root (`git apply --check` accepts the
+  diff; a `# Check:` comment gives the exact command, with `--directory` inside a larger
+  repository), or to your home directory in user scope. It covers agent files in every harness,
+  dependency agents, the files of skills the plan installs and agnthub's lock; agnthub's private
+  state directory (ownership records) is left out, and `#` comments at the top say so. The diff
+  goes to stdout and the plan to stderr; a color terminal gets git's diff colors, redirected
+  output, `NO_COLOR` and `TERM=dumb` plain text. `--diff` never prompts and exits 0 (1 when the
+  plan has blocked items, whose changes it leaves out); `--diff --yes` shows the diff and then
+  applies it. `--json --diff` adds `diff` and `files` (`[{path, action, sha256}]`) to the plan.
+- Every command that plans and applies (`add`, `update`, `restore`, `remove`, `mcp install`,
+  `mcp uninstall`) accepts `-y` for `--yes`, as before; a test now keeps it that way.
+- Packages for the hosted registry: `gitdiff` renders recorded changes as a git diff,
+  `install.Planner.Preview` returns the exact changes `Apply` would make, `state.Files` /
+  `state.Recorder` let every write go to disk or to memory, `resolve.Closure.Targets` turns a
+  dependency closure into plan targets, and `skills.Item.Files` carries a skill install's
+  validated source files.
+
+### Changed
+
+- `state.Lock.Save` and `state.Ownership.Save` take the `state.Files` they write through
+  (`state.Disk` for the filesystem), and `skills.RemoveInstalled` takes it first.
+
 ## v0.7.0
 
 ### New

@@ -31,8 +31,10 @@ type addOptions struct {
 	// home directory refuses instead of installing into user scope.
 	project bool
 	yes     bool
-	json    bool
-	all     bool
+	// diff prints the exact changes as a git diff instead of prompting.
+	diff bool
+	json bool
+	all  bool
 	// allowWithoutShell installs agents that lose the shell access they use.
 	allowWithoutShell bool
 }
@@ -93,6 +95,11 @@ In a terminal, add asks which agents and harnesses to install (detected harnesse
 are preselected), previews the plan and asks before writing. --yes, --all and
 --json never prompt and refuse any plan that is not entirely valid.
 
+--diff (-d) prints the exact changes as a git diff on stdout (the plan goes to
+stderr), never prompts and writes nothing; with --yes it then applies the same
+changes. Paths are relative to the project root, or to your home directory in
+user scope.
+
 Agents install into the project in the current directory, or into your user
 configuration with --global. Your home directory (or any directory above it) is
 no project: harnesses would apply project files there to projects below it or
@@ -137,6 +144,7 @@ install first through the skill installer (skills.sh, or skillInstaller in
 		"install into user scope instead of the project (the default in your home directory)",
 	)
 	flags.BoolVarP(&opts.yes, "yes", "y", false, "apply without prompting")
+	flags.BoolVarP(&opts.diff, "diff", "d", false, diffUsage)
 	flags.BoolVar(&opts.json, "json", false, "print machine-readable JSON; never prompts")
 	flags.BoolVar(&opts.all, "all", false, "shorthand for --agent '*' --harness all --yes")
 	flags.BoolVar(&opts.allowWithoutShell, allowWithoutShellFlag, false, allowWithoutShellUsage)
@@ -173,12 +181,12 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	if err != nil {
 		return err
 	}
-	out := a.printer(opts.json)
+	out := a.planPrinter(opts.json, opts.diff && !opts.list)
 	if opts.list {
 		return out.inventory(snapshot, inventory)
 	}
 	// Only a terminal user without --yes/--all/--json is ever asked anything.
-	interactive := a.Interactive && !opts.yes && !opts.all && !opts.json
+	interactive := a.Interactive && !opts.yes && !opts.all && !opts.json && !opts.diff
 	if interactive {
 		// Reject malformed or invalid extras before asking anything; whether their
 		// Harness is selected is checked once the selection is known.
@@ -217,7 +225,7 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	}
 	plan, err := planner.Build(install.Request{
 		Source:    a.lockedSource(snapshot),
-		Targets:   a.targets(closure),
+		Targets:   closure.Targets(a.lockedSource),
 		Harnesses: harnesses,
 		Settings:  settings,
 		Scope:     scope,
@@ -240,6 +248,10 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	}
 	plan.NoteBlockedSkills()
 	view := &planView{Plan: plan, Harnesses: a.harnessViews(harnesses, settings)}
+	approved := opts.yes || opts.all
+	if opts.diff {
+		return a.applyDiff(ctx, planner, view, out, approved, planner.Pending(plan, a.WorkDir))
+	}
 	// Nothing to write and nothing to record: no prompt, nothing to apply.
 	// --json keeps reporting the plan (and an apply with --yes) as before.
 	if !opts.json && !plan.Blocked() && !planner.Pending(plan, a.WorkDir) {
@@ -247,7 +259,7 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 		return nil
 	}
 	if !interactive {
-		return a.applyUnattended(ctx, planner, view, out, opts.yes || opts.all, opts.json)
+		return a.applyUnattended(ctx, planner, view, out, approved, opts.json)
 	}
 	return a.applyInteractive(ctx, planner, view, out)
 }
@@ -392,7 +404,7 @@ func (a *App) apply(
 		out.plan(&planView{
 			Plan: &applied, Harnesses: view.Harnesses, Skipped: view.Skipped,
 			SkippedSkills: view.SkippedSkills, Outcome: view.Outcome, Report: view.Report,
-			Previewed: view.Previewed,
+			Previewed: view.Previewed, Diff: view.Diff,
 		}, statusApplied)
 	}
 	if err == nil && !replays(view) {
@@ -675,61 +687,4 @@ func (a *App) lockedSource(snapshot *source.Snapshot) state.LockedSource {
 		locked.Locator = "./" + filepath.ToSlash(rel)
 	}
 	return locked
-}
-
-// targets turns the resolved closure into plan targets; companions keep their own
-// source but share the user's Harnesses, scope and Settings. Each Target carries
-// what it requires per Harness so the lock can tell later whether a Dependency is
-// still needed.
-func (a *App) targets(closure *resolve.Closure) []install.Target {
-	keys := make(map[string]string, len(closure.Members))
-	sources := make([]state.LockedSource, len(closure.Members))
-	for i, member := range closure.Members {
-		sources[i] = a.lockedSource(member.Snapshot)
-		keys[member.Label] = state.LockedAgent{
-			Source: sources[i], Agent: member.Definition.ID,
-		}.Key()
-	}
-	requires := map[string]map[agent.HarnessID][]string{}
-	add := func(label string, harnessID agent.HarnessID, entry string) {
-		byHarness := requires[label]
-		if byHarness == nil {
-			byHarness = map[agent.HarnessID][]string{}
-			requires[label] = byHarness
-		}
-		if !slices.Contains(byHarness[harnessID], entry) {
-			byHarness[harnessID] = append(byHarness[harnessID], entry)
-		}
-	}
-	for _, member := range closure.Members {
-		for harnessID, labels := range member.Requires {
-			for _, label := range labels {
-				add(member.Label, harnessID, state.RequireAgent(keys[label]))
-			}
-		}
-	}
-	for _, requirement := range closure.Skills {
-		for _, need := range requirement.Needs {
-			add(need.RequiredBy, need.Harness, state.RequireSkill(requirement.Skill))
-		}
-	}
-	targets := make([]install.Target, 0, len(closure.Members))
-	for i, member := range closure.Members {
-		target := install.Target{
-			Definition: member.Definition,
-			Origin:     state.OriginDependency,
-			Source:     sources[i],
-			Harnesses:  member.Harnesses,
-			RequiredBy: member.RequiredBy,
-			Requires:   requires[member.Label],
-		}
-		if target.Requires == nil {
-			target.Requires = map[agent.HarnessID][]string{}
-		}
-		if member.Direct {
-			target.Origin = state.OriginDirect
-		}
-		targets = append(targets, target)
-	}
-	return targets
 }

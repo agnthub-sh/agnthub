@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/evolving.git",
+        "ref": "v1",
+        "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
+      },
+      "agent": "drifter",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "gemini",
+          "variant": "generated",
+          "sourcePath": "agents/drifter.md",
+          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
+          "converter": "gemini/v5",
+          "path": ".gemini/agents/drifter.md",
+          "digest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

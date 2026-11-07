@@ -9,6 +9,7 @@ Gemini CLI and omp.
 agnthub add owner/repo --list                 # what the repository offers, without writing anything
 agnthub add owner/repo                        # choose agents and harnesses, preview, then install
 agnthub add owner/repo --agent reviewer --harness claude --harness codex
+agnthub add owner/repo --agent reviewer --harness claude --diff   # the exact files as a git diff; writes nothing
 agnthub list                                  # what is installed here
 agnthub check                                 # newer source content and local drift, no writes
 agnthub update                                # preview and apply newer content
@@ -23,6 +24,11 @@ Every install is previewed before anything is written, the project lock
 not install or that you changed. Repositories need no particular setup: agnthub reads portable
 `AGENT.md`/`agents/` definitions, each harness's native agent directory, the Claude Code plugins
 and marketplaces a repository packages (`.claude-plugin/`), and an optional `agnthub.yaml`.
+
+`-d/--diff` on `add`, `update`, `restore` and `remove` prints every file the command would
+create, update or delete as a git-style unified diff (exactly the bytes it would write, generated
+by the same code as the write) and writes nothing; `git apply --check` accepts it, and `-d -y`
+shows it and then applies it. See [the `--diff` details](docs/cli.md#behavior).
 
 A preview is a table of what each harness gets, sorted by agent and harness. Only rows that
 change something are listed; notes, refusals and the agents already in place are summed up
@@ -179,8 +185,10 @@ In this repository:
 ## AI agents (MCP)
 
 AI agents use agnthub through its hosted MCP server, `https://mcp.agnthub.sh`: they search the
-registry and, after you confirm, install agents with `npx -y agnthub-cli@latest add … --yes`.
-`agnthub mcp install` sets the server up in every harness on this machine:
+registry, show you the exact files an install writes with
+`npx -y agnthub-cli@latest add … --diff`, check them for security issues and, after you confirm,
+install with the same command and `-y`. `agnthub mcp install` sets the server up in every harness
+on this machine:
 
 ```sh
 npx agnthub-cli mcp install                              # pick harnesses (and omp profiles) from a list

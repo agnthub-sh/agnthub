@@ -1,0 +1,19 @@
+$ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness codex --yes
+exit status: 0
+--- stdout
+Installed · localhost:8443/evolving.git#v1@5286a739a333 · project scope
+harnesses: codex
+
+AGENT    HARNESS  ACTION    PATH
+drifter  codex    + create  .codex/agents/drifter.toml
+
+1 created · 0 updated · 0 deleted
+$ agnthub remove drifter --diff
+exit status: 0
+--- stderr
+Remove plan · project scope · lock agnthub-lock.json
+
+AGENT    HARNESS  ACTION    PATH
+drifter  codex    - delete  .codex/agents/drifter.toml
+
+1 to delete

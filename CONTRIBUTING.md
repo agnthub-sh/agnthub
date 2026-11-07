@@ -118,8 +118,10 @@ To bump a pinned Harness version:
 | `harness` | Harness adapters, conversion through the shared semantics model, Harness Settings |
 | `resolve` | the Agent and Skill Dependency closure |
 | `skills` | skill installer configuration, Skill Dependency install and verification |
-| `install` | planning, assessment and atomic application of installs |
-| `state` | the project lock, ownership records and installation identities |
+| `install` | planning, assessment and atomic application of installs, and their in-memory preview |
+| `state` | the project lock, ownership records, installation identities, and the `Files` every write goes through (disk or an in-memory recorder) |
+| `gitdiff` | renders recorded changes as a unified diff `git apply` accepts (`--diff`) |
+| `preview` | the exact files `agnthub add` would create on a fresh machine, computed in memory (the registry's `install_diff`) |
 | `adoption` | anonymous install reports to the registry |
 | `platform/env` | the process environment, behind an interface tests can replace |
 | `internal/cli` | the cobra commands and terminal UI |

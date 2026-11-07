@@ -158,10 +158,23 @@ func LoadLock(path string) (*Lock, error) {
 	return lock, nil
 }
 
-// Save writes the lock deterministically.
-func (l *Lock) Save(path string) error {
+// Save writes the lock deterministically through files.
+func (l *Lock) Save(files Files, path string) error {
 	l.normalize()
-	return writeJSON(path, l, 0o644)
+	return writeJSON(files, path, l, 0o644)
+}
+
+// Clone returns a deep copy of the lock.
+func (l *Lock) Clone() (*Lock, error) {
+	raw, err := jsonAPI.Marshal(l)
+	if err != nil {
+		return nil, err
+	}
+	clone := &Lock{}
+	if err := jsonAPI.Unmarshal(raw, clone); err != nil {
+		return nil, err
+	}
+	return clone, nil
 }
 
 func (l *Lock) normalize() {

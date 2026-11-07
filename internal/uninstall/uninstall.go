@@ -7,7 +7,6 @@ package uninstall
 import (
 	"errors"
 	"fmt"
-	"os"
 	"path/filepath"
 	"slices"
 	"strings"
@@ -398,11 +397,11 @@ func unchanged(unit *Unit) (bool, error) {
 	}
 }
 
-// Apply performs the plan's changes in inv's lock and ownership records, which
-// the caller saves. Each artifact is verified again right before deletion; a
-// failure leaves that artifact and its state untouched and is reported on its
-// entries, while every other entry still applies.
-func Apply(inv *Inventory, plan *Plan) error {
+// Apply performs the plan's changes through files and in inv's lock and ownership
+// records, which the caller saves. Each artifact is verified again right before
+// deletion; a failure leaves that artifact and its state untouched and is reported
+// on its entries, while every other entry still applies.
+func Apply(inv *Inventory, plan *Plan, files state.Files) error {
 	failed := map[string]error{}
 	kept := map[string]string{}
 	for _, entry := range plan.Entries {
@@ -415,7 +414,7 @@ func Apply(inv *Inventory, plan *Plan) error {
 		}
 		failed[path] = nil
 		var err error
-		kept[path], err = remove(entry.Unit)
+		kept[path], err = remove(files, entry.Unit)
 		failed[path] = err
 	}
 	applied := map[*Unit]bool{}
@@ -460,17 +459,17 @@ func (inv *Inventory) lockEntryGone(unit *Unit, applied map[*Unit]bool) bool {
 	return true
 }
 
-// remove deletes one artifact after verifying it is still unchanged.
-func remove(unit *Unit) (string, error) {
+// remove deletes one artifact through files after verifying it is still unchanged.
+func remove(files state.Files, unit *Unit) (string, error) {
 	if unit.Kind == KindSkill {
-		target, err := skills.RemoveInstalled(unit.Path, unit.Digest)
+		target, err := skills.RemoveInstalled(files, unit.Path, unit.Digest)
 		return target, skillError(err)
 	}
 	exists, err := unchanged(unit)
 	if err != nil || !exists {
 		return "", err
 	}
-	return "", os.Remove(unit.Path)
+	return "", files.Remove(unit.Path)
 }
 
 // skillError words a changed Skill like a changed Agent file, keeping the detail.

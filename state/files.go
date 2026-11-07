@@ -56,13 +56,13 @@ func readJSON(path string, target any) (bool, error) {
 	return true, nil
 }
 
-// writeJSON atomically writes value as indented JSON with a trailing newline.
-func writeJSON(path string, value any, perm fs.FileMode) error {
+// writeJSON writes value as indented JSON with a trailing newline through files.
+func writeJSON(files Files, path string, value any, perm fs.FileMode) error {
 	content, err := jsonAPI.MarshalIndent(value, "", "  ")
 	if err != nil {
 		return fmt.Errorf("encode %s: %w", path, err)
 	}
-	return WriteFileAtomic(path, append(content, '\n'), perm)
+	return files.WriteFile(path, append(content, '\n'), perm)
 }
 
 // WriteFileAtomic writes content through a temporary file and rename, creating

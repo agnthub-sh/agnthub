@@ -24,8 +24,10 @@ type removeOptions struct {
 	extras    []string
 	global    bool
 	yes       bool
-	json      bool
-	clean     bool
+	// diff prints the exact changes as a git diff instead of prompting.
+	diff  bool
+	json  bool
+	clean bool
 }
 
 func (a *App) removeCommand(ctx context.Context) *cobra.Command {
@@ -51,11 +53,16 @@ used by omp profiles hep and work) is only deleted when its last binding goes;
 choose a binding with --extra. Ambiguous bindings are asked about in a terminal
 and refused otherwise.
 
-Without agent names, a terminal user chooses the agents to remove from a list.`,
+Without agent names, a terminal user chooses the agents to remove from a list.
+
+--diff (-d) prints the exact deletions and lock changes as a git diff on stdout
+(the plan goes to stderr), never prompts and writes nothing; with --yes it then
+applies them.`,
 		Example: `  # Choose installed agents interactively
   agnthub remove
   agnthub rm reviewer
   agnthub rm reviewer planner --yes
+  agnthub rm reviewer --diff
   agnthub remove reviewer --harness claude --harness codex --yes
   agnthub remove reviewer --harness omp --extra omp.profile=work --yes
   agnthub rm --global reviewer
@@ -72,6 +79,7 @@ Without agent names, a terminal user chooses the agents to remove from a list.`,
 		"select the recorded harness binding <harness>.<key>=<value>, e.g. omp.profile=work")
 	flags.BoolVarP(&opts.global, "global", "g", false, "remove user-scope installations")
 	flags.BoolVarP(&opts.yes, "yes", "y", false, "apply without prompting")
+	flags.BoolVarP(&opts.diff, "diff", "d", false, diffUsage)
 	flags.BoolVar(&opts.json, "json", false, "print machine-readable JSON; never prompts")
 	flags.BoolVar(&opts.clean, "clean-dependencies", false,
 		"remove dependencies no remaining agent requires instead of agents")
@@ -92,13 +100,15 @@ type removal struct {
 	unreadable  []string
 	// previewed reports that the plan was shown before the user approved it.
 	previewed bool
+	// diff is the --json --diff patch of the plan.
+	diff *diffJSON
 }
 
 func (a *App) runRemove(ctx context.Context, names []string, opts *removeOptions) error {
 	r := &removal{
 		app:         a,
 		opts:        opts,
-		interactive: a.Interactive && !opts.yes && !opts.json,
+		interactive: a.Interactive && !opts.yes && !opts.json && !opts.diff,
 	}
 	if !opts.clean && len(names) == 0 && !r.interactive {
 		return errors.New(
@@ -540,7 +550,7 @@ func (r *removal) loadExternal() {
 // only when every selected artifact can be removed, a terminal user is asked,
 // and cleanup applies what is safe while reporting what it preserves.
 func (r *removal) decide(ctx context.Context, plan *uninstall.Plan) error {
-	out := r.app.printer(r.opts.json)
+	out := r.app.planPrinter(r.opts.json, r.opts.diff)
 	changes, refused := 0, 0
 	for _, entry := range plan.Entries {
 		switch {
@@ -551,6 +561,9 @@ func (r *removal) decide(ctx context.Context, plan *uninstall.Plan) error {
 		}
 	}
 	if changes == 0 {
+		if r.opts.diff && r.opts.json {
+			r.diff = &diffJSON{Files: []diffFileJSON{}}
+		}
 		status := statusRefused
 		if refused == 0 {
 			status = statusApplied
@@ -560,6 +573,9 @@ func (r *removal) decide(ctx context.Context, plan *uninstall.Plan) error {
 			return &ExitError{Code: 1}
 		}
 		return nil
+	}
+	if r.opts.diff {
+		return r.applyDiff(out, plan, refused)
 	}
 	if !r.interactive {
 		if refused > 0 {
@@ -596,12 +612,12 @@ func (r *removal) decide(ctx context.Context, plan *uninstall.Plan) error {
 }
 
 func (r *removal) apply(out *printer, plan *uninstall.Plan) error {
-	applyErr := uninstall.Apply(r.inv, plan)
-	if err := r.saveLock(); err != nil {
+	applyErr := uninstall.Apply(r.inv, plan, state.Disk)
+	if err := r.saveLock(state.Disk); err != nil {
 		r.print(out, plan, statusFailed)
 		return fmt.Errorf("save lock: %w", err)
 	}
-	if err := r.inv.Ownership.Save(); err != nil {
+	if err := r.inv.Ownership.Save(state.Disk); err != nil {
 		r.print(out, plan, statusFailed)
 		return fmt.Errorf("save ownership records: %w", err)
 	}
@@ -613,18 +629,80 @@ func (r *removal) apply(out *printer, plan *uninstall.Plan) error {
 	return nil
 }
 
-// saveLock writes the lock back. A project lock in the home directory (written by
-// agnthub 0.4.7 and earlier) is deleted once it records nothing, so later commands
-// there use user scope.
-func (r *removal) saveLock() error {
-	lock := r.inv.Lock
-	if !r.opts.global && len(lock.Agents) == 0 && len(lock.Skills) == 0 && r.app.inHome() {
-		if err := os.Remove(r.lockPath); err != nil && !errors.Is(err, fs.ErrNotExist) {
-			return err
-		}
+// applyDiff shows the exact changes of the plan and applies it only with --yes;
+// refused items refuse the whole removal, as without --diff.
+func (r *removal) applyDiff(out *printer, plan *uninstall.Plan, refused int) error {
+	changes, err := r.preview(plan)
+	if err != nil {
+		return err
+	}
+	command := "remove"
+	if r.opts.clean {
+		command = "remove --clean-dependencies"
+	}
+	scope := harness.ScopeProject
+	if r.opts.global {
+		scope = harness.ScopeGlobal
+	}
+	patch, err := r.app.patch(changes, scope, diffNote{command: command, blocked: refused > 0})
+	if err != nil {
+		return err
+	}
+	if out.json {
+		r.diff = newDiffJSON(patch)
+	} else if err := r.app.writeDiff(patch); err != nil {
+		return err
+	}
+	switch {
+	case refused > 0:
+		r.print(out, plan, statusRefused)
+		return &ExitError{Code: 1}
+	case !r.opts.yes:
+		r.print(out, plan, statusPlanned)
 		return nil
 	}
-	return lock.Save(r.lockPath)
+	return r.apply(out, plan)
+}
+
+// preview runs the removal against a recorder, on copies of the lock, the
+// ownership records and the plan's entries, and returns what it would change.
+func (r *removal) preview(plan *uninstall.Plan) ([]state.Change, error) {
+	lock, ownership := r.inv.Lock, r.inv.Ownership
+	defer func() { r.inv.Lock, r.inv.Ownership = lock, ownership }()
+	lockCopy, err := lock.Clone()
+	if err != nil {
+		return nil, err
+	}
+	r.inv.Lock, r.inv.Ownership = lockCopy, ownership.Clone()
+	entries := make([]*uninstall.Entry, len(plan.Entries))
+	for i, entry := range plan.Entries {
+		copied := *entry
+		entries[i] = &copied
+	}
+	recorder := &state.Recorder{}
+	// An entry that fails its last check records nothing, as it would change nothing.
+	_ = uninstall.Apply(r.inv, &uninstall.Plan{Entries: entries}, recorder)
+	if err := r.saveLock(recorder); err != nil {
+		return nil, err
+	}
+	if err := r.inv.Ownership.Save(recorder); err != nil {
+		return nil, err
+	}
+	return recorder.Changes(), nil
+}
+
+// saveLock writes the lock back through files. A project lock in the home
+// directory (written by agnthub 0.4.7 and earlier) is deleted once it records
+// nothing, so later commands there use user scope.
+func (r *removal) saveLock(files state.Files) error {
+	lock := r.inv.Lock
+	if !r.opts.global && len(lock.Agents) == 0 && len(lock.Skills) == 0 && r.app.inHome() {
+		if _, err := os.Lstat(r.lockPath); errors.Is(err, fs.ErrNotExist) {
+			return nil
+		}
+		return files.Remove(r.lockPath)
+	}
+	return lock.Save(files, r.lockPath)
 }
 
 type removeJSON struct {
@@ -638,6 +716,9 @@ type removeJSON struct {
 	DependenciesKept []dependencyJSON `json:"dependenciesKept,omitempty"`
 	// Summary counts results once applied, planned actions before.
 	Summary map[string]int `json:"summary"`
+	// Diff and Files are present with --diff: the patch and one entry per file.
+	Diff  *string         `json:"diff,omitempty"`
+	Files *[]diffFileJSON `json:"files,omitempty"`
 }
 
 type removeItemJSON struct {
@@ -675,6 +756,9 @@ func (r *removal) payload(plan *uninstall.Plan, status string) removeJSON {
 	}
 	if r.opts.clean {
 		payload.Mode = "cleanup"
+	}
+	if r.diff != nil {
+		payload.Diff, payload.Files = &r.diff.Diff, &r.diff.Files
 	}
 	for _, entry := range plan.Entries {
 		unit := entry.Unit

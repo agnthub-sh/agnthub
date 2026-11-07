@@ -3,6 +3,7 @@ package state
 import (
 	"fmt"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 	"time"
@@ -80,8 +81,8 @@ func LoadOwnership(path string) (*Ownership, error) {
 	return ownership, nil
 }
 
-// Save writes the records deterministically with owner-only permissions.
-func (o *Ownership) Save() error {
+// Save writes the records deterministically with owner-only permissions through files.
+func (o *Ownership) Save(files Files) error {
 	o.Version = OwnershipVersion
 	sort.Slice(o.Records, func(i, j int) bool {
 		return o.Records[i].Binding() < o.Records[j].Binding()
@@ -89,7 +90,14 @@ func (o *Ownership) Save() error {
 	if o.Records == nil {
 		o.Records = []Record{}
 	}
-	return writeJSON(o.path, o, 0o600)
+	return writeJSON(files, o.path, o, 0o600)
+}
+
+// Clone returns a copy whose record list changes independently of o's.
+func (o *Ownership) Clone() *Ownership {
+	clone := *o
+	clone.Records = slices.Clone(o.Records)
+	return &clone
 }
 
 // ForPath returns every record bound to an artifact path.

@@ -1,0 +1,48 @@
+# agnthub add --diff: the exact changes agnthub would make; nothing was written.
+# Paths are relative to the project root /agnthub-e2e/project.
+# Check: git -C /agnthub-e2e/project apply --check
+# Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
+diff --git a/.cursor/agents/drifter.md b/.cursor/agents/drifter.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..e3edc53cf2038cf3e8ef35b73824bd4ea295bf56
+--- /dev/null
++++ b/.cursor/agents/drifter.md
+@@ -0,0 +1,5 @@
++---
++name: drifter
++description: Agent whose source moves on after it is installed.
++---
++Revision one instructions.
+diff --git a/agnthub-lock.json b/agnthub-lock.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..6a5e9d7a4772caa36b82419a8fce65042d3a6a1c
+--- /dev/null
++++ b/agnthub-lock.json
+@@ -0,0 +1,27 @@
++{
++  "version": 1,
++  "agents": [
++    {
++      "source": {
++        "kind": "git",
++        "locator": "localhost:8443/evolving.git",
++        "ref": "v1",
++        "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
++      },
++      "agent": "drifter",
++      "origin": "direct",
++      "artifacts": [
++        {
++          "harness": "cursor",
++          "variant": "generated",
++          "sourcePath": "agents/drifter.md",
++          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
++          "converter": "cursor/v5",
++          "path": ".cursor/agents/drifter.md",
++          "digest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
++          "requires": []
++        }
++      ]
++    }
++  ]
++}

@@ -46,6 +46,15 @@ type Content struct {
 	HasVersion bool
 	// Digest covers every installable file's relative path and bytes.
 	Digest string
+	// files are a source Skill's installable files, the content an install places.
+	files []File
+}
+
+// File is one installable file of a Skill directory.
+type File struct {
+	// Path is slash-separated and relative to the Skill directory.
+	Path    string
+	Content []byte
 }
 
 // parseSkillMD reads the identity and metadata.version of a SKILL.md.
@@ -156,6 +165,7 @@ func readSourceSkill(tree source.Tree, dir string) (Content, error) {
 		}
 		total += int64(len(data))
 		files = append(files, fileDigest{rel: rel, digest: sha256.Sum256(data)})
+		content.files = append(content.files, File{Path: rel, Content: data})
 	}
 	content.Digest = contentDigest(files)
 	return content, nil

@@ -1,0 +1,26 @@
+$ agnthub add https://localhost:8443/manifest.git --agent lead --harness omp --diff
+exit status: 0
+--- stderr
+Plan · localhost:8443/manifest.git@eafafe63d176 · project scope
+harnesses: omp profile=default (native default)
+omp: shared by every omp profile; verify with default profile
+
+Skills
+SKILL      HARNESS  ACTION     PATH
+e2e-skill  omp      + install  .agents/skills/e2e-skill
+
+· >=1.0.0 <=2.0.0 from localhost:8443/skills.git#v1.0.0, required by lead
+· version 1.4.0
+· project .agents/skills
+· runs skills add 'https://localhost:8443/skills.git#21f36aec981afd5f3a2141ea1d52b9ca2f691f48' --skill e2e-skill --agent universal --yes
+
+Agents
+AGENT          HARNESS  ACTION    PATH
+companion [1]  omp      + create  .omp/agents/companion.md
+helper [2]     omp      + create  .omp/agents/helper.md
+lead           omp      + create  .omp/agents/lead.md
+
+[1] companion: dependency of lead, from localhost:8443/companion.git#v1@7baafb2b236d
+[2] helper: dependency of lead, from localhost:8443/manifest.git@eafafe63d176
+
+3 to create · 0 to update · 0 to delete · skills: 1 install

@@ -95,6 +95,8 @@ type Item struct {
 	Command []string
 	// Shadowed is the compatible copy that an incompatible higher-priority copy hides.
 	Shadowed string
+	// Files are an install's validated source files: what the backend places at Path.
+	Files []File
 }
 
 // Blocking reports whether the item prevents installing its dependents.
@@ -388,7 +390,7 @@ func (r *planRun) planInstall(
 		item.Reason = fmt.Sprintf("%s: %v", revisionLabel(item.Source, got.revision), got.err)
 		return
 	}
-	item.Version, item.Digest = got.content.Version, got.content.Digest
+	item.Version, item.Digest, item.Files = got.content.Version, got.content.Digest, got.content.files
 	for _, bounds := range item.bounds {
 		if why := bounds.Check(got.content.Version, got.content.HasVersion); why != "" {
 			item.Decision = DecisionUnsatisfied

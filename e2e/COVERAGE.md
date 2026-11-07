@@ -256,6 +256,7 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 | `remove` refuses a modified file | — | project · git | R | R | R | R | R | R | R |
 | `remove --clean-dependencies` removes unused companions and skills | — | project · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 | user scope: `add -g`, `list -g`, `check -g`, `remove -g` | — | global · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| `--diff` writes nothing and prints exactly what `add` (with dependencies and a skill), `update` and `remove` then write: `git apply` turns the project into the result | — | project · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
 
 ### Home directory
 

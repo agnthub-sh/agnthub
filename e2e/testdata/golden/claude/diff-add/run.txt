@@ -1,0 +1,10 @@
+$ agnthub add https://localhost:8443/evolving.git#v1 --agent drifter --harness claude --diff
+exit status: 0
+--- stderr
+Plan · localhost:8443/evolving.git#v1@5286a739a333 · project scope
+harnesses: claude
+
+AGENT    HARNESS  ACTION    PATH
+drifter  claude   + create  .claude/agents/drifter.md
+
+1 to create · 0 to update · 0 to delete

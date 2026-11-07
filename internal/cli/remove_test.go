@@ -253,7 +253,7 @@ func TestCleanupTreatsUnknownRequirementsAsInUse(t *testing.T) {
 			}
 		}
 	}
-	if err := lock.Save(filepath.Join(h.project, state.LockFileName)); err != nil {
+	if err := lock.Save(state.Disk, filepath.Join(h.project, state.LockFileName)); err != nil {
 		t.Fatal(err)
 	}
 	code, out := h.runWith(git, nil, "remove", "--clean-dependencies", "--yes", "--json")

@@ -1,0 +1,42 @@
+# agnthub update --diff: the exact changes agnthub would make; nothing was written.
+# Paths are relative to the project root /agnthub-e2e/project.
+# Check: git -C /agnthub-e2e/project apply --check
+# Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
+diff --git a/.opencode/agents/drifter.md b/.opencode/agents/drifter.md
+index 9fb741fa2d79bdba2d2ae5a6ada5437266ed8f32..d31a7dc0c80503a1d1c4ca3c346d275345a4ff72 100644
+--- a/.opencode/agents/drifter.md
++++ b/.opencode/agents/drifter.md
+@@ -1,5 +1,5 @@
+ ---
+-description: Agent whose source moves on after it is installed.
++description: Agent whose source moved on after it was installed.
+ mode: subagent
+ ---
+-Revision one instructions.
++Revision two instructions.
+diff --git a/agnthub-lock.json b/agnthub-lock.json
+index 01a8c48a1facc80f66da677e95295b7c4935ad65..5e096806c1674d3c7af25854d41e2d68fc58c4bf 100644
+--- a/agnthub-lock.json
++++ b/agnthub-lock.json
+@@ -6,7 +6,7 @@
+         "kind": "git",
+         "locator": "localhost:8443/evolving.git",
+         "ref": "v1",
+-        "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
++        "revision": "c46127b4737635d713c65463fd0376cf617e9494"
+       },
+       "agent": "drifter",
+       "origin": "direct",
+@@ -15,10 +15,10 @@
+           "harness": "opencode",
+           "variant": "generated",
+           "sourcePath": "agents/drifter.md",
+-          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
++          "sourceDigest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
+           "converter": "opencode/v5",
+           "path": ".opencode/agents/drifter.md",
+-          "digest": "sha256:01ba7b1c547b2e5f2bcd7b36198905e6aab5634893233019ce95c672e68d3ee9",
++          "digest": "sha256:ef9ed46d176110c970ab51429621fbe2d7dbe8dd1135887ba85ad6f82382ae0d",
+           "requires": []
+         }
+       ]

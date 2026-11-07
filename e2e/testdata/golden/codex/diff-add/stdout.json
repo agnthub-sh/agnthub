@@ -1,0 +1,48 @@
+# agnthub add --diff: the exact changes agnthub would make; nothing was written.
+# Paths are relative to the project root /agnthub-e2e/project.
+# Check: git -C /agnthub-e2e/project apply --check
+# Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
+diff --git a/.codex/agents/drifter.toml b/.codex/agents/drifter.toml
+new file mode 100644
+index 0000000000000000000000000000000000000000..ce34f572d6eb33b10fdc0a50cf80b011aae97b52
+--- /dev/null
++++ b/.codex/agents/drifter.toml
+@@ -0,0 +1,5 @@
++name = 'drifter'
++description = 'Agent whose source moves on after it is installed.'
++developer_instructions = """
++Revision one instructions.
++"""
+diff --git a/agnthub-lock.json b/agnthub-lock.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..91a5c23901254eba47a8e591df14ada99a9bb9d4
+--- /dev/null
++++ b/agnthub-lock.json
+@@ -0,0 +1,27 @@
++{
++  "version": 1,
++  "agents": [
++    {
++      "source": {
++        "kind": "git",
++        "locator": "localhost:8443/evolving.git",
++        "ref": "v1",
++        "revision": "5286a739a33342587a9c0b3da4e46c1e5e50560e"
++      },
++      "agent": "drifter",
++      "origin": "direct",
++      "artifacts": [
++        {
++          "harness": "codex",
++          "variant": "generated",
++          "sourcePath": "agents/drifter.md",
++          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
++          "converter": "codex/v5",
++          "path": ".codex/agents/drifter.toml",
++          "digest": "sha256:47588c996808366eb3048504562a73f8d77c1e0202b032767bbe59d464f664d6",
++          "requires": []
++        }
++      ]
++    }
++  ]
++}

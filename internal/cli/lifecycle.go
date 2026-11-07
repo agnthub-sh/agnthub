@@ -345,7 +345,7 @@ func (l *lifecycle) planLatest(
 		closure := set.closure()
 		plan, err := l.planner.Build(install.Request{
 			Source:    rootSource,
-			Targets:   l.app.targets(closure),
+			Targets:   closure.Targets(l.app.lockedSource),
 			Harnesses: harnesses,
 			Settings:  map[agent.HarnessID]harness.Settings{c.harness: c.settings},
 			Scope:     l.scope,

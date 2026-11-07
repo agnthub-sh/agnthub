@@ -1,0 +1,149 @@
+# agnthub add --diff: the exact changes agnthub would make; nothing was written.
+# Paths are relative to the project root /agnthub-e2e/project.
+# Check: git -C /agnthub-e2e/project apply --check
+# Not shown: agnthub's private state directory /agnthub-e2e/home/.local/state/agnthub (ownership records).
+# Skill files (e2e-skill) are placed by the skill installer (e.g. skills add https://localhost:8443/skills.git#21f36aec981afd5f3a2141ea1d52b9ca2f691f48 --skill e2e-skill --agent cursor --yes), which may also write its own bookkeeping (lock files, links) not shown here.
+diff --git a/.agents/skills/e2e-skill/SKILL.md b/.agents/skills/e2e-skill/SKILL.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..f7e2bdfd97b5aeba4a8d7e40a53b605d5cb01964
+--- /dev/null
++++ b/.agents/skills/e2e-skill/SKILL.md
+@@ -0,0 +1,7 @@
++---
++name: e2e-skill
++description: Fixture skill required by the lead agent.
++metadata:
++  version: 1.4.0
++---
++Use this skill when the lead asks for it.
+diff --git a/.cursor/agents/companion.md b/.cursor/agents/companion.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..0b75b9883319a9470de9c518302f84c7e25cb24c
+--- /dev/null
++++ b/.cursor/agents/companion.md
+@@ -0,0 +1,5 @@
++---
++name: companion
++description: Companion agent fetched from another Git source.
++---
++Assist the lead from another repository.
+diff --git a/.cursor/agents/helper.md b/.cursor/agents/helper.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..ddf7a79996cd027eeead04f99ade0e3a89b0a0c8
+--- /dev/null
++++ b/.cursor/agents/helper.md
+@@ -0,0 +1,5 @@
++---
++name: helper
++description: Helps the lead agent.
++---
++Help the lead.
+diff --git a/.cursor/agents/lead.md b/.cursor/agents/lead.md
+new file mode 100644
+index 0000000000000000000000000000000000000000..187ccde134a6297e75ab302742974c647f7c839c
+--- /dev/null
++++ b/.cursor/agents/lead.md
+@@ -0,0 +1,5 @@
++---
++name: lead
++description: Leads a change end to end and delegates to its companions.
++---
++Coordinate the helper and the companion to finish the change.
+diff --git a/agnthub-lock.json b/agnthub-lock.json
+new file mode 100644
+index 0000000000000000000000000000000000000000..d7b979cfd3e296392ec2635b47ff254db9276782
+--- /dev/null
++++ b/agnthub-lock.json
+@@ -0,0 +1,92 @@
++{
++  "version": 1,
++  "agents": [
++    {
++      "source": {
++        "kind": "git",
++        "locator": "localhost:8443/companion.git",
++        "ref": "v1",
++        "revision": "7baafb2b236dce93aac4d851eb49196b5ff5c534"
++      },
++      "agent": "companion",
++      "origin": "dependency",
++      "artifacts": [
++        {
++          "harness": "cursor",
++          "variant": "generated",
++          "sourcePath": "agents/companion.md",
++          "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
++          "converter": "cursor/v5",
++          "path": ".cursor/agents/companion.md",
++          "digest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
++          "requires": []
++        }
++      ]
++    },
++    {
++      "source": {
++        "kind": "git",
++        "locator": "localhost:8443/manifest.git",
++        "revision": "eafafe63d17670563e2773525238100a8184657e"
++      },
++      "agent": "helper",
++      "origin": "dependency",
++      "artifacts": [
++        {
++          "harness": "cursor",
++          "variant": "generated",
++          "sourcePath": "agents/helper.md",
++          "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
++          "converter": "cursor/v5",
++          "path": ".cursor/agents/helper.md",
++          "digest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
++          "requires": []
++        }
++      ]
++    },
++    {
++      "source": {
++        "kind": "git",
++        "locator": "localhost:8443/manifest.git",
++        "revision": "eafafe63d17670563e2773525238100a8184657e"
++      },
++      "agent": "lead",
++      "origin": "direct",
++      "artifacts": [
++        {
++          "harness": "cursor",
++          "variant": "generated",
++          "sourcePath": "agents/lead/AGENT.md",
++          "sourceDigest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
++          "converter": "cursor/v5",
++          "path": ".cursor/agents/lead.md",
++          "digest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
++          "requires": [
++            "agent:git:localhost:8443/companion.git::companion",
++            "agent:git:localhost:8443/manifest.git::helper",
++            "skill:e2e-skill"
++          ]
++        }
++      ]
++    }
++  ],
++  "skills": [
++    {
++      "skill": "e2e-skill",
++      "source": {
++        "kind": "git",
++        "locator": "localhost:8443/skills.git",
++        "ref": "v1.0.0",
++        "revision": "21f36aec981afd5f3a2141ea1d52b9ca2f691f48"
++      },
++      "version": "1.4.0",
++      "digest": "sha256:9e1273b9f24ac263d489209397035669c0cb9f0ce2a21e1e767ed08c17a65064",
++      "path": ".agents/skills/e2e-skill",
++      "scope": "project",
++      "harnesses": [
++        "cursor"
++      ],
++      "mode": "installed"
++    }
++  ]
++}

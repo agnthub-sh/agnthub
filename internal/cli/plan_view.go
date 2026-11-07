@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"io"
 	"maps"
 	"strings"
 
@@ -39,6 +40,8 @@ type planView struct {
 	// Previewed reports that the user saw this plan before approving it, so the
 	// result need not repeat its table.
 	Previewed bool
+	// Diff is the --json --diff patch of the plan.
+	Diff *diffJSON
 }
 
 // harnessView is one selected Harness with detection and effective Settings.
@@ -76,18 +79,23 @@ func newPlanStyles() planStyles {
 // printer is styled only when stdout is a color terminal; NO_COLOR, TERM=dumb and
 // redirected output get plain text without escape sequences or emoji.
 func (a *App) printer(asJSON bool) *printer {
+	return a.printerTo(a.Stdout, asJSON)
+}
+
+// printerTo is printer for w, styled only when w is a color terminal.
+func (a *App) printerTo(w io.Writer, asJSON bool) *printer {
 	if asJSON {
-		return newPrinter(a.Stdout, true)
+		return newPrinter(w, true)
 	}
-	profile := colorprofile.Detect(a.Stdout, a.Env.Pairs())
+	profile := colorprofile.Detect(w, a.Env.Pairs())
 	plain := profile <= colorprofile.ASCII
 	if plain {
 		profile = colorprofile.NoTTY
 	}
-	space := &spacer{w: &colorprofile.Writer{Forward: a.Stdout, Profile: profile}}
+	space := &spacer{w: &colorprofile.Writer{Forward: w, Profile: profile}}
 	p := newPrinter(space, false)
 	p.space = space
-	p.plain, p.width = plain, terminalWidth(a.Stdout, a.Env)
+	p.plain, p.width = plain, terminalWidth(w, a.Env)
 	p.root, p.home = a.WorkDir, a.Env.Home()
 	return p
 }
@@ -109,6 +117,9 @@ type planJSON struct {
 	SkillSummary  map[string]int `json:"skillSummary,omitempty"`
 	// Changes compares an update or restore with the lock.
 	Changes *lifecycleReport `json:"changes,omitempty"`
+	// Diff and Files are present with --diff: the patch and one entry per file.
+	Diff  *string         `json:"diff,omitempty"`
+	Files *[]diffFileJSON `json:"files,omitempty"`
 	// previewed is planView.Previewed; human output only.
 	previewed bool
 }
@@ -283,6 +294,9 @@ func (p *printer) plan(view *planView, status string) {
 	}
 	addSkills(&payload, view)
 	payload.previewed = view.Previewed
+	if view.Diff != nil {
+		payload.Diff, payload.Files = &view.Diff.Diff, &view.Diff.Files
+	}
 	if p.json {
 		_ = p.emitJSON(payload)
 		return

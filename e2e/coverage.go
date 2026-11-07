@@ -157,6 +157,10 @@ var stepSpecs = map[string]stepSpec{
 	"lifecycle-remove-refuse-modified": {scope: scopeProj, source: sourceGit},
 	"lifecycle-clean-dependencies":     {scope: scopeProj, source: sourceGit},
 	"lifecycle-global":                 {scope: scopeUser, source: sourceGit},
+	"diff-add":                         {scope: scopeProj, source: sourceGit},
+	"diff-update":                      {scope: scopeProj, source: sourceGit},
+	"diff-remove":                      {scope: scopeProj, source: sourceGit},
+	"diff-dependencies":                {scope: scopeProj, source: sourceGit},
 
 	"home-add":            {scope: scopeUser, source: sourceLocal, native: true},
 	"home-refuse-project": {scope: scopeProj, source: sourceLocal},
@@ -568,6 +572,15 @@ var scenarios = []scenario{
 	lifecycle("lifecycle-clean-dependencies",
 		"`remove --clean-dependencies` removes unused companions and skills"),
 	lifecycle("lifecycle-global", "user scope: `add -g`, `list -g`, `check -g`, `remove -g`"),
+	{
+		id:    "diff",
+		group: "Lifecycle",
+		title: "`--diff` writes nothing and prints exactly what `add` (with dependencies and a " +
+			"skill), `update` and `remove` then write: `git apply` turns the project into the result",
+		all: evidence{
+			steps: []string{"diff-add", "diff-update", "diff-remove", "diff-dependencies"},
+		},
+	},
 
 	homeDirectory("home-add",
 		"`add` in the home directory (no project) installs into user scope, which the "+
