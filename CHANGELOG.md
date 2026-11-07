@@ -1,5 +1,36 @@
 # Changelog
 
+## v0.9.0
+
+### Changed
+
+- **`mcp install` offers only the harnesses that are missing agnthub's MCP server.** It
+  detects every supported harness (and every omp profile) and keeps the ones without the
+  hosted server at `https://mcp.agnthub.sh`; an older agnthub entry (the former `/mcp` URLs,
+  the local server `npx agnthub-cli mcp`) counts as missing and is updated. The ones already
+  set up are never offered, only named on one dimmed line (`Already set up: claude,
+  omp · default`). With none missing it prints `agnthub's MCP server is already set up in
+  every detected harness.` with the detected ones and exits 0. In a terminal, one missing
+  harness is a yes/no question (`Add agnthub's MCP server to cursor?`); several are a toggle
+  list of only those, all preselected, and then a confirmation of the chosen set. Declining
+  exits 1 and writes nothing. The human table lists only what changed.
+- **`mcp uninstall` follows the same pattern**: none found prints
+  `No agnthub MCP installs detected.` and exits 0; one is a yes/no question; several are a
+  toggle list (all preselected) and then a confirmation.
+- **New `--all`** on both commands takes every candidate without the list; `--yes` now only
+  skips the confirmation, so `--all --yes` is fully non-interactive. Explicit `--harness` /
+  `--profile` picks show no list and, in a terminal, are confirmed unless `--yes`.
+
+### Breaking changes
+
+- `--harness all` is removed from `mcp install` and `mcp uninstall`; use `--all` (it now
+  fails with that hint).
+- Without a terminal, both commands need `--all` or `--harness`: `mcp uninstall --yes` alone
+  no longer removes every install found (use `mcp uninstall --all --yes`), and `--all` runs
+  without a confirmation there.
+- `--json` without `--harness` now behaves like `--all --yes` (it used to fail without
+  `--harness`); it still never prompts.
+
 ## v0.8.0
 
 ### New

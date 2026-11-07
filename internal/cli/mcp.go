@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/charmbracelet/x/ansi"
 	"github.com/charmbracelet/x/term"
 	"github.com/spf13/cobra"
 
@@ -46,9 +47,9 @@ GitHub in each harness (OAuth); no secret is written unless you pass --api-key.
 
 The local MCP server (` + "`agnthub mcp`" + ` as a stdio server) was removed in v0.5.0.`,
 		Example: `  agnthub mcp install
-  agnthub mcp install --harness claude,codex --yes
+  agnthub mcp install --all --yes
   agnthub mcp install --harness omp --profile work --yes
-  agnthub mcp uninstall --yes`,
+  agnthub mcp uninstall`,
 		DisableFlagParsing: true,
 		Args:               cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
@@ -79,14 +80,16 @@ type mcpOptions struct {
 	scope     string
 	apiKey    bool
 	force     bool
+	all       bool
 	yes       bool
 	json      bool
 }
 
-func (o *mcpOptions) register(cmd *cobra.Command) {
+// register declares the flags install and uninstall share; all describes --all.
+func (o *mcpOptions) register(cmd *cobra.Command, all string) {
 	flags := cmd.Flags()
 	flags.StringSliceVarP(&o.harnesses, "harness", "H", nil,
-		"harnesses, comma-separated or repeated: "+harnessList()+", or all")
+		"harnesses, comma-separated or repeated: "+harnessList())
 	flags.StringArrayVar(&o.profiles, "profile", nil,
 		"omp profile (repeatable; \"default\" for the default profile); implies --harness omp")
 	flags.StringVar(
@@ -95,8 +98,10 @@ func (o *mcpOptions) register(cmd *cobra.Command) {
 		"user",
 		"user, or project for the current project's configuration",
 	)
-	flags.BoolVarP(&o.yes, "yes", "y", false, "do not prompt")
-	flags.BoolVar(&o.json, "json", false, "print the result as JSON (never prompts)")
+	flags.BoolVar(&o.all, "all", false, all)
+	flags.BoolVarP(&o.yes, "yes", "y", false, "do not ask for confirmation")
+	flags.BoolVar(&o.json, "json", false,
+		"print the result as JSON (never prompts; without --harness it implies --all --yes)")
 }
 
 func harnessList() string {
@@ -107,13 +112,24 @@ func harnessList() string {
 	return strings.Join(names, ", ")
 }
 
+const mcpChoosing = `
+
+In a terminal, one harness is confirmed with a yes/no question; several are
+offered in a toggle list, all preselected (space toggles, ctrl+a toggles all, enter
+confirms), and the chosen set is confirmed. --all takes every one without the
+list, --yes skips the confirmation, and --all --yes asks nothing. --harness and
+--profile pick harnesses and omp profiles explicitly: no list, but still a
+confirmation unless --yes. Without a terminal, pass --all or --harness: the run
+then asks nothing. --json never prompts and, without --harness, behaves like
+--all --yes.`
+
 const mcpExitCodes = `
 
-Exit status: 0 when every selected harness is set up (or already was); 1 on an
-error (invalid flags, a cancelled prompt, no --harness without a terminal, or a
-harness whose configuration could not be changed; the others are still done); 2
-when a harness was skipped because its agnthub entry was not set up by agnthub
-(rerun with --force to replace it).`
+Exit status: 0 when every chosen harness is set up (or all already were); 1 on an
+error (invalid flags, a declined or cancelled prompt, no --all or --harness without
+a terminal, or a harness whose configuration could not be changed; the others are
+still done); 2 when a harness was skipped because its agnthub entry was not set up
+by agnthub (rerun with --force to replace it).`
 
 func (a *App) mcpInstallCommand(ctx context.Context) *cobra.Command {
 	opts := &mcpOptions{}
@@ -122,30 +138,31 @@ func (a *App) mcpInstallCommand(ctx context.Context) *cobra.Command {
 		Short: "Add agnthub's hosted MCP server to your harnesses",
 		Long: `Add agnthub's hosted MCP server (` + mcpsetup.URL + `) to your harnesses.
 
-In a terminal, install lists the harnesses detected on this machine (and every omp
-profile) with what each has now; the ones without agnthub are preselected (space
-toggles, ctrl+a toggles all, enter confirms). Without a terminal, or with --yes or
---json, choose with --harness (and --profile for omp profiles); --harness all
-selects every detected harness.
+install looks at the harnesses detected on this machine (and every omp profile) and
+keeps the ones without agnthub's MCP server at ` + mcpsetup.URL + `; an older agnthub
+entry (the former /mcp URLs, or the local server ` + "`npx agnthub-cli mcp`" + `) counts as
+missing and is updated. The harnesses that already have it are never offered, only
+named in one line; when every one has it, install says so and exits 0.` + mcpChoosing + `
 
 Each harness gets an "agnthub" server (Streamable HTTP, ` + mcpsetup.URL + `) in its
-user configuration, or with --scope project in the current project's. Older agnthub
-entries (the former /mcp URLs, or the local server ` + "`npx agnthub-cli mcp`" + `) are
-replaced; an agnthub entry agnthub did not write is kept unless you confirm or pass
---force. Claude Code, Copilot CLI and Gemini CLI are configured with their own mcp
-command when it is on PATH; the others (and every --api-key or project-scope setup
-those commands cannot do) by editing the file: only the agnthub entry changes, the
+user configuration, or with --scope project in the current project's. An agnthub
+entry agnthub did not write is replaced only once you confirm it, or with --force.
+Claude Code, Copilot CLI and Gemini CLI are configured with their own mcp command
+when it is on PATH; the others (and every --api-key or project-scope setup those
+commands cannot do) by editing the file: only the agnthub entry changes, the
 previous file is copied to ~/.local/state/agnthub/mcp-backups, and the new one is
 written atomically with the old file mode (0600 for a new file). A configuration
-that does not parse is never changed.
+that does not parse is never changed. Naming an undetected harness with --harness
+sets it up anyway.
 
 You then sign in with GitHub in each harness (install prints how). --api-key writes
 your agnthub API key (` + apiclient.KeyVariable + `, or the one ` + "`agnthub auth login`" + ` saved) as an
 Authorization header instead: the key is then stored in plain text in each
 harness's configuration file.` + mcpExitCodes,
 		Example: `  agnthub mcp install
+  agnthub mcp install --all --yes
   agnthub mcp install --harness claude,codex --yes
-  agnthub mcp install --harness all --yes --json
+  agnthub mcp install --json
   agnthub mcp install --harness omp --profile default --profile work --yes
   agnthub mcp install --harness cursor --scope project --yes
   agnthub mcp install --harness claude --api-key --yes`,
@@ -154,7 +171,8 @@ harness's configuration file.` + mcpExitCodes,
 			return a.runMCPInstall(ctx, opts)
 		},
 	}
-	opts.register(cmd)
+	opts.register(cmd, "every detected harness (and omp profile) without agnthub's "+
+		"MCP server, without the list")
 	cmd.Flags().BoolVar(&opts.apiKey, "api-key", false,
 		"write your agnthub API key as an Authorization header instead of signing in (stored in plain text)")
 	cmd.Flags().
@@ -172,67 +190,173 @@ func (a *App) mcpUninstallCommand(ctx context.Context) *cobra.Command {
 uninstall looks in every supported harness's user configuration (every omp profile
 included) and, with --scope project, also in the current project's, for an agnthub
 entry agnthub set up: the hosted server or an older form of it (the former /mcp URLs,
-or the local server ` + "`npx agnthub-cli mcp`" + `). In a terminal it lists the ones it found,
-all selected; --yes removes every one found, --harness and --profile narrow the
-search. Removal uses the harness's own mcp command where install would, otherwise
-the same careful file edit with a backup. Other servers, and an agnthub entry
-agnthub did not write, are never removed.
+or the local server ` + "`npx agnthub-cli mcp`" + `). When there is none it says so and
+exits 0.` + mcpChoosing + `
 
-Exit status: 0 when every selected entry was removed, or none was found; 1 on an
-error (invalid flags, a cancelled prompt, no --yes or --harness without a terminal,
-or a configuration that could not be changed).`,
+Removal uses the harness's own mcp command where install would, otherwise the same
+careful file edit with a backup. Other servers, and an agnthub entry agnthub did
+not write, are never removed.
+
+Exit status: 0 when every chosen entry was removed, or none was found; 1 on an
+error (invalid flags, a declined or cancelled prompt, no --all or --harness without
+a terminal, or a configuration that could not be changed).`,
 		Example: `  agnthub mcp uninstall
-  agnthub mcp uninstall --yes
+  agnthub mcp uninstall --all --yes
   agnthub mcp uninstall --harness omp --profile work --yes
-  agnthub mcp uninstall --scope project --yes --json`,
+  agnthub mcp uninstall --scope project --json`,
 		Args: cobra.NoArgs,
 		RunE: func(*cobra.Command, []string) error {
 			return a.runMCPUninstall(ctx, opts)
 		},
 	}
-	opts.register(cmd)
+	opts.register(cmd, "every agnthub MCP install found, without the list")
 	return cmd
 }
 
-// mcpSelection is what the flags select.
-type mcpSelection struct {
-	// ids are the named harnesses; nil when none was named.
-	ids []agent.HarnessID
-	// all: --harness all.
-	all bool
-}
+// mcpSelection is the harnesses the flags name; nil when none is named.
+type mcpSelection []agent.HarnessID
 
 func (o *mcpOptions) selection() (mcpSelection, error) {
 	var sel mcpSelection
 	for _, name := range o.harnesses {
 		name = strings.TrimSpace(name)
 		if name == allSelector || name == allHarnesses {
-			sel.all = true
-			continue
+			return nil, errors.New("--harness all was replaced by --all")
 		}
 		id, err := agent.ParseHarness(name)
 		if err != nil {
-			return sel, err
+			return nil, err
 		}
-		if !slices.Contains(sel.ids, id) {
-			sel.ids = append(sel.ids, id)
+		if !slices.Contains(sel, id) {
+			sel = append(sel, id)
 		}
 	}
-	if sel.all && len(sel.ids) > 0 {
-		return sel, errors.New("--harness all already selects every harness; drop the other values")
+	if o.all && len(sel) > 0 {
+		return nil, errors.New("--all takes every harness; drop --harness or --all")
 	}
 	if len(o.profiles) > 0 {
 		switch {
-		case len(o.harnesses) == 0:
-			sel.ids = []agent.HarnessID{agent.OMP}
-		case !sel.all && !slices.Contains(sel.ids, agent.OMP):
-			return sel, errors.New("--profile selects omp profiles; add --harness omp")
+		case len(sel) == 0 && !o.all:
+			sel = mcpSelection{agent.OMP}
+		case len(sel) > 0 && !slices.Contains(sel, agent.OMP):
+			return nil, errors.New("--profile selects omp profiles; add --harness omp")
 		}
 	}
 	return sel, nil
 }
 
-func (sel mcpSelection) named() bool { return sel.all || len(sel.ids) > 0 }
+// mcpFlow is how a run chooses among its candidates.
+type mcpFlow struct {
+	// list offers several candidates in a toggle list.
+	list bool
+	// confirm asks before changing anything.
+	confirm bool
+}
+
+// mcpFlow decides the prompts: a toggle list without --all or a named harness,
+// a confirmation without --yes, and neither without a terminal or with --json.
+// Without a terminal, --all or --harness is required (--json implies --all).
+func (a *App) mcpFlow(opts *mcpOptions, sel mcpSelection, noTerminal string) (mcpFlow, error) {
+	named := len(sel) > 0
+	all := opts.all || (opts.json && !named)
+	if !a.Interactive && !all && !named {
+		return mcpFlow{}, errors.New(noTerminal)
+	}
+	prompts := a.Interactive && !opts.json
+	return mcpFlow{list: prompts && !all && !named, confirm: prompts && !opts.yes}, nil
+}
+
+// mcpQuestions words one command's prompts.
+type mcpQuestions struct {
+	// list titles the toggle list; one (with the target's label) and many the
+	// confirmation.
+	list, one, many string
+	// note describes a target: its file and what changes.
+	note func(*mcpsetup.Target) string
+	// preselect reports a target selected in the list.
+	preselect func(*mcpsetup.Target) bool
+}
+
+// chooseMCP returns the candidates the user chose: from a toggle list when the
+// flow has one and there are several, then confirmed when the flow asks. A
+// declined confirmation or an empty choice is errCancelled.
+func (a *App) chooseMCP(
+	ctx context.Context,
+	out *printer,
+	flow mcpFlow,
+	candidates []*mcpsetup.Target,
+	q mcpQuestions,
+) ([]*mcpsetup.Target, error) {
+	chosen := candidates
+	listed := flow.list && len(candidates) > 1
+	if listed {
+		options := make([]Option, 0, len(candidates))
+		labels := alignLabels(candidates, a.targetLabel)
+		for i, t := range candidates {
+			options = append(options, Option{
+				Value:    strconv.Itoa(i),
+				Label:    labels[i] + "  " + q.note(t),
+				Selected: q.preselect(t),
+			})
+		}
+		out.gapBeforePrompt()
+		values, err := a.Prompter.MultiSelect(ctx, q.list,
+			"Space toggles, ctrl+a toggles all, enter confirms.", options)
+		if err != nil {
+			return nil, err
+		}
+		chosen = make([]*mcpsetup.Target, 0, len(values))
+		for _, value := range values {
+			i, err := strconv.Atoi(value)
+			if err != nil || i < 0 || i >= len(candidates) {
+				return nil, fmt.Errorf("unexpected choice %q", value)
+			}
+			chosen = append(chosen, candidates[i])
+		}
+		if len(chosen) == 0 {
+			return nil, errCancelled
+		}
+	}
+	if !flow.confirm {
+		return chosen, nil
+	}
+	title, description := q.many, ""
+	if len(chosen) == 1 {
+		title, description = fmt.Sprintf(q.one, shortLabel(chosen[0])), q.note(chosen[0])
+	} else {
+		lines := alignLabels(chosen, shortLabel)
+		for i, t := range chosen {
+			lines[i] += "  " + q.note(t)
+		}
+		description = strings.Join(lines, "\n")
+	}
+	if !listed {
+		// A toggle list already ends with a blank line.
+		out.gapBeforePrompt()
+	}
+	ok, err := a.Prompter.Confirm(ctx, title, description)
+	if err != nil {
+		return nil, err
+	}
+	if !ok {
+		return nil, errCancelled
+	}
+	return chosen, nil
+}
+
+// alignLabels labels each target, padded to the widest so what follows lines up.
+func alignLabels(targets []*mcpsetup.Target, label func(*mcpsetup.Target) string) []string {
+	labels := make([]string, len(targets))
+	width := 0
+	for i, t := range targets {
+		labels[i] = label(t)
+		width = max(width, ansi.StringWidth(labels[i]))
+	}
+	for i := range labels {
+		labels[i] += strings.Repeat(" ", width-ansi.StringWidth(labels[i]))
+	}
+	return labels
+}
 
 // mcpScope parses --scope; project scope is refused in the home directory, which
 // is no project.
@@ -299,12 +423,13 @@ func (a *App) runMCPInstall(ctx context.Context, opts *mcpOptions) error {
 			return err
 		}
 	}
-	interactive := a.Interactive && !opts.yes && !opts.json
-	if !sel.named() && !interactive {
-		return errors.New("choose harnesses with --harness (e.g. --harness claude,codex, or " +
-			"--harness all for every detected harness); run it in a terminal to pick them from a list")
+	flow, err := a.mcpFlow(opts, sel, "no terminal to choose harnesses in: pass --all to set "+
+		"up every detected harness without agnthub's MCP server, or choose with --harness "+
+		"(e.g. --harness claude,codex)")
+	if err != nil {
+		return err
 	}
-	ids, undetected := sel.ids, []agent.HarnessID(nil)
+	ids, undetected := []agent.HarnessID(sel), []agent.HarnessID(nil)
 	if len(ids) == 0 {
 		hctx := a.harnessContext()
 		for _, installer := range a.Registry.Installers() {
@@ -327,44 +452,71 @@ func (a *App) runMCPInstall(ctx context.Context, opts *mcpOptions) error {
 		)
 	}
 	out := a.printer(opts.json)
-	selected := targets
-	force := opts.force
-	if interactive && !sel.named() {
-		if selected, err = a.promptMCPInstall(ctx, out, targets); err != nil {
-			return err
-		}
-		if !force && slices.ContainsFunc(selected, func(t *mcpsetup.Target) bool {
-			return t.State == mcpsetup.Foreign
-		}) {
-			if force, err = a.confirmReplace(ctx, out, selected); err != nil {
-				return err
-			}
+	report := mcpReport{
+		Command: "install",
+		Scope:   scopeName(scope),
+		URL:     mcpsetup.URL,
+		apiKey:  apiKey != "",
+		named:   len(sel) > 0,
+	}
+	for _, id := range undetected {
+		report.NotDetected = append(report.NotDetected, string(id))
+	}
+	missing := make([]*mcpsetup.Target, 0, len(targets))
+	for _, t := range targets {
+		if t.Err == nil && t.State == mcpsetup.Installed {
+			report.current = append(report.current, shortLabel(t))
+		} else {
+			missing = append(missing, t)
 		}
 	}
-	if apiKey != "" {
+	var chosen []*mcpsetup.Target
+	force := opts.force
+	if len(missing) > 0 {
+		if len(report.current) > 0 && (flow.confirm || flow.list && len(missing) > 1) {
+			out.paragraph(0, out.styles.dim.Render(alreadySetUp(report.current)))
+			report.currentShown = true
+		}
+		chosen, err = a.chooseMCP(ctx, out, flow, missing, mcpQuestions{
+			list: "Harnesses to set up agnthub's MCP server in",
+			one:  "Add agnthub's MCP server to %s?",
+			many: "Add agnthub's MCP server to these harnesses?",
+			note: func(t *mcpsetup.Target) string {
+				path := out.path(t.Path)
+				switch {
+				case t.Err != nil:
+					return path + " · cannot read its configuration"
+				case t.State == mcpsetup.Foreign:
+					return path + " · replace another agnthub server (" + t.Existing + ")"
+				case t.State != mcpsetup.Absent:
+					return path + " · update an older agnthub setup"
+				}
+				return path
+			},
+			preselect: func(t *mcpsetup.Target) bool { return t.Err == nil },
+		})
+		if err != nil {
+			return err
+		}
+		// Confirming a foreign entry's replacement is the --force.
+		force = force || flow.confirm && slices.ContainsFunc(chosen,
+			func(t *mcpsetup.Target) bool { return t.State == mcpsetup.Foreign })
+	}
+	if apiKey != "" && len(chosen) > 0 {
 		fmt.Fprintln(
 			a.Stderr,
 			"warning: --api-key stores your agnthub API key in plain text in each "+
 				"selected harness's MCP configuration; anyone who can read those files can use it",
 		)
 	}
-	report := mcpReport{
-		Command: "install",
-		Scope:   scopeName(scope),
-		URL:     mcpsetup.URL,
-		apiKey:  apiKey != "",
-	}
-	// Rows follow the list; installed ones left unselected are shown as they are.
+	// Rows follow the scan; already set-up ones are reported unchanged.
 	for _, t := range targets {
 		switch {
-		case slices.Contains(selected, t):
+		case slices.Contains(chosen, t):
 			report.add(t, setup.Install(ctx, t, force))
-		case t.State == mcpsetup.Installed:
+		case t.Err == nil && t.State == mcpsetup.Installed:
 			report.add(t, mcpsetup.Result{Action: mcpsetup.ActionUnchanged})
 		}
-	}
-	for _, id := range undetected {
-		report.NotDetected = append(report.NotDetected, string(id))
 	}
 	if apiKey != "" {
 		a.warnReadable(report.Results)
@@ -372,90 +524,33 @@ func (a *App) runMCPInstall(ctx context.Context, opts *mcpOptions) error {
 	return a.emitMCP(out, &report)
 }
 
-// promptMCPInstall offers every target: the ones without agnthub preselected,
-// the others marked with what they have.
-func (a *App) promptMCPInstall(
-	ctx context.Context,
-	out *printer,
-	targets []*mcpsetup.Target,
-) ([]*mcpsetup.Target, error) {
-	if !slices.ContainsFunc(
-		targets,
-		func(t *mcpsetup.Target) bool { return t.State != mcpsetup.Installed },
-	) {
-		return nil, nil
-	}
-	options := make([]Option, 0, len(targets))
-	for i, t := range targets {
-		label := a.targetLabel(t)
-		switch {
-		case t.Err != nil:
-			label += " (cannot read its configuration)"
-		case t.State == mcpsetup.Installed:
-			label += " (already installed)"
-		case t.State == mcpsetup.Outdated,
-			t.State == mcpsetup.Legacy,
-			t.State == mcpsetup.LegacyStdio:
-			label += " (older agnthub setup; select to update)"
-		case t.State == mcpsetup.Foreign:
-			label += " (has another agnthub server: " + t.Existing + "; select to replace)"
-		}
-		options = append(options, Option{
-			Value:    strconv.Itoa(i),
-			Label:    label,
-			Selected: t.Err == nil && t.State == mcpsetup.Absent,
-		})
-	}
-	out.gapBeforePrompt()
-	values, err := a.Prompter.MultiSelect(ctx, "Harnesses to set up agnthub's MCP server in",
-		"Space toggles, ctrl+a toggles all, enter confirms.", options)
-	if err != nil {
-		return nil, err
-	}
-	selected := make([]*mcpsetup.Target, 0, len(values))
-	for _, value := range values {
-		i, err := strconv.Atoi(value)
-		if err != nil || i < 0 || i >= len(targets) {
-			return nil, fmt.Errorf("unexpected choice %q", value)
-		}
-		selected = append(selected, targets[i])
-	}
-	if len(selected) == 0 {
-		return nil, errCancelled
-	}
-	return selected, nil
-}
-
-// confirmReplace asks before replacing agnthub entries agnthub did not write.
-func (a *App) confirmReplace(
-	ctx context.Context,
-	out *printer,
-	selected []*mcpsetup.Target,
-) (bool, error) {
-	var lines []string
-	for _, t := range selected {
-		if t.State == mcpsetup.Foreign {
-			lines = append(lines, a.targetLabel(t)+": "+t.Existing+" in "+out.path(t.Path))
-		}
-	}
-	out.gapBeforePrompt()
-	ok, err := a.Prompter.Confirm(ctx, "Replace these agnthub servers agnthub did not set up?",
-		strings.Join(lines, "\n"))
-	if err != nil {
-		return false, err
-	}
-	if !ok {
-		return false, errCancelled
-	}
-	return true, nil
-}
-
+// targetLabel names a target in a toggle list: its harness ID and name, and
+// profile.
 func (a *App) targetLabel(t *mcpsetup.Target) string {
 	label := fmt.Sprintf("%-9s %s", t.Harness, a.harnessName(t.Harness))
 	if t.Profile != "" {
 		label += " · profile " + t.Profile
 	}
+	if t.Scope == harness.ScopeProject {
+		label += " (project)"
+	}
 	return label
+}
+
+// shortLabel names a target in a sentence: "claude", "omp · work".
+func shortLabel(t *mcpsetup.Target) string {
+	label := string(t.Harness)
+	if t.Profile != "" {
+		label += " · " + t.Profile
+	}
+	if t.Scope == harness.ScopeProject {
+		label += " (project)"
+	}
+	return label
+}
+
+func alreadySetUp(labels []string) string {
+	return "Already set up: " + strings.Join(labels, ", ")
 }
 
 func (a *App) runMCPUninstall(ctx context.Context, opts *mcpOptions) error {
@@ -467,12 +562,12 @@ func (a *App) runMCPUninstall(ctx context.Context, opts *mcpOptions) error {
 	if err != nil {
 		return err
 	}
-	interactive := a.Interactive && !opts.yes && !opts.json
-	if !sel.named() && !interactive && !opts.yes {
-		return errors.New("pass --yes to remove every agnthub MCP install found, or choose " +
-			"harnesses with --harness; run it in a terminal to pick them from a list")
+	flow, err := a.mcpFlow(opts, sel, "no terminal to choose in: pass --all to remove every "+
+		"agnthub MCP install found, or choose with --harness (e.g. --harness claude,codex)")
+	if err != nil {
+		return err
 	}
-	ids := sel.ids
+	ids := []agent.HarnessID(sel)
 	if len(ids) == 0 {
 		ids = a.supportedHarnesses()
 	}
@@ -505,32 +600,22 @@ func (a *App) runMCPUninstall(ctx context.Context, opts *mcpOptions) error {
 	if len(found) == 0 {
 		return a.emitMCP(out, &report)
 	}
-	selected := found
-	if interactive && !sel.named() {
-		options := make([]Option, 0, len(found))
-		for i, t := range found {
-			label := a.targetLabel(t) + "  " + out.path(t.Path)
+	chosen, err := a.chooseMCP(ctx, out, flow, found, mcpQuestions{
+		list: "Remove agnthub's MCP server from",
+		one:  "Remove agnthub's MCP server from %s?",
+		many: "Remove agnthub's MCP server from these harnesses?",
+		note: func(t *mcpsetup.Target) string {
 			if t.State != mcpsetup.Installed {
-				label += " (older agnthub setup)"
+				return out.path(t.Path) + " · older agnthub setup"
 			}
-			options = append(options, Option{Value: strconv.Itoa(i), Label: label, Selected: true})
-		}
-		out.gapBeforePrompt()
-		values, err := a.Prompter.MultiSelect(ctx, "Remove agnthub's MCP server from",
-			"Space toggles, ctrl+a toggles all, enter confirms.", options)
-		if err != nil {
-			return err
-		}
-		selected = selected[:0:0]
-		for _, value := range values {
-			i, err := strconv.Atoi(value)
-			if err != nil || i < 0 || i >= len(found) {
-				return fmt.Errorf("unexpected choice %q", value)
-			}
-			selected = append(selected, found[i])
-		}
+			return out.path(t.Path)
+		},
+		preselect: func(*mcpsetup.Target) bool { return true },
+	})
+	if err != nil {
+		return err
 	}
-	for _, t := range selected {
+	for _, t := range chosen {
 		report.add(t, setup.Uninstall(ctx, t))
 	}
 	return a.emitMCP(out, &report)
@@ -554,6 +639,12 @@ type mcpReport struct {
 	Warnings    []string        `json:"warnings,omitempty"`
 
 	apiKey bool
+	// named: the harnesses were named with --harness or --profile.
+	named bool
+	// current labels the targets that already had the hosted server;
+	// currentShown: they were already named before a prompt.
+	current      []string
+	currentShown bool
 }
 
 type mcpResultJSON struct {
@@ -662,7 +753,14 @@ func (p *printer) humanMCP(r *mcpReport) {
 			r.Command,
 		)+", some harnesses skipped"
 	case !changed:
-		icon, title = p.emoji("✅"), "agnthub MCP server already installed"
+		where := "detected"
+		if r.named {
+			where = "selected"
+		}
+		fmt.Fprintln(p.w, p.emoji("✅")+s.title.Render(
+			"agnthub's MCP server is already set up in every "+where+" harness."))
+		p.paragraph(2, s.dim.Render(strings.Join(r.current, ", ")))
+		return
 	default:
 		icon, title = p.emoji("✅"), "agnthub MCP server "+pastTense(r.Command)
 	}
@@ -676,6 +774,9 @@ func (p *printer) humanMCP(r *mcpReport) {
 	var notes []string
 	backups := ""
 	for _, row := range r.Results {
+		if row.Action == string(mcpsetup.ActionUnchanged) {
+			continue
+		}
 		t.rows = append(t.rows, []cell{
 			{text: row.Harness, style: s.title},
 			plainCell(row.Profile),
@@ -694,7 +795,8 @@ func (p *printer) humanMCP(r *mcpReport) {
 		}
 	}
 	p.render(t)
-	if len(notes) > 0 || backups != "" || len(r.NotDetected) > 0 {
+	showCurrent := len(r.current) > 0 && !r.currentShown
+	if len(notes) > 0 || backups != "" || showCurrent || len(r.NotDetected) > 0 {
 		p.section()
 	}
 	for _, note := range notes {
@@ -702,6 +804,9 @@ func (p *printer) humanMCP(r *mcpReport) {
 	}
 	if backups != "" {
 		p.paragraph(2, s.dim.Render("Previous files are backed up in "+p.path(dirOf(backups))+"."))
+	}
+	if showCurrent {
+		p.paragraph(2, s.dim.Render(alreadySetUp(r.current)))
 	}
 	if len(r.NotDetected) > 0 {
 		p.paragraph(2, s.dim.Render("Not detected: "+strings.Join(r.NotDetected, ", ")+

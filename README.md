@@ -188,23 +188,29 @@ AI agents use agnthub through its hosted MCP server, `https://mcp.agnthub.sh`: t
 registry, show you the exact files an install writes with
 `npx -y agnthub-cli@latest add … --diff`, check them for security issues and, after you confirm,
 install with the same command and `-y`. `agnthub mcp install` sets the server up in every harness
-on this machine:
+on this machine that does not have it yet:
 
 ```sh
-npx agnthub-cli mcp install                              # pick harnesses (and omp profiles) from a list
+npx agnthub-cli mcp install                              # confirm, or pick from a list of the missing ones
+npx agnthub-cli mcp install --all --yes                  # every detected harness that lacks it, no questions
 npx agnthub-cli mcp install --harness claude,codex --yes
 npx agnthub-cli mcp install --harness omp --profile work --yes
 npx agnthub-cli mcp uninstall                            # remove it again
 ```
 
-It adds an `agnthub` server (Streamable HTTP) to each harness's user configuration (or the
-project's, with `--scope project`), with Claude Code's, Copilot CLI's and Gemini CLI's own
+Harnesses (and omp profiles) that already have the server are never offered, only named on
+one line; with none missing it says so and exits 0. One missing harness is a yes/no question,
+several a toggle list (all preselected) and then a confirmation; `--all` skips the list and
+`--yes` the confirmation. Without a terminal, pass `--all` or `--harness`; `--json` without
+`--harness` behaves like `--all --yes`. `mcp uninstall` works the same way on the installs it
+finds. It adds an `agnthub` server (Streamable HTTP) to each harness's user configuration (or
+the project's, with `--scope project`), with Claude Code's, Copilot CLI's and Gemini CLI's own
 `mcp add` when they are on `PATH` and otherwise by editing the file: only the `agnthub` entry
 changes, the previous file is backed up under `~/.local/state/agnthub/mcp-backups` and the new
 one is written atomically with the old mode. Older agnthub entries (the `/mcp` URLs and the local
-server removed in v0.5.0) are replaced; an `agnthub` entry agnthub did not write is kept unless
-you confirm or pass `--force`. You then sign in with GitHub in each harness (it prints how), or
-pass `--api-key` to store your API key as a header instead. See
+server removed in v0.5.0) count as missing and are updated; an `agnthub` entry agnthub did not
+write is kept unless you confirm or pass `--force`. You then sign in with GitHub in each harness
+(it prints how), or pass `--api-key` to store your API key as a header instead. See
 [AI agents (MCP)](docs/cli.md#ai-agents-mcp) for every flag, the per-harness details and the
 exit statuses.
 

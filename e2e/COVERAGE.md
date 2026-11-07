@@ -315,14 +315,16 @@ servers its configuration defines, without a model or a sign-in:
 | omp | file edit of each profile's `mcp.json` | omp's own loader, `loadAllMCPConfigs` from the installed package (what omp connects to at startup), with `OMP_PROFILE` unset and `=work` |
 
 Steps: bare `agnthub mcp` without a terminal exits 1 with the removal notice and the
-`mcp install` hint, and `mcp install` without `--harness` exits 1; `mcp install --harness <h>
---yes --json` replaces the local server (`update`; omp: `update` in the default profile,
-`install` in `work`) with the hosted server, which the Harness then lists at
-`https://mcp.agnthub.sh` beside the neighbor; a second install is `unchanged`; `mcp uninstall
---yes --json` removes it from every profile while the Harness still lists the neighbor; a
-fresh install is `install`; `--api-key` (with `AGNTHUB_API_KEY`) rewrites it with a bearer
-header the Harness still loads and warns that the key is stored in plain text; `mcp
-uninstall --harness <h> --yes` removes it again. The exact files each edit produces (every
+`mcp install` hint, and `mcp install --yes` without `--all` or `--harness` exits 1; `mcp
+install --all --yes --json` (detection finds only the image's Harness) replaces the local
+server (`update`; omp: `update` in the default profile, `install` in `work`) with the hosted
+server, which the Harness then lists at `https://mcp.agnthub.sh` beside the neighbor; a second
+one is `unchanged`, and without `--json` it prints that the server is already set up in every
+detected harness; `mcp uninstall --all --yes --json` removes it from every profile while the
+Harness still lists the neighbor; the single-harness path `mcp install --harness <h> --yes
+--json` is `install`; `--api-key` (with `AGNTHUB_API_KEY`) rewrites it with a bearer header
+the Harness still loads and warns that the key is stored in plain text; `mcp uninstall
+--harness <h> --yes` removes it again. The exact files each edit produces (every
 legacy form, a foreign entry, comments, an unparseable file, the API key header), backups,
 file modes, environment overrides, project scope and the prompts are proven by the unit
 tests in `internal/mcpsetup` and `internal/cli/mcp_test.go`, not here: the Harness commands

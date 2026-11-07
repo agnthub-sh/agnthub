@@ -116,6 +116,7 @@ func (s *suite) mcp(t *testing.T) {
 				`{"mcpServers": {"other": {"type": "http", "url": "`+neighborURL+`"}}}`)
 			profiles = append(profiles, "work")
 		}
+		all := []string{"mcp", "install", "--all", "--yes", "--json"}
 		install := []string{"mcp", "install", "--harness", s.harness, "--yes", "--json"}
 
 		t.Run("bare-mcp-notice", func(t *testing.T) {
@@ -124,9 +125,9 @@ func (s *suite) mcp(t *testing.T) {
 				!bytes.Contains(stderr, []byte("mcp install")) {
 				t.Fatalf("exit %d\n%s", exit, stderr)
 			}
-			exit, _, stderr = s.agnthub(t, nil, []string{"mcp", "install"})
-			if exit != 1 || !bytes.Contains(stderr, []byte("--harness")) {
-				t.Fatalf("install without --harness and a terminal: exit %d\n%s", exit, stderr)
+			exit, _, stderr = s.agnthub(t, nil, []string{"mcp", "install", "--yes"})
+			if exit != 1 || !bytes.Contains(stderr, []byte("--all")) {
+				t.Fatalf("install without --all and a terminal: exit %d\n%s", exit, stderr)
 			}
 		})
 		t.Run("install-replaces-local-server", func(t *testing.T) {
@@ -134,16 +135,21 @@ func (s *suite) mcp(t *testing.T) {
 			if s.harness == "omp" {
 				want = "update install" // default profile seeded, work profile empty
 			}
-			s.mcpStep(t, install, want, h.mechanism)
+			s.mcpStep(t, all, want, h.mechanism)
 			for _, profile := range profiles {
 				requireServers(t, h.list(t, profile), true)
 			}
-			s.mcpStep(t, install, strings.Repeat("unchanged ", len(profiles)), "")
+			s.mcpStep(t, all, strings.Repeat("unchanged ", len(profiles)), "")
+			exit, stdout, stderr := s.agnthub(t, nil, []string{"mcp", "install", "--all", "--yes"})
+			if exit != 0 ||
+				!bytes.Contains(stdout, []byte("already set up in every detected harness")) {
+				t.Fatalf("rerun: exit %d\n%s%s", exit, stdout, stderr)
+			}
 		})
 		t.Run("uninstall", func(t *testing.T) {
 			s.mcpStep(
 				t,
-				[]string{"mcp", "uninstall", "--yes", "--json"},
+				[]string{"mcp", "uninstall", "--all", "--yes", "--json"},
 				strings.Repeat("remove ", len(profiles)),
 				h.mechanism,
 			)
@@ -151,7 +157,7 @@ func (s *suite) mcp(t *testing.T) {
 				requireServers(t, h.list(t, profile), false)
 			}
 		})
-		t.Run("install-again-and-api-key", func(t *testing.T) {
+		t.Run("install-one-harness-and-api-key", func(t *testing.T) {
 			s.mcpStep(t, install, strings.Repeat("install ", len(profiles)), h.mechanism)
 			for _, profile := range profiles {
 				requireServers(t, h.list(t, profile), true)
