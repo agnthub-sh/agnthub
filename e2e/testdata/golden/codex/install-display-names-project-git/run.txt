@@ -1,0 +1,2 @@
+$ agnthub add https://localhost:8443/display-names.git --agent '*' --harness codex --yes --json
+exit status: 0

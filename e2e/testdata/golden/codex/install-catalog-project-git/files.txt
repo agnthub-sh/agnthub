@@ -1,0 +1,10 @@
+0644 home/.config/agnthub/config.yaml
+0600 home/.local/state/agnthub/installations.json
+0644 project/.codex/agents/backend-architect.toml
+0644 project/.codex/agents/cafe-copywriter-v2.toml
+0644 project/.codex/agents/engineering-frontend-developer.toml
+0644 project/.codex/agents/engineering-search-relevance-engineer.toml
+0644 project/.codex/agents/marketing-growth-hacker.toml
+0644 project/.codex/agents/marketing-seo-specialist.toml
+0644 project/.codex/agents/unity-architect.toml
+0644 project/agnthub-lock.json

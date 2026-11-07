@@ -1,0 +1,176 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/display-names.git",
+    "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+  },
+  "harnesses": [
+    {
+      "id": "gemini",
+      "name": "Gemini CLI",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "bug-hunter",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/bug-hunter.md",
+      "variant": "generated",
+      "sourcePath": ".opencode/agents/Bug Hunter.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the opencode variant"
+      ]
+    },
+    {
+      "agent": "code-reviewer",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/code-reviewer.md",
+      "variant": "generated",
+      "sourcePath": "agents/Code Reviewer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "doc-writer",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/doc-writer.md",
+      "variant": "generated",
+      "sourcePath": ".cursor/agents/Doc Writer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the cursor variant"
+      ]
+    },
+    {
+      "agent": "issue-triager",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/issue-triager.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/issue-triager.toml",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant"
+      ]
+    },
+    {
+      "agent": "pair-programmer",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/pair-programmer.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/Pair Programmer.agent.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant"
+      ]
+    },
+    {
+      "agent": "release-manager",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/release-manager.md",
+      "variant": "generated",
+      "sourcePath": ".omp/agents/release-manager.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the omp variant"
+      ]
+    },
+    {
+      "agent": "search-relevance-engineer",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/search-relevance-engineer.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/Search Relevance Engineer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "test-planner",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/test-planner.md",
+      "variant": "native",
+      "sourcePath": ".gemini/agents/test-planner.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create"
+    }
+  ],
+  "summary": {
+    "create": 8
+  }
+}

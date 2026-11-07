@@ -1,0 +1,203 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/catalog.git",
+    "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+  },
+  "harnesses": [
+    {
+      "id": "omp",
+      "name": "omp",
+      "detected": true,
+      "settings": [
+        {
+          "key": "profile",
+          "value": "default",
+          "source": "native default"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "agent": "backend-architect",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/backend-architect.md",
+      "variant": "generated",
+      "sourcePath": "engineering/Backend Architect.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted color: cosmetic",
+        "omitted emoji: Claude Code ignores it",
+        "omitted vibe: Claude Code ignores it",
+        "display name \"Backend Architect\": the agent is named backend-architect"
+      ]
+    },
+    {
+      "agent": "cafe-copywriter-v2",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/cafe-copywriter-v2.md",
+      "variant": "generated",
+      "sourcePath": "marketing/Café Copywriter (v2).md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted color: cosmetic",
+        "omitted emoji: Claude Code ignores it",
+        "omitted vibe: Claude Code ignores it",
+        "display name \"Café Copywriter\": the agent is named cafe-copywriter-v2 and the description starts with the display name"
+      ]
+    },
+    {
+      "agent": "engineering-frontend-developer",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/engineering-frontend-developer.md",
+      "variant": "generated",
+      "sourcePath": "engineering/engineering-frontend-developer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted color: cosmetic",
+        "omitted emoji: Claude Code ignores it",
+        "omitted vibe: Claude Code ignores it",
+        "display name \"Frontend Developer\": the agent is named engineering-frontend-developer and the description starts with the display name"
+      ]
+    },
+    {
+      "agent": "engineering-search-relevance-engineer",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/engineering-search-relevance-engineer.md",
+      "variant": "generated",
+      "sourcePath": "engineering/engineering-search-relevance-engineer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted color: cosmetic",
+        "omitted emoji: Claude Code ignores it",
+        "omitted vibe: Claude Code ignores it",
+        "display name \"Search Relevance Engineer\": the agent is named engineering-search-relevance-engineer and the description starts with the display name"
+      ]
+    },
+    {
+      "agent": "marketing-growth-hacker",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/marketing-growth-hacker.md",
+      "variant": "generated",
+      "sourcePath": "marketing/marketing-growth-hacker.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted color: cosmetic",
+        "omitted emoji: Claude Code ignores it",
+        "omitted vibe: Claude Code ignores it",
+        "display name \"Growth Hacker\": the agent is named marketing-growth-hacker and the description starts with the display name"
+      ]
+    },
+    {
+      "agent": "marketing-seo-specialist",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/marketing-seo-specialist.md",
+      "variant": "generated",
+      "sourcePath": "marketing/marketing-seo-specialist.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted color: cosmetic",
+        "omitted emoji: Claude Code ignores it",
+        "omitted vibe: Claude Code ignores it",
+        "display name \"SEO Specialist\": the agent is named marketing-seo-specialist and the description starts with the display name"
+      ]
+    },
+    {
+      "agent": "unity-architect",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/unity-architect.md",
+      "variant": "generated",
+      "sourcePath": "game-development/unity/unity-architect.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omitted color: cosmetic",
+        "omitted emoji: Claude Code ignores it",
+        "omitted vibe: Claude Code ignores it",
+        "display name \"Unity Architect\": the agent is named unity-architect"
+      ]
+    }
+  ],
+  "summary": {
+    "create": 7
+  }
+}

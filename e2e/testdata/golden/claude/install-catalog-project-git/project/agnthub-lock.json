@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "agent": "backend-architect",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": "engineering/Backend Architect.md",
+          "sourceDigest": "sha256:122cbb22d4b06f4b5a7b6c686271d8a17b15edaaf6d3d982756316a484ed2d68",
+          "converter": "claude/v6",
+          "path": ".claude/agents/backend-architect.md",
+          "digest": "sha256:6209457c2cef40b092bcc5c6a75f0a5ef7bbbec8139d860b6c6bff57bbb4a972",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "agent": "cafe-copywriter-v2",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": "marketing/Café Copywriter (v2).md",
+          "sourceDigest": "sha256:74af3314573774599bd2e672d0e23a25c11a485446e4eba205ccb77b1569e6db",
+          "converter": "claude/v6",
+          "path": ".claude/agents/cafe-copywriter-v2.md",
+          "digest": "sha256:4f21cccd0e74481726c498582ceffc3f3353638da36ebcbaeec57aa1c7fe3ac2",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "agent": "engineering-frontend-developer",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": "engineering/engineering-frontend-developer.md",
+          "sourceDigest": "sha256:c1946f5533aa44e7c9ad2322bb6f2ba1f2c63e72b2aa3f8ddf4736ecd3d9690c",
+          "converter": "claude/v6",
+          "path": ".claude/agents/engineering-frontend-developer.md",
+          "digest": "sha256:6dc9d164fc01380a68b6b30331f856d90e072e5652a3f24dbbf4d22736c9e579",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "agent": "engineering-search-relevance-engineer",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": "engineering/engineering-search-relevance-engineer.md",
+          "sourceDigest": "sha256:e59bbe86dbcc536aa24700ba39597a5f254ae28064786bb951d61e9086153086",
+          "converter": "claude/v6",
+          "path": ".claude/agents/engineering-search-relevance-engineer.md",
+          "digest": "sha256:c52b9f600db3e213df5a156d5ed4bdf0d6f97cfe774d2c8a9cfc5a945361b98f",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "agent": "marketing-growth-hacker",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": "marketing/marketing-growth-hacker.md",
+          "sourceDigest": "sha256:4db22cbe6b1608c2dd5279b2dab172fc0ce8ea12db55f973cfe2c0aed5c02c35",
+          "converter": "claude/v6",
+          "path": ".claude/agents/marketing-growth-hacker.md",
+          "digest": "sha256:dadb5b201b4f16455eb38cc5b358f30cbf394c6a5f6b73d963ea23f7f3321770",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "agent": "marketing-seo-specialist",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": "marketing/marketing-seo-specialist.md",
+          "sourceDigest": "sha256:e97a51e7946016d2b402ae269f00dc6ac53c2ae798be83dcb2a47c6d8bcda45d",
+          "converter": "claude/v6",
+          "path": ".claude/agents/marketing-seo-specialist.md",
+          "digest": "sha256:1f2226cd9453b55f88911ea5483a821b8f6de3bddf1aceae7b8a0370926b9e70",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/catalog.git",
+        "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b"
+      },
+      "agent": "unity-architect",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": "game-development/unity/unity-architect.md",
+          "sourceDigest": "sha256:485c60b8453f55c182577fd26ac9204588e4ca568ba3048a68d36ff8fea99a73",
+          "converter": "claude/v6",
+          "path": ".claude/agents/unity-architect.md",
+          "digest": "sha256:3951540c66ba116fc7c6e97694952d9f8cbdce67280726f31ca878f13bdd25ae",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

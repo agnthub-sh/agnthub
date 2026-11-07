@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/bug-hunter.md",
+      "digest": "sha256:cdeabdb700efa4fa3d9423cf769bf9574a09a56cf6021f13e421f795cd88fe6b",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "bug-hunter",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/code-reviewer.md",
+      "digest": "sha256:9aa8e6a1f5cb4a08e5a8c6ce1ddc346700e1698b6b35225b008b232bd13b3835",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "code-reviewer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/doc-writer.md",
+      "digest": "sha256:3ffc3aedf57bdd5bd8d0b16a7bbc8871d6e283df7269f4067ec4fd6faebaab33",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "doc-writer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/issue-triager.md",
+      "digest": "sha256:eb6a5edbc753a6bca36e7eb18d6029cdd48b0feac0cac5d1449f8891302fe0e0",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "issue-triager",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/pair-programmer.md",
+      "digest": "sha256:dfe8fe2fa17546d30897d4923a7eb7e48e4376a6cadbb7eb50582e4557ff2a83",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "pair-programmer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/release-manager.md",
+      "digest": "sha256:1e69a398eb320b94e3b37a278821b90aa409256ac0d59b994c96354e7745099a",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "release-manager",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/search-relevance-engineer.md",
+      "digest": "sha256:dd7c359c8bc12fd4440dd28ec10dd7d9a1e2c967e018744706f06ceba4923f80",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "search-relevance-engineer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/test-planner.md",
+      "digest": "sha256:df5e87ad74c8a157eb5fd210640e69174a94c1d8bb927d34e7d9131054ec85b7",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "test-planner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

@@ -230,6 +230,8 @@ Read from the installed CLIs' bundles and first-party docs (Claude Code 2.1.309,
 
 Only Gemini CLI rejects a display name. Everywhere except OpenCode and Copilot CLI, `name` is still what the harness invokes the agent by, so two files with one label shadow each other: one of them wins by read order or precedence (Codex and Gemini CLI warn about the duplicate).
 
+Runtime-verified by the e2e `install-display-names-project-git` step (pinned Codex 0.164.0, Cursor 2026.10.22-27dcf5f, Gemini CLI 0.66.0): Codex lists an authored `name = "Issue Triager"` as the spawn_agent role `Issue Triager`; Cursor's Task tool lists `name: Doc Writer` verbatim as `- Doc Writer: …`; Gemini CLI lists an agent with `display_name: Test Planner` under its `name` slug (`- test-planner -> …`).
+
 ## Decisions and remaining unknowns
 
 1. **Exact product support target:** CLI-only, IDE, or cloud per harness? Copilot especially needs separate surface labels. Should initial support include all seven, or only a tested subset? Skill support is not agent support.

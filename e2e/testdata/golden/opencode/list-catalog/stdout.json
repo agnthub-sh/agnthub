@@ -1,0 +1,57 @@
+{
+  "source": "localhost:8443/catalog.git",
+  "revision": "c8338fa7de3aa0fdd50e223f7ffeb06e3efbf12b",
+  "manifest": false,
+  "agents": [
+    {
+      "id": "backend-architect",
+      "description": "Designs scalable APIs and services.",
+      "portable": "engineering/Backend Architect.md",
+      "variants": {},
+      "division": "engineering"
+    },
+    {
+      "id": "cafe-copywriter-v2",
+      "description": "Writes warm product copy for cafés.",
+      "portable": "marketing/Café Copywriter (v2).md",
+      "variants": {},
+      "division": "marketing"
+    },
+    {
+      "id": "engineering-frontend-developer",
+      "description": "Builds accessible, fast web interfaces.",
+      "portable": "engineering/engineering-frontend-developer.md",
+      "variants": {},
+      "division": "engineering"
+    },
+    {
+      "id": "engineering-search-relevance-engineer",
+      "description": "Expert search engineer for Elasticsearch and OpenSearch — index design, BM25 tuning and relevance evaluation.",
+      "portable": "engineering/engineering-search-relevance-engineer.md",
+      "variants": {},
+      "division": "engineering"
+    },
+    {
+      "id": "marketing-growth-hacker",
+      "description": "Finds growth channels and runs experiments.",
+      "portable": "marketing/marketing-growth-hacker.md",
+      "variants": {},
+      "division": "marketing"
+    },
+    {
+      "id": "marketing-seo-specialist",
+      "description": "Improves organic search rankings.",
+      "portable": "marketing/marketing-seo-specialist.md",
+      "variants": {},
+      "division": "marketing"
+    },
+    {
+      "id": "unity-architect",
+      "description": "Structures Unity projects into data-driven, decoupled systems.",
+      "portable": "game-development/unity/unity-architect.md",
+      "variants": {},
+      "division": "game-development"
+    }
+  ],
+  "problems": []
+}

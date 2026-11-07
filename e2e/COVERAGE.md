@@ -129,23 +129,23 @@ not load that scope (see Exclusions). Scope · source lists where the row's step
 
 | Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
 |---|---|---|---|---|---|---|---|---|---|
-| division folders are the inventory (with each agent's division); scripts, examples and documents are not agents | — | inventory · git |  |  |  |  |  |  |  |
-| agent in a division folder, display name and cosmetic keys | `engineering-search-relevance-engineer` | project · git |  |  |  |  |  |  |  |
-| agent one folder down in a division (`game-development/unity/`) | `unity-architect` | project · git |  |  |  |  |  |  |  |
-| file name with spaces, unicode and parentheses (`Café Copywriter (v2).md` → `cafe-copywriter-v2`) | `cafe-copywriter-v2` | project · git |  |  |  |  |  |  |  |
+| division folders are the inventory (with each agent's division); scripts, examples and documents are not agents | — | inventory · git | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ |
+| agent in a division folder, display name and cosmetic keys | `engineering-search-relevance-engineer` | project · git | W N | W N | W N | W N | W N | W N | W N |
+| agent one folder down in a division (`game-development/unity/`) | `unity-architect` | project · git | W N | W N | W N | W N | W N | W N | W N |
+| file name with spaces, unicode and parentheses (`Café Copywriter (v2).md` → `cafe-copywriter-v2`) | `cafe-copywriter-v2` | project · git | W N | W N | W N | W N | W N | W N | W N |
 
 ### Display names
 
 | Scenario | Fixture agent | Scope · source | claude | opencode | codex | copilot | cursor | gemini | omp |
 |---|---|---|---|---|---|---|---|---|---|
-| `agents/Code Reviewer.md` with `name: Code Reviewer` | `code-reviewer` | project · git |  |  |  |  |  |  |  |
-| Claude Code file with `name: Search Relevance Engineer` | `search-relevance-engineer` | project · git |  |  |  |  |  |  |  |
-| omp file with `name: Release Manager` | `release-manager` | project · git |  |  |  |  |  |  |  |
-| Cursor file `Doc Writer.md` with `name: Doc Writer` | `doc-writer` | project · git |  |  |  |  |  |  |  |
-| Codex file with `name = "Issue Triager"` | `issue-triager` | project · git |  |  |  |  |  |  |  |
-| Copilot CLI file `Pair Programmer.agent.md` | `pair-programmer` | project · git |  |  |  |  |  |  |  |
-| OpenCode file `Bug Hunter.md` | `bug-hunter` | project · git |  |  |  |  |  |  |  |
-| Gemini CLI file with `display_name: Test Planner` | `test-planner` | project · git |  |  |  |  |  |  |  |
+| `agents/Code Reviewer.md` with `name: Code Reviewer` | `code-reviewer` | project · git | W N | W N | W N | W N | W N | W N | W N |
+| Claude Code file with `name: Search Relevance Engineer` | `search-relevance-engineer` | project · git | W N | W N | W N | W N | W N | W N | W N |
+| omp file with `name: Release Manager` | `release-manager` | project · git | W N | W N | W N | W N | W N | W N | W N |
+| Cursor file `Doc Writer.md` with `name: Doc Writer` | `doc-writer` | project · git | W N | W N | W N | W N | W N | W N | W N |
+| Codex file with `name = "Issue Triager"` | `issue-triager` | project · git | W N | W N | W N | W N | W N | W N | W N |
+| Copilot CLI file `Pair Programmer.agent.md` | `pair-programmer` | project · git | W N | W N | W N | W N | W N | W N | W N |
+| OpenCode file `Bug Hunter.md` | `bug-hunter` | project · git | W N | W N | W N | W N | W N | W N | W N |
+| Gemini CLI file with `display_name: Test Planner` | `test-planner` | project · git | W N | W N | W N | W N | W N | W N | W N |
 
 ### Sources
 

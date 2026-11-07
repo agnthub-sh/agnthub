@@ -1,0 +1,184 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/display-names.git",
+    "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+  },
+  "harnesses": [
+    {
+      "id": "codex",
+      "name": "Codex",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "bug-hunter",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/bug-hunter.toml",
+      "variant": "generated",
+      "sourcePath": ".opencode/agents/Bug Hunter.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the opencode variant"
+      ]
+    },
+    {
+      "agent": "code-reviewer",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/code-reviewer.toml",
+      "variant": "generated",
+      "sourcePath": "agents/Code Reviewer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "display name \"Code Reviewer\": the agent is named code-reviewer"
+      ]
+    },
+    {
+      "agent": "doc-writer",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/doc-writer.toml",
+      "variant": "generated",
+      "sourcePath": ".cursor/agents/Doc Writer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the cursor variant",
+        "display name \"Doc Writer\": the agent is named doc-writer"
+      ]
+    },
+    {
+      "agent": "issue-triager",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/issue-triager.toml",
+      "variant": "native",
+      "sourcePath": ".codex/agents/issue-triager.toml",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "pair-programmer",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/pair-programmer.toml",
+      "variant": "generated",
+      "sourcePath": ".github/agents/Pair Programmer.agent.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "display name \"Pair Programmer\": the agent is named pair-programmer"
+      ]
+    },
+    {
+      "agent": "release-manager",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/release-manager.toml",
+      "variant": "generated",
+      "sourcePath": ".omp/agents/release-manager.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the omp variant",
+        "display name \"Release Manager\": the agent is named release-manager"
+      ]
+    },
+    {
+      "agent": "search-relevance-engineer",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/search-relevance-engineer.toml",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/Search Relevance Engineer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "display name \"Search Relevance Engineer\": the agent is named search-relevance-engineer"
+      ]
+    },
+    {
+      "agent": "test-planner",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.codex/agents/test-planner.toml",
+      "variant": "generated",
+      "sourcePath": ".gemini/agents/test-planner.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the gemini variant",
+        "display name \"Test Planner\": the agent is named test-planner"
+      ]
+    }
+  ],
+  "summary": {
+    "create": 8
+  }
+}

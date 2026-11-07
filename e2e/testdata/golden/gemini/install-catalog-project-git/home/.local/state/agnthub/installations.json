@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/backend-architect.md",
+      "digest": "sha256:1f53087f2eafacf30a30c0d8615962834d1afbb281a4865964971453535cccd0",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "backend-architect",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/cafe-copywriter-v2.md",
+      "digest": "sha256:ef6ba72842057358b06703cf438f06c1be8311ba880bc950acd12de6726963d2",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "cafe-copywriter-v2",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/engineering-frontend-developer.md",
+      "digest": "sha256:1fb21834e60b5fc600505c54e71eb99e5a542c9cee2c84af954ab421c7bc456e",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "engineering-frontend-developer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/engineering-search-relevance-engineer.md",
+      "digest": "sha256:2072cf0a912d038fd98c81511fc40ae0335132f40556821b532f443c3ca9b932",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "engineering-search-relevance-engineer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/marketing-growth-hacker.md",
+      "digest": "sha256:66341558b1ed54315d54bf1c29f8be29150480aaec80dace08b396f412768ecd",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "marketing-growth-hacker",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/marketing-seo-specialist.md",
+      "digest": "sha256:9638937d41593d79a639d56174caec76c050cc34e2e73ae84a9fbe34a73b31e6",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "marketing-seo-specialist",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.gemini/agents/unity-architect.md",
+      "digest": "sha256:db998f396929438d94b9533d1826320cda4f46204bd2bc49fd1527bb9fcdd348",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "unity-architect",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

@@ -129,6 +129,20 @@ func TestDiscoverCatalogLayoutRefusesWhatIsNotACatalog(t *testing.T) {
 			"team/d.md": "---\nname: D\ndescription: D\n---\n",
 			"team/e.md": "---\nname: E\ndescription: E\n---\n",
 		},
+		"another product's records": {
+			"personas/architect.md": "---\nid: architect\nname: Architect\nrole: Architect\ndomain: core\n" +
+				"description: Designs\n---\nYou are the architect.\n",
+			"personas/reviewer.md": "---\nid: reviewer\nname: Reviewer\nrole: Reviewer\ndomain: core\n" +
+				"description: Reviews\n---\nYou are the reviewer.\n",
+			"personas/planner.md": "---\nid: planner\nname: Planner\nrole: Planner\ndomain: core\n" +
+				"description: Plans\n---\nYou are the planner.\n",
+			"public_agents/base/writer.md": "---\nname: Writer\nslug: writer\n" +
+				"description: Writes\nmodel: ''\ntags: [Base]\n---\nWrite.\n",
+			"public_agents/base/translator.md": "---\nname: Translator\nslug: translator\n" +
+				"description: Translates\nmodel: ''\ntags: [Base]\n---\nTranslate.\n",
+			"public_agents/base/researcher.md": "---\nname: Researcher\nslug: researcher\n" +
+				"description: Researches\nmodel: ''\ntags: [Base]\n---\nResearch.\n",
+		},
 	}
 	for name, files := range cases {
 		t.Run(name, func(t *testing.T) {

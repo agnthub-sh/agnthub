@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/backend-architect.md",
+      "digest": "sha256:1937e92540e2fd235ce83000adca46824d670f0991d4347fa8065b27f5aa71a4",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "backend-architect",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/cafe-copywriter-v2.md",
+      "digest": "sha256:d46cb2b35affee7ec7ddd5d1bb2585134e227a11b0e88698f3161e7aa2f7ccac",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "cafe-copywriter-v2",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/engineering-frontend-developer.md",
+      "digest": "sha256:f4a2cb6f5c5a99014d35c1586c1ebe1fa026e3c21f8a1082eec2514e577ce6a4",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "engineering-frontend-developer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/engineering-search-relevance-engineer.md",
+      "digest": "sha256:17aa243c5daa7c3381dc2307febd07b7221cb60a89f5961930db13cf323da90d",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "engineering-search-relevance-engineer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/marketing-growth-hacker.md",
+      "digest": "sha256:94bcdb84fd18d27ee422e8e9f16be5822e2c3d44c28798ec70905883db259dac",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "marketing-growth-hacker",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/marketing-seo-specialist.md",
+      "digest": "sha256:20370a37708a8bfba945dacdebe96d216ddc05a8bf7d5575dced3a17bae4cd2f",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "marketing-seo-specialist",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.omp/agents/unity-architect.md",
+      "digest": "sha256:c4c3a772d64b1f606906125f24304ff40af268d98f4f34baaf1224dda6a92297",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "unity-architect",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

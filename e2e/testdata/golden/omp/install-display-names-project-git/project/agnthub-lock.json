@@ -1,0 +1,172 @@
+{
+  "version": 1,
+  "agents": [
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "agent": "bug-hunter",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".opencode/agents/Bug Hunter.md",
+          "sourceDigest": "sha256:92c92acf2ce45fdc82da32f390c2b427a006a949f6d571b341aeea79146dc743",
+          "converter": "omp/v6",
+          "path": ".omp/agents/bug-hunter.md",
+          "digest": "sha256:cdeabdb700efa4fa3d9423cf769bf9574a09a56cf6021f13e421f795cd88fe6b",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "agent": "code-reviewer",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": "agents/Code Reviewer.md",
+          "sourceDigest": "sha256:33f92bdc0499f48d70079f1c2e5b52a9b5c75df4a44cd1874c0a28cef07d3b9d",
+          "converter": "omp/v6",
+          "path": ".omp/agents/code-reviewer.md",
+          "digest": "sha256:9aa8e6a1f5cb4a08e5a8c6ce1ddc346700e1698b6b35225b008b232bd13b3835",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "agent": "doc-writer",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".cursor/agents/Doc Writer.md",
+          "sourceDigest": "sha256:12b695235cb9e7342bb83545a4135ed50d49f1c6543db0df40d2a81221ee92fc",
+          "converter": "omp/v6",
+          "path": ".omp/agents/doc-writer.md",
+          "digest": "sha256:3ffc3aedf57bdd5bd8d0b16a7bbc8871d6e283df7269f4067ec4fd6faebaab33",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "agent": "issue-triager",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".codex/agents/issue-triager.toml",
+          "sourceDigest": "sha256:5b26655ac64b8c9444cd254737bb893365d84b020a4219e664769e296fbd8655",
+          "converter": "omp/v6",
+          "path": ".omp/agents/issue-triager.md",
+          "digest": "sha256:eb6a5edbc753a6bca36e7eb18d6029cdd48b0feac0cac5d1449f8891302fe0e0",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "agent": "pair-programmer",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".github/agents/Pair Programmer.agent.md",
+          "sourceDigest": "sha256:76c165b3118f4ca84a1c049bad89a46b3d45f5080c5ac3f6c1eb446d9c6d7109",
+          "converter": "omp/v6",
+          "path": ".omp/agents/pair-programmer.md",
+          "digest": "sha256:dfe8fe2fa17546d30897d4923a7eb7e48e4376a6cadbb7eb50582e4557ff2a83",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "agent": "release-manager",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "native",
+          "sourcePath": ".omp/agents/release-manager.md",
+          "sourceDigest": "sha256:1e69a398eb320b94e3b37a278821b90aa409256ac0d59b994c96354e7745099a",
+          "path": ".omp/agents/release-manager.md",
+          "digest": "sha256:1e69a398eb320b94e3b37a278821b90aa409256ac0d59b994c96354e7745099a",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "agent": "search-relevance-engineer",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".claude/agents/Search Relevance Engineer.md",
+          "sourceDigest": "sha256:92cb4ab7062c9987fd0d99de82de8cff92607db5c00b1c10dbd03d7b29ba3b6c",
+          "converter": "omp/v6",
+          "path": ".omp/agents/search-relevance-engineer.md",
+          "digest": "sha256:dd7c359c8bc12fd4440dd28ec10dd7d9a1e2c967e018744706f06ceba4923f80",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "agent": "test-planner",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "omp",
+          "variant": "generated",
+          "sourcePath": ".gemini/agents/test-planner.md",
+          "sourceDigest": "sha256:ac6817c23f3f4b354f08e071974500d0306179eb5cd5e761ec064a5c538b7c92",
+          "converter": "omp/v6",
+          "path": ".omp/agents/test-planner.md",
+          "digest": "sha256:df5e87ad74c8a157eb5fd210640e69174a94c1d8bb927d34e7d9131054ec85b7",
+          "requires": []
+        }
+      ]
+    }
+  ]
+}

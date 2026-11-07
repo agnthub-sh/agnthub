@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.github/agents/backend-architect.agent.md",
+      "digest": "sha256:59025947bf4477cf282d3ba2095e8b45258b90bd4731b55f3d15d1973b80e8b4",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "backend-architect",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/cafe-copywriter-v2.agent.md",
+      "digest": "sha256:09c3beb3738f773baee95fb8ccbd31f423a867dde9758402f343da882c48506d",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "cafe-copywriter-v2",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/engineering-frontend-developer.agent.md",
+      "digest": "sha256:bfc26c44811ceb35cb231bb471cc9ef0dc75c742f29c7cb46ce7d6c396d4b827",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "engineering-frontend-developer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/engineering-search-relevance-engineer.agent.md",
+      "digest": "sha256:5453d6d03f84c79274573074c6d4f16fbff4b31a1c3d52c0805547498e0a9541",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "engineering-search-relevance-engineer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/marketing-growth-hacker.agent.md",
+      "digest": "sha256:fe60fecf03da63b701189dfb2ffa529e1b57659690eda6b2d7c7bd35726fa34d",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "marketing-growth-hacker",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/marketing-seo-specialist.agent.md",
+      "digest": "sha256:4977fa65393bc1fff7c9d173e25d0939f580c9b59ea4ffa3d77d9f1b8bd714cd",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "marketing-seo-specialist",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.github/agents/unity-architect.agent.md",
+      "digest": "sha256:ae49015f0e255ed43df563a7304c15b26315eadfc5c980353120ea8691483e42",
+      "harness": "copilot",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/catalog.git",
+      "agent": "unity-architect",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

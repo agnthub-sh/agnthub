@@ -3,6 +3,7 @@ package discovery
 import (
 	"errors"
 	"path"
+	"slices"
 	"sort"
 	"strings"
 
@@ -243,8 +244,9 @@ func (s *scanner) catalogFolder(folder catalogFolder) ([]candidate, folderVerdic
 // catalogFile reads one Markdown file of a folder and returns it as a
 // candidate when its frontmatter names and describes an agent, consists
 // mostly of agent fields (a recipe or plugin manifest with id, secrets and
-// install steps does not), and instructions follow. The file name is the
-// identity; the name is a display name.
+// install steps does not), carries no record identifier of its own, and
+// instructions follow. The file name is the identity; the name is a display
+// name.
 func (s *scanner) catalogFile(name, division string) (*candidate, bool, error) {
 	entry, err := s.tree.Stat(name)
 	if err != nil {
@@ -277,11 +279,21 @@ func (s *scanner) catalogFile(name, division string) (*candidate, bool, error) {
 	}, false, nil
 }
 
+// recordKeys identify a file within another product's own registry (a
+// platform's agent configs, an IDE's persona library, a recipe catalog). No
+// harness agent format defines them: a harness knows an agent by its file
+// name or name, so a file that names itself with one is that product's
+// record, not a harness agent.
+var recordKeys = []string{"id", "slug"}
+
 // agentShaped reports whether more of a frontmatter's keys are agent fields
-// than are not.
+// than are not, and none of them is a record identifier.
 func agentShaped(frontmatter map[string]any) bool {
 	known := 0
 	for key := range frontmatter {
+		if slices.Contains(recordKeys, key) {
+			return false
+		}
 		if harness.KnownAgentKey(key) {
 			known++
 		}

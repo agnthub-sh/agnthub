@@ -157,11 +157,12 @@ func requireLoaded(t *testing.T, n nativeContext, loaded []string, output []byte
 	t.Logf("loaded all %d installed agents (%s scope)", len(n.agents), n.scope)
 }
 
-// describedAgents returns the agents a Harness listed whose description is the
-// one agnthub installed, so an agent shadowed by a built-in or another file of
-// the same name does not count as loaded. Cursor reads frontmatter values
-// verbatim, so a description YAML had to quote is listed as written, quotes
-// and escapes included, which agnthub accepts as the same description.
+// describedAgents returns the names of the agents a Harness listed whose
+// description is the one agnthub installed, so an agent shadowed by a built-in
+// or another file of the same name does not count as loaded. Cursor reads
+// frontmatter values verbatim, so a description YAML had to quote is listed as
+// written, quotes and escapes included, which agnthub accepts as the same
+// description.
 func describedAgents(t *testing.T, n nativeContext, listed map[string]string) []string {
 	t.Helper()
 	var loaded []string
@@ -180,7 +181,7 @@ func describedAgents(t *testing.T, n nativeContext, listed map[string]string) []
 		}
 		want := oneLine(doc.String("description"))
 		if got := oneLine(description); got == want || unquoted(got) == want {
-			loaded = append(loaded, id)
+			loaded = append(loaded, n.names[id])
 		} else {
 			t.Logf("%s: the Harness lists %q, agnthub installed %q", id, description,
 				doc.String("description"))

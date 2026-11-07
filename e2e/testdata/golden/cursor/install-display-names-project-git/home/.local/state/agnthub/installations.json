@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/bug-hunter.md",
+      "digest": "sha256:318358b36c308421e14e1d0ad8d35e38a8212612dbdbb0d4f4f431394d0eb638",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "bug-hunter",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/code-reviewer.md",
+      "digest": "sha256:6ee5cd97c1f1c4c9825776376e8a8cef93aec5a6a94d364b7d0daef1be6bed88",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "code-reviewer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/doc-writer.md",
+      "digest": "sha256:12b695235cb9e7342bb83545a4135ed50d49f1c6543db0df40d2a81221ee92fc",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "doc-writer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/issue-triager.md",
+      "digest": "sha256:4bcf4b8bf084e1dbf6c9a39b54b6cea0da6fc0ed129977c1922478e331f66a40",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "issue-triager",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/pair-programmer.md",
+      "digest": "sha256:200610f9ccc59d64ca017bf6dd9df3f041ebabfba83c9b47474625a20fb81898",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "pair-programmer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/release-manager.md",
+      "digest": "sha256:1f85d29bbd573b83fe73bdce27bf04b559a352566cae3bcec86b6a37d79f1469",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "release-manager",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/search-relevance-engineer.md",
+      "digest": "sha256:b286526beecf723354a36d155e6c245671e3c8e9b4d17f24afadc07a163ce81c",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "search-relevance-engineer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.cursor/agents/test-planner.md",
+      "digest": "sha256:29e9cc37b3584dd2e58e413fd993a218bcf7b1c5f8a22bf62b51ed47f8b09ba7",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "test-planner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

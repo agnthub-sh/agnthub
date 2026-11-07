@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.claude/agents/bug-hunter.md",
+      "digest": "sha256:aa2a82c573b93d6b1cf43c13dd3e9186655a07edb5f0c4b2f82c93352bb62759",
+      "harness": "claude",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "bug-hunter",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.claude/agents/code-reviewer.md",
+      "digest": "sha256:ff09d46ff322a2ef9620bbf0c5ca244edb8147c08935f9cb6bcb133f82c2ed56",
+      "harness": "claude",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "code-reviewer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.claude/agents/doc-writer.md",
+      "digest": "sha256:b7753ea4403ad5e29c5702388e3507167365a7729388f578fea7ad1706dd73b1",
+      "harness": "claude",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "doc-writer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.claude/agents/issue-triager.md",
+      "digest": "sha256:70a4dc311743d25b358886114265a7869558b98097063f525aabb984b7ebc5a6",
+      "harness": "claude",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "issue-triager",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.claude/agents/pair-programmer.md",
+      "digest": "sha256:76691b06dec60e7305005390500d0eaea889582de453cab253a1629e43051de5",
+      "harness": "claude",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "pair-programmer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.claude/agents/release-manager.md",
+      "digest": "sha256:edba7a5aa3123a60f8ce3ddc8a31d89407be1423529d2c4ddf82db0da879fdd2",
+      "harness": "claude",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "release-manager",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.claude/agents/search-relevance-engineer.md",
+      "digest": "sha256:92cb4ab7062c9987fd0d99de82de8cff92607db5c00b1c10dbd03d7b29ba3b6c",
+      "harness": "claude",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "search-relevance-engineer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.claude/agents/test-planner.md",
+      "digest": "sha256:a18659c0ac2e66987d279f89968b7ac6244e2f9c24c7ea983983f198a63f60dd",
+      "harness": "claude",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "test-planner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

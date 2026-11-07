@@ -1,0 +1,2 @@
+$ agnthub add https://localhost:8443/catalog.git --agent '*' --harness copilot --yes --json
+exit status: 0

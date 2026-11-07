@@ -1,0 +1,176 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/display-names.git",
+    "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+  },
+  "harnesses": [
+    {
+      "id": "copilot",
+      "name": "GitHub Copilot CLI",
+      "detected": true,
+      "settings": []
+    }
+  ],
+  "items": [
+    {
+      "agent": "bug-hunter",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/bug-hunter.agent.md",
+      "variant": "generated",
+      "sourcePath": ".opencode/agents/Bug Hunter.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the opencode variant"
+      ]
+    },
+    {
+      "agent": "code-reviewer",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/code-reviewer.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/Code Reviewer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "doc-writer",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/doc-writer.agent.md",
+      "variant": "generated",
+      "sourcePath": ".cursor/agents/Doc Writer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the cursor variant"
+      ]
+    },
+    {
+      "agent": "issue-triager",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/issue-triager.agent.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/issue-triager.toml",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant"
+      ]
+    },
+    {
+      "agent": "pair-programmer",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/pair-programmer.agent.md",
+      "variant": "native",
+      "sourcePath": ".github/agents/Pair Programmer.agent.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "release-manager",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/release-manager.agent.md",
+      "variant": "generated",
+      "sourcePath": ".omp/agents/release-manager.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the omp variant"
+      ]
+    },
+    {
+      "agent": "search-relevance-engineer",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/search-relevance-engineer.agent.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/Search Relevance Engineer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant"
+      ]
+    },
+    {
+      "agent": "test-planner",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/test-planner.agent.md",
+      "variant": "generated",
+      "sourcePath": ".gemini/agents/test-planner.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the gemini variant"
+      ]
+    }
+  ],
+  "summary": {
+    "create": 8
+  }
+}

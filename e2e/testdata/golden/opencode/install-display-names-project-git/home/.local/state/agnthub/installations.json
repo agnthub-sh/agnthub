@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/bug-hunter.md",
+      "digest": "sha256:92c92acf2ce45fdc82da32f390c2b427a006a949f6d571b341aeea79146dc743",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "bug-hunter",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/code-reviewer.md",
+      "digest": "sha256:2776bdcb15400e66ac9b50ee6e3ca0f5b8a63c5c0d12bdfef3c0cf05eb662224",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "code-reviewer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/doc-writer.md",
+      "digest": "sha256:230dbb5d21b24faf8959c3ebd2df184a633ad1aba51a07c52554a7ce6b299393",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "doc-writer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/issue-triager.md",
+      "digest": "sha256:fe998de53f67de44597ff22afdbe1578fed82f7fedc4a9dcb9a708212f4ca3b5",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "issue-triager",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/pair-programmer.md",
+      "digest": "sha256:25d94108c2b78547bc432fa59e94d300d59bc5505a265228203889f7d14d8181",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "pair-programmer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/release-manager.md",
+      "digest": "sha256:336cb5cef32c18cc07b746fc5c824036fb1a27c9b45fcc4293227e9b0e3f89b5",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "release-manager",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/search-relevance-engineer.md",
+      "digest": "sha256:749197b614718e39970787b41a79233511e69a69e87d3db1dfc5d28c9f819a8b",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "search-relevance-engineer",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
+      "path": "/agnthub-e2e/project/.opencode/agents/test-planner.md",
+      "digest": "sha256:6fac0ba535c2c45a9a0fcf03f401f2fb08201c8c9e84364708f8029606e8f8ac",
+      "harness": "opencode",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/display-names.git",
+      "agent": "test-planner",
+      "origin": "direct",
+      "installedAt": "<time>"
+    }
+  ]
+}

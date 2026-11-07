@@ -1,0 +1,2 @@
+$ agnthub add https://localhost:8443/display-names.git --agent '*' --harness opencode --yes --json
+exit status: 0

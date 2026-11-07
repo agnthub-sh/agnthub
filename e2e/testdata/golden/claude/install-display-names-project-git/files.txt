@@ -1,0 +1,11 @@
+0644 home/.config/agnthub/config.yaml
+0600 home/.local/state/agnthub/installations.json
+0644 project/.claude/agents/bug-hunter.md
+0644 project/.claude/agents/code-reviewer.md
+0644 project/.claude/agents/doc-writer.md
+0644 project/.claude/agents/issue-triager.md
+0644 project/.claude/agents/pair-programmer.md
+0644 project/.claude/agents/release-manager.md
+0644 project/.claude/agents/search-relevance-engineer.md
+0644 project/.claude/agents/test-planner.md
+0644 project/agnthub-lock.json

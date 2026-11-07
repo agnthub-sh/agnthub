@@ -1,5 +1,43 @@
 # Changelog
 
+## v0.10.0
+
+### Added
+
+- **Catalog layouts** (ADR 0017). A source without `agnthub.yaml` and without agents in any
+  other layout may keep its agents in top-level division folders, as msitarzewski/agency-agents
+  does: `agnthub add msitarzewski/agency-agents --list` now lists its 283 agents across 18
+  divisions. A Markdown file directly in a folder, or one folder down, is an agent when its
+  frontmatter has a `name`, a `description`, mostly agent fields and no `id` or `slug`, and
+  instructions follow; a folder is a division when two thirds of its Markdown files are agents,
+  and the source is a catalog when divisions with three or more agents hold five together.
+  Documentation, code, tooling, example, template, test and integration folders never count.
+  `--list` shows each agent's `division` (also in `--list --json`) and the picker shows the
+  folder.
+- **Same-name conflicts.** Two agents that one harness would load under the same name in one
+  directory are refused as a conflict naming the other file or planned agent.
+
+### Changed
+
+- **Display names are accepted in every layout.** A `name` that is not an identifier
+  (`name: Search Relevance Engineer`, capitals, spaces) no longer refuses an agent or decides
+  its identity: the identifier is the location, normalized (ASCII-folded, lowercased,
+  hyphenated: `Café Copywriter (v2).md` → `cafe-copywriter-v2`). Two files that normalize to one
+  identifier are ambiguous. Authored files install byte for byte into their own harness unless it
+  rejects the name (Gemini CLI needs a slug; Claude Code skips a leading `-`, a `:` or more than
+  256 characters). Converted files use the identifier as `name` in Claude Code, Codex, Cursor,
+  Gemini CLI and omp, keep the display name in Copilot CLI's `name` and Gemini CLI's
+  `display_name`, and elsewhere start the description with it. Cosmetic keys (`color`, `emoji`,
+  `vibe`) are dropped with a note instead of refusing the agent.
+- `--list` and the picker no longer cut a description inside a multi-byte character.
+
+### Library
+
+- `agent.Definition.Division`, `agent.NormalizeID`, `agent.IDFromPath`, `agent.DisplayName`;
+  `harness.NativeAgent.DisplayName`, `harness.Semantics.DisplayName`, `harness.InvocationName`,
+  `harness.KnownAgentKey`; `category.FromDivision` maps obvious division folder names to
+  taxonomy categories (a hint, never a publisher category).
+
 ## v0.9.2
 
 ### Changed

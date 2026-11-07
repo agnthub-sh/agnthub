@@ -1,0 +1,206 @@
+{
+  "status": "applied",
+  "scope": "project",
+  "source": {
+    "kind": "git",
+    "locator": "localhost:8443/display-names.git",
+    "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+  },
+  "harnesses": [
+    {
+      "id": "omp",
+      "name": "omp",
+      "detected": true,
+      "settings": [
+        {
+          "key": "profile",
+          "value": "default",
+          "source": "native default"
+        }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "agent": "bug-hunter",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/bug-hunter.md",
+      "variant": "generated",
+      "sourcePath": ".opencode/agents/Bug Hunter.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the opencode variant"
+      ]
+    },
+    {
+      "agent": "code-reviewer",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/code-reviewer.md",
+      "variant": "generated",
+      "sourcePath": "agents/Code Reviewer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "display name \"Code Reviewer\": the agent is named code-reviewer"
+      ]
+    },
+    {
+      "agent": "doc-writer",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/doc-writer.md",
+      "variant": "generated",
+      "sourcePath": ".cursor/agents/Doc Writer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the cursor variant",
+        "display name \"Doc Writer\": the agent is named doc-writer"
+      ]
+    },
+    {
+      "agent": "issue-triager",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/issue-triager.md",
+      "variant": "generated",
+      "sourcePath": ".codex/agents/issue-triager.toml",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the codex variant",
+        "display name \"Issue Triager\": the agent is named issue-triager"
+      ]
+    },
+    {
+      "agent": "pair-programmer",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/pair-programmer.md",
+      "variant": "generated",
+      "sourcePath": ".github/agents/Pair Programmer.agent.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the copilot variant",
+        "display name \"Pair Programmer\": the agent is named pair-programmer"
+      ]
+    },
+    {
+      "agent": "release-manager",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/release-manager.md",
+      "variant": "native",
+      "sourcePath": ".omp/agents/release-manager.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
+      "agent": "search-relevance-engineer",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/search-relevance-engineer.md",
+      "variant": "generated",
+      "sourcePath": ".claude/agents/Search Relevance Engineer.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the claude variant",
+        "display name \"Search Relevance Engineer\": the agent is named search-relevance-engineer"
+      ]
+    },
+    {
+      "agent": "test-planner",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/test-planner.md",
+      "variant": "generated",
+      "sourcePath": ".gemini/agents/test-planner.md",
+      "source": {
+        "kind": "git",
+        "locator": "localhost:8443/display-names.git",
+        "revision": "460fffaf12e29cf9d55574f31d44dc2545d1f7a5"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "converted from the gemini variant",
+        "display name \"Test Planner\": the agent is named test-planner"
+      ]
+    }
+  ],
+  "summary": {
+    "create": 8
+  }
+}
