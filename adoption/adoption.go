@@ -42,8 +42,9 @@ var OptOutVariables = []string{"DO_NOT_TRACK", "DISABLE_TELEMETRY"}
 
 // Notice tells the user, once per machine before the first report is sent, what install
 // reports are and how to opt out.
-const Notice = "agnthub sends anonymous-by-design install counts with a random installation " +
-	"id; set DO_NOT_TRACK=1 to opt out. See https://app.agnthub.sh/privacy#install-reports"
+const Notice = "agnthub sends install counts tagged with a random installation id " +
+	"(pseudonymous; no account or IP is stored); set DO_NOT_TRACK=1 to opt out. " +
+	"See https://app.agnthub.sh/privacy#install-reports"
 
 // NoticePath records that Notice was shown on this machine; it lives beside the
 // installation identities.

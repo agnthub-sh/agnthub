@@ -1,5 +1,16 @@
 # Changelog
 
+## v0.9.2
+
+### Changed
+
+- **The install-report notice says the reports are pseudonymous.** It now reads:
+  `agnthub sends install counts tagged with a random installation id (pseudonymous; no account
+  or IP is stored); set DO_NOT_TRACK=1 to opt out. See
+  https://app.agnthub.sh/privacy#install-reports`. v0.9.1's wording ("anonymous-by-design")
+  contradicted the privacy policy. A machine that already showed the v0.9.1 notice does not
+  show it again.
+
 ## v0.9.1
 
 ### Changed
