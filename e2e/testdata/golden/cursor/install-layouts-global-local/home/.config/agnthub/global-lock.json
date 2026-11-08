@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/allowlisted.md",
           "sourceDigest": "sha256:f3ff55dcde035238f85d0fdae8958a9aff05a4776d32adde1c8d30fa96889af8",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/allowlisted.md",
           "digest": "sha256:2c666335d922a4e82fd9d07c801ec6d91d942d904f4a2df9560d203d01695d88",
           "requires": []
@@ -34,7 +34,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/annotated.md",
           "sourceDigest": "sha256:8cf577c3db790479f198a536eb7ad1011f84a0827e2bb2a07bfe5836a4254087",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/annotated.md",
           "digest": "sha256:a7868873938a8ff73273129a4888c276d9b148126a3afe2e13dbf20a32b6316a",
           "requires": []
@@ -54,7 +54,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/backgrounder.md",
           "sourceDigest": "sha256:db764d016ee2d92946ed60cf836c8b3fc1f08052face2ee6fc019dbb27de0bc2",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/backgrounder.md",
           "digest": "sha256:bcc07585ac3496d3ae1305c6f4bab985dc72745881be07d57d1f1946fbccc84e",
           "requires": []
@@ -74,7 +74,7 @@
           "variant": "generated",
           "sourcePath": "agents/bom.md",
           "sourceDigest": "sha256:4a06ac5e6bf431ff6070e79391195c1ff4e3c7e8f0b093dbfa06fb32e692f629",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/bom.md",
           "digest": "sha256:ec425d98db8b44567f2db045451b70f964e604dcd9547c286770a81903c865e7",
           "requires": []
@@ -94,7 +94,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/bounded.md",
           "sourceDigest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/bounded.md",
           "digest": "sha256:20365c8dedff6334c26bfcb5879ceab376db3c4ed420040ecf47f06dbf5bf890",
           "requires": []
@@ -114,7 +114,7 @@
           "variant": "generated",
           "sourcePath": "agents/claude-shaped.md",
           "sourceDigest": "sha256:fd5067a2a12f6e18f26f14d9a44bdf5e355fc65476c81afd0b70ce124c95c9ad",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/claude-shaped.md",
           "digest": "sha256:7d7d7b3a697a3a348c1215d3929c8740d0e84335a82b3754c863fa5ae7e24e48",
           "requires": []
@@ -134,7 +134,7 @@
           "variant": "generated",
           "sourcePath": "agents/colon.md",
           "sourceDigest": "sha256:89cfd9750c6cd78419f7c04dc07bbc55508cbd9e43767be467bca82fefd1bd34",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/colon.md",
           "digest": "sha256:4509a672291fe28bac3586c65101f4a844ba6f8c94c8fbc3dce7772b6747c024",
           "requires": []
@@ -154,7 +154,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/colon-native.md",
           "sourceDigest": "sha256:35d1f81dc452f8003feecba40b8e861f9bb90ba1dbba87c219cb1e540b5249d7",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/colon-native.md",
           "digest": "sha256:4f3c75c55d6f3731717513e5d9efcb815e4f058124a5ac0825ecce0bfae1bff0",
           "requires": []
@@ -231,7 +231,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-solo.toml",
           "sourceDigest": "sha256:e782111961e86540d80e45850dbb038dfb01c39f7fc510ddf1f325a6071983f3",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/cx-solo.md",
           "digest": "sha256:c5d0d1b91f8086ec097d02cc5b88b60b3946ca8f7347e755553d1dd08e60535b",
           "requires": []
@@ -251,7 +251,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-workspace.toml",
           "sourceDigest": "sha256:24a94e115878b83ba14cac3d632c14bd1a98380f1ea48bdabebd076fb5293d87",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/cx-workspace.md",
           "digest": "sha256:1cfac41eb058d7a18a396bd006044053fe99a2c348d6324fba98909650006e5a",
           "requires": []
@@ -271,7 +271,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/defaulted.md",
           "sourceDigest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/defaulted.md",
           "digest": "sha256:c20316bc6492fe53aed8dc200ce142079ebc6e456ba6dedb8450841f58a5e6a4",
           "requires": []
@@ -291,7 +291,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/delegator.md",
           "sourceDigest": "sha256:d55cbc4849ca6e3c63b9d2d51bd5489a1979c2f519369759a3dd2bd55b7d3bce",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/delegator.md",
           "digest": "sha256:437baf75c7eab4fa855300e090d341f2f4129742f687c6f30aa54c1bb59c5cfc",
           "requires": []
@@ -311,7 +311,7 @@
           "variant": "generated",
           "sourcePath": "agents/dual.md",
           "sourceDigest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/dual.md",
           "digest": "sha256:8e662ea5d599f85f01b66ec8ee474111d235dc3fee3af5e2e96af9f9740e6c97",
           "requires": []
@@ -331,7 +331,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/team/fixer.md",
           "sourceDigest": "sha256:11404f0e334d2b363d7bc45e6d952817a29d4568e08f2545c04cf83eaa5686e8",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/fixer.md",
           "digest": "sha256:9166162617cd54d9eb7675aa91b451765380189d5fe2338ac23786322fa1228f",
           "requires": []
@@ -351,7 +351,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-colored.agent.md",
           "sourceDigest": "sha256:cf7c2dcc846ea6083bd4a55c95a8ef6105f2a6fd4587cbd090a078c3584c2d25",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/gh-colored.md",
           "digest": "sha256:fb17b93258e9a87d2e21d71b574718588c64de18f777de75e9ee9171d140a121",
           "requires": []
@@ -371,7 +371,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-manual.agent.md",
           "sourceDigest": "sha256:36c4e0f4476f6ddbe8e49920350a8d05f305ecff9df72c40c170612173445218",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/gh-manual.md",
           "digest": "sha256:c965904bdf419be24f591f98f7c2b1e372609ebef93855024a667a08255d51db",
           "requires": []
@@ -391,7 +391,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-native.agent.md",
           "sourceDigest": "sha256:864618375986b42a604b63514ac52ca854ba652da1b19574df74aac49db3acc3",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/gh-native.md",
           "digest": "sha256:975428d4f0c413ad9dc4697cf6c38b44714a89d960a19329a18b5c2b464df5b5",
           "requires": []
@@ -411,7 +411,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-plain.md",
           "sourceDigest": "sha256:00d467065c9f6ab9e2344d19d1262dd45ed81922b8d89907de43b5bc8a9e8fea",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/gh-plain.md",
           "digest": "sha256:baf1f9ccd85e5d4626712711c25031b2befcb0139a4d1146c567737a04e6180b",
           "requires": []
@@ -431,9 +431,29 @@
           "variant": "generated",
           "sourcePath": ".gemini/agents/gm-native.md",
           "sourceDigest": "sha256:ab77641ac4f6666fa0d80ee36d4fdf2332dbd2f1bc5d0106cd69fb9446f670e9",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/gm-native.md",
           "digest": "sha256:0adf90ad9b163e21f1735f2dc8bcc4eb10198e9341c2940047cddc3a58f662e1",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "interview-prep",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "cursor",
+          "variant": "generated",
+          "sourcePath": "agents/interview-prep.agent.md",
+          "sourceDigest": "sha256:b2e6484ad817368c1eb324d62cb325d893ea766b2e24a9d25d818698d17bcc2a",
+          "converter": "cursor/v7",
+          "path": "/agnthub-e2e/home/.cursor/agents/interview-prep.md",
+          "digest": "sha256:eb97abc5c63986595c7832e4eb884b81a5c3bc3befb1fbc005943ef830c90b25",
           "requires": []
         }
       ]
@@ -451,7 +471,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/isolated.md",
           "sourceDigest": "sha256:213ccb5e38aa066c15bfee1536e7e91930bb54fc01fdaba30d0befe07666fb8b",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/isolated.md",
           "digest": "sha256:a00385216669d753f11e9243443a34a587729b55bc4a3820d78e9c075740ca57",
           "requires": []
@@ -471,7 +491,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/journaler.md",
           "sourceDigest": "sha256:8054d0e04ddedf2eb8559ad2a2a6c9d1a60d4e0f0b41eebf631e6d03d1d0e361",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/journaler.md",
           "digest": "sha256:9bf8881b60ef9502dd7983578c23892c9538feeae8940992eaf90ea3c6db30cf",
           "requires": []
@@ -491,7 +511,7 @@
           "variant": "generated",
           "sourcePath": "agents/literal.md",
           "sourceDigest": "sha256:b973b211d0f1640b3dec85aa413b974bd3a3bd92b362105f58b2044100ffdf23",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/literal.md",
           "digest": "sha256:d3cdaed55588bad5dcd3d86cf55df186f66eafb6af5d4a1abbc72e7f855971e0",
           "requires": []
@@ -511,7 +531,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/local-notes.md",
           "sourceDigest": "sha256:4d831bcbb3fb7890336981e00b967572db3011ba4cf6404b531ab134ea9ad8f0",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/local-notes.md",
           "digest": "sha256:8c1463d2726cc00489772f72114809d78267db03cc6039a5ed755bf6544d4422",
           "requires": []
@@ -531,7 +551,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/misnamed.md",
           "sourceDigest": "sha256:c5c73ca9bb6c15b435d0584078dd5bb855ca728acba4339cd9bdb0c8ac46ea4e",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/misnamed.md",
           "digest": "sha256:88dec6de97e3599d8892db5749d383d9e06402324eb896dade61cf46363e46c4",
           "requires": []
@@ -551,7 +571,7 @@
           "variant": "generated",
           "sourcePath": "agents/modelled.md",
           "sourceDigest": "sha256:3d52a9d90250746cb40d20913b4d1bc01c4a5b313259f51dc8bc6bf92035666e",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/modelled.md",
           "digest": "sha256:3952ff7599533b6a7a9d49536d2faf28edc9959ca53cfe281d76210d584539f0",
           "requires": []
@@ -571,7 +591,7 @@
           "variant": "generated",
           "sourcePath": ".opencode/agents/oc-native.md",
           "sourceDigest": "sha256:5951d5e75a6de4429a8f579c654bb4589d12db75deba1844913b6c4b421cf5d0",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/oc-native.md",
           "digest": "sha256:a60187438999d7eaf240c04fe3287d04943ab5f84cee5aceb87e3f9e927ffcb8",
           "requires": []
@@ -591,7 +611,7 @@
           "variant": "generated",
           "sourcePath": ".omp/agents/omp-native.md",
           "sourceDigest": "sha256:f0e791fe64b2035a1eab0136e814e470e570bd86b6b2a69dffdf2b3661a0611a",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/omp-native.md",
           "digest": "sha256:6abcba64f60330b51f7c228219cc308fa43baecaa624da999c330c97d5b0a2d6",
           "requires": []
@@ -611,7 +631,7 @@
           "variant": "generated",
           "sourcePath": "agents/planner.md",
           "sourceDigest": "sha256:6e67f8119738e58371e61f662e332d971058192a6dc99791e7c19094691376f2",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/planner.md",
           "digest": "sha256:ecedabdba48794907bc7bd53986e64bef1a1241a22144625bb8736be4b821f3d",
           "requires": []
@@ -631,7 +651,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/quoted.md",
           "sourceDigest": "sha256:a92554a3420863b7acc442ea397337ac1bae541f07c7a50f8a3be291d02b0dd1",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/quoted.md",
           "digest": "sha256:ce3074f704c3b4f8b6f546327bddf6fe97a2bd1b6eba834c0cd9b76c6510058a",
           "requires": []
@@ -651,7 +671,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/recaller.md",
           "sourceDigest": "sha256:a30571bad4b7bff23bdacaaac67fb2667016a24a7c89682f52832bfda484b7d1",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/recaller.md",
           "digest": "sha256:827126fd5e8c40c68179551ebe0b04235676e21cc26f11b8991846e5d1e0e910",
           "requires": []
@@ -671,7 +691,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/relaxed.md",
           "sourceDigest": "sha256:88b6be1e2b64ae4bbfbab2c958f917bca08a5abedebecac673fa17ba8826ce95",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/relaxed.md",
           "digest": "sha256:8d7c7b28d982b893100c1eebcaaa2dbb54be3dbf9b7e459f57b6300adcba8031",
           "requires": []
@@ -691,7 +711,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/rememberer.md",
           "sourceDigest": "sha256:e876bb3f846cda6620fed5b2d357e0a6997129a7a526e240789ed2e4b8e965ef",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/rememberer.md",
           "digest": "sha256:c8ea17236e77d0c704066ead296ef3090b0c8ceb3273237b7cdc7bbda5d9216e",
           "requires": []
@@ -711,7 +731,7 @@
           "variant": "generated",
           "sourcePath": "agents/researcher/AGENT.md",
           "sourceDigest": "sha256:dd13ee557398466dd574705483ce5697cfb0b3352c2ef6e815509612dc32282b",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/researcher.md",
           "digest": "sha256:45a434b924990a2e5b79118158ad5a8ba90005ebc4660589fa239f631ad71d48",
           "requires": []
@@ -731,7 +751,7 @@
           "variant": "generated",
           "sourcePath": "AGENT.md",
           "sourceDigest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/root-helper.md",
           "digest": "sha256:5eb4a6af5bb686c64dfba163cb44c5d7054e52ec44dc3f28e3fd4da0bd8fff88",
           "requires": []
@@ -751,7 +771,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/scripted.md",
           "sourceDigest": "sha256:1527e595b5b95f417d832f97ccb0ef2cd0579cb27cdc6944de2071946ee4b82c",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/scripted.md",
           "digest": "sha256:4c95aa0522b3d7f10a0457a42b07b6e0c191ef6f731f298c1ed408ccbcc6b846",
           "requires": []
@@ -771,7 +791,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/skilled.md",
           "sourceDigest": "sha256:e13388a2a0e7989773c6eced86e91871233b762fbe37b11597e0ebdd58e42d69",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/skilled.md",
           "digest": "sha256:93dca0a0eca770dfb1b6b8d02bfb351b97626db54d3afa9d6485b993cd7674b5",
           "requires": []
@@ -791,7 +811,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/studio-qa.md",
           "sourceDigest": "sha256:cfe15b9951529179d27ad3396fc10136bcf5a2455518aed3464720354c2fa3e8",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/studio-qa.md",
           "digest": "sha256:4b0ae8128a59bac0347fbc7d8e7bf757106d4f76214f02f8617e188aec21bc95",
           "requires": []
@@ -811,7 +831,7 @@
           "variant": "generated",
           "sourcePath": "agents/tagged.md",
           "sourceDigest": "sha256:2e9a09a7b24a92f19ee04b1adad396cf4e9f100fa5cc4c882a59ca2e47b73f09",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/tagged.md",
           "digest": "sha256:966b109009028587b343557c8096d0ae2191e6e00925a7c6beaba6dd1a90f75e",
           "requires": []
@@ -831,7 +851,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/wildcard.md",
           "sourceDigest": "sha256:6619fd1e1a173c38342c4ad36dbb057d4829db134be89767f903b7c5523afef3",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/wildcard.md",
           "digest": "sha256:4a6af65d4f5755323d9752c4d48ccaf527a4fb6c4666013ab8c021817e705ffa",
           "requires": []

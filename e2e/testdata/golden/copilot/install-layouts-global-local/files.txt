@@ -26,6 +26,7 @@
 0644 home/.copilot/agents/gh-native.agent.md
 0644 home/.copilot/agents/gh-plain.agent.md
 0644 home/.copilot/agents/gm-native.agent.md
+0644 home/.copilot/agents/interview-prep.agent.md
 0644 home/.copilot/agents/isolated.agent.md
 0644 home/.copilot/agents/issue-reader.agent.md
 0644 home/.copilot/agents/journaler.agent.md

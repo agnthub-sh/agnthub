@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/more/mk-guarded.md",
           "sourceDigest": "sha256:8aa77306d8b0d60797e85a008e128ee544994ce1c6d2607ce4e0256ad3107476",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/mk-guarded.md",
           "digest": "sha256:f4e0a864efcccd1cc33e6f2b0c433b5b980c58d3a4e862db0c3c24fefa3cc827",
           "requires": []
@@ -34,7 +34,7 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/mk-lister.md",
           "sourceDigest": "sha256:42b4caf101f87d5da5feeb015372dbe5a70a7f809c819eef8f9113b10ee6b375",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/mk-lister.md",
           "digest": "sha256:a97ed69d86aa45c659746a163f45a4fff3339579313b7a351c3c711932bcb0cf",
           "requires": []
@@ -54,7 +54,7 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/deep/mk-nested.md",
           "sourceDigest": "sha256:33799b1ca12e3ccb8449a66e4c19a09a37d09d14f69cd7dff0c7097f42dfcc0d",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/mk-nested.md",
           "digest": "sha256:85df7c4b6edb0ebaeeb8e3aa63ed18809d10635b0b65cb757b90a22a89376296",
           "requires": []
@@ -74,7 +74,7 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/mk-scanner.md",
           "sourceDigest": "sha256:5e6a2950be2c2e8fcfb2427622cc0ee6e963a4cbc730d26d8c830ffb3e7c6d7f",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/mk-scanner.md",
           "digest": "sha256:2d8b7d6500fa27d8ed2ac594ac55e2d0c357fc5a222bf72eed7c52575123569b",
           "requires": []

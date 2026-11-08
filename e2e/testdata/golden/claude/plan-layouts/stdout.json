@@ -562,6 +562,22 @@
       "action": "create"
     },
     {
+      "agent": "interview-prep",
+      "harness": "claude",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.claude/agents/interview-prep.md",
+      "variant": "generated",
+      "sourcePath": "agents/interview-prep.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "isolated",
       "harness": "claude",
       "settings": {},
@@ -1010,7 +1026,7 @@
     }
   ],
   "summary": {
-    "create": 55,
+    "create": 56,
     "incompatible": 2,
     "invalid": 1
   }

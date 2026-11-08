@@ -27,6 +27,7 @@
 0644 project/.gemini/agents/gh-plain.md
 0644 project/.gemini/agents/gm-mcp.md
 0644 project/.gemini/agents/gm-native.md
+0644 project/.gemini/agents/interview-prep.md
 0644 project/.gemini/agents/isolated.md
 0644 project/.gemini/agents/issue-reader.md
 0644 project/.gemini/agents/journaler.md

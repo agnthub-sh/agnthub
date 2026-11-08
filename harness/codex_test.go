@@ -45,7 +45,7 @@ func TestCodexConvertPreservesInstructionTextExactly(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if !artifact.Generated || artifact.Converter != "codex/v6" ||
+			if !artifact.Generated || artifact.Converter != "codex/v7" ||
 				artifact.FileName != "reviewer.toml" {
 				t.Fatalf("unexpected artifact metadata: %+v", artifact)
 			}

@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/allowlisted.md",
           "sourceDigest": "sha256:f3ff55dcde035238f85d0fdae8958a9aff05a4776d32adde1c8d30fa96889af8",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/allowlisted.md",
           "digest": "sha256:8b0e636aa6c86cc71b46113cb910d2fa79bdaa5e70baf0de61015f3a887d8896",
           "requires": []
@@ -34,7 +34,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/annotated.md",
           "sourceDigest": "sha256:8cf577c3db790479f198a536eb7ad1011f84a0827e2bb2a07bfe5836a4254087",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/annotated.md",
           "digest": "sha256:bf51e7459a5c49a121d93bb65ffabb38f2e9801340089c05593c44baa6007a6b",
           "requires": []
@@ -54,7 +54,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/backgrounder.md",
           "sourceDigest": "sha256:db764d016ee2d92946ed60cf836c8b3fc1f08052face2ee6fc019dbb27de0bc2",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/backgrounder.md",
           "digest": "sha256:b2201ea00c6e2fdddfac1d2c94358739de0a0641bcc17d4fe9abfc9ebc76068e",
           "requires": []
@@ -74,7 +74,7 @@
           "variant": "generated",
           "sourcePath": "agents/bom.md",
           "sourceDigest": "sha256:4a06ac5e6bf431ff6070e79391195c1ff4e3c7e8f0b093dbfa06fb32e692f629",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/bom.md",
           "digest": "sha256:6cb56707921a916746838facef1998c1112204c60ac7ab479b1553e5e9144f9d",
           "requires": []
@@ -94,7 +94,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/bom-native.md",
           "sourceDigest": "sha256:4625951c9f6cb88f9476953c5a7dcb191bb1ccb2ff8ad6bbdd98a2c9baeb593c",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/bom-native.md",
           "digest": "sha256:3b2c11ef6d84e43dcafc5dfd1eeb0c8bf602a92a47224c3b4cee4c663d786960",
           "requires": []
@@ -114,7 +114,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/bounded.md",
           "sourceDigest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/bounded.md",
           "digest": "sha256:9afe9424a45124492fe214adf8e06749c4cfffbebf7ad3ff7b209ee874b3b412",
           "requires": []
@@ -134,7 +134,7 @@
           "variant": "generated",
           "sourcePath": "agents/claude-shaped.md",
           "sourceDigest": "sha256:fd5067a2a12f6e18f26f14d9a44bdf5e355fc65476c81afd0b70ce124c95c9ad",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/claude-shaped.md",
           "digest": "sha256:705a891c530b3318804616c5ed0750f91b5d9eb33403289ce9a75807ad26f9cf",
           "requires": []
@@ -154,7 +154,7 @@
           "variant": "generated",
           "sourcePath": "agents/colon.md",
           "sourceDigest": "sha256:89cfd9750c6cd78419f7c04dc07bbc55508cbd9e43767be467bca82fefd1bd34",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/colon.md",
           "digest": "sha256:74c6b95091c7fbeec80e0425c61e8f70757fc33ffd0b29181eff93c5e5d4f203",
           "requires": []
@@ -174,7 +174,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/colon-native.md",
           "sourceDigest": "sha256:35d1f81dc452f8003feecba40b8e861f9bb90ba1dbba87c219cb1e540b5249d7",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/colon-native.md",
           "digest": "sha256:a77c836bd5ede7c97dc04ad2783ae0b931472c956ae85f113845360e4a2202e1",
           "requires": []
@@ -194,7 +194,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-folded.md",
           "sourceDigest": "sha256:269f1c668e921158450159bc7643fb769ff5af270bc46ab39cdd8ccaa5ac764c",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/cu-folded.md",
           "digest": "sha256:1560e113c1ea41bf76db6b212d620f4fdd4e9890f5fd70fcd327ae1b1e48615b",
           "requires": []
@@ -214,7 +214,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-native.md",
           "sourceDigest": "sha256:90e2a7aaee545f416f39f918470e649abfde0a5d1d00e05c5f3eb07cd57778bd",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/cu-native.md",
           "digest": "sha256:1c699f1fff21dd66d349c7e8c741b03a02cbe808fe8b4701c9080525370937d2",
           "requires": []
@@ -234,7 +234,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-tagged.md",
           "sourceDigest": "sha256:970c3f3b68d411a7b90dc24c2b42c1e5f3355966a2427f158fa3b42b3c726970",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/cu-tagged.md",
           "digest": "sha256:e31dd4d761beb696091f92c17744971d24041c8fcae2073bcb364f8f505bb0b0",
           "requires": []
@@ -254,7 +254,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-native.toml",
           "sourceDigest": "sha256:a885e8934fcddf4cf363afdb2c3f69d15dec952f974f37fcfd39c1c7a66bc1a1",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/cx-native.md",
           "digest": "sha256:b5983a48efcd806e29efb3c1179ce572815b6b48cd1ebb80ccded013e643c0a1",
           "requires": []
@@ -274,7 +274,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-nicknamed.toml",
           "sourceDigest": "sha256:afe1f7c1493cd1348a68552047006bd3c87c0ebb0e102a4200365a2a6fb42436",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/cx-nicknamed.md",
           "digest": "sha256:00a26b23a48dfb0b60b8f5588757ae3708a7291c9a9be7732e7e970e6e16db56",
           "requires": []
@@ -294,7 +294,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-sandboxed.toml",
           "sourceDigest": "sha256:dcaa98695697729de4d531213e23fa532f915b87e3ec07b5e09cec4f3249ede2",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/cx-sandboxed.md",
           "digest": "sha256:f551c9680164320f86443a3b271ccf62a87b200a43b341902e42ace244ed1096",
           "requires": []
@@ -314,7 +314,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-solo.toml",
           "sourceDigest": "sha256:e782111961e86540d80e45850dbb038dfb01c39f7fc510ddf1f325a6071983f3",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/cx-solo.md",
           "digest": "sha256:4b4439407465c2fc38ceedeb2f0329f9a2d49e6e7c2a0ac2868a3b50ff27b488",
           "requires": []
@@ -334,7 +334,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-workspace.toml",
           "sourceDigest": "sha256:24a94e115878b83ba14cac3d632c14bd1a98380f1ea48bdabebd076fb5293d87",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/cx-workspace.md",
           "digest": "sha256:2779276878d27fe0ef48ff673fdd34ec830f54568d215fa93bab27faf08d33ea",
           "requires": []
@@ -354,7 +354,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/defaulted.md",
           "sourceDigest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/defaulted.md",
           "digest": "sha256:d8f9a833b3982f03fd134e9d0486513fe7a9546c2e1077b1238a7c07dafeb958",
           "requires": []
@@ -374,7 +374,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/delegator.md",
           "sourceDigest": "sha256:d55cbc4849ca6e3c63b9d2d51bd5489a1979c2f519369759a3dd2bd55b7d3bce",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/delegator.md",
           "digest": "sha256:69f3d9b90174b4fc98073f3d36418bfeb6bb7f6c15c6c06bcdf21956f6e7d3a3",
           "requires": []
@@ -394,7 +394,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/differ.md",
           "sourceDigest": "sha256:f34d2b83d43c92767414489fcc9c4e0bf1ac99d953a6a91f2b3eb4d61347fb07",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/differ.md",
           "digest": "sha256:bb2915e1fae8f1b51e84f6f4c3707eb89881f90576fd21d785645f1503be91c0",
           "requires": []
@@ -433,7 +433,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/team/fixer.md",
           "sourceDigest": "sha256:11404f0e334d2b363d7bc45e6d952817a29d4568e08f2545c04cf83eaa5686e8",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/fixer.md",
           "digest": "sha256:97bb6d3bb2a03b079bd64f659d1b8808527c402330340da9f928f97d8b4ea90b",
           "requires": []
@@ -453,7 +453,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-colored.agent.md",
           "sourceDigest": "sha256:cf7c2dcc846ea6083bd4a55c95a8ef6105f2a6fd4587cbd090a078c3584c2d25",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/gh-colored.md",
           "digest": "sha256:7a314bb449fdaa33074fa73708a21168d87c9089e93695e670b98c0a7e456240",
           "requires": []
@@ -473,7 +473,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-manual.agent.md",
           "sourceDigest": "sha256:36c4e0f4476f6ddbe8e49920350a8d05f305ecff9df72c40c170612173445218",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/gh-manual.md",
           "digest": "sha256:0d26ba3a55705796dc3ab185275665679d57097db1140086792d48e8b70044d9",
           "requires": []
@@ -493,7 +493,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-native.agent.md",
           "sourceDigest": "sha256:864618375986b42a604b63514ac52ca854ba652da1b19574df74aac49db3acc3",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/gh-native.md",
           "digest": "sha256:36f6c94a85ad2655b09938ed637dcc7ba09caf7f8cbf32ca9bc11ce7fb3d40e4",
           "requires": []
@@ -513,7 +513,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-plain.md",
           "sourceDigest": "sha256:00d467065c9f6ab9e2344d19d1262dd45ed81922b8d89907de43b5bc8a9e8fea",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/gh-plain.md",
           "digest": "sha256:e0bc5a7a9772c20e1e0ca4d0bd362d4ee812ea945d94423fc77b27a9e7ec7a08",
           "requires": []
@@ -533,9 +533,29 @@
           "variant": "generated",
           "sourcePath": ".gemini/agents/gm-native.md",
           "sourceDigest": "sha256:ab77641ac4f6666fa0d80ee36d4fdf2332dbd2f1bc5d0106cd69fb9446f670e9",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/gm-native.md",
           "digest": "sha256:6cfd2e80784cd69aa9500fbe268f533814caa5e811a747aff654bb4c3479d7ba",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "interview-prep",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "opencode",
+          "variant": "generated",
+          "sourcePath": "agents/interview-prep.agent.md",
+          "sourceDigest": "sha256:b2e6484ad817368c1eb324d62cb325d893ea766b2e24a9d25d818698d17bcc2a",
+          "converter": "opencode/v7",
+          "path": ".opencode/agents/interview-prep.md",
+          "digest": "sha256:80f3c3833d180b62b3aa98b28c150f0a5c9399b38335cbe7d7fcedbbb4a53083",
           "requires": []
         }
       ]
@@ -553,7 +573,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/isolated.md",
           "sourceDigest": "sha256:213ccb5e38aa066c15bfee1536e7e91930bb54fc01fdaba30d0befe07666fb8b",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/isolated.md",
           "digest": "sha256:14f6cb0780da25f4c6adf495a46b20e650557c08602eadf478f446456373573c",
           "requires": []
@@ -573,7 +593,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/issue-reader.md",
           "sourceDigest": "sha256:c5cf513142027c5ce8dcbea7dfacadf3fd23fbd5e748c9fc999dd1fd00902358",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/issue-reader.md",
           "digest": "sha256:1c9737320201565388f2c17c9c0f24e02fd9c4d9bdaec196d4cad0dc75eb8f72",
           "requires": []
@@ -593,7 +613,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/journaler.md",
           "sourceDigest": "sha256:8054d0e04ddedf2eb8559ad2a2a6c9d1a60d4e0f0b41eebf631e6d03d1d0e361",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/journaler.md",
           "digest": "sha256:891c0c592c842fbdc9d1a95da4f045bdd7eaf1d02ed6ec818fc8b49dff8d1e03",
           "requires": []
@@ -613,7 +633,7 @@
           "variant": "generated",
           "sourcePath": "agents/literal.md",
           "sourceDigest": "sha256:b973b211d0f1640b3dec85aa413b974bd3a3bd92b362105f58b2044100ffdf23",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/literal.md",
           "digest": "sha256:d06ed47a989d2f493725cf79654fb54a5d3ff64a3541102d6307720288905538",
           "requires": []
@@ -633,7 +653,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/local-notes.md",
           "sourceDigest": "sha256:4d831bcbb3fb7890336981e00b967572db3011ba4cf6404b531ab134ea9ad8f0",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/local-notes.md",
           "digest": "sha256:1e3ad76c6cf4a2ad51e1fdfa2105f04999aa5944d9aa9aea058a76a7607aeca8",
           "requires": []
@@ -653,7 +673,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/mcp-wide.md",
           "sourceDigest": "sha256:f364f5a6fbed5ae66025777291f65b8f33e48ec39a3d09f9119ac30f9e054fb1",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/mcp-wide.md",
           "digest": "sha256:7705e7ae19819a7500e4f3cefb77dff5f52209a3b22fecb46a098b65e45536d7",
           "requires": []
@@ -673,7 +693,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/misnamed.md",
           "sourceDigest": "sha256:c5c73ca9bb6c15b435d0584078dd5bb855ca728acba4339cd9bdb0c8ac46ea4e",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/misnamed.md",
           "digest": "sha256:2db248e590a29a456ecde4c1012cc4a6b259a881458de4292c4e0fb4932f84a4",
           "requires": []
@@ -693,7 +713,7 @@
           "variant": "generated",
           "sourcePath": "agents/modelled.md",
           "sourceDigest": "sha256:3d52a9d90250746cb40d20913b4d1bc01c4a5b313259f51dc8bc6bf92035666e",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/modelled.md",
           "digest": "sha256:9887b7eba3a7f4dd4a2f38fe85f6a01a05b85f84d2667d1605e9ebff5dce63b2",
           "requires": []
@@ -713,7 +733,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/no-shell.md",
           "sourceDigest": "sha256:63a2ad194c53901523f07f8f3ec3303517e950b53a482f2f2e13b84902d155f3",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/no-shell.md",
           "digest": "sha256:104276a37df7c39a5bc58fca479ded5831450e7d29ce293b9c9adc52fb8506b5",
           "requires": []
@@ -752,7 +772,7 @@
           "variant": "generated",
           "sourcePath": ".omp/agents/omp-native.md",
           "sourceDigest": "sha256:f0e791fe64b2035a1eab0136e814e470e570bd86b6b2a69dffdf2b3661a0611a",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/omp-native.md",
           "digest": "sha256:0f8b726519b5b0d61b4767cb9dbbbc9247fd8e6b763f8ab7fba4972b2d85a854",
           "requires": []
@@ -772,7 +792,7 @@
           "variant": "generated",
           "sourcePath": "agents/planner.md",
           "sourceDigest": "sha256:6e67f8119738e58371e61f662e332d971058192a6dc99791e7c19094691376f2",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/planner.md",
           "digest": "sha256:4d4fce26a460a922bc4e7fdb4c0cc0749fc60a81ef20371f392846efb34d397c",
           "requires": []
@@ -792,7 +812,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/quoted.md",
           "sourceDigest": "sha256:a92554a3420863b7acc442ea397337ac1bae541f07c7a50f8a3be291d02b0dd1",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/quoted.md",
           "digest": "sha256:9b1fb62fa2112538411734c9987a19da66a52a349f240253eb4473237da822c2",
           "requires": []
@@ -812,7 +832,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/recaller.md",
           "sourceDigest": "sha256:a30571bad4b7bff23bdacaaac67fb2667016a24a7c89682f52832bfda484b7d1",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/recaller.md",
           "digest": "sha256:d997d52dea4214891339a8278d5ab7cf1e470e0f3abc70382c8f784c3f157aa2",
           "requires": []
@@ -832,7 +852,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/relaxed.md",
           "sourceDigest": "sha256:88b6be1e2b64ae4bbfbab2c958f917bca08a5abedebecac673fa17ba8826ce95",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/relaxed.md",
           "digest": "sha256:31ee034497ace5ed3caa8e97e4346d355f1eb56768bcb45513d54b6dfe1dec7f",
           "requires": []
@@ -852,7 +872,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/rememberer.md",
           "sourceDigest": "sha256:e876bb3f846cda6620fed5b2d357e0a6997129a7a526e240789ed2e4b8e965ef",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/rememberer.md",
           "digest": "sha256:f4def52e4c11dc80afc664821f27fcdbe3d70aca9ed2ec46f33f89e8df204c95",
           "requires": []
@@ -872,7 +892,7 @@
           "variant": "generated",
           "sourcePath": "agents/researcher/AGENT.md",
           "sourceDigest": "sha256:dd13ee557398466dd574705483ce5697cfb0b3352c2ef6e815509612dc32282b",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/researcher.md",
           "digest": "sha256:b7c7c3d6a3202e23bd15aed06f538934a183964d361a183f13da464efc0e499a",
           "requires": []
@@ -892,7 +912,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/reviewer.md",
           "sourceDigest": "sha256:a9c4c55855bdcff3eb2fa4bd246ff94f4de189219525d61086c93cac478e5070",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/reviewer.md",
           "digest": "sha256:a745b2f6173ac55ef13a66268e7226c824de3bad810ca76daefdfb53e37a10bb",
           "requires": []
@@ -912,7 +932,7 @@
           "variant": "generated",
           "sourcePath": "AGENT.md",
           "sourceDigest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/root-helper.md",
           "digest": "sha256:de4481519aea2418e36d0f369a7f2428d3005ae524b4f05a2a8af776e42356b1",
           "requires": []
@@ -932,7 +952,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/scripted.md",
           "sourceDigest": "sha256:1527e595b5b95f417d832f97ccb0ef2cd0579cb27cdc6944de2071946ee4b82c",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/scripted.md",
           "digest": "sha256:e0b371d3298048fdaa5d83fc343d62ee0eb497eda294a0beb9495c78f5c2dc76",
           "requires": []
@@ -952,7 +972,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/skilled.md",
           "sourceDigest": "sha256:e13388a2a0e7989773c6eced86e91871233b762fbe37b11597e0ebdd58e42d69",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/skilled.md",
           "digest": "sha256:68c5fa6feb158ea53a759626f891e8ac8772235a4ff4a83ad5c465a70674405e",
           "requires": []
@@ -972,7 +992,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/studio-qa.md",
           "sourceDigest": "sha256:cfe15b9951529179d27ad3396fc10136bcf5a2455518aed3464720354c2fa3e8",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/studio-qa.md",
           "digest": "sha256:a6cdeb76a85a77c7ed1f3c82d9593e6957466530e72cb566062791081887e029",
           "requires": []
@@ -992,7 +1012,7 @@
           "variant": "generated",
           "sourcePath": "agents/tagged.md",
           "sourceDigest": "sha256:2e9a09a7b24a92f19ee04b1adad396cf4e9f100fa5cc4c882a59ca2e47b73f09",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/tagged.md",
           "digest": "sha256:2dc9055011b1aadc70eca9dbf3b13e95037de3f0669ed035babc13b60bcbd6d8",
           "requires": []
@@ -1012,7 +1032,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/web-searcher.md",
           "sourceDigest": "sha256:445f4b734cae55d1068397452bb0a8ae3cdb891d2f5c18ce8014b6f2ff54ecde",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/web-searcher.md",
           "digest": "sha256:6e53885d4ac4e288a1c7a1252d652fc1119d9232b3f82ea705638c12166da148",
           "requires": []
@@ -1032,7 +1052,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/wildcard.md",
           "sourceDigest": "sha256:6619fd1e1a173c38342c4ad36dbb057d4829db134be89767f903b7c5523afef3",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/wildcard.md",
           "digest": "sha256:9d958867bfd97de5e302b9cc6457dea7249ce4055fe060d09eecb379efd021a7",
           "requires": []

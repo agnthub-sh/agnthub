@@ -18,7 +18,7 @@ index 0000000000000000000000000000000000000000..a45674ea04949f10d58a378df7541684
 +Revision one instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
 new file mode 100644
-index 0000000000000000000000000000000000000000..6220bba857f9612d2c6b5ec912076ee7e8137d46
+index 0000000000000000000000000000000000000000..f2bd86bfcef01fee60dd309cdfc1ad4d63408f92
 --- /dev/null
 +++ b/agnthub-lock.json
 @@ -0,0 +1,27 @@
@@ -40,7 +40,7 @@ index 0000000000000000000000000000000000000000..6220bba857f9612d2c6b5ec912076ee7
 +          "variant": "generated",
 +          "sourcePath": "agents/drifter.md",
 +          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
-+          "converter": "cursor/v6",
++          "converter": "cursor/v7",
 +          "path": ".cursor/agents/drifter.md",
 +          "digest": "sha256:ebc904767ef64b3ebe5680726134f1276ae2931b6fa0ac68ee87007473305b93",
 +          "requires": []

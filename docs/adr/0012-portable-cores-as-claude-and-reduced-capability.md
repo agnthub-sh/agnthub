@@ -1,6 +1,6 @@
 # Read portable cores as Claude Code agents and install reduced capability visibly
 
-Status: accepted (decided by the user on 2026-11-05). Amends [ADR 0002](0002-agent-variants-and-conservative-conversion.md). Amended by [ADR 0014](0014-emulate-worktree-isolation-and-manual-only-invocation.md) (worktree isolation and manual-only invocation).
+Status: accepted (decided by the user on 2026-11-05). Amends [ADR 0002](0002-agent-variants-and-conservative-conversion.md). Amended by [ADR 0014](0014-emulate-worktree-isolation-and-manual-only-invocation.md) (worktree isolation and manual-only invocation) and [ADR 0019](0019-read-agent-md-cores-as-copilot-agents.md) (`<id>.agent.md` cores are read as Copilot CLI agents).
 
 ADR 0002 limited the portable core to `name`, `description` and the body, with harmless metadata omitted: any other key refused conversion for every harness. A registry census (2026-11-05, 144,705 agents) found that 96% of portable cores are `agents/*.md` files written for Claude Code (`model: sonnet`, `tools: Read, Grep`, `color`…), and that about 14,000 of them were hidden because of those keys. It also found agents refused only because a harness cannot grant a capability they use, while the conversion would never have widened what they may do.
 

@@ -326,6 +326,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.gemini/agents/interview-prep.md",
+      "digest": "sha256:3fb45b7d333cfef5c6106c7286aeeb1ade330c313b3a2773694f47d717977ddd",
+      "harness": "gemini",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "interview-prep",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.gemini/agents/isolated.md",
       "digest": "sha256:5c10a7eb1b774b5af400eb03fb8d41dbfbf05f6c2e2238de600c118ca74751cc",
       "harness": "gemini",

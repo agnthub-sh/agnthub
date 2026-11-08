@@ -366,6 +366,20 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.omp/agent/agents/interview-prep.md",
+      "digest": "sha256:87f08412cc2d52ef3ebff798f4710a2845a98104a229cdeea18ea89fb4f73713",
+      "harness": "omp",
+      "scope": "global",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "interview-prep",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.omp/agent/agents/isolated.md",
       "digest": "sha256:cb911fd3ac820fee36dda0459f6e141284d10bae01562b4cccdad185a4205a6e",
       "harness": "omp",

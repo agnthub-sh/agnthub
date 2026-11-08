@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/companion.md",
           "digest": "sha256:f46d9cc1ac5a8c9aedf1d9906ed1503c4fc56fa585670fd2524c3090c4e06cce",
           "requires": []
@@ -36,7 +36,7 @@
           "variant": "generated",
           "sourcePath": "agents/helper.md",
           "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/helper.md",
           "digest": "sha256:9c938fe4e372dccd672fc700c42aabde48650204ab55c9522f3bfaab040e314e",
           "requires": []
@@ -79,7 +79,7 @@
           "variant": "generated",
           "sourcePath": "native/claude/native-only.md",
           "sourceDigest": "sha256:0ed4be951d129f063ef866308d751ceb8a44f77dce1f570061a1baca2581cd99",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/native-only.md",
           "digest": "sha256:04d2ba6f0bf3a0c67beee79c700c92ef46d424a0233a78d77eee4f797bbf1641",
           "requires": []

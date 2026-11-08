@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": "/agnthub-e2e/home/.config/opencode/agents/companion.md",
           "digest": "sha256:f46d9cc1ac5a8c9aedf1d9906ed1503c4fc56fa585670fd2524c3090c4e06cce",
           "requires": []
@@ -37,7 +37,7 @@
           "variant": "generated",
           "sourcePath": "agents/helper.md",
           "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": "/agnthub-e2e/home/.config/opencode/agents/helper.md",
           "digest": "sha256:bd1cac20bbec376dc16269252de6b5547477b1ddc35d99416d2eca230df732b9",
           "requires": []
@@ -82,7 +82,7 @@
           "variant": "generated",
           "sourcePath": "native/claude/native-only.md",
           "sourceDigest": "sha256:0ed4be951d129f063ef866308d751ceb8a44f77dce1f570061a1baca2581cd99",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": "/agnthub-e2e/home/.config/opencode/agents/native-only.md",
           "digest": "sha256:83062e78c164b86a629797b77c139863bf220e8033254c5b1f1136cc370d8cad",
           "requires": []

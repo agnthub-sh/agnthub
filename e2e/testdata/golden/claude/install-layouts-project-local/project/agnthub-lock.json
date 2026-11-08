@@ -71,7 +71,7 @@
           "variant": "generated",
           "sourcePath": "agents/bom.md",
           "sourceDigest": "sha256:4a06ac5e6bf431ff6070e79391195c1ff4e3c7e8f0b093dbfa06fb32e692f629",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/bom.md",
           "digest": "sha256:df7c565661bc8e49275030d4167673baad4f04efa12b197025f2e4ac2e31f7d8",
           "requires": []
@@ -129,7 +129,7 @@
           "variant": "generated",
           "sourcePath": "agents/claude-shaped.md",
           "sourceDigest": "sha256:fd5067a2a12f6e18f26f14d9a44bdf5e355fc65476c81afd0b70ce124c95c9ad",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/claude-shaped.md",
           "digest": "sha256:71899bc89f7e5afd99e9d208f9b60dd4a8316b55464115886af7e60bf4f320bf",
           "requires": []
@@ -149,7 +149,7 @@
           "variant": "generated",
           "sourcePath": "agents/colon.md",
           "sourceDigest": "sha256:89cfd9750c6cd78419f7c04dc07bbc55508cbd9e43767be467bca82fefd1bd34",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/colon.md",
           "digest": "sha256:0c3926569c8153481c759f62db89c1a4ec4b9b3bf757522fb3173d83e471ae29",
           "requires": []
@@ -188,7 +188,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-folded.md",
           "sourceDigest": "sha256:269f1c668e921158450159bc7643fb769ff5af270bc46ab39cdd8ccaa5ac764c",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/cu-folded.md",
           "digest": "sha256:de3cd740d513cae2e327490dd68239fa0717e7749af1ac30f73be33fa47e7303",
           "requires": []
@@ -208,7 +208,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-native.md",
           "sourceDigest": "sha256:90e2a7aaee545f416f39f918470e649abfde0a5d1d00e05c5f3eb07cd57778bd",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/cu-native.md",
           "digest": "sha256:a4468eba257e590656510e11360e91f88a18432d1dbf315ada8c00e726d2b59e",
           "requires": []
@@ -228,7 +228,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-tagged.md",
           "sourceDigest": "sha256:970c3f3b68d411a7b90dc24c2b42c1e5f3355966a2427f158fa3b42b3c726970",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/cu-tagged.md",
           "digest": "sha256:7459c019b171b34058616bfa10a039551d2c0bc16ea852a19ef69cd6ef7ba49d",
           "requires": []
@@ -248,7 +248,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-native.toml",
           "sourceDigest": "sha256:a885e8934fcddf4cf363afdb2c3f69d15dec952f974f37fcfd39c1c7a66bc1a1",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/cx-native.md",
           "digest": "sha256:670524f1aa00f9997fa0e8cc12d1e0534cac319d44317248be008a11ec83bc14",
           "requires": []
@@ -268,7 +268,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-nicknamed.toml",
           "sourceDigest": "sha256:afe1f7c1493cd1348a68552047006bd3c87c0ebb0e102a4200365a2a6fb42436",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/cx-nicknamed.md",
           "digest": "sha256:9bdd22253a03bc26df73a1b841c54fbdbc5a19637cbd345930842e0824467b7e",
           "requires": []
@@ -288,7 +288,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-sandboxed.toml",
           "sourceDigest": "sha256:dcaa98695697729de4d531213e23fa532f915b87e3ec07b5e09cec4f3249ede2",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/cx-sandboxed.md",
           "digest": "sha256:141df76d688584738a9923c545609ee0e3c807e06ebbb27c4e007943520143d8",
           "requires": []
@@ -308,7 +308,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-solo.toml",
           "sourceDigest": "sha256:e782111961e86540d80e45850dbb038dfb01c39f7fc510ddf1f325a6071983f3",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/cx-solo.md",
           "digest": "sha256:1769a3f7a7db227baf11003544d8304bc7f05e65803797deee55a4b1a6281ac3",
           "requires": []
@@ -328,7 +328,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-workspace.toml",
           "sourceDigest": "sha256:24a94e115878b83ba14cac3d632c14bd1a98380f1ea48bdabebd076fb5293d87",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/cx-workspace.md",
           "digest": "sha256:ddfd2fc81e8063d33ea8e50691aa55f301c7b1fd7e33336e23ef7ff3621f1587",
           "requires": []
@@ -443,7 +443,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-colored.agent.md",
           "sourceDigest": "sha256:cf7c2dcc846ea6083bd4a55c95a8ef6105f2a6fd4587cbd090a078c3584c2d25",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/gh-colored.md",
           "digest": "sha256:2b4bf99f96b58f28154a70ea25ffdcbfd15337d00769e5258397cf49e5ff2f0e",
           "requires": []
@@ -463,7 +463,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-manual.agent.md",
           "sourceDigest": "sha256:36c4e0f4476f6ddbe8e49920350a8d05f305ecff9df72c40c170612173445218",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/gh-manual.md",
           "digest": "sha256:91e6b58580981c3447f1f8596da545de916c295a886fe93b63ca7daad9edd011",
           "requires": []
@@ -483,7 +483,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-native.agent.md",
           "sourceDigest": "sha256:864618375986b42a604b63514ac52ca854ba652da1b19574df74aac49db3acc3",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/gh-native.md",
           "digest": "sha256:9e1e698ab41a632e7b9dbd5d02fe57c03173bb4ae158a9994314cabd6e376136",
           "requires": []
@@ -503,7 +503,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-plain.md",
           "sourceDigest": "sha256:00d467065c9f6ab9e2344d19d1262dd45ed81922b8d89907de43b5bc8a9e8fea",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/gh-plain.md",
           "digest": "sha256:be35d667281b31f7672b50e7fd6e9abeea370c0374cdfaf4b490d8769e5411f7",
           "requires": []
@@ -523,7 +523,7 @@
           "variant": "generated",
           "sourcePath": ".gemini/agents/gm-native.md",
           "sourceDigest": "sha256:ab77641ac4f6666fa0d80ee36d4fdf2332dbd2f1bc5d0106cd69fb9446f670e9",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/gm-native.md",
           "digest": "sha256:9faaee070b788e04ff0d4ef35984da99bb73e50d255d3186a838bbb0fb17c220",
           "requires": []
@@ -545,6 +545,26 @@
           "sourceDigest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
           "path": ".claude/agents/guarded.md",
           "digest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "interview-prep",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "claude",
+          "variant": "generated",
+          "sourcePath": "agents/interview-prep.agent.md",
+          "sourceDigest": "sha256:b2e6484ad817368c1eb324d62cb325d893ea766b2e24a9d25d818698d17bcc2a",
+          "converter": "claude/v7",
+          "path": ".claude/agents/interview-prep.md",
+          "digest": "sha256:2b84264697f4a69f4889dcca9ffdd836a59e2002e9593159e7a97ed4f38aa5f3",
           "requires": []
         }
       ]
@@ -638,7 +658,7 @@
           "variant": "generated",
           "sourcePath": "agents/literal.md",
           "sourceDigest": "sha256:b973b211d0f1640b3dec85aa413b974bd3a3bd92b362105f58b2044100ffdf23",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/literal.md",
           "digest": "sha256:9ad1860a697b3d13a6c82031a72aed8459a0ab05b3b98265c73f639931d2bd8e",
           "requires": []
@@ -734,7 +754,7 @@
           "variant": "generated",
           "sourcePath": "agents/modelled.md",
           "sourceDigest": "sha256:3d52a9d90250746cb40d20913b4d1bc01c4a5b313259f51dc8bc6bf92035666e",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/modelled.md",
           "digest": "sha256:588ba1e319282966324aeaa35096354035534d4c41c744989e22be67b7118e63",
           "requires": []
@@ -773,7 +793,7 @@
           "variant": "generated",
           "sourcePath": ".opencode/agents/oc-native.md",
           "sourceDigest": "sha256:5951d5e75a6de4429a8f579c654bb4589d12db75deba1844913b6c4b421cf5d0",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/oc-native.md",
           "digest": "sha256:6696a70e730ee7381d2bc3f7ca43a6cafac7ab6a7eed5eac117a1ebb4774c462",
           "requires": []
@@ -793,7 +813,7 @@
           "variant": "generated",
           "sourcePath": ".omp/agents/omp-native.md",
           "sourceDigest": "sha256:f0e791fe64b2035a1eab0136e814e470e570bd86b6b2a69dffdf2b3661a0611a",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/omp-native.md",
           "digest": "sha256:d993cc4c08ee425d375b3088feafe20f327978db326e12628f64a3f0b38c0bbe",
           "requires": []
@@ -813,7 +833,7 @@
           "variant": "generated",
           "sourcePath": "agents/planner.md",
           "sourceDigest": "sha256:6e67f8119738e58371e61f662e332d971058192a6dc99791e7c19094691376f2",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/planner.md",
           "digest": "sha256:e2d37e82a66d42baeed2407bcfab0a7d2a41cd127d22987437bf874334473b26",
           "requires": []
@@ -909,7 +929,7 @@
           "variant": "generated",
           "sourcePath": "agents/researcher/AGENT.md",
           "sourceDigest": "sha256:dd13ee557398466dd574705483ce5697cfb0b3352c2ef6e815509612dc32282b",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/researcher.md",
           "digest": "sha256:47afc12e8de043ac12bc8cc00ca9adac65550e9bfe52697f3c2c88c2cdad4a00",
           "requires": []
@@ -948,7 +968,7 @@
           "variant": "generated",
           "sourcePath": "AGENT.md",
           "sourceDigest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/root-helper.md",
           "digest": "sha256:ef505e2cb7f710356392ff888dd60937433cd76e796be9a634dae7b2e1ef288c",
           "requires": []
@@ -1025,7 +1045,7 @@
           "variant": "generated",
           "sourcePath": "agents/tagged.md",
           "sourceDigest": "sha256:2e9a09a7b24a92f19ee04b1adad396cf4e9f100fa5cc4c882a59ca2e47b73f09",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/tagged.md",
           "digest": "sha256:8790777ac855be507063c031322ca6849b3e275dc0d6b2e615b7632d6d9d94fa",
           "requires": []

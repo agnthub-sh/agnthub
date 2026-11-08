@@ -26,6 +26,7 @@
 0644 project/.github/agents/gh-native.agent.md
 0644 project/.github/agents/gh-plain.agent.md
 0644 project/.github/agents/gm-native.agent.md
+0644 project/.github/agents/interview-prep.agent.md
 0644 project/.github/agents/isolated.agent.md
 0644 project/.github/agents/issue-reader.agent.md
 0644 project/.github/agents/journaler.agent.md

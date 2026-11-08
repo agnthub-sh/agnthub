@@ -27,6 +27,7 @@
 0644 home/.gemini/agents/gh-plain.md
 0644 home/.gemini/agents/gm-mcp.md
 0644 home/.gemini/agents/gm-native.md
+0644 home/.gemini/agents/interview-prep.md
 0644 home/.gemini/agents/isolated.md
 0644 home/.gemini/agents/issue-reader.md
 0644 home/.gemini/agents/journaler.md

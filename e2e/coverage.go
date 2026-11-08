@@ -409,6 +409,10 @@ var scenarios = []scenario{
 	conversion("Variants and conversion", "portable-as-claude",
 		"portable core written for Claude Code (`model`, `tools`, `color`): read as a Claude "+
 			"Code agent", "claude-shaped"),
+	conversion("Variants and conversion", "portable-as-copilot",
+		"portable core in Copilot's `<id>.agent.md` form with Copilot tool names "+
+			"(`read`, `search`, `web/fetch`): read as a Copilot CLI agent, so it keeps read, "+
+			"search and web fetch; refused on Codex (it cannot withhold edits)", "interview-prep"),
 	conversion("Variants and conversion", "unsupported-permission-mode",
 		"Claude-only `permissionMode: plan`: native on Claude Code, read-only elsewhere (no "+
 			"edits or shell) with `--allow-without-shell`, refused on Codex", "guarded"),

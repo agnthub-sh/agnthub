@@ -616,6 +616,22 @@
       "optIn": "allow-without-shell"
     },
     {
+      "agent": "interview-prep",
+      "harness": "copilot",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.github/agents/interview-prep.agent.md",
+      "variant": "generated",
+      "sourcePath": "agents/interview-prep.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "isolated",
       "harness": "copilot",
       "settings": {},
@@ -1127,7 +1143,7 @@
     }
   ],
   "summary": {
-    "create": 50,
+    "create": 51,
     "incompatible": 7,
     "invalid": 1
   }

@@ -266,6 +266,18 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.cursor/agents/interview-prep.md",
+      "digest": "sha256:c1398450089766c653990953f829db678f53be3e958abf8a19978b44a9a3f1c0",
+      "harness": "cursor",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "destination": "project",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "interview-prep",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.cursor/agents/isolated.md",
       "digest": "sha256:21ffe930013c91049d5078bca407544642e30bb8cf339a4f86f00045b68a77b8",
       "harness": "cursor",

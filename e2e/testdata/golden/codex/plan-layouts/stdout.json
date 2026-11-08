@@ -512,6 +512,19 @@
       "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
     },
     {
+      "agent": "interview-prep",
+      "harness": "codex",
+      "settings": {},
+      "effectiveSettings": {},
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "incompatible",
+      "reason": "it excludes edit, but a Codex agent file has no tool allowlist or read-only mode to withhold it"
+    },
+    {
       "agent": "isolated",
       "harness": "codex",
       "settings": {},
@@ -998,7 +1011,7 @@
   ],
   "summary": {
     "create": 31,
-    "incompatible": 26,
+    "incompatible": 27,
     "invalid": 1
   }
 }

@@ -15,7 +15,7 @@
           "variant": "generated",
           "sourcePath": "engineering/Backend Architect.md",
           "sourceDigest": "sha256:122cbb22d4b06f4b5a7b6c686271d8a17b15edaaf6d3d982756316a484ed2d68",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/backend-architect.md",
           "digest": "sha256:39babf6e026deebf05fd40bb987f1ec4d51ba3b6a01b61b852f39485192936e1",
           "requires": []
@@ -36,7 +36,7 @@
           "variant": "generated",
           "sourcePath": "marketing/Café Copywriter (v2).md",
           "sourceDigest": "sha256:74af3314573774599bd2e672d0e23a25c11a485446e4eba205ccb77b1569e6db",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/cafe-copywriter-v2.md",
           "digest": "sha256:0bfe72cceb270cabb127316bc70013c7160cffebb74f8dc77c2414e3faa157bd",
           "requires": []
@@ -57,7 +57,7 @@
           "variant": "generated",
           "sourcePath": "engineering/engineering-frontend-developer.md",
           "sourceDigest": "sha256:c1946f5533aa44e7c9ad2322bb6f2ba1f2c63e72b2aa3f8ddf4736ecd3d9690c",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/engineering-frontend-developer.md",
           "digest": "sha256:bb11920de8884601a4ee6477ee31a1574682e0b395e5ad4fd9d2ed3d892efff6",
           "requires": []
@@ -78,7 +78,7 @@
           "variant": "generated",
           "sourcePath": "engineering/engineering-search-relevance-engineer.md",
           "sourceDigest": "sha256:e59bbe86dbcc536aa24700ba39597a5f254ae28064786bb951d61e9086153086",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/engineering-search-relevance-engineer.md",
           "digest": "sha256:84290e09f2307d4647aae25e3083d4cb86800fa734670f8cea975e1e390470ac",
           "requires": []
@@ -99,7 +99,7 @@
           "variant": "generated",
           "sourcePath": "marketing/marketing-growth-hacker.md",
           "sourceDigest": "sha256:4db22cbe6b1608c2dd5279b2dab172fc0ce8ea12db55f973cfe2c0aed5c02c35",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/marketing-growth-hacker.md",
           "digest": "sha256:edd03945477475a48aaa91885d2001f20e7c247985a566d779641b393d125a9b",
           "requires": []
@@ -120,7 +120,7 @@
           "variant": "generated",
           "sourcePath": "marketing/marketing-seo-specialist.md",
           "sourceDigest": "sha256:e97a51e7946016d2b402ae269f00dc6ac53c2ae798be83dcb2a47c6d8bcda45d",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/marketing-seo-specialist.md",
           "digest": "sha256:d2362ab10b4f0609d0807b31bf1a7107d4aaf6eb8c355e38a103ad60399e3745",
           "requires": []
@@ -141,7 +141,7 @@
           "variant": "generated",
           "sourcePath": "game-development/unity/unity-architect.md",
           "sourceDigest": "sha256:485c60b8453f55c182577fd26ac9204588e4ca568ba3048a68d36ff8fea99a73",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/unity-architect.md",
           "digest": "sha256:170fb20ab657f9c4faf5bd87fd96debc5dfd57bcc77a0eae7b519edc5b8a0a8b",
           "requires": []

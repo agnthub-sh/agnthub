@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/guarded.md",
           "sourceDigest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/guarded.md",
           "digest": "sha256:c92f55e32a442ea2a8e9c00bc36fe49e1d0a8448140dfbe046b15b23bf2b073c",
           "requires": []

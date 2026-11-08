@@ -157,8 +157,8 @@ func TestClaudeAgentsConvertToEveryHarnessTheirToolsAllow(t *testing.T) {
 				if got := strings.Join(artifact.ReducedNames(), ", "); got != tc.want[target] {
 					t.Errorf("%s → %s: reduced %q, want %q", tc.name, target, got, tc.want[target])
 				}
-				if !artifact.Generated || !strings.HasSuffix(artifact.Converter, "/v6") {
-					t.Errorf("%s → %s: not a v6 generated artifact: %+v", tc.name, target, artifact)
+				if !artifact.Generated || !strings.HasSuffix(artifact.Converter, "/v7") {
+					t.Errorf("%s → %s: not a v7 generated artifact: %+v", tc.name, target, artifact)
 				}
 				if !hasNote(artifact.Notes, "harness default model") {
 					t.Errorf("%s → %s: the source model must be noted, got %q",
@@ -445,19 +445,22 @@ func TestPortableCoreIsPreferredOverOtherVariants(t *testing.T) {
 
 func TestOlderLocksRestoreUnderTheCurrentConverter(t *testing.T) {
 	for _, h := range agent.AllHarnesses {
-		for _, old := range []string{"v1", "v2", "v3", "v4", "v5"} {
-			if !harness.ConverterReproduces(string(h)+"/"+old, string(h)+"/v6") {
-				t.Errorf("%s: v6 must restore %s locks", h, old)
+		for _, old := range []string{"v1", "v2", "v3", "v4", "v5", "v6"} {
+			if !harness.ConverterReproduces(string(h)+"/"+old, string(h)+"/v7") {
+				t.Errorf("%s: v7 must restore %s locks", h, old)
 			}
-			if !harness.Unattributed(string(h) + "/" + old) {
+			if old != "v6" && !harness.Unattributed(string(h)+"/"+old) {
 				t.Errorf("%s: %s locks predate the attribution header", h, old)
 			}
 		}
-		if harness.Unattributed(string(h) + "/v6") {
-			t.Errorf("%s: v6 artifacts carry the attribution header", h)
+		for _, attributed := range []string{"v6", "v7"} {
+			if harness.Unattributed(string(h) + "/" + attributed) {
+				t.Errorf("%s: %s artifacts carry the attribution header", h, attributed)
+			}
 		}
 	}
-	if harness.ConverterReproduces("claude/v2", "codex/v6") ||
+	if harness.ConverterReproduces("claude/v2", "codex/v7") ||
+		harness.ConverterReproduces("claude/v8", "claude/v7") ||
 		harness.ConverterReproduces("claude/v7", "claude/v6") {
 		t.Fatal("only the same harness's older converters are reproducible")
 	}

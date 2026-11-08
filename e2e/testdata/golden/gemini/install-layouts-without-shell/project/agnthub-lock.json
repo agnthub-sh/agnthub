@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/differ.md",
           "sourceDigest": "sha256:f34d2b83d43c92767414489fcc9c4e0bf1ac99d953a6a91f2b3eb4d61347fb07",
-          "converter": "gemini/v6",
+          "converter": "gemini/v7",
           "path": ".gemini/agents/differ.md",
           "digest": "sha256:9301fbd01f3b2e9e1f1f850be7eec96d1de600a9f2d5e12553305fe072c53f9e",
           "requires": []
@@ -34,7 +34,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/guarded.md",
           "sourceDigest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
-          "converter": "gemini/v6",
+          "converter": "gemini/v7",
           "path": ".gemini/agents/guarded.md",
           "digest": "sha256:aceb2d46811a11d3fd17bfb0a8d60c5799f31afe51c6abee9009fb96e2ecc200",
           "requires": []

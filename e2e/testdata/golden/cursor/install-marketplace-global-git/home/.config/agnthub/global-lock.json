@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/more/mk-guarded.md",
           "sourceDigest": "sha256:8aa77306d8b0d60797e85a008e128ee544994ce1c6d2607ce4e0256ad3107476",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/mk-guarded.md",
           "digest": "sha256:5310ecc54a36b89bd13188c926aa2687e22cfc9b66bdd38e390b0a4a4f21218b",
           "requires": []
@@ -38,7 +38,7 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/mk-lister.md",
           "sourceDigest": "sha256:42b4caf101f87d5da5feeb015372dbe5a70a7f809c819eef8f9113b10ee6b375",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/mk-lister.md",
           "digest": "sha256:9372e0017eec69a275d76cb5d878b7a4cb3ca4b349be89bde70be9e0132483a2",
           "requires": []
@@ -60,7 +60,7 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/deep/mk-nested.md",
           "sourceDigest": "sha256:33799b1ca12e3ccb8449a66e4c19a09a37d09d14f69cd7dff0c7097f42dfcc0d",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/mk-nested.md",
           "digest": "sha256:14e42ac1b4d2250b8cc0167d395b2c9cfb20025fe8780784e7f239e357d0202c",
           "requires": []
@@ -82,7 +82,7 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/mk-scanner.md",
           "sourceDigest": "sha256:5e6a2950be2c2e8fcfb2427622cc0ee6e963a4cbc730d26d8c830ffb3e7c6d7f",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": "/agnthub-e2e/home/.cursor/agents/mk-scanner.md",
           "digest": "sha256:8b289bc671a021c0458f693ed8e4ef6d89216d59555b3e3ff672f109a0c5cd30",
           "requires": []

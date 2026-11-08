@@ -60,7 +60,7 @@ index 0000000000000000000000000000000000000000..f7e2bdfd97b5aeba4a8d7e40a53b605d
 +Use this skill when the lead asks for it.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
 new file mode 100644
-index 0000000000000000000000000000000000000000..6558cf93f2fd5b8c6431df9731fc322809e29412
+index 0000000000000000000000000000000000000000..bbebda399607d107d1c2ff9c7c2d3af2b144641e
 --- /dev/null
 +++ b/agnthub-lock.json
 @@ -0,0 +1,92 @@
@@ -82,7 +82,7 @@ index 0000000000000000000000000000000000000000..6558cf93f2fd5b8c6431df9731fc3228
 +          "variant": "generated",
 +          "sourcePath": "agents/companion.md",
 +          "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-+          "converter": "claude/v6",
++          "converter": "claude/v7",
 +          "path": ".claude/agents/companion.md",
 +          "digest": "sha256:4284dcbf2b6fda1e4314c7d8ace11c4cc2fc93b5f96ad762c1f78946ace76ca5",
 +          "requires": []
@@ -103,7 +103,7 @@ index 0000000000000000000000000000000000000000..6558cf93f2fd5b8c6431df9731fc3228
 +          "variant": "generated",
 +          "sourcePath": "agents/helper.md",
 +          "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
-+          "converter": "claude/v6",
++          "converter": "claude/v7",
 +          "path": ".claude/agents/helper.md",
 +          "digest": "sha256:4acd4b1eb2ac8623c5fe5b28ccf5b32a0bb13fda40c70fd0f8d29cc10c675717",
 +          "requires": []
@@ -124,7 +124,7 @@ index 0000000000000000000000000000000000000000..6558cf93f2fd5b8c6431df9731fc3228
 +          "variant": "generated",
 +          "sourcePath": "agents/lead/AGENT.md",
 +          "sourceDigest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
-+          "converter": "claude/v6",
++          "converter": "claude/v7",
 +          "path": ".claude/agents/lead.md",
 +          "digest": "sha256:e5a7cda7e54cc8055947cb0c5419a5484723db0c1c707aa61f79ad649f6d6bee",
 +          "requires": [

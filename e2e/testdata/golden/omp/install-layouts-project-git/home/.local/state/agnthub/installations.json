@@ -392,6 +392,21 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/project/.omp/agents/interview-prep.md",
+      "digest": "sha256:79162ca8051f555a2ad543c694f53b1eea56c32b3462e806ccedaa1699545605",
+      "harness": "omp",
+      "scope": "project",
+      "projectRoot": "/agnthub-e2e/project",
+      "settings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "interview-prep",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/project/.omp/agents/isolated.md",
       "digest": "sha256:9576499485f8945f3d2fcfbcecb8cc8c6c86ee58b6b10abc2f48ac0a1c68a477",
       "harness": "omp",

@@ -27,6 +27,7 @@
 0644 home/.omp/agent/agents/gh-native.md
 0644 home/.omp/agent/agents/gh-plain.md
 0644 home/.omp/agent/agents/gm-native.md
+0644 home/.omp/agent/agents/interview-prep.md
 0644 home/.omp/agent/agents/isolated.md
 0644 home/.omp/agent/agents/issue-reader.md
 0644 home/.omp/agent/agents/journaler.md

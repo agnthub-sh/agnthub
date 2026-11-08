@@ -784,7 +784,7 @@ func (a claudeAdapter) Convert(sem *Semantics) (Artifact, error) {
 		return Artifact{}, err
 	}
 	sem = check.sem
-	native := sem.claudeNative(agent.Claude)
+	native := sem.dialectNative(agent.Claude)
 	fields := []agent.Field{
 		{Key: "name", Value: sem.ID},
 		{Key: "description", Value: sem.Description},

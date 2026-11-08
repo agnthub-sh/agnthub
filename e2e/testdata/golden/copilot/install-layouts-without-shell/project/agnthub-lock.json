@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/differ.md",
           "sourceDigest": "sha256:f34d2b83d43c92767414489fcc9c4e0bf1ac99d953a6a91f2b3eb4d61347fb07",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/differ.agent.md",
           "digest": "sha256:27d9839fff28133af3f5d79a01bd22d77da1af99f152387715c97130f2fd2c5f",
           "requires": []
@@ -34,7 +34,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/guarded.md",
           "sourceDigest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/guarded.agent.md",
           "digest": "sha256:32c13415ac36f27c7b4aff2386c18c06edbbaa5be379df84fe93ea3a8f3d0ad1",
           "requires": []

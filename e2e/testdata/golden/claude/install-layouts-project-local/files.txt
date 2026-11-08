@@ -28,6 +28,7 @@
 0644 project/.claude/agents/gh-plain.md
 0644 project/.claude/agents/gm-native.md
 0644 project/.claude/agents/guarded.md
+0644 project/.claude/agents/interview-prep.md
 0644 project/.claude/agents/isolated-editor.md
 0644 project/.claude/agents/isolated.md
 0644 project/.claude/agents/issue-reader.md

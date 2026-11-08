@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/more/mk-guarded.md",
           "sourceDigest": "sha256:8aa77306d8b0d60797e85a008e128ee544994ce1c6d2607ce4e0256ad3107476",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": "/agnthub-e2e/home/.config/opencode/agents/mk-guarded.md",
           "digest": "sha256:2bad3e136a7e41f3611ec7d62a4dad681a9e2f00b60c0f9b44d2debd12c162ab",
           "requires": []
@@ -38,7 +38,7 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/mk-lister.md",
           "sourceDigest": "sha256:42b4caf101f87d5da5feeb015372dbe5a70a7f809c819eef8f9113b10ee6b375",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": "/agnthub-e2e/home/.config/opencode/agents/mk-lister.md",
           "digest": "sha256:dd05eee922513ce546d7ac360e08cdd694d1e73d87bd1a02f23d9d1dce0dd91d",
           "requires": []
@@ -60,7 +60,7 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/deep/mk-nested.md",
           "sourceDigest": "sha256:33799b1ca12e3ccb8449a66e4c19a09a37d09d14f69cd7dff0c7097f42dfcc0d",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": "/agnthub-e2e/home/.config/opencode/agents/mk-nested.md",
           "digest": "sha256:06415a0348621e525f02a01b3210a4f5881c077b79a8b2f58eaca3436d150dbd",
           "requires": []
@@ -82,7 +82,7 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/mk-scanner.md",
           "sourceDigest": "sha256:5e6a2950be2c2e8fcfb2427622cc0ee6e963a4cbc730d26d8c830ffb3e7c6d7f",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": "/agnthub-e2e/home/.config/opencode/agents/mk-scanner.md",
           "digest": "sha256:90a18005de566be3ae7552d5bcc2337f03b3360f643e27c53c590f6d48d1d707",
           "requires": []

@@ -15,7 +15,7 @@
           "variant": "generated",
           "sourcePath": ".opencode/agents/Bug Hunter.md",
           "sourceDigest": "sha256:92c92acf2ce45fdc82da32f390c2b427a006a949f6d571b341aeea79146dc743",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/bug-hunter.agent.md",
           "digest": "sha256:b2fe7576dd9860a6350a8b11a825a1bc6e04208ae453116796bfacd180cc52cf",
           "requires": []
@@ -36,7 +36,7 @@
           "variant": "generated",
           "sourcePath": "agents/Code Reviewer.md",
           "sourceDigest": "sha256:33f92bdc0499f48d70079f1c2e5b52a9b5c75df4a44cd1874c0a28cef07d3b9d",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/code-reviewer.agent.md",
           "digest": "sha256:c5bc42bcea92c8220ecd9ca4570ab81e80ea742d65e0b58792f2dfc5a299f2a8",
           "requires": []
@@ -57,7 +57,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/Doc Writer.md",
           "sourceDigest": "sha256:12b695235cb9e7342bb83545a4135ed50d49f1c6543db0df40d2a81221ee92fc",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/doc-writer.agent.md",
           "digest": "sha256:e56bed00ac6f5cede7126e4a3e3f3616de2a604a6209d3a8ff20b6fd7a55ef03",
           "requires": []
@@ -78,7 +78,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/issue-triager.toml",
           "sourceDigest": "sha256:5b26655ac64b8c9444cd254737bb893365d84b020a4219e664769e296fbd8655",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/issue-triager.agent.md",
           "digest": "sha256:a24f07a383f5f9f509e36d213b9a091426e179000881e7531281a084de92c518",
           "requires": []
@@ -119,7 +119,7 @@
           "variant": "generated",
           "sourcePath": ".omp/agents/release-manager.md",
           "sourceDigest": "sha256:1e69a398eb320b94e3b37a278821b90aa409256ac0d59b994c96354e7745099a",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/release-manager.agent.md",
           "digest": "sha256:8a9ebfe5a3393e2d8e92827e9a6d4c48f1fc8f854ee4027539d4b033c3a1015a",
           "requires": []
@@ -140,7 +140,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/Search Relevance Engineer.md",
           "sourceDigest": "sha256:92cb4ab7062c9987fd0d99de82de8cff92607db5c00b1c10dbd03d7b29ba3b6c",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/search-relevance-engineer.agent.md",
           "digest": "sha256:9a907c8cbba3ebefe7e122fb8bc0d0ecf64001f646306bc5ac0233daa6582b5c",
           "requires": []
@@ -161,7 +161,7 @@
           "variant": "generated",
           "sourcePath": ".gemini/agents/test-planner.md",
           "sourceDigest": "sha256:ac6817c23f3f4b354f08e071974500d0306179eb5cd5e761ec064a5c538b7c92",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/test-planner.agent.md",
           "digest": "sha256:8fd64c8e29a7942cf6680e9fb0725026ff918b6d828f29ecbf0d89199c1965c1",
           "requires": []

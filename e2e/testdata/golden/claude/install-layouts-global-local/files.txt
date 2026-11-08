@@ -26,6 +26,7 @@
 0644 home/.claude/agents/gh-plain.md
 0644 home/.claude/agents/gm-native.md
 0644 home/.claude/agents/guarded.md
+0644 home/.claude/agents/interview-prep.md
 0644 home/.claude/agents/isolated-editor.md
 0644 home/.claude/agents/isolated.md
 0644 home/.claude/agents/issue-reader.md

@@ -612,6 +612,27 @@
       ]
     },
     {
+      "agent": "interview-prep",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "default profile",
+      "path": "/agnthub-e2e/home/.omp/agent/agents/interview-prep.md",
+      "variant": "generated",
+      "sourcePath": "agents/interview-prep.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
+    },
+    {
       "agent": "isolated",
       "harness": "omp",
       "settings": {},
@@ -1176,6 +1197,6 @@
     }
   ],
   "summary": {
-    "create": 51
+    "create": 52
   }
 }

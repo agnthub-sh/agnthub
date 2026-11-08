@@ -310,6 +310,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.claude/agents/interview-prep.md",
+      "digest": "sha256:3e7013a093de112ee026237b41cb2355efe77732cdb4dfbd3910e5d3e7c4f6bc",
+      "harness": "claude",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "interview-prep",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.claude/agents/isolated-editor.md",
       "digest": "sha256:7f7ea86776f7a9253c8e264fb101b575f07cb5cdc7bdd88692b01cd60c9443fb",
       "harness": "claude",

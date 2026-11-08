@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/companion.md",
           "digest": "sha256:d278bddae5b77f8b907c46b21324c647eefe18368b27700056eeca7cf4b51ca6",
           "requires": []
@@ -37,7 +37,7 @@
           "variant": "generated",
           "sourcePath": "agents/helper.md",
           "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/helper.md",
           "digest": "sha256:19306b10333051b5c91a0ad1e8b2492b7a2764b62b32967cf19963cd39620fe5",
           "requires": []
@@ -58,7 +58,7 @@
           "variant": "generated",
           "sourcePath": "agents/lead/AGENT.md",
           "sourceDigest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/lead.md",
           "digest": "sha256:4b02ebd605b5df0abe7fa95153f7e6d948c942b63b0d5e6b93a66bab3fe4ab85",
           "requires": [
@@ -83,7 +83,7 @@
           "variant": "generated",
           "sourcePath": "native/claude/native-only.md",
           "sourceDigest": "sha256:0ed4be951d129f063ef866308d751ceb8a44f77dce1f570061a1baca2581cd99",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/native-only.md",
           "digest": "sha256:708cf637a988f24cf6c78c02be1b62d4a520884d3c7c08b2cec1156871651e34",
           "requires": []

@@ -10,3 +10,4 @@ The decisions that shape the CLI. Numbers are shared with the registry service's
 - [0012 Read portable cores as Claude Code agents and install reduced capability visibly](0012-portable-cores-as-claude-and-reduced-capability.md)
 - [0014 Emulate worktree isolation and manual-only invocation where a harness lacks them](0014-emulate-worktree-isolation-and-manual-only-invocation.md)
 - [0016 Attribute converted agents to their source and mark them as modified](0016-attribute-converted-agents-to-their-source.md)
+- [0019 Read `<id>.agent.md` portable cores as Copilot CLI agents](0019-read-agent-md-cores-as-copilot-agents.md)

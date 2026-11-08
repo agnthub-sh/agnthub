@@ -27,6 +27,7 @@
 0644 project/.opencode/agents/gh-native.md
 0644 project/.opencode/agents/gh-plain.md
 0644 project/.opencode/agents/gm-native.md
+0644 project/.opencode/agents/interview-prep.md
 0644 project/.opencode/agents/isolated.md
 0644 project/.opencode/agents/issue-reader.md
 0644 project/.opencode/agents/journaler.md

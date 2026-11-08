@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/companion.md",
           "digest": "sha256:4284dcbf2b6fda1e4314c7d8ace11c4cc2fc93b5f96ad762c1f78946ace76ca5",
           "requires": []
@@ -36,7 +36,7 @@
           "variant": "generated",
           "sourcePath": "agents/helper.md",
           "sourceDigest": "sha256:094d378ca1a5fccd8748ead589e5145901acf36679d021f70c945b71bef3b602",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/helper.md",
           "digest": "sha256:fb7e002e7e969a407e0b7d54af2a1eed0068ef70450df0cc28c9dedf2c05732a",
           "requires": []
@@ -56,7 +56,7 @@
           "variant": "generated",
           "sourcePath": "agents/lead/AGENT.md",
           "sourceDigest": "sha256:d4a32bfb8dff0a061d73b86dd2b16b612a17665a6cfa36f5518977097357fd1e",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/lead.md",
           "digest": "sha256:45b1332136edc689f35b0cc21f534e7939f1ce58cf6d44ba2626ccdcee8ce1d2",
           "requires": [

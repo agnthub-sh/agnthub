@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/companion.md",
           "digest": "sha256:85a320c7b4b08537b1f8012125deda810dffd3cf0b0178922c1ae7039142dd58",
           "requires": []
@@ -34,7 +34,7 @@
           "variant": "generated",
           "sourcePath": "agents/sidekick.md",
           "sourceDigest": "sha256:47843ea71bee050cacb41e460bb1b0f57fac11dc56b53318c5fd9273d2835506",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/sidekick.md",
           "digest": "sha256:36ab55c66caa70d4e9008f5936777e1e6c30a729c3c8e3794dcc0bce2b6b2eaa",
           "requires": []

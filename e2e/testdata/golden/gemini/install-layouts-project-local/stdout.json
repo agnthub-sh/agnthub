@@ -544,6 +544,22 @@
       "action": "create"
     },
     {
+      "agent": "interview-prep",
+      "harness": "gemini",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.gemini/agents/interview-prep.md",
+      "variant": "generated",
+      "sourcePath": "agents/interview-prep.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "isolated",
       "harness": "gemini",
       "settings": {},
@@ -1049,6 +1065,6 @@
     }
   ],
   "summary": {
-    "create": 53
+    "create": 54
   }
 }

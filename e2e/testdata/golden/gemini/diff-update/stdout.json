@@ -17,7 +17,7 @@ index 22746c1c04ebfa50b3f380db30f6f63f6a08308a..3dd8036f0922c6c2e64cad029db7e659
 +---
 +Revision two instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
-index 352f14f21dc9f2a3661376cecaba43d536b03fb2..92eb7ed803a7054cd2c798b35a70f981eeb6a40a 100644
+index c72fe972a7d6fbdcfad6f48b24a6a0ba8a01b039..9078d83c9583b08f96bbd0596af2253a1bafb373 100644
 --- a/agnthub-lock.json
 +++ b/agnthub-lock.json
 @@ -6,7 +6,7 @@
@@ -35,7 +35,7 @@ index 352f14f21dc9f2a3661376cecaba43d536b03fb2..92eb7ed803a7054cd2c798b35a70f981
            "sourcePath": "agents/drifter.md",
 -          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
 +          "sourceDigest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
-           "converter": "gemini/v6",
+           "converter": "gemini/v7",
            "path": ".gemini/agents/drifter.md",
 -          "digest": "sha256:d777d57b3af58dcf607b0cf2470dac35de4937a2ef80e7dccae0d0bb4bb31371",
 +          "digest": "sha256:a3f6dc2e7215ba06b8bb96d11692f87618d8b5d54afc6147230c353dee69ac3a",

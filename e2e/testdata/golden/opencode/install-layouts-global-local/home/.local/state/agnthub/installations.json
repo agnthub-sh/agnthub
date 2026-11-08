@@ -299,6 +299,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.config/opencode/agents/interview-prep.md",
+      "digest": "sha256:80f3c3833d180b62b3aa98b28c150f0a5c9399b38335cbe7d7fcedbbb4a53083",
+      "harness": "opencode",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "interview-prep",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.config/opencode/agents/isolated.md",
       "digest": "sha256:14f6cb0780da25f4c6adf495a46b20e650557c08602eadf478f446456373573c",
       "harness": "opencode",

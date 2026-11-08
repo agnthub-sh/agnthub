@@ -35,7 +35,7 @@
           "variant": "generated",
           "sourcePath": "agents/Code Reviewer.md",
           "sourceDigest": "sha256:33f92bdc0499f48d70079f1c2e5b52a9b5c75df4a44cd1874c0a28cef07d3b9d",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/code-reviewer.md",
           "digest": "sha256:2776bdcb15400e66ac9b50ee6e3ca0f5b8a63c5c0d12bdfef3c0cf05eb662224",
           "requires": []
@@ -56,7 +56,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/Doc Writer.md",
           "sourceDigest": "sha256:12b695235cb9e7342bb83545a4135ed50d49f1c6543db0df40d2a81221ee92fc",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/doc-writer.md",
           "digest": "sha256:230dbb5d21b24faf8959c3ebd2df184a633ad1aba51a07c52554a7ce6b299393",
           "requires": []
@@ -77,7 +77,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/issue-triager.toml",
           "sourceDigest": "sha256:5b26655ac64b8c9444cd254737bb893365d84b020a4219e664769e296fbd8655",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/issue-triager.md",
           "digest": "sha256:fe998de53f67de44597ff22afdbe1578fed82f7fedc4a9dcb9a708212f4ca3b5",
           "requires": []
@@ -98,7 +98,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/Pair Programmer.agent.md",
           "sourceDigest": "sha256:76c165b3118f4ca84a1c049bad89a46b3d45f5080c5ac3f6c1eb446d9c6d7109",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/pair-programmer.md",
           "digest": "sha256:25d94108c2b78547bc432fa59e94d300d59bc5505a265228203889f7d14d8181",
           "requires": []
@@ -119,7 +119,7 @@
           "variant": "generated",
           "sourcePath": ".omp/agents/release-manager.md",
           "sourceDigest": "sha256:1e69a398eb320b94e3b37a278821b90aa409256ac0d59b994c96354e7745099a",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/release-manager.md",
           "digest": "sha256:336cb5cef32c18cc07b746fc5c824036fb1a27c9b45fcc4293227e9b0e3f89b5",
           "requires": []
@@ -140,7 +140,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/Search Relevance Engineer.md",
           "sourceDigest": "sha256:92cb4ab7062c9987fd0d99de82de8cff92607db5c00b1c10dbd03d7b29ba3b6c",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/search-relevance-engineer.md",
           "digest": "sha256:749197b614718e39970787b41a79233511e69a69e87d3db1dfc5d28c9f819a8b",
           "requires": []
@@ -161,7 +161,7 @@
           "variant": "generated",
           "sourcePath": ".gemini/agents/test-planner.md",
           "sourceDigest": "sha256:ac6817c23f3f4b354f08e071974500d0306179eb5cd5e761ec064a5c538b7c92",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/test-planner.md",
           "digest": "sha256:6fac0ba535c2c45a9a0fcf03f401f2fb08201c8c9e84364708f8029606e8f8ac",
           "requires": []

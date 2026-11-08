@@ -15,7 +15,7 @@
           "variant": "generated",
           "sourcePath": ".opencode/agents/Bug Hunter.md",
           "sourceDigest": "sha256:92c92acf2ce45fdc82da32f390c2b427a006a949f6d571b341aeea79146dc743",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/bug-hunter.md",
           "digest": "sha256:318358b36c308421e14e1d0ad8d35e38a8212612dbdbb0d4f4f431394d0eb638",
           "requires": []
@@ -36,7 +36,7 @@
           "variant": "generated",
           "sourcePath": "agents/Code Reviewer.md",
           "sourceDigest": "sha256:33f92bdc0499f48d70079f1c2e5b52a9b5c75df4a44cd1874c0a28cef07d3b9d",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/code-reviewer.md",
           "digest": "sha256:6ee5cd97c1f1c4c9825776376e8a8cef93aec5a6a94d364b7d0daef1be6bed88",
           "requires": []
@@ -77,7 +77,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/issue-triager.toml",
           "sourceDigest": "sha256:5b26655ac64b8c9444cd254737bb893365d84b020a4219e664769e296fbd8655",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/issue-triager.md",
           "digest": "sha256:4bcf4b8bf084e1dbf6c9a39b54b6cea0da6fc0ed129977c1922478e331f66a40",
           "requires": []
@@ -98,7 +98,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/Pair Programmer.agent.md",
           "sourceDigest": "sha256:76c165b3118f4ca84a1c049bad89a46b3d45f5080c5ac3f6c1eb446d9c6d7109",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/pair-programmer.md",
           "digest": "sha256:200610f9ccc59d64ca017bf6dd9df3f041ebabfba83c9b47474625a20fb81898",
           "requires": []
@@ -119,7 +119,7 @@
           "variant": "generated",
           "sourcePath": ".omp/agents/release-manager.md",
           "sourceDigest": "sha256:1e69a398eb320b94e3b37a278821b90aa409256ac0d59b994c96354e7745099a",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/release-manager.md",
           "digest": "sha256:1f85d29bbd573b83fe73bdce27bf04b559a352566cae3bcec86b6a37d79f1469",
           "requires": []
@@ -140,7 +140,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/Search Relevance Engineer.md",
           "sourceDigest": "sha256:92cb4ab7062c9987fd0d99de82de8cff92607db5c00b1c10dbd03d7b29ba3b6c",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/search-relevance-engineer.md",
           "digest": "sha256:b286526beecf723354a36d155e6c245671e3c8e9b4d17f24afadc07a163ce81c",
           "requires": []
@@ -161,7 +161,7 @@
           "variant": "generated",
           "sourcePath": ".gemini/agents/test-planner.md",
           "sourceDigest": "sha256:ac6817c23f3f4b354f08e071974500d0306179eb5cd5e761ec064a5c538b7c92",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/test-planner.md",
           "digest": "sha256:29e9cc37b3584dd2e58e413fd993a218bcf7b1c5f8a22bf62b51ed47f8b09ba7",
           "requires": []

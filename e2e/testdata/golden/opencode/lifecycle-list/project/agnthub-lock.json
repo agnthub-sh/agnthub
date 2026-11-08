@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "agents/drifter.md",
           "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/drifter.md",
           "digest": "sha256:2ce0f58388ae893bf4ac265f88412cbae7c73e77a89d67e2ab31afabafbaec45",
           "requires": []

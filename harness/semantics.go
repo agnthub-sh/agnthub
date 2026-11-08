@@ -37,7 +37,8 @@ type Semantics struct {
 	// portable core.
 	Source agent.HarnessID
 	// Dialect is the Harness whose field meanings a portable core is read
-	// with: Claude Code (ADR 0012). It is "" for a native Variant.
+	// with: Copilot CLI for GitHub Copilot's <id>.agent.md form, else Claude
+	// Code (ADR 0012). It is "" for a native Variant.
 	Dialect agent.HarnessID
 	// Model is the source Harness's model choice. Model strings are not portable:
 	// renderers never carry it to another Harness and note that the target's
@@ -271,7 +272,7 @@ func (t MCPTool) String() string {
 }
 
 // converterVersion is the conversion contract of every generated artifact.
-const converterVersion = "v6"
+const converterVersion = "v7"
 
 // converterID names the conversion contract for h.
 func converterID(h agent.HarnessID) string {
@@ -285,17 +286,26 @@ func converterID(h agent.HarnessID) string {
 // skills, v5 portable cores read as Claude Code agents and reduced
 // capability; v6 adds the attribution header, which a restore of an earlier
 // lock leaves out, see Unattributed), so a lock written by an earlier version
-// restores when its recorded digest still matches.
+// restores when its recorded digest still matches. v7 reads <id>.agent.md
+// portable cores as Copilot CLI agents and Copilot's VS Code tool names; it
+// renders every other v6 artifact byte for byte, and a v6 lock whose
+// artifact it renders differently is refused by its digest.
 func ConverterReproduces(recorded, current string) bool {
 	if recorded == current {
 		return true
 	}
-	harnessID, _, ok := strings.Cut(recorded, "/")
-	if !ok || !Unattributed(recorded) {
+	harnessID, version, ok := strings.Cut(recorded, "/")
+	if !ok {
 		return false
 	}
 	h := agent.HarnessID(harnessID)
-	return current == converterID(h) || current == WithoutAttribution(h, Artifact{}).Converter
+	switch {
+	case Unattributed(recorded):
+		return current == converterID(h) || current == WithoutAttribution(h, Artifact{}).Converter
+	case version == "v6":
+		return current == converterID(h)
+	}
+	return false
 }
 
 // portableDelegationKeys limit which agents an Agent delegates to in other
@@ -315,8 +325,10 @@ var portableRestrictionKeys = map[string]bool{
 
 // PortableSemantics parses the portable core as a Claude Code agent (ADR
 // 0012): the same fields, values and refusals as a .claude/agents file, plus
-// the delegation lists of other dialects, which still refuse. It requires a
-// description and instructions.
+// the delegation lists of other dialects, which still refuse. A core in
+// GitHub Copilot's own <id>.agent.md form is read as a Copilot CLI agent
+// instead, with its tool aliases (portableDialect). It requires a description
+// and instructions.
 func PortableSemantics(target agent.HarnessID, id string, doc *agent.Document) (*Semantics, error) {
 	if doc == nil {
 		return nil, &IncompatibleError{
@@ -336,7 +348,7 @@ func PortableSemantics(target agent.HarnessID, id string, doc *agent.Document) (
 		Description:  description,
 		Instructions: doc.Body,
 		DisplayName:  displayName(id, doc.String("name")),
-		Dialect:      agent.Claude,
+		Dialect:      portableDialect(doc),
 	}
 	for key := range doc.Frontmatter {
 		if key != "name" && key != "description" && !harmlessPortableKeys[key] {
@@ -344,16 +356,22 @@ func PortableSemantics(target agent.HarnessID, id string, doc *agent.Document) (
 			break
 		}
 	}
-	readClaudeFields(sem, doc)
+	ignores := "Claude Code ignores"
+	if sem.Dialect == agent.Copilot {
+		ignores = "Copilot CLI ignores"
+		readCopilotFields(sem, doc, true)
+	} else {
+		readClaudeFields(sem, doc)
+	}
 	for _, key := range portableDelegationKeys {
-		if value, set := doc.Frontmatter[key]; set && !emptyValue(value) {
-			sem.unsupported(key, "limits which agents it delegates to, a field Claude Code "+
-				"ignores")
+		if value, set := doc.Frontmatter[key]; set && !emptyValue(value) &&
+			(sem.Dialect != agent.Copilot || key != "agents" && !copilotIDEOnlyFields[key]) {
+			sem.unsupported(key, "limits which agents it delegates to, a field "+ignores)
 		}
 	}
 	for _, key := range sortedKeys(doc.Frontmatter) {
 		if portableRestrictionKeys[foldKey(key)] && !emptyValue(doc.Frontmatter[key]) {
-			sem.unsupported(key, "a field Claude Code ignores, but it reads as a tool or "+
+			sem.unsupported(key, "a field "+ignores+", but it reads as a tool or "+
 				"permission restriction in another harness's dialect")
 		}
 	}
@@ -362,6 +380,26 @@ func PortableSemantics(target agent.HarnessID, id string, doc *agent.Document) (
 			"Code plugin")
 	}
 	return sem, nil
+}
+
+// portableDialect is the Harness whose field meanings a portable core
+// follows: Copilot CLI for a file named <id>.agent.md, the form GitHub
+// Copilot reads (awesome-copilot's agents/*.agent.md, organization agents in
+// a configuration repository's agents/), else Claude Code (ADR 0012). An
+// <id>.agent.md file that declares a field only Claude Code defines
+// (permissionMode, disallowedTools, hooks…) was written for Claude Code and
+// keeps its reading.
+func portableDialect(doc *agent.Document) agent.HarnessID {
+	if !strings.HasSuffix(doc.Path, ".agent.md") {
+		return agent.Claude
+	}
+	for key := range doc.Frontmatter {
+		if _, copilot := copilotFields[key]; !copilot && copilotUnenforced[key] == "" &&
+			key != "color" && slices.Contains(claudeFields, key) {
+			return agent.Claude
+		}
+	}
+	return agent.Copilot
 }
 
 // sourceLabel names where the semantics came from for notes and reasons.
@@ -420,7 +458,7 @@ func begin(target agent.HarnessID, sem *Semantics) (*renderCheck, error) {
 			"%s cannot express; only Gemini CLI has per-agent MCP servers",
 			sem.sourceLabel(), strings.Join(names, ", "), target)
 	}
-	native := sem.claudeNative(target)
+	native := sem.dialectNative(target)
 	check.lower(native)
 	if err := check.lowerIsolation(); err != nil {
 		return nil, err
@@ -448,11 +486,12 @@ func begin(target agent.HarnessID, sem *Semantics) (*renderCheck, error) {
 	return check, nil
 }
 
-// claudeNative reports whether target reads the Agent's Claude Code fields
-// natively: Claude Code rendering a portable core read as a Claude Code agent
-// keeps its model and permission mode.
-func (s *Semantics) claudeNative(target agent.HarnessID) bool {
-	return target == agent.Claude && s.Dialect == agent.Claude
+// dialectNative reports whether target reads a portable core's fields
+// natively: Claude Code rendering a core read as a Claude Code agent keeps
+// its model and permission mode, Copilot CLI one read as a Copilot CLI agent
+// its model.
+func (s *Semantics) dialectNative(target agent.HarnessID) bool {
+	return s.Dialect != "" && target == s.Dialect
 }
 
 // dialectName names whose field meanings the Agent's model follows.
@@ -539,7 +578,7 @@ func (c *renderCheck) lower(native bool) {
 // agent-scoped MCP servers.
 func (s *Semantics) relaxedFor(target agent.HarnessID) bool {
 	return s.relaxed || len(s.MCPServers) > 0 || s.Tools.Shell != nil || s.Spawns != nil ||
-		(s.PermissionMode == "plan" && !s.claudeNative(target)) ||
+		(s.PermissionMode == "plan" && !s.dialectNative(target)) ||
 		(s.Background && target != agent.Claude && target != agent.Cursor)
 }
 

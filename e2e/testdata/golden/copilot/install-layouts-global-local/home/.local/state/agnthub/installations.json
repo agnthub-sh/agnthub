@@ -288,6 +288,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.copilot/agents/interview-prep.agent.md",
+      "digest": "sha256:ae8537102167f60f2b9e767d674c33b67482ec21b2ba93da72cf449e47f98d04",
+      "harness": "copilot",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "interview-prep",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.copilot/agents/isolated.agent.md",
       "digest": "sha256:769157495c20bddd181e04977d2fe20f6a4c71a114824fea3afa6b038e7fa823",
       "harness": "copilot",

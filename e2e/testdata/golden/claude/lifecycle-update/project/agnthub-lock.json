@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "agents/drifter.md",
           "sourceDigest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/drifter.md",
           "digest": "sha256:d4c72a5c0dec7d890a397b14ff37603882c66b6c82079767514fd78a302eea59",
           "requires": []

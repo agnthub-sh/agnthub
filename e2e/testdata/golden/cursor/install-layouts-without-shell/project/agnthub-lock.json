@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-sandboxed.toml",
           "sourceDigest": "sha256:dcaa98695697729de4d531213e23fa532f915b87e3ec07b5e09cec4f3249ede2",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/cx-sandboxed.md",
           "digest": "sha256:fbcc8ba5d3e2d485a77efe75150b297f6f994de5ff1f06735a0ca54c6db05499",
           "requires": []
@@ -34,7 +34,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/guarded.md",
           "sourceDigest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/guarded.md",
           "digest": "sha256:d2b3ddba050d113ac572cbb4c03319eb29e52beddded305003ba12bde2a38575",
           "requires": []
@@ -54,7 +54,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/reviewer.md",
           "sourceDigest": "sha256:a9c4c55855bdcff3eb2fa4bd246ff94f4de189219525d61086c93cac478e5070",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/reviewer.md",
           "digest": "sha256:06fdb0c9a72cfe6ac5169449105809188770204cded195656d3f136ea881969f",
           "requires": []

@@ -239,38 +239,68 @@ func (copilotAdapter) Native(id string, variant *agent.VariantFile) (Artifact, e
 }
 
 // copilotToolNames maps Copilot CLI tools entries (matched case-insensitively) to
-// capabilities. Copilot's web alias, and its WebSearch compatibility alias, only
-// expose web_fetch: the CLI has no web search tool. Core names are the primary
+// capabilities: the documented aliases plus the VS Code tool names Copilot CLI
+// 1.0.105 grants (runtime-verified 2026-11-07, see harness-agent-formats.md).
+// The web alias, and web/fetch, only expose web_fetch: the CLI has no web
+// search tool, and WebSearch grants nothing. Core names are the primary
 // aliases conversion writes.
 var copilotToolNames = []nativeTool{
 	{name: "read", cap: CapRead, core: true},
 	{name: "view", cap: CapRead},
 	{name: "notebookread", cap: CapRead},
+	{name: "readfile", cap: CapRead},
 	{name: "search", cap: CapSearch, core: true},
 	{name: "grep", cap: CapSearch},
 	{name: "glob", cap: CapSearch},
-	{name: "search/codebase", cap: CapSearch},
+	{name: "codebase", cap: CapSearch},
+	{name: "filesearch", cap: CapSearch},
+	{name: "textsearch", cap: CapSearch},
 	{name: "edit", cap: CapEdit, core: true},
 	{name: "create", cap: CapEdit},
 	{name: "write", cap: CapEdit},
 	{name: "multiedit", cap: CapEdit},
 	{name: "notebookedit", cap: CapEdit},
 	{name: "editfiles", cap: CapEdit},
+	{name: "createfile", cap: CapEdit},
+	{name: "createdirectory", cap: CapEdit},
 	{name: "execute", cap: CapShell, core: true},
 	{name: "shell", cap: CapShell},
 	{name: "bash", cap: CapShell},
 	{name: "powershell", cap: CapShell},
 	{name: "runcommands", cap: CapShell},
+	{name: "runinterminal", cap: CapShell},
 	{name: "web", cap: CapWebFetch, core: true},
 	{name: "webfetch", cap: CapWebFetch},
 	{name: "web_fetch", cap: CapWebFetch},
-	{name: "websearch", cap: CapWebFetch},
+	{name: "web/fetch", cap: CapWebFetch},
 	{name: "agent", cap: CapDelegate, core: true},
 	{name: "custom-agent", cap: CapDelegate},
 	{name: "task", cap: CapDelegate},
 	{name: "runsubagent", cap: CapDelegate},
 	{name: "todo", cap: CapTodo, core: true},
+	{name: "todos", cap: CapTodo},
 	{name: "todowrite", cap: CapTodo},
+}
+
+// copilotToolSets are VS Code's tool sets, the namespaces of its
+// <set>/<tool> names (edit/editFiles, read/problems…). Copilot CLI grants
+// such an entry only through the alias its last segment names.
+var copilotToolSets = []string{
+	"agent", "edit", "execute", "read", "runcommands", "search", "todo", "vscode", "web",
+}
+
+// copilotLookup finds a tools entry the way Copilot CLI 1.0.105 does:
+// case-insensitively, and a namespaced <prefix>/<name> entry by its last
+// segment (read/readFile grants view, github/search grants grep and glob).
+func copilotLookup(name string) (Capability, bool) {
+	lower := strings.ToLower(name)
+	if c, ok := lookupTool(copilotToolNames, lower); ok {
+		return c, true
+	}
+	if i := strings.LastIndexByte(lower, '/'); i >= 0 {
+		return lookupTool(copilotToolNames, lower[i+1:])
+	}
+	return 0, false
 }
 
 func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Semantics, error) {
@@ -285,6 +315,18 @@ func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Seman
 		DisplayName:  displayName(id, doc.String("name")),
 		Source:       agent.Copilot,
 	}
+	readCopilotFields(sem, doc, false)
+	return sem, nil
+}
+
+// readCopilotFields reads a Copilot CLI agent's frontmatter into sem: a
+// validated .github/agents file, or a portable core in Copilot's own
+// <id>.agent.md form. A portable core was not validated, so a known field
+// of the wrong shape is unsupported (Copilot CLI would drop the agent), and
+// a key Copilot CLI ignores is omitted with a note unless it reads as a tool
+// or permission restriction, which is unsupported as in a portable core read
+// as a Claude Code agent.
+func readCopilotFields(sem *Semantics, doc *agent.Document, portable bool) {
 	var skillAllowlist []string
 	hasSkillAllowlist := false
 	// disable-model-invocation takes precedence over the retired infer
@@ -294,6 +336,9 @@ func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Seman
 		(!hasModelInvocation && doc.Frontmatter["infer"] == false)
 	for _, key := range sortedKeys(doc.Frontmatter) {
 		value := doc.Frontmatter[key]
+		if portable && !portableCopilotField(sem, key, value) {
+			continue
+		}
 		switch key {
 		case "name", "description", "target", "include-custom-instructions":
 		case "model":
@@ -339,7 +384,7 @@ func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Seman
 		}
 	}
 	if hasSkillAllowlist {
-		extra := &Semantics{Source: agent.Copilot}
+		extra := &Semantics{Source: sem.Source}
 		copilotToolPolicy(extra, skillAllowlist)
 		sem.Notes = append(sem.Notes, extra.Notes...)
 		sem.intersectTools("allowed-tools", extra.Tools)
@@ -351,30 +396,69 @@ func (a copilotAdapter) Semantics(id string, variant *agent.VariantFile) (*Seman
 		sem.Tools.withhold(CapDelegate)
 		sem.note("agents: [] converted without delegation")
 	}
-	return sem, nil
+}
+
+// portableCopilotField checks one key of a portable core read as a Copilot
+// CLI agent and reports whether readCopilotFields reads it. It records why
+// it does not: a restriction of a shape agnthub cannot read, or one Copilot
+// CLI ignores, is unsupported; an empty value, another field of the wrong
+// shape (VS Code's model list) or a key Copilot CLI ignores is omitted with
+// a note.
+func portableCopilotField(sem *Semantics, key string, value any) bool {
+	kind, known := copilotFields[key]
+	switch {
+	case key == "name" || key == "description":
+		return true
+	case value == nil && key != "tools":
+		sem.note("omitted %s: empty", key)
+	case known && checkCopilotField(key, kind, value) == nil:
+		return true
+	case copilotUnenforced[key] != "" && copilotUnenforcedShape(key, value):
+		return true
+	case key == "tools" || key == "mcp-servers" || copilotUnenforced[key] != "":
+		sem.unsupported(key, "a restriction of a shape agnthub cannot read")
+	case known:
+		sem.note("omitted %s: Copilot CLI cannot read its value", key)
+	case restrictionLike(key, value):
+		sem.unsupported(key, "a field Copilot CLI ignores, but it reads as a tool or "+
+			"permission restriction")
+	case copilotIDEOnlyFields[key]:
+		sem.note("omitted %s: used only by IDE custom agents", key)
+	case harmlessPortableKeys[key] || descriptiveKeys[key]:
+		sem.note("omitted %s: descriptive metadata", key)
+	default:
+		sem.note("omitted %s: Copilot CLI ignores it", key)
+	}
+	return false
 }
 
 // copilotToolPolicy reads a Copilot tools list. Copilot ignores names it does
-// not know, so they grant nothing; skill and sql are always present. An MCP
-// tool is granted by its exposed name, <server>-<tool>; since server names may
-// contain '-', such an entry cannot be read as a server and tool, so a
-// hyphenated name that is not a built-in alias is kept as unknown. Copilot CLI
-// grants nothing for documented <server>/<tool> entries naming session MCP
-// servers.
+// not know, so they grant nothing; skill and sql are always present. A
+// namespaced entry grants what its last segment's alias grants (copilotLookup);
+// otherwise a VS Code tool-set entry (read/problems) names a VS Code tool
+// Copilot CLI lacks, and any other <server>/<tool> entry grants nothing for
+// session MCP servers. An MCP tool is granted by its exposed name,
+// <server>-<tool>; since server names may contain '-', such an entry cannot
+// be read as a server and tool, so a hyphenated name that is not a built-in
+// alias is kept as unknown.
 func copilotToolPolicy(sem *Semantics, names []string) {
 	if slices.Contains(names, "*") {
 		return
 	}
 	sem.Tools.Restricted = true
 	for _, name := range names {
-		lower := strings.ToLower(name)
-		if c, ok := lookupTool(copilotToolNames, lower); ok {
+		if c, ok := copilotLookup(name); ok {
 			sem.Tools.Allowed |= c
 			continue
 		}
+		lower := strings.ToLower(name)
+		set, _, namespaced := strings.Cut(lower, "/")
 		switch {
 		case lower == "skill" || lower == "sql":
-		case strings.Contains(name, "/"):
+		case namespaced && slices.Contains(copilotToolSets, set):
+			sem.note("omitted tools entry %s: a VS Code tool Copilot CLI does not have, so "+
+				"it grants nothing", name)
+		case namespaced:
 			sem.note("omitted tools entry %s: Copilot CLI grants nothing for a "+
 				"<server>/<tool> entry naming a session MCP server", name)
 		case strings.Contains(name, "-"):
@@ -440,6 +524,9 @@ func (a copilotAdapter) Convert(sem *Semantics) (Artifact, error) {
 	}
 	if sem.ManualOnly {
 		fields = append(fields, agent.Field{Key: "disable-model-invocation", Value: true})
+	}
+	if model := strings.TrimSpace(sem.Model); model != "" && sem.dialectNative(agent.Copilot) {
+		fields = append(fields, agent.Field{Key: "model", Value: model})
 	}
 	if sem.Tools.Limited() {
 		if !sem.Tools.Restricted {

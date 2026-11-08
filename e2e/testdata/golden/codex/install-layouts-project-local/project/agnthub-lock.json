@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/annotated.md",
           "sourceDigest": "sha256:8cf577c3db790479f198a536eb7ad1011f84a0827e2bb2a07bfe5836a4254087",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/annotated.toml",
           "digest": "sha256:0048413e9f5b7d3e2fd1087f01cf658f12adbf7d36a974bb782f829906e96b9b",
           "requires": []
@@ -34,7 +34,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/backgrounder.md",
           "sourceDigest": "sha256:db764d016ee2d92946ed60cf836c8b3fc1f08052face2ee6fc019dbb27de0bc2",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/backgrounder.toml",
           "digest": "sha256:f1b967c9f028f742eac53d2791f5359584d815b3c6e0832bd0e08ac276ad01dd",
           "requires": []
@@ -54,7 +54,7 @@
           "variant": "generated",
           "sourcePath": "agents/bom.md",
           "sourceDigest": "sha256:4a06ac5e6bf431ff6070e79391195c1ff4e3c7e8f0b093dbfa06fb32e692f629",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/bom.toml",
           "digest": "sha256:d5e212e3deff44563e487f5266de2e49c90d55bc7450664bea69a1fba9b6a377",
           "requires": []
@@ -74,7 +74,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/bounded.md",
           "sourceDigest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/bounded.toml",
           "digest": "sha256:40a7bff678547fce5690e25654875b916bd798d6352c356715e697cd9a5b20e1",
           "requires": []
@@ -94,7 +94,7 @@
           "variant": "generated",
           "sourcePath": "agents/colon.md",
           "sourceDigest": "sha256:89cfd9750c6cd78419f7c04dc07bbc55508cbd9e43767be467bca82fefd1bd34",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/colon.toml",
           "digest": "sha256:670c0c583b65e257c1b6c5f983bf34d3d049ab55b583eb29d204fca12022de89",
           "requires": []
@@ -190,7 +190,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/defaulted.md",
           "sourceDigest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/defaulted.toml",
           "digest": "sha256:5ab90cc717931ca20830b6cabfb62a1eceabb35b300fea413dba047675c4f6d4",
           "requires": []
@@ -210,7 +210,7 @@
           "variant": "generated",
           "sourcePath": "agents/dual.md",
           "sourceDigest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/dual.toml",
           "digest": "sha256:4ccb63796a5b623253b80397cf1353552da0991282f5b0dd5a696cd8b8546607",
           "requires": []
@@ -230,7 +230,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/team/fixer.md",
           "sourceDigest": "sha256:11404f0e334d2b363d7bc45e6d952817a29d4568e08f2545c04cf83eaa5686e8",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/fixer.toml",
           "digest": "sha256:2aea58fe817806dd5bc4f84e4cc09ce777fe32553101468e9bfdad02eea6a5f3",
           "requires": []
@@ -250,7 +250,7 @@
           "variant": "generated",
           "sourcePath": ".github/agents/gh-manual.agent.md",
           "sourceDigest": "sha256:36c4e0f4476f6ddbe8e49920350a8d05f305ecff9df72c40c170612173445218",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/gh-manual.toml",
           "digest": "sha256:331dce33cf2f2ebfd1cc3c19dfabb25e15ddfcdf525843199ef847ea3a8a5d40",
           "requires": []
@@ -270,7 +270,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/isolated.md",
           "sourceDigest": "sha256:213ccb5e38aa066c15bfee1536e7e91930bb54fc01fdaba30d0befe07666fb8b",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/isolated.toml",
           "digest": "sha256:d8b65d74cc73539f69354f20a0095168552cecb0acf2cc9a95b4aa90fcb85dd7",
           "requires": []
@@ -290,7 +290,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/journaler.md",
           "sourceDigest": "sha256:8054d0e04ddedf2eb8559ad2a2a6c9d1a60d4e0f0b41eebf631e6d03d1d0e361",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/journaler.toml",
           "digest": "sha256:862fcd714777bafbfa2a0f28d3fece1fb6c904a59b1f744e6df4a71bba7db810",
           "requires": []
@@ -310,7 +310,7 @@
           "variant": "generated",
           "sourcePath": "agents/literal.md",
           "sourceDigest": "sha256:b973b211d0f1640b3dec85aa413b974bd3a3bd92b362105f58b2044100ffdf23",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/literal.toml",
           "digest": "sha256:29f734ecc6f6880f5d1cf759c4dd59dbc29070bd64083c5af47aa0edb3ff533e",
           "requires": []
@@ -330,7 +330,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/local-notes.md",
           "sourceDigest": "sha256:4d831bcbb3fb7890336981e00b967572db3011ba4cf6404b531ab134ea9ad8f0",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/local-notes.toml",
           "digest": "sha256:c0201fab648da90d131043e986533344a9847b33926a1847c0507e6b002c9211",
           "requires": []
@@ -350,7 +350,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/misnamed.md",
           "sourceDigest": "sha256:c5c73ca9bb6c15b435d0584078dd5bb855ca728acba4339cd9bdb0c8ac46ea4e",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/misnamed.toml",
           "digest": "sha256:41c6b4034ee5997466b46572cdcc7f56020d15ceead7f577ed31453cabdfaa05",
           "requires": []
@@ -370,7 +370,7 @@
           "variant": "generated",
           "sourcePath": "agents/modelled.md",
           "sourceDigest": "sha256:3d52a9d90250746cb40d20913b4d1bc01c4a5b313259f51dc8bc6bf92035666e",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/modelled.toml",
           "digest": "sha256:670d757df46e9767ea296509d07719c2021aa5a3c9a2bc0d370aec407306750f",
           "requires": []
@@ -390,7 +390,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/no-shell.md",
           "sourceDigest": "sha256:63a2ad194c53901523f07f8f3ec3303517e950b53a482f2f2e13b84902d155f3",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/no-shell.toml",
           "digest": "sha256:9de40b3ae4b25893810714e3e69e947fd4c7c488b8d34507e01af7c9604ced56",
           "requires": []
@@ -410,7 +410,7 @@
           "variant": "generated",
           "sourcePath": "agents/planner.md",
           "sourceDigest": "sha256:6e67f8119738e58371e61f662e332d971058192a6dc99791e7c19094691376f2",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/planner.toml",
           "digest": "sha256:4dbaa60c9f399edae7eed792e9020fa7c6b1e15d38a24e1ac8acbfc9fda10955",
           "requires": []
@@ -430,7 +430,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/quoted.md",
           "sourceDigest": "sha256:a92554a3420863b7acc442ea397337ac1bae541f07c7a50f8a3be291d02b0dd1",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/quoted.toml",
           "digest": "sha256:06f086b011c38f4eff269699d3a4267b4665303dd25c9a743c2bd83b8c717115",
           "requires": []
@@ -450,7 +450,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/relaxed.md",
           "sourceDigest": "sha256:88b6be1e2b64ae4bbfbab2c958f917bca08a5abedebecac673fa17ba8826ce95",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/relaxed.toml",
           "digest": "sha256:8ad8ee3b37bf599cfe932f9389cfe1b5ceff721b3953e2d13be4deffa2c17fb5",
           "requires": []
@@ -470,7 +470,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/rememberer.md",
           "sourceDigest": "sha256:e876bb3f846cda6620fed5b2d357e0a6997129a7a526e240789ed2e4b8e965ef",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/rememberer.toml",
           "digest": "sha256:035d4ed65376e9344686dc3e6aae806be30d3f5c428b63f6f980397b0b7d6c39",
           "requires": []
@@ -490,7 +490,7 @@
           "variant": "generated",
           "sourcePath": "agents/researcher/AGENT.md",
           "sourceDigest": "sha256:dd13ee557398466dd574705483ce5697cfb0b3352c2ef6e815509612dc32282b",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/researcher.toml",
           "digest": "sha256:adb2fd70bc765c3b5774084235b6f8364026f1228023a873980ed894432325dd",
           "requires": []
@@ -510,7 +510,7 @@
           "variant": "generated",
           "sourcePath": "AGENT.md",
           "sourceDigest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/root-helper.toml",
           "digest": "sha256:6eb11a755e337d02e032521859da6587223f163838e9900cd44c9c16579ab0e8",
           "requires": []
@@ -530,7 +530,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/scripted.md",
           "sourceDigest": "sha256:1527e595b5b95f417d832f97ccb0ef2cd0579cb27cdc6944de2071946ee4b82c",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/scripted.toml",
           "digest": "sha256:e087368b7870807cb86e5b434a60da2b3b696ed3c12f3aaba39688b90bb6412c",
           "requires": []
@@ -550,7 +550,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/skilled.md",
           "sourceDigest": "sha256:e13388a2a0e7989773c6eced86e91871233b762fbe37b11597e0ebdd58e42d69",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/skilled.toml",
           "digest": "sha256:928425e1e14ae03eca0c2be26b815b5e5605ecbabe1c6233557f48b610c3cca6",
           "requires": []
@@ -570,7 +570,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/studio-qa.md",
           "sourceDigest": "sha256:cfe15b9951529179d27ad3396fc10136bcf5a2455518aed3464720354c2fa3e8",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/studio-qa.toml",
           "digest": "sha256:13eaa7e5ddc617f79da286c4bd0b1b5c975097a408a64c7c33b80566df0cafc4",
           "requires": []
@@ -590,7 +590,7 @@
           "variant": "generated",
           "sourcePath": "agents/tagged.md",
           "sourceDigest": "sha256:2e9a09a7b24a92f19ee04b1adad396cf4e9f100fa5cc4c882a59ca2e47b73f09",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/tagged.toml",
           "digest": "sha256:462a270162fedf508611488cdbcf2626b3a819e520dd4413dac4dedbca5346a5",
           "requires": []
@@ -610,7 +610,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/wildcard.md",
           "sourceDigest": "sha256:6619fd1e1a173c38342c4ad36dbb057d4829db134be89767f903b7c5523afef3",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/wildcard.toml",
           "digest": "sha256:d72e5d2cd23df94f9a0f5efad25945e1d19613e25482f4424c6b03f5c390beb2",
           "requires": []

@@ -1,5 +1,33 @@
 # Changelog
 
+## v0.10.2
+
+### Changed
+
+- **`<id>.agent.md` portable definitions are read as GitHub Copilot CLI agents**
+  ([ADR 0019](docs/adr/0019-read-agent-md-cores-as-copilot-agents.md)). Files in Copilot's
+  own form, such as github/awesome-copilot's `agents/*.agent.md`, were read as Claude Code
+  agents, whose case-sensitive tool names made `tools: [read, search, web/fetch]` grant
+  nothing: refused on Claude Code ("it allows no tools"), Codex and Cursor, and installed
+  without tools elsewhere ("omitted tools entries read, search, web/fetch"). Their `tools` now
+  grant what Copilot CLI grants (runtime-verified with Copilot CLI 1.0.105): the aliases, the
+  VS Code names Copilot CLI accepts (`codebase`, `editFiles`, `runCommands`…), a namespaced
+  entry by its last segment (`read/readFile`, `execute/runInTerminal`) and `web/fetch`; so
+  interview-prep installs with read, search and web fetch on Claude Code (`Read, Grep, Glob,
+  WebFetch`), OpenCode, Copilot CLI, Gemini CLI and omp, and read-only on Cursor (Codex still
+  refuses: it cannot withhold edits). Entries Copilot CLI grants nothing for (`problems`,
+  `fetch`, `read/problems`, `github/*`) are left out with a note each; an allowlist that grants
+  nothing still grants nothing. `model` stays on Copilot CLI and is noted elsewhere; keys
+  Copilot CLI ignores are noted unless they read as restrictions, which still refuse. An
+  `<id>.agent.md` file that declares a field only Claude Code defines (`permissionMode`,
+  `disallowedTools`, `hooks`…) keeps the Claude Code reading.
+- **Copilot CLI `tools` entries read as Copilot CLI reads them**, in `.github/agents` files
+  too: `WebSearch` grants nothing (it was read as web fetch), and namespaced entries such as
+  `edit/editFiles` grant their last segment's alias (they were read as MCP tools granting
+  nothing).
+- This is converter `v7`: `check` shows the files it converts differently as a converter
+  change and `update` rewrites them; `restore` of a `v6` lock reproduces every other file.
+
 ## v0.10.1
 
 ### Changed

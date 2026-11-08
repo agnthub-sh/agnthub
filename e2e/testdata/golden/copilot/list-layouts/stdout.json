@@ -226,6 +226,12 @@
       }
     },
     {
+      "id": "interview-prep",
+      "description": "Technical interview coach for software engineers. Runs mock interviews and researches companies.",
+      "portable": "agents/interview-prep.agent.md",
+      "variants": {}
+    },
+    {
       "id": "isolated",
       "description": "Implements a change in its own git worktree.",
       "variants": {

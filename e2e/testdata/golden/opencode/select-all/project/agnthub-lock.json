@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/companion.md",
           "digest": "sha256:85a320c7b4b08537b1f8012125deda810dffd3cf0b0178922c1ae7039142dd58",
           "requires": []
@@ -24,7 +24,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/companion.toml",
           "digest": "sha256:94f6f65202eff03df6f4974961ea74e160b9bd518a6899b2f0283f009905e8ec",
           "requires": []
@@ -34,7 +34,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/companion.agent.md",
           "digest": "sha256:6be501d6c502b7fadcbdcc68d6f80861cdb0f9817977fb7889ca51f02a307225",
           "requires": []
@@ -44,7 +44,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/companion.md",
           "digest": "sha256:2eff54fc1d9582ddc646d8c943c38ecd62bf4235a751f9ff3695bcc04797151e",
           "requires": []
@@ -54,7 +54,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "gemini/v6",
+          "converter": "gemini/v7",
           "path": ".gemini/agents/companion.md",
           "digest": "sha256:52192a0064f7a14fbb55187c6f3fdd46ff1c05d6218e18e8c50389be4e2078ae",
           "requires": []
@@ -64,7 +64,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "omp/v6",
+          "converter": "omp/v7",
           "path": ".omp/agents/companion.md",
           "digest": "sha256:f7bc8ddac04640a418ea973cb79ff8078ec2e47444e6583b43be5bc0a5f08f0b",
           "requires": []
@@ -74,7 +74,7 @@
           "variant": "generated",
           "sourcePath": "agents/companion.md",
           "sourceDigest": "sha256:4bce0e2f6a207717d616279822a201aa8cfd37c66a21473847ce578b19c6c36f",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/companion.md",
           "digest": "sha256:9d080e5d625ec6b92e5b8a042c05ec7e38966090d68fc3dbfe5c63e90982a785",
           "requires": []
@@ -94,7 +94,7 @@
           "variant": "generated",
           "sourcePath": "agents/sidekick.md",
           "sourceDigest": "sha256:47843ea71bee050cacb41e460bb1b0f57fac11dc56b53318c5fd9273d2835506",
-          "converter": "claude/v6",
+          "converter": "claude/v7",
           "path": ".claude/agents/sidekick.md",
           "digest": "sha256:36ab55c66caa70d4e9008f5936777e1e6c30a729c3c8e3794dcc0bce2b6b2eaa",
           "requires": []
@@ -104,7 +104,7 @@
           "variant": "generated",
           "sourcePath": "agents/sidekick.md",
           "sourceDigest": "sha256:47843ea71bee050cacb41e460bb1b0f57fac11dc56b53318c5fd9273d2835506",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/sidekick.toml",
           "digest": "sha256:65626d442b16d749d29ffd09b4705e0e0f8a2a0641b60369fa3522be23c42b0f",
           "requires": []
@@ -114,7 +114,7 @@
           "variant": "generated",
           "sourcePath": "agents/sidekick.md",
           "sourceDigest": "sha256:47843ea71bee050cacb41e460bb1b0f57fac11dc56b53318c5fd9273d2835506",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/sidekick.agent.md",
           "digest": "sha256:7be202092a27ecc586d58333bf8d825f633371eda62d0a984df439450ba450ad",
           "requires": []
@@ -124,7 +124,7 @@
           "variant": "generated",
           "sourcePath": "agents/sidekick.md",
           "sourceDigest": "sha256:47843ea71bee050cacb41e460bb1b0f57fac11dc56b53318c5fd9273d2835506",
-          "converter": "cursor/v6",
+          "converter": "cursor/v7",
           "path": ".cursor/agents/sidekick.md",
           "digest": "sha256:a81f2b892d033b2b52b3a0a06234440e338d1a212a3ecc9d2e93669fd420a90c",
           "requires": []
@@ -134,7 +134,7 @@
           "variant": "generated",
           "sourcePath": "agents/sidekick.md",
           "sourceDigest": "sha256:47843ea71bee050cacb41e460bb1b0f57fac11dc56b53318c5fd9273d2835506",
-          "converter": "gemini/v6",
+          "converter": "gemini/v7",
           "path": ".gemini/agents/sidekick.md",
           "digest": "sha256:7534936db98134b2c745ca75e4e6466e46ca76fa48bf93648f0e2b4e130cf588",
           "requires": []
@@ -144,7 +144,7 @@
           "variant": "generated",
           "sourcePath": "agents/sidekick.md",
           "sourceDigest": "sha256:47843ea71bee050cacb41e460bb1b0f57fac11dc56b53318c5fd9273d2835506",
-          "converter": "omp/v6",
+          "converter": "omp/v7",
           "path": ".omp/agents/sidekick.md",
           "digest": "sha256:ab8d023f4ce1c6c889d6fc43bb594b4577a10b8c9e67a5a1ed0c5a971a6ae5a1",
           "requires": []
@@ -154,7 +154,7 @@
           "variant": "generated",
           "sourcePath": "agents/sidekick.md",
           "sourceDigest": "sha256:47843ea71bee050cacb41e460bb1b0f57fac11dc56b53318c5fd9273d2835506",
-          "converter": "opencode/v6",
+          "converter": "opencode/v7",
           "path": ".opencode/agents/sidekick.md",
           "digest": "sha256:1b7c33d93bb3ba29b0562ec6326064adb091327cd947184e9bf06843ac36d08d",
           "requires": []

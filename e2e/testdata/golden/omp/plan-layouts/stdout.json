@@ -710,6 +710,27 @@
       "optIn": "allow-without-shell"
     },
     {
+      "agent": "interview-prep",
+      "harness": "omp",
+      "settings": {},
+      "effectiveSettings": {
+        "profile": "default"
+      },
+      "destination": "project, shared by every omp profile; verify with default profile",
+      "path": "/agnthub-e2e/project/.omp/agents/interview-prep.md",
+      "variant": "generated",
+      "sourcePath": "agents/interview-prep.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "omp keeps MCP, extension and custom tools available to agents with a tools list"
+      ]
+    },
+    {
       "agent": "isolated",
       "harness": "omp",
       "settings": {},
@@ -1304,7 +1325,7 @@
     }
   ],
   "summary": {
-    "create": 51,
+    "create": 52,
     "incompatible": 6,
     "invalid": 1
   }

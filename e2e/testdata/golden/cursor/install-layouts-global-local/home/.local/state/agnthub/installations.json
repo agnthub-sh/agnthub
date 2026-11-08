@@ -244,6 +244,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.cursor/agents/interview-prep.md",
+      "digest": "sha256:eb97abc5c63986595c7832e4eb884b81a5c3bc3befb1fbc005943ef830c90b25",
+      "harness": "cursor",
+      "scope": "global",
+      "destination": "user",
+      "source": "local:/agnthub-e2e/src/layouts",
+      "agent": "interview-prep",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.cursor/agents/isolated.md",
       "digest": "sha256:a00385216669d753f11e9243443a34a587729b55bc4a3820d78e9c075740ca57",
       "harness": "cursor",

@@ -26,6 +26,7 @@
 0644 project/.omp/agents/gh-native.md
 0644 project/.omp/agents/gh-plain.md
 0644 project/.omp/agents/gm-native.md
+0644 project/.omp/agents/interview-prep.md
 0644 project/.omp/agents/isolated.md
 0644 project/.omp/agents/issue-reader.md
 0644 project/.omp/agents/journaler.md

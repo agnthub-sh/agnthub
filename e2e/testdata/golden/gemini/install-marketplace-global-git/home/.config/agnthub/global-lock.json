@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/more/mk-guarded.md",
           "sourceDigest": "sha256:8aa77306d8b0d60797e85a008e128ee544994ce1c6d2607ce4e0256ad3107476",
-          "converter": "gemini/v6",
+          "converter": "gemini/v7",
           "path": "/agnthub-e2e/home/.gemini/agents/mk-guarded.md",
           "digest": "sha256:0027b19c0391a57bb2a158123cd196658f4fb8aaa9139ebb8ee29b8556547083",
           "requires": []
@@ -38,7 +38,7 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/mk-lister.md",
           "sourceDigest": "sha256:42b4caf101f87d5da5feeb015372dbe5a70a7f809c819eef8f9113b10ee6b375",
-          "converter": "gemini/v6",
+          "converter": "gemini/v7",
           "path": "/agnthub-e2e/home/.gemini/agents/mk-lister.md",
           "digest": "sha256:66a97141fbf810d92b7f41fa1b71bb091f0adccc3cbdf37dc314d2c8ece0c278",
           "requires": []
@@ -60,7 +60,7 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/deep/mk-nested.md",
           "sourceDigest": "sha256:33799b1ca12e3ccb8449a66e4c19a09a37d09d14f69cd7dff0c7097f42dfcc0d",
-          "converter": "gemini/v6",
+          "converter": "gemini/v7",
           "path": "/agnthub-e2e/home/.gemini/agents/mk-nested.md",
           "digest": "sha256:17d315990f32ca89a3126313ead36bb29fe6da1dbf8a372d3ea0ad7708cef871",
           "requires": []
@@ -82,7 +82,7 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/mk-scanner.md",
           "sourceDigest": "sha256:5e6a2950be2c2e8fcfb2427622cc0ee6e963a4cbc730d26d8c830ffb3e7c6d7f",
-          "converter": "gemini/v6",
+          "converter": "gemini/v7",
           "path": "/agnthub-e2e/home/.gemini/agents/mk-scanner.md",
           "digest": "sha256:ef0cf8c0e9d3e4ee87dba3357590da0b5fa8593910a48e54cefd5356eb608f2a",
           "requires": []

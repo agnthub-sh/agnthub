@@ -18,7 +18,7 @@ index 0000000000000000000000000000000000000000..22746c1c04ebfa50b3f380db30f6f63f
 +Revision one instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
 new file mode 100644
-index 0000000000000000000000000000000000000000..352f14f21dc9f2a3661376cecaba43d536b03fb2
+index 0000000000000000000000000000000000000000..c72fe972a7d6fbdcfad6f48b24a6a0ba8a01b039
 --- /dev/null
 +++ b/agnthub-lock.json
 @@ -0,0 +1,27 @@
@@ -40,7 +40,7 @@ index 0000000000000000000000000000000000000000..352f14f21dc9f2a3661376cecaba43d5
 +          "variant": "generated",
 +          "sourcePath": "agents/drifter.md",
 +          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
-+          "converter": "gemini/v6",
++          "converter": "gemini/v7",
 +          "path": ".gemini/agents/drifter.md",
 +          "digest": "sha256:d777d57b3af58dcf607b0cf2470dac35de4937a2ef80e7dccae0d0bb4bb31371",
 +          "requires": []

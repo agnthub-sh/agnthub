@@ -18,7 +18,7 @@ index 0000000000000000000000000000000000000000..3f2113dfe38008cad4efea2a35c32249
 +Revision one instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
 new file mode 100644
-index 0000000000000000000000000000000000000000..67348b6693ff6b55b9e44c591ce71107e01f3d20
+index 0000000000000000000000000000000000000000..f4dfc0bd68dce1a93e415e1c5dfa0df5cc37ac51
 --- /dev/null
 +++ b/agnthub-lock.json
 @@ -0,0 +1,27 @@
@@ -40,7 +40,7 @@ index 0000000000000000000000000000000000000000..67348b6693ff6b55b9e44c591ce71107
 +          "variant": "generated",
 +          "sourcePath": "agents/drifter.md",
 +          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
-+          "converter": "copilot/v6",
++          "converter": "copilot/v7",
 +          "path": ".github/agents/drifter.agent.md",
 +          "digest": "sha256:033d7c0862cce32a46d64eaa54887fd697a90b2e8d364f81897442547e78f69f",
 +          "requires": []

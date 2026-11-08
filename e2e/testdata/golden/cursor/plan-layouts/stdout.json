@@ -593,6 +593,25 @@
       "optIn": "allow-without-shell"
     },
     {
+      "agent": "interview-prep",
+      "harness": "cursor",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.cursor/agents/interview-prep.md",
+      "variant": "generated",
+      "sourcePath": "agents/interview-prep.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create",
+      "notes": [
+        "excludes web search, delegation, but Cursor cannot withhold them from an agent"
+      ]
+    },
+    {
       "agent": "isolated",
       "harness": "cursor",
       "settings": {},
@@ -1108,7 +1127,7 @@
     }
   ],
   "summary": {
-    "create": 42,
+    "create": 43,
     "incompatible": 15,
     "invalid": 1
   }

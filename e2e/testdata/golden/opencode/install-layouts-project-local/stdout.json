@@ -542,6 +542,22 @@
       ]
     },
     {
+      "agent": "interview-prep",
+      "harness": "opencode",
+      "settings": {},
+      "effectiveSettings": {},
+      "destination": "project",
+      "path": "/agnthub-e2e/project/.opencode/agents/interview-prep.md",
+      "variant": "generated",
+      "sourcePath": "agents/interview-prep.agent.md",
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "origin": "direct",
+      "action": "create"
+    },
+    {
       "agent": "isolated",
       "harness": "opencode",
       "settings": {},
@@ -1026,6 +1042,6 @@
     }
   ],
   "summary": {
-    "create": 52
+    "create": 53
   }
 }

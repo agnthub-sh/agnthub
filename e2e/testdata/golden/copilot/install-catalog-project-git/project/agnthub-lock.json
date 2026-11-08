@@ -15,7 +15,7 @@
           "variant": "generated",
           "sourcePath": "engineering/Backend Architect.md",
           "sourceDigest": "sha256:122cbb22d4b06f4b5a7b6c686271d8a17b15edaaf6d3d982756316a484ed2d68",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/backend-architect.agent.md",
           "digest": "sha256:59025947bf4477cf282d3ba2095e8b45258b90bd4731b55f3d15d1973b80e8b4",
           "requires": []
@@ -36,7 +36,7 @@
           "variant": "generated",
           "sourcePath": "marketing/Café Copywriter (v2).md",
           "sourceDigest": "sha256:74af3314573774599bd2e672d0e23a25c11a485446e4eba205ccb77b1569e6db",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/cafe-copywriter-v2.agent.md",
           "digest": "sha256:09c3beb3738f773baee95fb8ccbd31f423a867dde9758402f343da882c48506d",
           "requires": []
@@ -57,7 +57,7 @@
           "variant": "generated",
           "sourcePath": "engineering/engineering-frontend-developer.md",
           "sourceDigest": "sha256:c1946f5533aa44e7c9ad2322bb6f2ba1f2c63e72b2aa3f8ddf4736ecd3d9690c",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/engineering-frontend-developer.agent.md",
           "digest": "sha256:bfc26c44811ceb35cb231bb471cc9ef0dc75c742f29c7cb46ce7d6c396d4b827",
           "requires": []
@@ -78,7 +78,7 @@
           "variant": "generated",
           "sourcePath": "engineering/engineering-search-relevance-engineer.md",
           "sourceDigest": "sha256:e59bbe86dbcc536aa24700ba39597a5f254ae28064786bb951d61e9086153086",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/engineering-search-relevance-engineer.agent.md",
           "digest": "sha256:5453d6d03f84c79274573074c6d4f16fbff4b31a1c3d52c0805547498e0a9541",
           "requires": []
@@ -99,7 +99,7 @@
           "variant": "generated",
           "sourcePath": "marketing/marketing-growth-hacker.md",
           "sourceDigest": "sha256:4db22cbe6b1608c2dd5279b2dab172fc0ce8ea12db55f973cfe2c0aed5c02c35",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/marketing-growth-hacker.agent.md",
           "digest": "sha256:fe60fecf03da63b701189dfb2ffa529e1b57659690eda6b2d7c7bd35726fa34d",
           "requires": []
@@ -120,7 +120,7 @@
           "variant": "generated",
           "sourcePath": "marketing/marketing-seo-specialist.md",
           "sourceDigest": "sha256:e97a51e7946016d2b402ae269f00dc6ac53c2ae798be83dcb2a47c6d8bcda45d",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/marketing-seo-specialist.agent.md",
           "digest": "sha256:4977fa65393bc1fff7c9d173e25d0939f580c9b59ea4ffa3d77d9f1b8bd714cd",
           "requires": []
@@ -141,7 +141,7 @@
           "variant": "generated",
           "sourcePath": "game-development/unity/unity-architect.md",
           "sourceDigest": "sha256:485c60b8453f55c182577fd26ac9204588e4ca568ba3048a68d36ff8fea99a73",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": ".github/agents/unity-architect.agent.md",
           "digest": "sha256:ae49015f0e255ed43df563a7304c15b26315eadfc5c980353120ea8691483e42",
           "requires": []

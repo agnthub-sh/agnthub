@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": "agents/solo.md",
           "sourceDigest": "sha256:22c2b699c258ee4495bb750a0d72a67e9f8f37e9a6a018018ebbcd487b881ebf",
-          "converter": "codex/v6",
+          "converter": "codex/v7",
           "path": ".codex/agents/solo.toml",
           "digest": "sha256:c6d5fa86985f39ae9f40ffdb1a4368e94fb3147d98ced6cbf3b0b060b3fb7d4a",
           "requires": []

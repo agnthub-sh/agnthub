@@ -16,7 +16,7 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/more/mk-guarded.md",
           "sourceDigest": "sha256:8aa77306d8b0d60797e85a008e128ee544994ce1c6d2607ce4e0256ad3107476",
-          "converter": "omp/v6",
+          "converter": "omp/v7",
           "path": "/agnthub-e2e/home/.omp/agent/agents/mk-guarded.md",
           "digest": "sha256:2cd2f4b0148bc4e7db44adb381648d8b1ab0c0af1ef858f161ad5f6bc050c4ee",
           "requires": []
@@ -38,7 +38,7 @@
           "variant": "generated",
           "sourcePath": "plugins/listed/mk-lister.md",
           "sourceDigest": "sha256:42b4caf101f87d5da5feeb015372dbe5a70a7f809c819eef8f9113b10ee6b375",
-          "converter": "omp/v6",
+          "converter": "omp/v7",
           "path": "/agnthub-e2e/home/.omp/agent/agents/mk-lister.md",
           "digest": "sha256:909f031966d29da063af6f52077cc1571fcfa8db664d8b9aa567d6f07bf26b01",
           "requires": []
@@ -60,7 +60,7 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/deep/mk-nested.md",
           "sourceDigest": "sha256:33799b1ca12e3ccb8449a66e4c19a09a37d09d14f69cd7dff0c7097f42dfcc0d",
-          "converter": "omp/v6",
+          "converter": "omp/v7",
           "path": "/agnthub-e2e/home/.omp/agent/agents/mk-nested.md",
           "digest": "sha256:9fbc8701c1d3a8c0d69cc84b032e1f58d60656c934c33380062ec1cbc10d7364",
           "requires": []
@@ -82,7 +82,7 @@
           "variant": "generated",
           "sourcePath": "plugins/scanned/agents/mk-scanner.md",
           "sourceDigest": "sha256:5e6a2950be2c2e8fcfb2427622cc0ee6e963a4cbc730d26d8c830ffb3e7c6d7f",
-          "converter": "omp/v6",
+          "converter": "omp/v7",
           "path": "/agnthub-e2e/home/.omp/agent/agents/mk-scanner.md",
           "digest": "sha256:4c3a7b821008a3e956fda5591b040d9e643ca38e305a74af6a358a052167e3f0",
           "requires": []

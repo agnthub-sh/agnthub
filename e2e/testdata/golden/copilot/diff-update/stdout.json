@@ -17,7 +17,7 @@ index 3f2113dfe38008cad4efea2a35c32249556f3845..8e9dec407769d8529d34ecd9a00175ce
 +---
 +Revision two instructions.
 diff --git a/agnthub-lock.json b/agnthub-lock.json
-index 67348b6693ff6b55b9e44c591ce71107e01f3d20..f880f4fb60d86cbefa145d5e466f4a3c94ec0b0f 100644
+index f4dfc0bd68dce1a93e415e1c5dfa0df5cc37ac51..f73e8e2dd6acee20ae2d2c4152249162cc5e865f 100644
 --- a/agnthub-lock.json
 +++ b/agnthub-lock.json
 @@ -6,7 +6,7 @@
@@ -35,7 +35,7 @@ index 67348b6693ff6b55b9e44c591ce71107e01f3d20..f880f4fb60d86cbefa145d5e466f4a3c
            "sourcePath": "agents/drifter.md",
 -          "sourceDigest": "sha256:5111a461fde129f551cb9a6db403a335bd347f03ebef69b2ae2723347e287a49",
 +          "sourceDigest": "sha256:0beaf1d3c3b0bc65ddd020a69b5d08cb2b1c21104afe707b148c692412e2d616",
-           "converter": "copilot/v6",
+           "converter": "copilot/v7",
            "path": ".github/agents/drifter.agent.md",
 -          "digest": "sha256:033d7c0862cce32a46d64eaa54887fd697a90b2e8d364f81897442547e78f69f",
 +          "digest": "sha256:1f867c0ebba51d69ccc057ea8596186a45579023bf43a1a0dca9f71940e6a030",

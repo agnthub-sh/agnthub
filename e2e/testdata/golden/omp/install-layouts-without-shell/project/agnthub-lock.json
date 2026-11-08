@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/differ.md",
           "sourceDigest": "sha256:f34d2b83d43c92767414489fcc9c4e0bf1ac99d953a6a91f2b3eb4d61347fb07",
-          "converter": "omp/v6",
+          "converter": "omp/v7",
           "path": ".omp/agents/differ.md",
           "digest": "sha256:41fc3f27748d70bfcfcfaad1bc35eb6910b16800204ea343729ae5df17c132d3",
           "requires": []
@@ -34,7 +34,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/guarded.md",
           "sourceDigest": "sha256:80f92e3bbeb78196cbbee92863463941aea7183a3430493a406d18a7fcc5cbf3",
-          "converter": "omp/v6",
+          "converter": "omp/v7",
           "path": ".omp/agents/guarded.md",
           "digest": "sha256:b188596e4765639a6d12fc5da46b3d4371edce8fc1e32baeffaafafba46e73ab",
           "requires": []

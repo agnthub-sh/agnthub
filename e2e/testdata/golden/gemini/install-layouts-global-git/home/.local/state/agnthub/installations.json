@@ -299,6 +299,17 @@
       "installedAt": "<time>"
     },
     {
+      "path": "/agnthub-e2e/home/.gemini/agents/interview-prep.md",
+      "digest": "sha256:333891ef121c6e4da0099ecc12c022aabdf7114a57cb5a6215680317fb9cc3c6",
+      "harness": "gemini",
+      "scope": "global",
+      "destination": "user",
+      "source": "git:localhost:8443/layouts.git",
+      "agent": "interview-prep",
+      "origin": "direct",
+      "installedAt": "<time>"
+    },
+    {
       "path": "/agnthub-e2e/home/.gemini/agents/isolated.md",
       "digest": "sha256:2de365e13c938448299332a37770cf29ca3ae169b9e9166aa36009c5a23d702c",
       "harness": "gemini",

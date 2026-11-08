@@ -104,10 +104,10 @@ func TestGeneratedArtifactsCarryTheirSourceAttribution(t *testing.T) {
 func TestRestoringAnOlderLockLeavesTheAttributionOut(t *testing.T) {
 	def := reviewerDefinition(t)
 	src := state.LockedSource{Kind: "github", Locator: "acme/agents"}
-	current := buildOne(t, def, agent.Cursor, src, "cursor/v6")
+	current := buildOne(t, def, agent.Cursor, src, "cursor/v7")
 	older := buildOne(t, def, agent.Cursor, src, "cursor/v4")
 	if !strings.Contains(string(current.Artifact.Content), "# Adapted from") ||
-		current.Artifact.Converter != "cursor/v6" {
+		current.Artifact.Converter != "cursor/v7" {
 		t.Fatalf("current lock: %s\n%s", current.Artifact.Converter, current.Artifact.Content)
 	}
 	if strings.Contains(string(older.Artifact.Content), "# ") ||

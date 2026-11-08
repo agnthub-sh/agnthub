@@ -14,7 +14,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/allowlisted.md",
           "sourceDigest": "sha256:f3ff55dcde035238f85d0fdae8958a9aff05a4776d32adde1c8d30fa96889af8",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/allowlisted.agent.md",
           "digest": "sha256:2365a7569d3a2a7cc81fb0fef66299302aca468ac3717770d15538a4f09442f7",
           "requires": []
@@ -34,7 +34,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/annotated.md",
           "sourceDigest": "sha256:8cf577c3db790479f198a536eb7ad1011f84a0827e2bb2a07bfe5836a4254087",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/annotated.agent.md",
           "digest": "sha256:4f320cccff964d5e5ba479ef26985ae550e3b9d424ec05b75e46c912759ea902",
           "requires": []
@@ -54,7 +54,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/backgrounder.md",
           "sourceDigest": "sha256:db764d016ee2d92946ed60cf836c8b3fc1f08052face2ee6fc019dbb27de0bc2",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/backgrounder.agent.md",
           "digest": "sha256:90b0d2721ef1eb8282421f4e0c50bc527b056792ddfcc786f6b9545f6610e939",
           "requires": []
@@ -74,7 +74,7 @@
           "variant": "generated",
           "sourcePath": "agents/bom.md",
           "sourceDigest": "sha256:4a06ac5e6bf431ff6070e79391195c1ff4e3c7e8f0b093dbfa06fb32e692f629",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/bom.agent.md",
           "digest": "sha256:bdcf9f6919e5d4b2fcb586b35fb63f9ade8c7ebd557cdbf183a837ce9bf63023",
           "requires": []
@@ -94,7 +94,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/bom-native.md",
           "sourceDigest": "sha256:4625951c9f6cb88f9476953c5a7dcb191bb1ccb2ff8ad6bbdd98a2c9baeb593c",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/bom-native.agent.md",
           "digest": "sha256:f769277f2e84a30366d1755b1458ab340742997875b736d2c35803f1b1f827b8",
           "requires": []
@@ -114,7 +114,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/bounded.md",
           "sourceDigest": "sha256:1494ece3b407cf05fd00f25ac55a892dcb9c1b87d20059d3cb91a165ffa36515",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/bounded.agent.md",
           "digest": "sha256:56503dd65a9f35fc413175eeeafd7ca2e9cf98b253589a2df3dab0af2f9a0e5d",
           "requires": []
@@ -134,7 +134,7 @@
           "variant": "generated",
           "sourcePath": "agents/claude-shaped.md",
           "sourceDigest": "sha256:fd5067a2a12f6e18f26f14d9a44bdf5e355fc65476c81afd0b70ce124c95c9ad",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/claude-shaped.agent.md",
           "digest": "sha256:cd8e6a6b9ce5e4a5d08d63d65feca107a04fe15447942c7c07bff8e7e33428dd",
           "requires": []
@@ -154,7 +154,7 @@
           "variant": "generated",
           "sourcePath": "agents/colon.md",
           "sourceDigest": "sha256:89cfd9750c6cd78419f7c04dc07bbc55508cbd9e43767be467bca82fefd1bd34",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/colon.agent.md",
           "digest": "sha256:df2691f5ca3dad1b55a0dbbf310b72d40f034ebb7ea37f3a16ddf1dca88cf05c",
           "requires": []
@@ -174,7 +174,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/colon-native.md",
           "sourceDigest": "sha256:35d1f81dc452f8003feecba40b8e861f9bb90ba1dbba87c219cb1e540b5249d7",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/colon-native.agent.md",
           "digest": "sha256:cad307232136129fbc929aadc3159d0058513c144d3e2b42520e80b7518a0aaf",
           "requires": []
@@ -194,7 +194,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-folded.md",
           "sourceDigest": "sha256:269f1c668e921158450159bc7643fb769ff5af270bc46ab39cdd8ccaa5ac764c",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/cu-folded.agent.md",
           "digest": "sha256:aa903b57a889d25a758baaa39cb0e34ae5431349ee2fa5908554a4ef3dadbda2",
           "requires": []
@@ -214,7 +214,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-native.md",
           "sourceDigest": "sha256:90e2a7aaee545f416f39f918470e649abfde0a5d1d00e05c5f3eb07cd57778bd",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/cu-native.agent.md",
           "digest": "sha256:dc4f0473e2b44602e0a5391471402d671054af4ab50ab3b3df019616ebff1f86",
           "requires": []
@@ -234,7 +234,7 @@
           "variant": "generated",
           "sourcePath": ".cursor/agents/cu-tagged.md",
           "sourceDigest": "sha256:970c3f3b68d411a7b90dc24c2b42c1e5f3355966a2427f158fa3b42b3c726970",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/cu-tagged.agent.md",
           "digest": "sha256:bb35197f6e1fa9f35a6d8adb800d39423f9da53142b6f752d74449fab76946d0",
           "requires": []
@@ -254,7 +254,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-native.toml",
           "sourceDigest": "sha256:a885e8934fcddf4cf363afdb2c3f69d15dec952f974f37fcfd39c1c7a66bc1a1",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/cx-native.agent.md",
           "digest": "sha256:0917d0a400e2404a194a83e0a25cc98e2436601325afad9609f2e19d648f2c20",
           "requires": []
@@ -274,7 +274,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-nicknamed.toml",
           "sourceDigest": "sha256:afe1f7c1493cd1348a68552047006bd3c87c0ebb0e102a4200365a2a6fb42436",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/cx-nicknamed.agent.md",
           "digest": "sha256:99da2419e6d185da8b4467150e6b65e6e6d452e4c1e805906435bebd1033fbd5",
           "requires": []
@@ -294,7 +294,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-sandboxed.toml",
           "sourceDigest": "sha256:dcaa98695697729de4d531213e23fa532f915b87e3ec07b5e09cec4f3249ede2",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/cx-sandboxed.agent.md",
           "digest": "sha256:45f5f79158e0850bcd1a531ad3f0c35264a2db2c98b9c6bba57299cb31e4aea7",
           "requires": []
@@ -314,7 +314,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-solo.toml",
           "sourceDigest": "sha256:e782111961e86540d80e45850dbb038dfb01c39f7fc510ddf1f325a6071983f3",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/cx-solo.agent.md",
           "digest": "sha256:4efcef06837a8053c99b8e3777104f89dbc50fefd38c9cac8540e866258024a7",
           "requires": []
@@ -334,7 +334,7 @@
           "variant": "generated",
           "sourcePath": ".codex/agents/cx-workspace.toml",
           "sourceDigest": "sha256:24a94e115878b83ba14cac3d632c14bd1a98380f1ea48bdabebd076fb5293d87",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/cx-workspace.agent.md",
           "digest": "sha256:439ed33bcb9556ba094d064509cd7b49888e3a13a7daedbe9997379b27fc36a4",
           "requires": []
@@ -354,7 +354,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/defaulted.md",
           "sourceDigest": "sha256:ddd0b31e73407b8199fba692dcd8c406e0175b9ec3d31b5e7672ff948c8ac4f4",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/defaulted.agent.md",
           "digest": "sha256:a5fcd6d67beb5257adaf10d7f0e49d377afcc0c54e57b148baa9d46dac43f572",
           "requires": []
@@ -374,7 +374,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/delegator.md",
           "sourceDigest": "sha256:d55cbc4849ca6e3c63b9d2d51bd5489a1979c2f519369759a3dd2bd55b7d3bce",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/delegator.agent.md",
           "digest": "sha256:796763fb22a26552fbeb2015c07eed844de85c5b883da2d8abb0e13409e34c2e",
           "requires": []
@@ -394,7 +394,7 @@
           "variant": "generated",
           "sourcePath": "agents/dual.md",
           "sourceDigest": "sha256:fe1353c121713139859ee8c6c1174a9ffa6f20c6c37444bc313a360a5cffc8b9",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/dual.agent.md",
           "digest": "sha256:9ac911b7dfe62ad4703a097779a0a45a7a9fe471554cf22679cf82f7191a8200",
           "requires": []
@@ -414,7 +414,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/team/fixer.md",
           "sourceDigest": "sha256:11404f0e334d2b363d7bc45e6d952817a29d4568e08f2545c04cf83eaa5686e8",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/fixer.agent.md",
           "digest": "sha256:56829066e0af7a86801b53bc595472c23657801d964b35e2e5c4f63cd7fdb8ba",
           "requires": []
@@ -510,9 +510,29 @@
           "variant": "generated",
           "sourcePath": ".gemini/agents/gm-native.md",
           "sourceDigest": "sha256:ab77641ac4f6666fa0d80ee36d4fdf2332dbd2f1bc5d0106cd69fb9446f670e9",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/gm-native.agent.md",
           "digest": "sha256:e88be574a7f1c564b1d705f9c3a526354bb5ce5c6b4e1a52f5e620164d5f4adb",
+          "requires": []
+        }
+      ]
+    },
+    {
+      "source": {
+        "kind": "local",
+        "locator": "/agnthub-e2e/src/layouts"
+      },
+      "agent": "interview-prep",
+      "origin": "direct",
+      "artifacts": [
+        {
+          "harness": "copilot",
+          "variant": "generated",
+          "sourcePath": "agents/interview-prep.agent.md",
+          "sourceDigest": "sha256:b2e6484ad817368c1eb324d62cb325d893ea766b2e24a9d25d818698d17bcc2a",
+          "converter": "copilot/v7",
+          "path": "/agnthub-e2e/home/.copilot/agents/interview-prep.agent.md",
+          "digest": "sha256:ae8537102167f60f2b9e767d674c33b67482ec21b2ba93da72cf449e47f98d04",
           "requires": []
         }
       ]
@@ -530,7 +550,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/isolated.md",
           "sourceDigest": "sha256:213ccb5e38aa066c15bfee1536e7e91930bb54fc01fdaba30d0befe07666fb8b",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/isolated.agent.md",
           "digest": "sha256:769157495c20bddd181e04977d2fe20f6a4c71a114824fea3afa6b038e7fa823",
           "requires": []
@@ -550,7 +570,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/issue-reader.md",
           "sourceDigest": "sha256:c5cf513142027c5ce8dcbea7dfacadf3fd23fbd5e748c9fc999dd1fd00902358",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/issue-reader.agent.md",
           "digest": "sha256:2f2ef1b3756aff4f8d3c15504f0a690146a574f59e20e65700da5deb43931597",
           "requires": []
@@ -570,7 +590,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/journaler.md",
           "sourceDigest": "sha256:8054d0e04ddedf2eb8559ad2a2a6c9d1a60d4e0f0b41eebf631e6d03d1d0e361",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/journaler.agent.md",
           "digest": "sha256:613d411efdcf8e4805357472aefa664796e948c64fc9beaf9d0621953eee3539",
           "requires": []
@@ -590,7 +610,7 @@
           "variant": "generated",
           "sourcePath": "agents/literal.md",
           "sourceDigest": "sha256:b973b211d0f1640b3dec85aa413b974bd3a3bd92b362105f58b2044100ffdf23",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/literal.agent.md",
           "digest": "sha256:911250454fd392158e94f53bd4f18b3f457f1ea4ab3fa66fa587e0a859354213",
           "requires": []
@@ -610,7 +630,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/local-notes.md",
           "sourceDigest": "sha256:4d831bcbb3fb7890336981e00b967572db3011ba4cf6404b531ab134ea9ad8f0",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/local-notes.agent.md",
           "digest": "sha256:0f55c7acef8fe6f3da1553310f079ccd31cd1d65162b911bb02344d604c19f62",
           "requires": []
@@ -630,7 +650,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/misnamed.md",
           "sourceDigest": "sha256:c5c73ca9bb6c15b435d0584078dd5bb855ca728acba4339cd9bdb0c8ac46ea4e",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/misnamed.agent.md",
           "digest": "sha256:843c46afea483e390954ff90774971683755281f51f3d481c3b173dce7ea5b2c",
           "requires": []
@@ -650,7 +670,7 @@
           "variant": "generated",
           "sourcePath": "agents/modelled.md",
           "sourceDigest": "sha256:3d52a9d90250746cb40d20913b4d1bc01c4a5b313259f51dc8bc6bf92035666e",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/modelled.agent.md",
           "digest": "sha256:95ab7006e39ca6041bb204d9de020da19090ec963b49b40ac4d7a13ccfa9b20a",
           "requires": []
@@ -670,7 +690,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/no-shell.md",
           "sourceDigest": "sha256:63a2ad194c53901523f07f8f3ec3303517e950b53a482f2f2e13b84902d155f3",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/no-shell.agent.md",
           "digest": "sha256:597519ef91480f63a40053b0af187935409cd5b1311ff5c99982053036328a46",
           "requires": []
@@ -690,7 +710,7 @@
           "variant": "generated",
           "sourcePath": ".opencode/agents/oc-native.md",
           "sourceDigest": "sha256:5951d5e75a6de4429a8f579c654bb4589d12db75deba1844913b6c4b421cf5d0",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/oc-native.agent.md",
           "digest": "sha256:d5e1178db521a56abb8efd313d39463b8fe396c0ed761e97822c61dce0c36120",
           "requires": []
@@ -710,7 +730,7 @@
           "variant": "generated",
           "sourcePath": ".omp/agents/omp-native.md",
           "sourceDigest": "sha256:f0e791fe64b2035a1eab0136e814e470e570bd86b6b2a69dffdf2b3661a0611a",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/omp-native.agent.md",
           "digest": "sha256:7e5d0e1d69f8f3df3561f5c43bdcaee3836d73513208a17348d95b840145fe5f",
           "requires": []
@@ -730,7 +750,7 @@
           "variant": "generated",
           "sourcePath": "agents/planner.md",
           "sourceDigest": "sha256:6e67f8119738e58371e61f662e332d971058192a6dc99791e7c19094691376f2",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/planner.agent.md",
           "digest": "sha256:3a620d9f877ab2fd74f87155ccdfb7795a2b0ad8eaa9ed8437bf419e2f9315fb",
           "requires": []
@@ -750,7 +770,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/quoted.md",
           "sourceDigest": "sha256:a92554a3420863b7acc442ea397337ac1bae541f07c7a50f8a3be291d02b0dd1",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/quoted.agent.md",
           "digest": "sha256:9c47c4f304b275464509b3dc3b6c33e824c688f27c328a2cbbaeca4557f127fd",
           "requires": []
@@ -770,7 +790,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/recaller.md",
           "sourceDigest": "sha256:a30571bad4b7bff23bdacaaac67fb2667016a24a7c89682f52832bfda484b7d1",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/recaller.agent.md",
           "digest": "sha256:45b9a593ac02a307e59e070a9e4b37c2dc451df542a833415e37957ed83bd3d4",
           "requires": []
@@ -790,7 +810,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/relaxed.md",
           "sourceDigest": "sha256:88b6be1e2b64ae4bbfbab2c958f917bca08a5abedebecac673fa17ba8826ce95",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/relaxed.agent.md",
           "digest": "sha256:7ca1913629aaceba30b1ae3663fcbe460eed0a85cdd36bbbe8d13990c7970bee",
           "requires": []
@@ -810,7 +830,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/rememberer.md",
           "sourceDigest": "sha256:e876bb3f846cda6620fed5b2d357e0a6997129a7a526e240789ed2e4b8e965ef",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/rememberer.agent.md",
           "digest": "sha256:fb40ca2cada8e8813729728a5eb886c2ea0dab6bf569dc5bb8be5d57b515aae0",
           "requires": []
@@ -830,7 +850,7 @@
           "variant": "generated",
           "sourcePath": "agents/researcher/AGENT.md",
           "sourceDigest": "sha256:dd13ee557398466dd574705483ce5697cfb0b3352c2ef6e815509612dc32282b",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/researcher.agent.md",
           "digest": "sha256:d78b2c78aa90fea7fb0097a6310ff86d841b04bcdffae9c6d5fdad6948d73892",
           "requires": []
@@ -850,7 +870,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/reviewer.md",
           "sourceDigest": "sha256:a9c4c55855bdcff3eb2fa4bd246ff94f4de189219525d61086c93cac478e5070",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/reviewer.agent.md",
           "digest": "sha256:563e5b6494357514d1180719e7f58241461261f24a38b97ffb2215945173510a",
           "requires": []
@@ -870,7 +890,7 @@
           "variant": "generated",
           "sourcePath": "AGENT.md",
           "sourceDigest": "sha256:b9b9c62f67ad79f66551bfbd994660353fde591c65f23051c5b472f5deb04be0",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/root-helper.agent.md",
           "digest": "sha256:d6c0e240216661624c4cd0dc60f2c0484f12b6624b32c61a8570c8766b941257",
           "requires": []
@@ -890,7 +910,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/scripted.md",
           "sourceDigest": "sha256:1527e595b5b95f417d832f97ccb0ef2cd0579cb27cdc6944de2071946ee4b82c",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/scripted.agent.md",
           "digest": "sha256:2c287225f7cab0f9bde38bf9668e26fdc7f66040e4224807ff44ad88b4623b4c",
           "requires": []
@@ -910,7 +930,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/skilled.md",
           "sourceDigest": "sha256:e13388a2a0e7989773c6eced86e91871233b762fbe37b11597e0ebdd58e42d69",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/skilled.agent.md",
           "digest": "sha256:c2b70ec4d9290826e4c8ad9ed5daf89693f0e5a89194b1d3750e27a47c6da6fc",
           "requires": []
@@ -930,7 +950,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/studio-qa.md",
           "sourceDigest": "sha256:cfe15b9951529179d27ad3396fc10136bcf5a2455518aed3464720354c2fa3e8",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/studio-qa.agent.md",
           "digest": "sha256:da03029d8104a5e92978b248b50bb0c9d75ee7326482a17bdb46179a5beca290",
           "requires": []
@@ -950,7 +970,7 @@
           "variant": "generated",
           "sourcePath": "agents/tagged.md",
           "sourceDigest": "sha256:2e9a09a7b24a92f19ee04b1adad396cf4e9f100fa5cc4c882a59ca2e47b73f09",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/tagged.agent.md",
           "digest": "sha256:5fdadeddd4e306107e8e69c5999e9a85a866190ef64e01e82622ffccceee070a",
           "requires": []
@@ -970,7 +990,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/web-searcher.md",
           "sourceDigest": "sha256:445f4b734cae55d1068397452bb0a8ae3cdb891d2f5c18ce8014b6f2ff54ecde",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/web-searcher.agent.md",
           "digest": "sha256:30eac4c8979d0c2fb273edb1c5ea4709f6767e782d766c039f04ee907f56da89",
           "requires": []
@@ -990,7 +1010,7 @@
           "variant": "generated",
           "sourcePath": ".claude/agents/wildcard.md",
           "sourceDigest": "sha256:6619fd1e1a173c38342c4ad36dbb057d4829db134be89767f903b7c5523afef3",
-          "converter": "copilot/v6",
+          "converter": "copilot/v7",
           "path": "/agnthub-e2e/home/.copilot/agents/wildcard.agent.md",
           "digest": "sha256:6a638e7c7545e753cf42154ebd2f1888cdb2444715a8ca2eed2df87731e5b0da",
           "requires": []
