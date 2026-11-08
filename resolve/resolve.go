@@ -45,6 +45,9 @@ type Resolver struct {
 	Opener   Opener
 	Registry *harness.Registry
 	Limits   discovery.Limits
+	// IncludeIgnored reads the paths each source asks agnthub to ignore
+	// (discovery.IncludeIgnored).
+	IncludeIgnored bool
 }
 
 // Root is the already-open snapshot the user selected Agents from.
@@ -272,7 +275,7 @@ func (s *run) dependency(from *node, dep agent.AgentDependency) (*node, error) {
 	}
 	def := target.inventory.Find(dep.Agent)
 	if def == nil {
-		return nil, missingError(from, dep.Agent, target)
+		return nil, s.missingError(from, dep.Agent, target)
 	}
 	n, err := s.node(target, def, from.label)
 	if err != nil {
@@ -293,7 +296,12 @@ func (s *run) open(loc source.Locator) (*entry, error) {
 		return nil, err
 	}
 	s.opened = append(s.opened, snapshot)
-	inventory, err := discovery.Discover(snapshot.Tree, s.resolver.Registry, s.resolver.Limits)
+	var opts []discovery.Option
+	if s.resolver.IncludeIgnored {
+		opts = append(opts, discovery.IncludeIgnored())
+	}
+	inventory, err := discovery.Discover(snapshot.Tree, s.resolver.Registry, s.resolver.Limits,
+		opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -421,7 +429,7 @@ func cycleError(path []*node, back *node) error {
 	return fmt.Errorf("%w: %s", ErrCycle, strings.Join(labels, " → "))
 }
 
-func missingError(from *node, id string, target *entry) error {
+func (s *run) missingError(from *node, id string, target *entry) error {
 	where := "the same source"
 	if target != from.entry {
 		where = target.snapshot.Locator.Display()
@@ -444,9 +452,28 @@ func missingError(from *node, id string, target *entry) error {
 		available = append(available, "none")
 	}
 	return fmt.Errorf(
-		"%w: %s requires %s, which is not in %s (available: %s)",
+		"%w: %s requires %s, which is not in %s (available: %s)%s",
 		ErrMissing, from.label, id, where, strings.Join(available, ", "),
+		s.ignoreHint(target, where),
 	)
+}
+
+// ignoreHint tells that a missing Dependency may be in what its source asks
+// agnthub to ignore.
+func (s *run) ignoreHint(target *entry, where string) string {
+	ignore := target.inventory.Ignore
+	switch {
+	case s.resolver.IncludeIgnored || !ignore.Set():
+		return ""
+	case ignore.All:
+		return fmt.Sprintf("; %s asks agnthub to ignore it (%s, or ignore: all in %s); "+
+			"agnthub add --include-ignored installs from it anyway",
+			where, discovery.IgnoreFile, discovery.ManifestFile)
+	default:
+		return fmt.Sprintf("; %s asks agnthub to ignore %s (%s or the ignore key of %s), "+
+			"and the agent may be there: agnthub add --include-ignored reads ignored paths",
+			where, strings.Join(ignore.Paths, ", "), discovery.IgnoreFile, discovery.ManifestFile)
+	}
 }
 
 // skill records a Skill Dependency of n for harnessID. One Skill name maps to

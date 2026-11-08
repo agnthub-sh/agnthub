@@ -212,6 +212,9 @@ func (s *scanner) entryRoot(label string, src any, pluginRoot string) (string, b
 			s.problem(MarketplaceFile, "%s: source %q %s", label, src, reason)
 			return "", false
 		}
+		if s.ignored.Covers(root) {
+			return "", false
+		}
 		entry, err := s.tree.Stat(root)
 		switch {
 		case errors.Is(err, fs.ErrNotExist):
@@ -400,6 +403,9 @@ func (s *scanner) pluginAgentFile(
 	claude harness.Adapter,
 	plugin, name string,
 ) (*candidate, error) {
+	if s.ignored.Covers(name) {
+		return nil, nil
+	}
 	entry, err := s.tree.Stat(name)
 	switch {
 	case errors.Is(err, fs.ErrNotExist):

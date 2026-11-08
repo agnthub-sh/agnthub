@@ -19,6 +19,10 @@ type manifestFile struct {
 	SchemaVersion int                      `yaml:"schemaVersion"`
 	Categories    []string                 `yaml:"categories"`
 	Agents        map[string]manifestAgent `yaml:"agents"`
+	Ignore        manifestIgnore           `yaml:"ignore"`
+
+	// ignore is the validated ignore key.
+	ignore Ignore
 }
 
 type manifestAgent struct {
@@ -73,12 +77,19 @@ func decodeManifest(raw []byte) (*manifestFile, error) {
 		}
 		return nil, manifestErr("%v", err)
 	}
-	if manifest.SchemaVersion != 1 {
+	// A manifest that only sets ignore needs no schemaVersion; one that
+	// declares agents must name the schema they follow.
+	if manifest.SchemaVersion != 1 && (len(manifest.Agents) > 0 || manifest.SchemaVersion != 0) {
 		return nil, manifestErr("unsupported schemaVersion %d (want 1)", manifest.SchemaVersion)
 	}
-	if len(manifest.Agents) == 0 {
+	if len(manifest.Agents) == 0 && !manifest.Ignore.set {
 		return nil, manifestErr("declares no agents")
 	}
+	ignore, err := manifestRules(manifest.Ignore)
+	if err != nil {
+		return nil, err
+	}
+	manifest.ignore = ignore
 	categories, err := manifestCategories("", manifest.Categories)
 	if err != nil {
 		return nil, err
@@ -109,11 +120,7 @@ func manifestCategories(id string, declared []string) ([]string, error) {
 	return out, nil
 }
 
-func (s *scanner) fromManifest(raw []byte) (*Inventory, error) {
-	manifest, err := decodeManifest(raw)
-	if err != nil {
-		return nil, err
-	}
+func (s *scanner) fromManifest(manifest *manifestFile) (*Inventory, error) {
 	ids := make([]string, 0, len(manifest.Agents))
 	for id := range manifest.Agents {
 		ids = append(ids, id)
@@ -132,11 +139,7 @@ func (s *scanner) fromManifest(raw []byte) (*Inventory, error) {
 
 // planManifest records the files fromManifest reads, in the order it reads
 // them. The first invalid declaration ends the plan: the scan stops there too.
-func (s *scanner) planManifest(raw []byte) error {
-	manifest, err := decodeManifest(raw)
-	if err != nil {
-		return nil // the scan reports the invalid manifest
-	}
+func (s *scanner) planManifest(manifest *manifestFile) error {
 	ids := make([]string, 0, len(manifest.Agents))
 	for id := range manifest.Agents {
 		ids = append(ids, id)
@@ -277,6 +280,10 @@ func (s *scanner) declaredFile(id, name string) ([]byte, error) {
 	cleaned, err := source.CleanPath(name)
 	if err != nil {
 		return nil, manifestErr("agent %s: %v", id, err)
+	}
+	if s.ignored.Covers(cleaned) {
+		return nil, manifestErr("agent %s: %s is ignored (%s or the ignore key)", id, cleaned,
+			IgnoreFile)
 	}
 	if err := s.rejectLinkedParents(id, cleaned); err != nil {
 		return nil, err

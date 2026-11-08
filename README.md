@@ -25,6 +25,13 @@ not install or that you changed. Repositories need no particular setup: agnthub 
 `AGENT.md`/`agents/` definitions, each harness's native agent directory, the Claude Code plugins
 and marketplaces a repository packages (`.claude-plugin/`), and an optional `agnthub.yaml`.
 
+A repository owner who wants agnthub to leave the repository, or some paths in it, alone lists
+them in `.agnthub-ignore` at the root (one literal path per line; a file without paths ignores
+the whole repository) or under `ignore:` in `agnthub.yaml` (`ignore: all` or a list of paths).
+The CLI and the agnthub.sh indexer then never read those paths; `agnthub add --include-ignored`
+installs from them anyway, and agents already installed keep updating. See
+[ignoring a repository](docs/cli.md#behavior).
+
 `-d/--diff` on `add`, `update`, `restore` and `remove` prints every file the command would
 create, update or delete as a git-style unified diff (exactly the bytes it would write, generated
 by the same code as the write) and writes nothing; `git apply --check` accepts it, and `-d -y`

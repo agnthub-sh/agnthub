@@ -136,7 +136,9 @@ func pinKey(loc source.Locator) string {
 }
 
 // sourceCache opens each source revision once per command and discovers its
-// Agents. Frozen caches only ever open locked revisions.
+// Agents. Frozen caches only ever open locked revisions. Ignore rules decide
+// what add may newly install; they never break what is already installed, so
+// the cache reads ignored paths (ADR 0020).
 type sourceCache struct {
 	opener   source.Opener
 	registry *harness.Registry
@@ -207,7 +209,7 @@ func (c *sourceCache) open(ctx context.Context, loc source.Locator, revision str
 		return entry
 	}
 	entry.inventory, entry.err = discovery.Discover(
-		snapshot.Tree, c.registry, discovery.DefaultLimits(),
+		snapshot.Tree, c.registry, discovery.DefaultLimits(), discovery.IncludeIgnored(),
 	)
 	return entry
 }
@@ -288,8 +290,11 @@ func (l *lifecycle) planLatest(
 	withSkills bool,
 ) (*lifecyclePlan, error) {
 	lp := l.newPlan()
+	// Dependencies of installed agents are read like the agents themselves:
+	// including ignored paths (see sourceCache).
 	resolver := &resolve.Resolver{
 		Opener: l.cache, Registry: l.app.Registry, Limits: discovery.DefaultLimits(),
+		IncludeIgnored: true,
 	}
 	for _, c := range contexts {
 		harnesses := []agent.HarnessID{c.harness}

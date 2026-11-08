@@ -2,6 +2,22 @@
 
 ## Unreleased
 
+### Added
+
+- **Repositories can ask agnthub to ignore them, or some of their paths**
+  ([ADR 0020](docs/adr/0020-repository-ignore-rules.md)). List paths in `.agnthub-ignore` at the
+  repository root (one per line, `#` comments; a directory covers everything under it; literal
+  paths, no globs) or under the `ignore` key of `agnthub.yaml` (`ignore: [examples]`); an
+  `.agnthub-ignore` without paths, or `ignore: all`, ignores the whole repository. An
+  `agnthub.yaml` that only sets `ignore` needs no `schemaVersion`. agnthub never reads ignored
+  paths: their agents are not listed or installable, `add` of an ignored repository fails naming
+  it, and an agent `add` cannot find while paths are ignored gets a hint. `--list` shows the
+  rules (`ignore` in `--list --json`). The agnthub.sh indexer applies the same rules. An invalid
+  `.agnthub-ignore`, or an `agnthub.yaml` agent declared under an ignored path, rejects the source.
+- **`add --include-ignored`** installs from ignored paths anyway, in dependency sources too.
+- `check`, `update` and `restore` always read ignored paths: the rules decide what can be newly
+  added and never break an agent already installed.
+
 ### Changed
 
 - **The CLI is licensed under the [PolyForm Shield License 1.0.0](LICENSE)** instead of the MIT

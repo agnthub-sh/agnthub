@@ -51,6 +51,16 @@ type inventoryJSON struct {
 	Categories []string           `json:"categories,omitempty"`
 	Agents     []inventoryAgent   `json:"agents"`
 	Problems   []inventoryProblem `json:"problems"`
+	// Ignore is what the source asks agnthub to ignore, when it asks anything.
+	Ignore *inventoryIgnore `json:"ignore,omitempty"`
+}
+
+type inventoryIgnore struct {
+	// All ignores the whole source; Paths ignore files and directories in it.
+	All   bool     `json:"all"`
+	Paths []string `json:"paths"`
+	// Applied is false with --include-ignored, which lists ignored agents too.
+	Applied bool `json:"applied"`
 }
 
 type inventoryAgent struct {
@@ -72,7 +82,11 @@ type inventoryProblem struct {
 	Message string `json:"message"`
 }
 
-func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory) error {
+func (p *printer) inventory(
+	snapshot *source.Snapshot,
+	inv *discovery.Inventory,
+	includeIgnored bool,
+) error {
 	payload := inventoryJSON{
 		Source:     snapshot.Locator.Display(),
 		Revision:   snapshot.Revision,
@@ -80,6 +94,12 @@ func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory)
 		Categories: inv.Categories,
 		Agents:     []inventoryAgent{},
 		Problems:   []inventoryProblem{},
+	}
+	if inv.Ignore.Set() {
+		payload.Ignore = &inventoryIgnore{
+			All: inv.Ignore.All, Paths: append([]string{}, inv.Ignore.Paths...),
+			Applied: !includeIgnored,
+		}
 	}
 	for _, def := range inv.Agents {
 		item := inventoryAgent{
@@ -112,7 +132,21 @@ func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory)
 		header += " (agnthub.yaml)"
 	}
 	fmt.Fprintln(p.w, s.title.Render(header))
-	if len(payload.Agents) == 0 {
+	ignore := payload.Ignore
+	switch {
+	case ignore == nil:
+	case !ignore.Applied:
+		fmt.Fprintln(p.w, s.dim.Render("  ignore rules not applied (--"+includeIgnoredFlag+"): "+
+			ignoreRules(ignore)))
+	case ignore.All:
+		fmt.Fprintf(p.w, "  ignored: the source asks agnthub to ignore it (%s, or ignore: all in "+
+			"%s); --%s lists its agents anyway\n", discovery.IgnoreFile, discovery.ManifestFile,
+			includeIgnoredFlag)
+	default:
+		fmt.Fprintln(p.w, s.dim.Render(fmt.Sprintf("  ignored paths: %s (--%s lists their agents)",
+			strings.Join(ignore.Paths, ", "), includeIgnoredFlag)))
+	}
+	if len(payload.Agents) == 0 && (ignore == nil || !ignore.All || !ignore.Applied) {
 		fmt.Fprintln(p.w, "  no installable agents found")
 	}
 	for _, item := range payload.Agents {
@@ -146,6 +180,14 @@ func (p *printer) inventory(snapshot *source.Snapshot, inv *discovery.Inventory)
 				"every harness), or run add without them to choose interactively."))
 	}
 	return nil
+}
+
+// ignoreRules describes the rules a source declares.
+func ignoreRules(ignore *inventoryIgnore) string {
+	if ignore.All {
+		return "the whole source"
+	}
+	return strings.Join(ignore.Paths, ", ")
 }
 
 func formatSettings(settings map[string]string) string {

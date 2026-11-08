@@ -82,6 +82,10 @@ type Inventory struct {
 	// License is the source's root license file, or nil when it has none or
 	// it could not be read; every Agent's Definition.License points to it.
 	License *agent.License
+	// Ignore is what the source asks agnthub to ignore (IgnoreFile and the
+	// ignore key of agnthub.yaml). Discovery applies it unless IncludeIgnored:
+	// ignored paths are never read, and Ignore.All leaves the inventory empty.
+	Ignore Ignore
 }
 
 // CategoriesFor returns the categories that describe def: its own declared
@@ -118,6 +122,9 @@ type scanner struct {
 	tree     source.Tree
 	registry *harness.Registry
 	limits   Limits
+	options  options
+	// ignored are the ignore rules the scan applies: tree hides them.
+	ignored Ignore
 
 	entries    int
 	bytes      int64
@@ -137,23 +144,29 @@ type scanner struct {
 // goes on without it; only manifests stop what depends on their content.
 var errDeferred = errors.New("file not fetched yet")
 
-// maxPlanRounds bounds planning: agnthub.yaml or the marketplace, the plugin
-// manifests it lists, their agent files, a catalog layout's probe files and
-// the rest of its divisions (ADR 0017), and a final check.
-const maxPlanRounds = 7
+// maxPlanRounds bounds planning: agnthub.yaml and .agnthub-ignore, the
+// marketplace, the plugin manifests it lists, their agent files, a catalog
+// layout's probe files and the rest of its divisions (ADR 0017), and a final
+// check.
+const maxPlanRounds = 8
 
 // Discover scans tree and returns its Agent inventory.
 func Discover(
 	tree source.Tree,
 	registry *harness.Registry,
 	limits Limits,
+	opts ...Option,
 ) (*Inventory, error) {
+	var o options
+	for _, opt := range opts {
+		opt(&o)
+	}
 	if partial, ok := tree.(source.Partial); ok {
-		if err := prefetch(partial, registry, limits); err != nil {
+		if err := prefetch(partial, registry, limits, o); err != nil {
 			return nil, err
 		}
 	}
-	s := &scanner{tree: tree, registry: registry, limits: limits}
+	s := &scanner{tree: tree, registry: registry, limits: limits, options: o}
 	return s.scan()
 }
 
@@ -161,11 +174,11 @@ func Discover(
 // round needs nothing new. A budget the plan already exceeds is the scan's
 // verdict too (the plan counts no more than the scan); other planning
 // failures are left to the scan to report.
-func prefetch(tree source.Partial, registry *harness.Registry, limits Limits) error {
+func prefetch(tree source.Partial, registry *harness.Registry, limits Limits, o options) error {
 	requested := map[string]bool{}
 	for range maxPlanRounds {
 		s := &scanner{
-			tree: tree, registry: registry, limits: limits,
+			tree: tree, registry: registry, limits: limits, options: o,
 			partial: tree, pending: map[string]bool{},
 		}
 		if _, err := s.scan(); err != nil && !errors.Is(err, errDeferred) {
@@ -196,15 +209,23 @@ func prefetch(tree source.Partial, registry *harness.Registry, limits Limits) er
 }
 
 func (s *scanner) scan() (*Inventory, error) {
-	manifest, err := s.readOptional(ManifestFile)
+	manifest, ignore, err := s.config()
 	if err != nil {
 		return nil, err
 	}
+	if !s.options.includeIgnored && ignore.Set() {
+		if ignore.All {
+			return &Inventory{Ignore: ignore}, nil
+		}
+		s.ignored = ignore
+		s.tree = ignoredTree{Tree: s.tree, ignore: ignore}
+	}
+	declared := manifest != nil && len(manifest.Agents) > 0
 	var inv *Inventory
 	switch {
-	case manifest != nil && s.pending != nil:
+	case declared && s.pending != nil:
 		return nil, s.planManifest(manifest)
-	case manifest != nil:
+	case declared:
 		inv, err = s.fromManifest(manifest)
 	default:
 		inv, err = s.fromLayouts()
@@ -212,6 +233,10 @@ func (s *scanner) scan() (*Inventory, error) {
 	if err != nil {
 		return nil, err
 	}
+	if manifest != nil {
+		inv.Categories = manifest.Categories
+	}
+	inv.Ignore = ignore
 	inv.License = s.license()
 	for _, def := range inv.Agents {
 		def.License = inv.License
@@ -224,6 +249,58 @@ func (s *scanner) scan() (*Inventory, error) {
 		return inv.Problems[i].Path < inv.Problems[j].Path
 	})
 	return inv, nil
+}
+
+// config reads agnthub.yaml and IgnoreFile, the files that decide how the rest
+// of the source is read. While planning, both are fetched in one round.
+func (s *scanner) config() (*manifestFile, Ignore, error) {
+	manifestRaw, hasManifest, manifestErr := s.readConfig(ManifestFile)
+	ignoreRaw, hasIgnore, ignoreErr := s.readConfig(IgnoreFile)
+	// Both reads run before either error returns, so planning asks for both.
+	for _, err := range []error{manifestErr, ignoreErr} {
+		if err != nil && !errors.Is(err, errDeferred) {
+			return nil, Ignore{}, err
+		}
+	}
+	if manifestErr != nil || ignoreErr != nil {
+		return nil, Ignore{}, errDeferred
+	}
+	var manifest *manifestFile
+	var ignore Ignore
+	if hasManifest {
+		var err error
+		if manifest, err = decodeManifest(manifestRaw); err != nil {
+			return nil, Ignore{}, err
+		}
+		ignore = manifest.ignore
+	}
+	if hasIgnore {
+		fileRules, err := parseIgnoreFile(ignoreRaw)
+		if err != nil {
+			return nil, Ignore{}, err
+		}
+		ignore = ignore.merge(fileRules)
+	}
+	return manifest, ignore, nil
+}
+
+// readConfig reads an optional root configuration file; found tells an empty
+// file from a missing one.
+func (s *scanner) readConfig(name string) ([]byte, bool, error) {
+	entry, err := s.tree.Stat(name)
+	if errors.Is(err, fs.ErrNotExist) {
+		return nil, false, nil
+	}
+	if err != nil {
+		return nil, false, err
+	}
+	if entry.Kind != source.EntryFile && name == IgnoreFile {
+		return nil, false, &IgnoreError{
+			Reason: fmt.Sprintf("is a %s, not a regular file", entry.Kind),
+		}
+	}
+	raw, err := s.read(name)
+	return raw, err == nil, err
 }
 
 func (s *scanner) countEntry() error {
@@ -287,17 +364,6 @@ func (s *scanner) read(name string) ([]byte, error) {
 	}
 	s.bytes += int64(len(data))
 	return data, nil
-}
-
-// readOptional reads name when it exists, rejecting non-regular entries.
-func (s *scanner) readOptional(name string) ([]byte, error) {
-	if _, err := s.tree.Stat(name); err != nil {
-		if errors.Is(err, fs.ErrNotExist) {
-			return nil, nil
-		}
-		return nil, err
-	}
-	return s.read(name)
 }
 
 // listDir lists dir when it exists, recording skipped links/submodules.

@@ -11,3 +11,4 @@ The decisions that shape the CLI. Numbers are shared with the registry service's
 - [0014 Emulate worktree isolation and manual-only invocation where a harness lacks them](0014-emulate-worktree-isolation-and-manual-only-invocation.md)
 - [0016 Attribute converted agents to their source and mark them as modified](0016-attribute-converted-agents-to-their-source.md)
 - [0019 Read `<id>.agent.md` portable cores as Copilot CLI agents](0019-read-agent-md-cores-as-copilot-agents.md)
+- [0020 Let repository owners ask agnthub to ignore their repository or some paths](0020-repository-ignore-rules.md)

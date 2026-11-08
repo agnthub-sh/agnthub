@@ -37,6 +37,8 @@ type addOptions struct {
 	all  bool
 	// allowWithoutShell installs agents that lose the shell access they use.
 	allowWithoutShell bool
+	// includeIgnored reads the paths the source asks agnthub to ignore.
+	includeIgnored bool
 }
 
 // allowWithoutShellFlag installs agents into harnesses that cannot grant the
@@ -46,6 +48,10 @@ const (
 	allowWithoutShellUsage = "install agents that lose the shell access they use where a " +
 		"harness cannot grant it (e.g. Cursor read-only agents)"
 )
+
+// includeIgnoredFlag reads what a source asks agnthub to ignore (.agnthub-ignore
+// or the ignore key of agnthub.yaml).
+const includeIgnoredFlag = "include-ignored"
 
 // allSelector selects every agent (--agent '*') or every supported harness
 // (--harness '*'), as skills.sh's --skill '*' and --agent '*' do.
@@ -110,7 +116,11 @@ there (e.g. ~/.omp/agents) is removed with agnthub remove in the home directory.
 
 Required skills are reused when a compatible copy is already visible; missing ones
 install first through the skill installer (skills.sh, or skillInstaller in
-~/.config/agnthub/config.yaml) and are verified before any agent file is written.`,
+~/.config/agnthub/config.yaml) and are verified before any agent file is written.
+
+A source may ask agnthub to ignore it, or some of its paths, with .agnthub-ignore
+or the ignore key of agnthub.yaml; --include-ignored installs from them anyway.
+update, check and restore never apply these rules to agents already installed.`,
 		Example: `  # List the agents a source provides without installing
   agnthub add owner/repo -l
   # Choose agents and harnesses interactively
@@ -148,6 +158,9 @@ install first through the skill installer (skills.sh, or skillInstaller in
 	flags.BoolVar(&opts.json, "json", false, "print machine-readable JSON; never prompts")
 	flags.BoolVar(&opts.all, "all", false, "shorthand for --agent '*' --harness all --yes")
 	flags.BoolVar(&opts.allowWithoutShell, allowWithoutShellFlag, false, allowWithoutShellUsage)
+	flags.BoolVar(&opts.includeIgnored, includeIgnoredFlag, false,
+		"read the paths the source asks agnthub to ignore (.agnthub-ignore or the ignore key "+
+			"of agnthub.yaml)")
 	return cmd
 }
 
@@ -176,14 +189,26 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 		return err
 	}
 	defer func() { _ = snapshot.Close() }()
-	inventory, err := discovery.Discover(snapshot.Tree, a.Registry, discovery.DefaultLimits())
+	var discoverOpts []discovery.Option
+	if opts.includeIgnored {
+		discoverOpts = append(discoverOpts, discovery.IncludeIgnored())
+	}
+	inventory, err := discovery.Discover(snapshot.Tree, a.Registry, discovery.DefaultLimits(),
+		discoverOpts...)
 	done()
 	if err != nil {
 		return err
 	}
 	out := a.planPrinter(opts.json, opts.diff && !opts.list)
 	if opts.list {
-		return out.inventory(snapshot, inventory)
+		return out.inventory(snapshot, inventory, opts.includeIgnored)
+	}
+	if inventory.Ignore.All && !opts.includeIgnored {
+		return fmt.Errorf(
+			"%s asks agnthub to ignore it (%s, or ignore: all in %s); run again with "+
+				"--%s to install from it anyway",
+			loc.Display(), discovery.IgnoreFile, discovery.ManifestFile, includeIgnoredFlag,
+		)
 	}
 	// Only a terminal user without --yes/--all/--json is ever asked anything.
 	interactive := a.Interactive && !opts.yes && !opts.all && !opts.json && !opts.diff
@@ -210,9 +235,10 @@ func (a *App) runAdd(ctx context.Context, raw string, opts *addOptions) error {
 	}
 	done = a.busy(opts.json, "Resolving dependencies")
 	closure, err := (&resolve.Resolver{
-		Opener:   a.Opener,
-		Registry: a.Registry,
-		Limits:   discovery.DefaultLimits(),
+		Opener:         a.Opener,
+		Registry:       a.Registry,
+		Limits:         discovery.DefaultLimits(),
+		IncludeIgnored: opts.includeIgnored,
 	}).Resolve(ctx, resolve.Root{Snapshot: snapshot, Inventory: inventory}, defs, harnesses)
 	done()
 	if err != nil {
@@ -439,6 +465,7 @@ func (a *App) selectAgents(
 	interactive bool,
 ) ([]*agent.Definition, error) {
 	var defs []*agent.Definition
+	ignored := ignoredPaths(inventory, opts.includeIgnored)
 	switch {
 	case opts.all || slices.Contains(opts.agents, allSelector):
 		if problems := agentProblems(inventory); len(problems) > 0 {
@@ -457,7 +484,7 @@ func (a *App) selectAgents(
 			seen[id] = true
 			def := inventory.Find(id)
 			if def == nil {
-				return nil, missingAgent(inventory, id)
+				return nil, missingAgent(inventory, id, ignored)
 			}
 			defs = append(defs, def)
 		}
@@ -467,12 +494,12 @@ func (a *App) selectAgents(
 		return a.promptAgents(ctx, inventory)
 	default:
 		return nil, fmt.Errorf(
-			"choose agents with --agent (available: %s) or use --all",
-			strings.Join(agentIDs(inventory), ", "),
+			"choose agents with --agent (available: %s) or use --all%s",
+			strings.Join(agentIDs(inventory), ", "), ignoreHint(ignored),
 		)
 	}
 	if len(defs) == 0 {
-		return nil, errors.New("the source contains no installable agents")
+		return nil, errors.New("the source contains no installable agents" + ignoreHint(ignored))
 	}
 	return defs, nil
 }
@@ -508,7 +535,8 @@ func (a *App) promptAgents(
 	for _, id := range ids {
 		def := inventory.Find(id)
 		if def == nil {
-			return nil, missingAgent(inventory, id)
+			// The prompt offers only listed agents: no ignored path can hide id.
+			return nil, missingAgent(inventory, id, nil)
 		}
 		defs = append(defs, def)
 	}
@@ -539,13 +567,38 @@ func agentIDs(inventory *discovery.Inventory) []string {
 	return ids
 }
 
-func missingAgent(inventory *discovery.Inventory, id string) error {
+// ignoredPaths returns the ignored paths that hid agents from inventory: none
+// when --include-ignored read them.
+func ignoredPaths(inventory *discovery.Inventory, includeIgnored bool) []string {
+	if includeIgnored {
+		return nil
+	}
+	return inventory.Ignore.Paths
+}
+
+// ignoreHint tells that an agent agnthub did not find may be under an ignored path.
+func ignoreHint(ignored []string) string {
+	if len(ignored) == 0 {
+		return ""
+	}
+	return fmt.Sprintf(
+		"; the source asks agnthub to ignore %s (%s or the ignore key of %s), and the agent "+
+			"may be there: run again with --%s to read ignored paths",
+		strings.Join(ignored, ", "), discovery.IgnoreFile, discovery.ManifestFile,
+		includeIgnoredFlag,
+	)
+}
+
+// missingAgent reports an agent the inventory does not install; ignored are the
+// paths hidden from it.
+func missingAgent(inventory *discovery.Inventory, id string, ignored []string) error {
 	problems := inventory.ProblemsFor(id)
 	if len(problems) == 0 {
 		return fmt.Errorf(
-			"agent %q not found (available: %s)",
+			"agent %q not found (available: %s)%s",
 			id,
 			strings.Join(agentIDs(inventory), ", "),
+			ignoreHint(ignored),
 		)
 	}
 	lines := make([]string, 0, len(problems))
