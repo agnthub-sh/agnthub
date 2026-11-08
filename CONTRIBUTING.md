@@ -174,4 +174,5 @@ cannot.
 
 ## License
 
-By contributing you agree that your contributions are licensed under the [MIT License](LICENSE).
+By contributing you agree that your contributions are licensed under the
+[PolyForm Shield License 1.0.0](LICENSE).

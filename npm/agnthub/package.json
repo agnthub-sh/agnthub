@@ -8,7 +8,7 @@
     "url": "git+https://github.com/agnthub-sh/agnthub.git"
   },
   "bugs": "https://github.com/agnthub-sh/agnthub/issues",
-  "license": "MIT",
+  "license": "PolyForm-Shield-1.0.0",
   "bin": {
     "agnthub": "bin/agnthub.js"
   },

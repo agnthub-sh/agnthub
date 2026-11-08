@@ -2,3 +2,6 @@
 /bin/
 /dist/
 node_modules/
+
+# npm-pack copies the root LICENSE into the package
+/npm/agnthub/LICENSE

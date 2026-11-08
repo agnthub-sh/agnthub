@@ -257,4 +257,7 @@ See [CONTRIBUTING](CONTRIBUTING.md). Report security problems privately as descr
 
 ## License
 
-[MIT](LICENSE)
+[PolyForm Shield 1.0.0](LICENSE): you may use, change and redistribute the CLI for any purpose
+except providing a product that competes with it or with a product agnthub.sh provides with it,
+such as another agent registry. Releases up to v0.10.2 were published under the MIT License and
+stay available under it.

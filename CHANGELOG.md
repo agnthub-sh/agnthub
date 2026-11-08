@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+
+### Changed
+
+- **The CLI is licensed under the [PolyForm Shield License 1.0.0](LICENSE)** instead of the MIT
+  License: use, changes and redistribution are allowed for any purpose except providing a product
+  that competes with the CLI or with a product agnthub.sh provides with it. Releases up to
+  v0.10.2 stay under the MIT License. Release archives and the npm package now include `LICENSE`.
+
 ## v0.10.2
 
 ### Changed

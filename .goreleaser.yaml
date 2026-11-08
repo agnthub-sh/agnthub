@@ -28,9 +28,14 @@ archives:
     format_overrides:
       - goos: windows
         formats: [zip]
-    # Only the binary: the npm launcher and README document everything else.
+    # The binary and its LICENSE: the npm launcher and README document everything else.
     files:
-      - none*
+      - src: LICENSE
+        info:
+          owner: root
+          group: root
+          mode: 0644
+          mtime: "{{ .CommitDate }}"
     builds_info:
       owner: root
       group: root
